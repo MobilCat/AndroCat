@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mustafaozhan.github.com.githubclient.MainActivity">
+    tools:context="mustafaozhan.github.com.githubclient.activities.MainActivity">
 
     <WebView
         android:id="@+id/webView"
