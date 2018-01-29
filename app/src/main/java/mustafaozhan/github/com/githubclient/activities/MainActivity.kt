@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.githubclient.activities
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -12,8 +13,10 @@ import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
-import mustafaozhan.github.com.githubclient.extensions.putStringPreferences
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
+import android.content.Intent
+import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,13 +51,36 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners() {
         dashHomePage.setOnClickListener { webView.loadUrl("https://github.com/") }
-        dashLogout.setOnClickListener { webView.loadUrl("https://github.com/logout") }
-        dashProfile.setOnClickListener { webView.loadUrl("https://github.com/profile") }
-        dashSettings.setOnClickListener { webView.loadUrl("https://github.com/settings") }
+
         dashSearch.setOnClickListener { webView.loadUrl("https://github.com/search") }
+
+        dashLogout.setOnClickListener { webView.loadUrl("https://github.com/logout") }
+
+        dashProfile.setOnClickListener {
+            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.please_enter_your_githup_username)) == resources.getString(R.string.please_enter_your_githup_username)) {
+                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(applicationContext, SettingsActivity::class.java))
+            } else
+                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.please_enter_your_githup_username)))
+        }
+
         mSwipeRefreshLayout.setOnRefreshListener {
             webView.loadUrl(webView.url)
             mSwipeRefreshLayout.isRefreshing = false
+        }
+
+        dashSettings.setOnClickListener {
+            val items = arrayOf("Application Settings", "GitHub Settings")
+            val builder = AlertDialog.Builder(this)
+            builder.setItems(items, { _, item ->
+                // Do something with the selection
+                if (item == 0)
+                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                else if (item == 1)
+                    webView.loadUrl("https://github.com/settings")
+            })
+            val alert = builder.create()
+            alert.show()
         }
     }
 

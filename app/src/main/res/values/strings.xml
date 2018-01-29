@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">GitHub Client</string>
     <string name="loading">loading</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="username">Username</string>
+    <string name="please_enter_your_githup_username">Please Enter Your Githup Username</string>
 </resources>

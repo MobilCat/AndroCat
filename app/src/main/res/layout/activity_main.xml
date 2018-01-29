@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/loading"
-            android:scaleType="fitEnd"
+            android:scaleType="centerInside"
             android:scaleX="0.5"
             android:scaleY="0.5"
             android:src="@drawable/octocat_animation" />
@@ -50,7 +50,7 @@
         android:id="@+id/constraintLayoutDash"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:background="@color/colorGitHubDash"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
