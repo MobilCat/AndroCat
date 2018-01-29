@@ -12,11 +12,13 @@ import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
+import mustafaozhan.github.com.githubclient.extensions.putStringPreferences
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
 
 class MainActivity : AppCompatActivity() {
 
-    private var url = "https://github.com/login"
+
+    private var url = "https://github.com/"
 
 
     private var doubleBackToExitPressedOnce = false
@@ -30,12 +32,16 @@ class MainActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         setContentView(R.layout.activity_main)
-        mImgViewOctocat.visibility = View.GONE
+        mGifLayout.visibility = View.GONE
+
+        if (getPreferences(MODE_PRIVATE).getBoolean("is_first_run", true)) {
+            url = "https://github.com/login"
+            getPreferences(MODE_PRIVATE).edit().putBoolean("is_first_run", false).apply()
+        }
 
         initWebView()
         setListeners()
         webView.loadUrl(url)
-        url = "https://github.com/"
 
 
     }
@@ -48,13 +54,13 @@ class MainActivity : AppCompatActivity() {
         dashSearch.setOnClickListener { webView.loadUrl("https://github.com/search") }
         mSwipeRefreshLayout.setOnRefreshListener {
             webView.loadUrl(webView.url)
-            mSwipeRefreshLayout.isRefreshing=false
+            mSwipeRefreshLayout.isRefreshing = false
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        webView.webViewClient = MyWebViewClient(mImgViewOctocat)
+        webView.webViewClient = MyWebViewClient(mGifLayout)
         var newUserAgent: String? = webView.settings.userAgentString
         try {
             val ua = webView.settings.userAgentString
@@ -91,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         }
         this.doubleBackToExitPressedOnce = true
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
-        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000) //limiting double check time
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
 
     }
 }

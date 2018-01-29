@@ -23,19 +23,28 @@
             android:layout_height="0dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/mImgViewOctocat"
+    <LinearLayout
+        android:id="@+id/mGifLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#414141"
-        android:contentDescription="@string/loading"
-        android:scaleType="centerInside"
-        android:src="@drawable/octocat_github_gray"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/mImgViewOctocat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/loading"
+            android:scaleType="fitEnd"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/octocat_animation" />
+
+    </LinearLayout>
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayoutDash"
