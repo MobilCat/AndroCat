@@ -37,6 +37,11 @@ class MainActivity : AppCompatActivity() {
         url = "https://github.com/"
 
         dashHomePage.setOnClickListener {  webView.loadUrl("https://github.com/")}
+        dashLogout.setOnClickListener {  webView.loadUrl("https://github.com/logout")}
+        dashProfile.setOnClickListener {  webView.loadUrl("https://github.com/profile")}
+        dashSettings.setOnClickListener {  webView.loadUrl("https://github.com/settings")}
+        dashSearch.setOnClickListener {  webView.loadUrl("https://github.com/search")}
+
 
 
     }
