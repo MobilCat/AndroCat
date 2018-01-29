@@ -19,16 +19,12 @@
 
     <ImageView
         android:id="@+id/mImgViewOctocat"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="384dp"
+        android:layout_height="517dp"
         android:background="@color/white"
         android:contentDescription="@string/loading"
-        android:scaleType="center"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDash"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:scaleType="centerInside"
+        android:src="@drawable/octocat" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayoutDash"
@@ -41,8 +37,9 @@
 
         <Button
             android:id="@+id/dashHomePage"
-            android:layout_width="48sp"
-            android:layout_height="48sp"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/octocat_dash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
