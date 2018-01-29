@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.KeyEvent
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
@@ -23,13 +24,12 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         setContentView(R.layout.activity_main)
-
+        mImgViewOctocat.visibility=View.GONE
 
         initWebView()
         webView.loadUrl(URL)
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
+        webView.webViewClient = MyWebViewClient(mImgViewOctocat)
         var newUserAgent: String? = webView.settings.userAgentString
         try {
             val ua = webView.settings.userAgentString
@@ -50,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         webView.settings.userAgentString = newUserAgent
         webView.settings.useWideViewPort = true
         webView.settings.loadWithOverviewMode = true
-        webView.webViewClient = MyWebViewClient()
         webView.settings.javaScriptEnabled = true
         webView.settings.setSupportZoom(true)
         webView.settings.builtInZoomControls = true
