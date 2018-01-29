@@ -15,24 +15,28 @@ import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        const val URL = "https://github.com/login"
-    }
+
+    private var url = "https://github.com/login"
+
 
     private var doubleBackToExitPressedOnce = false
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         setContentView(R.layout.activity_main)
-        mImgViewOctocat.visibility=View.GONE
+        mImgViewOctocat.visibility = View.GONE
 
         initWebView()
-        webView.loadUrl(URL)
+        webView.loadUrl(url)
+        url = "https://github.com/"
+
+        dashHomePage.setOnClickListener {  webView.loadUrl("https://github.com/")}
 
 
     }
