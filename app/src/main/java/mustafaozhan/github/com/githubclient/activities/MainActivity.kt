@@ -33,17 +33,23 @@ class MainActivity : AppCompatActivity() {
         mImgViewOctocat.visibility = View.GONE
 
         initWebView()
+        setListeners()
         webView.loadUrl(url)
         url = "https://github.com/"
 
-        dashHomePage.setOnClickListener {  webView.loadUrl("https://github.com/")}
-        dashLogout.setOnClickListener {  webView.loadUrl("https://github.com/logout")}
-        dashProfile.setOnClickListener {  webView.loadUrl("https://github.com/profile")}
-        dashSettings.setOnClickListener {  webView.loadUrl("https://github.com/settings")}
-        dashSearch.setOnClickListener {  webView.loadUrl("https://github.com/search")}
 
+    }
 
-
+    private fun setListeners() {
+        dashHomePage.setOnClickListener { webView.loadUrl("https://github.com/") }
+        dashLogout.setOnClickListener { webView.loadUrl("https://github.com/logout") }
+        dashProfile.setOnClickListener { webView.loadUrl("https://github.com/profile") }
+        dashSettings.setOnClickListener { webView.loadUrl("https://github.com/settings") }
+        dashSearch.setOnClickListener { webView.loadUrl("https://github.com/search") }
+        mSwipeRefreshLayout.setOnRefreshListener {
+            webView.loadUrl(webView.url)
+            mSwipeRefreshLayout.isRefreshing=false
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

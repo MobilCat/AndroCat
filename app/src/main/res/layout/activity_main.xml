@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context="mustafaozhan.github.com.githubclient.activities.MainActivity">
 
-    <WebView
-        android:id="@+id/webView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/mSwipeRefreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
@@ -15,16 +15,23 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/mImgViewOctocat"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/white"
+        android:background="#414141"
         android:contentDescription="@string/loading"
         android:scaleType="centerInside"
-        android:src="@drawable/octocat"
+        android:src="@drawable/octocat_github_gray"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
