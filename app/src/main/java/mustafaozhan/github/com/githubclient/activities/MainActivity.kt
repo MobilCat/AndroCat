@@ -54,14 +54,18 @@ class MainActivity : AppCompatActivity() {
 
         dashSearch.setOnClickListener { webView.loadUrl("https://github.com/search") }
 
+        dashIssues.setOnClickListener { webView.loadUrl("https://github.com/issues") }
+
+        dashPullRequest.setOnClickListener { webView.loadUrl("https://github.com/pulls") }
+
         dashLogout.setOnClickListener { webView.loadUrl("https://github.com/logout") }
 
         dashProfile.setOnClickListener {
-            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.please_enter_your_githup_username)) == resources.getString(R.string.please_enter_your_githup_username)) {
+            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                 Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(applicationContext, SettingsActivity::class.java))
             } else
-                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.please_enter_your_githup_username)))
+                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
         }
 
         mSwipeRefreshLayout.setOnRefreshListener {
@@ -81,6 +85,14 @@ class MainActivity : AppCompatActivity() {
             })
             val alert = builder.create()
             alert.show()
+        }
+
+        dashStar.setOnClickListener {
+            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
+                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(applicationContext, SettingsActivity::class.java))
+            } else
+                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) + "?tab=stars")
         }
     }
 

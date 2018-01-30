@@ -49,7 +49,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayoutDash"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="40sp"
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,9 +57,9 @@
 
         <Button
             android:id="@+id/dashHomePage"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_marginStart="8dp"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
+            android:layout_marginStart="4dp"
             android:background="@drawable/octocat_dash"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,45 +68,81 @@
 
         <Button
             android:id="@+id/dashSettings"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/settings_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/dashProfile"
+            app:layout_constraintStart_toEndOf="@+id/dashPullRequest"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/dashProfile"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/user"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/dashLogout"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/dashLogout"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/logout_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/dashLogout"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/logout_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dashSettings"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
             android:id="@+id/dashSearch"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
             android:layout_marginStart="8dp"
             android:background="@drawable/search_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dashHomePage"
             app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/dashStar"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/star_icon"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dashSearch"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/dashIssues"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/issue_icon"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dashStar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/dashPullRequest"
+            android:layout_width="36sp"
+            android:layout_height="36sp"
+            android:background="@drawable/pull_request_icon"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dashIssues"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
