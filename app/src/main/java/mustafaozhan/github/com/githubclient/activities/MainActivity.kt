@@ -22,7 +22,7 @@ import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 class MainActivity : AppCompatActivity() {
 
 
-    private var url = "https://github.com/"
+    private var url = "https://github.com/login"
 
 
     private var doubleBackToExitPressedOnce = false
@@ -38,10 +38,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mGifLayout.visibility = View.GONE
 
-        if (getPreferences(MODE_PRIVATE).getBoolean("is_first_run", true)) {
-            url = "https://github.com/login"
-            getPreferences(MODE_PRIVATE).edit().putBoolean("is_first_run", false).apply()
-        }
 
         initWebView()
         setListeners()
