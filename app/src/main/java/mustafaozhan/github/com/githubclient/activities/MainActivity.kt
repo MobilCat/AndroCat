@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
 import android.content.Intent
+import kotlinx.android.synthetic.main.content_dash.*
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 
 

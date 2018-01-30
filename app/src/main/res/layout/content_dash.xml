@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGitHubDash">
+
+
+    <Button
+        android:id="@+id/dashHomePage"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/octocat_dash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dashSettings"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/settings_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashPullRequest"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dashProfile"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dashLogout"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/logout_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashSettings"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dashSearch"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/search_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashHomePage"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dashStar"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/star_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashSearch"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dashIssues"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/issue_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashStar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dashPullRequest"
+        android:layout_width="36sp"
+        android:layout_height="36sp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/pull_request_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dashIssues"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
+
