@@ -27,6 +27,7 @@ class SettingsActivity : AppCompatActivity() {
             alertDialog.setView(editText)
             editText.setTextColor(Color.WHITE)
             editText.setText(getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
+            editText.setSelection(editText.text.length)
             alertDialog.setPositiveButton("SAVE", { _, _ ->
                 putStringPreferences(applicationContext, "username", editText.text.toString())
                 txtUsernameInput.text = editText.text.toString()
