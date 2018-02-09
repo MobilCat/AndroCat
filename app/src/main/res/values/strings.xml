@@ -6,7 +6,6 @@
     <string name="missUsername">Please Enter Your Githup Username</string>
     <string name="news_feed">News Feed</string>
     <string name="search">Search</string>
-    <string name="pull_request">Pull Request</string>
     <string name="pull_requests">Pull Requests</string>
     <string name="profile">Profile</string>
     <string name="issues">Issues</string>
@@ -17,6 +16,6 @@
     <string name="user">User</string>
     <string name="starts">Starts</string>
     <string name="show_profile">Show Profile</string>
-    <string name="app_settings">App Settings</string>
-    <string name="github_settings">Github Settings</string>
+    <string name="log_out">Log out</string>
+    <string name="settings">Settings</string>
 </resources>

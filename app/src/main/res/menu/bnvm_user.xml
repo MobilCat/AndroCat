@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_back"
-        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:icon="@drawable/back_icon"
         android:title="@string/back" />
     <item
         android:id="@+id/navigation_stars"
@@ -11,17 +11,17 @@
         android:title="@string/starts" />
 
     <item
-        android:id="@+id/navigation_github_settings"
+        android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_black_24dp"
-        android:title="@string/github_settings" />
+        android:title="@string/settings" />
 
     <item
-        android:id="@+id/navigation_app_settings"
-        android:icon="@drawable/ic_settings_applications_black_24dp"
-        android:title="@string/app_settings" />
+        android:id="@+id/navigation_logout"
+        android:icon="@drawable/logout_icon"
+        android:title="@string/log_out" />
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/user"
         android:title="@string/show_profile" />
 
 </menu>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorGitHubDash"
     android:layout_height="match_parent"
     tools:context="mustafaozhan.github.com.githubclient.activities.MainActivity">
 
@@ -45,9 +46,8 @@
 
     </LinearLayout>
 
-    <!--android:background="?android:attr/dashGap"-->
-    <!--android:foreground="?attr/selectableItemBackground"-->
-    <android.support.design.widget.BottomNavigationView
+
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/mBottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

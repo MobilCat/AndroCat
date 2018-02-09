@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#24292f</color>
-    <color name="colorPrimaryDark">#13191c</color>
+    <color name="colorPrimaryDark">#24292f</color>
     <color name="colorAccent">#0097A7</color>
     <color name="colorGitHubDash">#24292f</color>
     <color name="white">#ffffff</color>

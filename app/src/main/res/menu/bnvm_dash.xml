@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_feed"
-        android:icon="@drawable/octocat_dash"
+        android:icon="@drawable/octocat_dash_small"
         android:title="@string/news_feed" />
 
     <item
         android:id="@+id/navigation_find"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:icon="@drawable/search_icon"
         android:title="@string/find" />
 
     <item
         android:id="@+id/navigation_pull_request"
         android:icon="@drawable/pull_request_icon"
-        android:title="@string/pull_request" />
+        android:title="@string/pull_requests" />
 
     <item
         android:id="@+id/navigation_Issues"
@@ -21,6 +21,6 @@
         android:title="@string/issues" />
     <item
         android:id="@+id/navigation_user"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/user"
         android:title="@string/user" />
 </menu>
