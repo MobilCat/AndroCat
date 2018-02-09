@@ -14,9 +14,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
-import android.content.Intent
-import kotlinx.android.synthetic.main.content_dash.*
-import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,57 +37,85 @@ class MainActivity : AppCompatActivity() {
 
 
         initWebView()
-        setListeners()
+
+
+
+
+        mBottomNavigationView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigation_feed -> {
+                    webView.loadUrl("https://github.com/")
+                    true
+                }
+                R.id.navigation_search -> {
+                    webView.loadUrl("https://github.com/search")
+                    true
+                }
+                R.id.navigation_pull_request -> {
+                    webView.loadUrl("https://github.com/pulls")
+                    true
+                }
+                R.id.navigation_Issues -> {
+                    webView.loadUrl("https://github.com/issues")
+                    true
+                }
+                R.id.navigation_profile -> {
+                    true
+                }
+                else -> false
+
+            }
+        }
         webView.loadUrl(url)
 
 
     }
 
     private fun setListeners() {
-        dashHomePage.setOnClickListener { webView.loadUrl("https://github.com/") }
-
-        dashSearch.setOnClickListener { webView.loadUrl("https://github.com/search") }
-
-        dashIssues.setOnClickListener { webView.loadUrl("https://github.com/issues") }
-
-        dashPullRequest.setOnClickListener { webView.loadUrl("https://github.com/pulls") }
-
-        dashLogout.setOnClickListener { webView.loadUrl("https://github.com/logout") }
-
-        dashProfile.setOnClickListener {
-            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
-                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(applicationContext, SettingsActivity::class.java))
-            } else
-                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
-        }
-
-        mSwipeRefreshLayout.setOnRefreshListener {
-            webView.loadUrl(webView.url)
-            mSwipeRefreshLayout.isRefreshing = false
-        }
-
-        dashSettings.setOnClickListener {
-            val items = arrayOf("Application Settings", "GitHub Settings")
-            val builder = AlertDialog.Builder(this)
-            builder.setItems(items, { _, item ->
-                // Do something with the selection
-                if (item == 0)
-                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
-                else if (item == 1)
-                    webView.loadUrl("https://github.com/settings")
-            })
-            val alert = builder.create()
-            alert.show()
-        }
-
-        dashStar.setOnClickListener {
-            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
-                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(applicationContext, SettingsActivity::class.java))
-            } else
-                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) + "?tab=stars")
-        }
+//        dashHomePage.setOnClickListener { webView.loadUrl("https://github.com/") }
+//
+//        dashSearch.setOnClickListener { webView.loadUrl("https://github.com/search") }
+//
+//        dashIssues.setOnClickListener { webView.loadUrl("https://github.com/issues") }
+//
+//        dashPullRequest.setOnClickListener { webView.loadUrl("https://github.com/pulls") }
+//
+//        dashLogout.setOnClickListener { webView.loadUrl("https://github.com/logout") }
+//
+//        dashProfile.setOnClickListener {
+//            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
+//                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
+//                startActivity(Intent(applicationContext, SettingsActivity::class.java))
+//            } else
+//                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
+//        }
+//
+//        mSwipeRefreshLayout.setOnRefreshListener {
+//            webView.loadUrl(webView.url)
+//            mSwipeRefreshLayout.isRefreshing = false
+//        }
+//
+//        dashSettings.setOnClickListener {
+//            val items = arrayOf("Application Settings", "GitHub Settings")
+//            val builder = AlertDialog.Builder(this)
+//            builder.setItems(items, { _, item ->
+//                // Do something with the selection
+//                if (item == 0)
+//                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
+//                else if (item == 1)
+//                    webView.loadUrl("https://github.com/settings")
+//            })
+//            val alert = builder.create()
+//            alert.show()
+//        }
+//
+//        dashStar.setOnClickListener {
+//            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
+//                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
+//                startActivity(Intent(applicationContext, SettingsActivity::class.java))
+//            } else
+//                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) + "?tab=stars")
+//        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

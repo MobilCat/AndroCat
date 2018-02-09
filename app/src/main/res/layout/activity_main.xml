@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDash"
+        app:layout_constraintBottom_toTopOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayoutDash"
+        app:layout_constraintBottom_toTopOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,15 +45,19 @@
 
     </LinearLayout>
 
-
-    <include
-        android:id="@+id/constraintLayoutDash"
-        layout="@layout/content_dash"
+    <!--android:background="?android:attr/dashGap"-->
+    <!--android:foreground="?attr/selectableItemBackground"-->
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/mBottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:layout_marginBottom="-14sp"
+        android:layout_height="wrap_content"
+
+        app:itemBackground="@color/colorGitHubDash"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </android.support.constraint.ConstraintLayout>
