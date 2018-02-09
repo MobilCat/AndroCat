@@ -9,4 +9,14 @@
     <string name="pull_request">Pull Request</string>
     <string name="pull_requests">Pull Requests</string>
     <string name="profile">Profile</string>
+    <string name="issues">Issues</string>
+    <string name="explore">Explore</string>
+    <string name="market_place">Market Place</string>
+    <string name="back">Back</string>
+    <string name="find">Find</string>
+    <string name="user">User</string>
+    <string name="starts">Starts</string>
+    <string name="show_profile">Show Profile</string>
+    <string name="app_settings">App Settings</string>
+    <string name="github_settings">Github Settings</string>
 </resources>

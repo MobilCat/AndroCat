@@ -1,7 +1,7 @@
 package mustafaozhan.github.com.githubclient.activities
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +13,8 @@ import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
+import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
+import mustafaozhan.github.com.githubclient.helpers.BottomNavigationViewHelper
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
 
 
@@ -37,20 +39,31 @@ class MainActivity : AppCompatActivity() {
 
 
         initWebView()
-
-
-
-
+        mSwipeRefreshLayout.setOnRefreshListener {
+            webView.loadUrl(webView.url)
+            mSwipeRefreshLayout.isRefreshing = false
+        }
+        changeLayout("dash")
+//        mBottomNavigationView.menu.getItem(4).setIcon(resources.getDrawable(R.drawable.octocat_dash))
         mBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.navigation_back -> {
+                    changeLayout("dash")
+                    true
+                }
+                R.id.navigation_find -> {
+                    changeLayout("find")
+                    true
+                }
+                R.id.navigation_user -> {
+                    changeLayout("user")
+                    true
+                }
                 R.id.navigation_feed -> {
-                    webView.loadUrl("https://github.com/")
+                    webView.loadUrl("https://github.com/login")
                     true
                 }
-                R.id.navigation_search -> {
-                    webView.loadUrl("https://github.com/search")
-                    true
-                }
+
                 R.id.navigation_pull_request -> {
                     webView.loadUrl("https://github.com/pulls")
                     true
@@ -59,7 +72,40 @@ class MainActivity : AppCompatActivity() {
                     webView.loadUrl("https://github.com/issues")
                     true
                 }
+                R.id.navigation_search -> {
+                    webView.loadUrl("https://github.com/search")
+                    true
+                }
+                R.id.navigation_marketplace -> {
+                    webView.loadUrl("https://github.com/marketplace")
+                    true
+                }
+                R.id.navigation_explore -> {
+                    webView.loadUrl("https://github.com/explore")
+                    true
+                }
+                R.id.navigation_stars -> {
+                    if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
+                        Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                    } else
+                        webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) + "?tab=stars")
+                    true
+                }
+                R.id.navigation_github_settings -> {
+                    webView.loadUrl("https://github.com/settings")
+                    true
+                }
+                R.id.navigation_app_settings -> {
+                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                    true
+                }
                 R.id.navigation_profile -> {
+                    if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
+                        Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                    } else
+                        webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
                     true
                 }
                 else -> false
@@ -71,52 +117,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setListeners() {
-//        dashHomePage.setOnClickListener { webView.loadUrl("https://github.com/") }
-//
-//        dashSearch.setOnClickListener { webView.loadUrl("https://github.com/search") }
-//
-//        dashIssues.setOnClickListener { webView.loadUrl("https://github.com/issues") }
-//
-//        dashPullRequest.setOnClickListener { webView.loadUrl("https://github.com/pulls") }
-//
-//        dashLogout.setOnClickListener { webView.loadUrl("https://github.com/logout") }
-//
-//        dashProfile.setOnClickListener {
-//            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
-//                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
-//                startActivity(Intent(applicationContext, SettingsActivity::class.java))
-//            } else
-//                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
-//        }
-//
-//        mSwipeRefreshLayout.setOnRefreshListener {
-//            webView.loadUrl(webView.url)
-//            mSwipeRefreshLayout.isRefreshing = false
-//        }
-//
-//        dashSettings.setOnClickListener {
-//            val items = arrayOf("Application Settings", "GitHub Settings")
-//            val builder = AlertDialog.Builder(this)
-//            builder.setItems(items, { _, item ->
-//                // Do something with the selection
-//                if (item == 0)
-//                    startActivity(Intent(applicationContext, SettingsActivity::class.java))
-//                else if (item == 1)
-//                    webView.loadUrl("https://github.com/settings")
-//            })
-//            val alert = builder.create()
-//            alert.show()
-//        }
-//
-//        dashStar.setOnClickListener {
-//            if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
-//                Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
-//                startActivity(Intent(applicationContext, SettingsActivity::class.java))
-//            } else
-//                webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) + "?tab=stars")
-//        }
+    private fun changeLayout(s: String) {
+        mBottomNavigationView.menu.clear()
+        when (s) {
+            "dash" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
+            "find" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_find)
+            "user" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_user)
+        }
+
+        BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView)
     }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_back"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:title="@string/back" />
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search" />
+
+    <item
+        android:id="@+id/navigation_marketplace"
+        android:icon="@drawable/ic_shopping_cart_black_24dp"
+        android:title="@string/market_place" />
+
+    <item
+        android:id="@+id/navigation_explore"
+        android:icon="@drawable/ic_explore_black_24dp"
+        android:title="@string/explore" />
+
+
+</menu>
