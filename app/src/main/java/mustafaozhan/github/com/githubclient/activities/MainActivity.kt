@@ -19,13 +19,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
+import org.jetbrains.anko.find
 
 
 class MainActivity : AppCompatActivity() {
 
-
     private var url = "https://github.com/login"
-
 
     private var doubleBackToExitPressedOnce = false
 
@@ -40,11 +39,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mGifLayout.visibility = View.GONE
 
-
         initWebView()
 
         setUi()
-
 
     }
 
@@ -55,7 +52,6 @@ class MainActivity : AppCompatActivity() {
             mSwipeRefreshLayout.isRefreshing = false
         }
 
-//        mBottomNavigationView.menu.getItem(4).setIcon(resources.getDrawable(R.drawable.octocat_dash))
         mBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_back -> changeLayout("dash")
@@ -65,14 +61,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
                 R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
                 R.id.navigation_search -> webView.loadUrl("https://github.com/search")
+                R.id.navigation_notification -> webView.loadUrl("https://github.com/notifications")
                 R.id.navigation_marketplace -> webView.loadUrl("https://github.com/marketplace")
                 R.id.navigation_explore -> webView.loadUrl("https://github.com/explore")
                 R.id.navigation_stars -> {
-                    if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
+                    if (getStringPreferences(applicationContext, "username",
+                                    resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     } else
-                        webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) + "?tab=stars")
+                        webView.loadUrl("https://github.com/"
+                                + getStringPreferences(applicationContext, "username",
+                                resources.getString(R.string.missUsername))
+                                + "?tab=stars")
                 }
                 R.id.navigation_settings -> {
                     val items = arrayOf("Application Settings", "GitHub Settings")
@@ -89,11 +90,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_logout -> webView.loadUrl("https://github.com/logout")
                 R.id.navigation_profile -> {
-                    if (getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
+                    if (getStringPreferences(applicationContext, "username",
+                                    resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     } else
-                        webView.loadUrl("https://github.com/" + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
+                        webView.loadUrl("https://github.com/"
+                                + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
                 }
             }
             true
@@ -102,16 +105,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeLayout(s: String) {
+
         mBottomNavigationView.startAnimation(AnimationUtils.loadAnimation(mBottomNavigationView.context,
                 R.anim.fade_in))
         mBottomNavigationView.menu.clear()
+
         when (s) {
-            "dash" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
+            "dash" -> {
+                mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
+                mBottomNavigationView.post {
+                    Glide.with(mBottomNavigationView)
+                            .load("https://github.com/"
+                                    + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername))
+                                    + ".png")
+                            .apply(RequestOptions.circleCropTransform())
+                            .into(mBottomNavigationView.getIconAt(4))
+                }
+            }
             "find" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_find)
-            "user" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_user)
+            "user" -> {
+                mBottomNavigationView.inflateMenu(R.menu.bnvm_user)
+                mBottomNavigationView.post {
+                    Glide.with(mBottomNavigationView)
+                            .load("https://github.com/"
+                                    + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername))
+                                    + ".png")
+                            .apply(RequestOptions.circleCropTransform())
+                            .into(mBottomNavigationView.getIconAt(0))
 
+                }
+            }
         }
-
         mBottomNavigationView.enableAnimation(false)
         mBottomNavigationView.enableItemShiftingMode(false)
         mBottomNavigationView.enableShiftingMode(false)
@@ -119,6 +143,8 @@ class MainActivity : AppCompatActivity() {
         mBottomNavigationView.setTextSize(12.0f)
         mBottomNavigationView.setIconsMarginTop(10)
         mBottomNavigationView.setIconSize(30.0F, 30.0F)
+
+
     }
 
 
