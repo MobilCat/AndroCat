@@ -13,6 +13,8 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
@@ -40,6 +42,13 @@ class MainActivity : AppCompatActivity() {
 
 
         initWebView()
+
+        setUi()
+
+
+    }
+
+    private fun setUi() {
         changeLayout("dash")
         mSwipeRefreshLayout.setOnRefreshListener {
             webView.loadUrl(webView.url)
@@ -90,8 +99,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
         webView.loadUrl(url)
-
-
     }
 
     private fun changeLayout(s: String) {
@@ -102,14 +109,16 @@ class MainActivity : AppCompatActivity() {
             "dash" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
             "find" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_find)
             "user" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_user)
+
         }
 
         mBottomNavigationView.enableAnimation(false)
         mBottomNavigationView.enableItemShiftingMode(false)
         mBottomNavigationView.enableShiftingMode(false)
-        mBottomNavigationView.enableAnimation(true)
-        mBottomNavigationView.setIconSize(24.0F, 24.0F)
-
+        mBottomNavigationView.enableAnimation(false)
+        mBottomNavigationView.setTextSize(12.0f)
+        mBottomNavigationView.setIconsMarginTop(10)
+        mBottomNavigationView.setIconSize(30.0F, 30.0F)
     }
 
 
