@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
-import org.jetbrains.anko.find
 
 
 class MainActivity : AppCompatActivity() {
@@ -111,30 +110,10 @@ class MainActivity : AppCompatActivity() {
         mBottomNavigationView.menu.clear()
 
         when (s) {
-            "dash" -> {
-                mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
-                mBottomNavigationView.post {
-                    Glide.with(mBottomNavigationView)
-                            .load("https://github.com/"
-                                    + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername))
-                                    + ".png")
-                            .apply(RequestOptions.circleCropTransform())
-                            .into(mBottomNavigationView.getIconAt(4))
-                }
-            }
+            "dash" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
             "find" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_find)
-            "user" -> {
-                mBottomNavigationView.inflateMenu(R.menu.bnvm_user)
-                mBottomNavigationView.post {
-                    Glide.with(mBottomNavigationView)
-                            .load("https://github.com/"
-                                    + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername))
-                                    + ".png")
-                            .apply(RequestOptions.circleCropTransform())
-                            .into(mBottomNavigationView.getIconAt(0))
+            "user" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_user)
 
-                }
-            }
         }
         mBottomNavigationView.enableAnimation(false)
         mBottomNavigationView.enableItemShiftingMode(false)
