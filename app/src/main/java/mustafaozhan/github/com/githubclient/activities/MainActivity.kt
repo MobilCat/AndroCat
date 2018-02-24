@@ -16,9 +16,11 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_main.*
+import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
+import me.piruin.quickaction.ActionItem
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +57,22 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.navigation_back -> changeLayout("dash")
                 R.id.navigation_find -> changeLayout("find")
-                R.id.navigation_user -> changeLayout("user")
+                R.id.navigation_user -> {
+                    val quickAction = QuickAction(this, QuickAction.HORIZONTAL)
+                    quickAction.setColorRes(R.color.colorGitHubDash)
+                    quickAction.setTextColorRes(R.color.white)
+
+                    val searchItem = ActionItem(3, "fd", R.drawable.search_icon)
+                    val infoItem = ActionItem(4, "Info", R.drawable.ic_settings_black_24dp)
+                    val eraseItem = ActionItem(5, "Clear", R.drawable.octocat_dash)
+                    val okItem = ActionItem(6, "OK", R.drawable.pull_request_icon)
+                    quickAction.addActionItem(searchItem)
+                    quickAction.addActionItem(infoItem)
+                    quickAction.addActionItem(eraseItem)
+                    quickAction.addActionItem(okItem)
+
+                    quickAction.show(mBottomNavigationView.getIconAt(4))
+                }
                 R.id.navigation_feed -> webView.loadUrl("https://github.com/login")
                 R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
                 R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
