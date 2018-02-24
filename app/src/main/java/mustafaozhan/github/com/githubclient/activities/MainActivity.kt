@@ -11,10 +11,8 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.Glide.init
 import kotlinx.android.synthetic.main.activity_main.*
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
@@ -26,8 +24,8 @@ import me.piruin.quickaction.ActionItem
 class MainActivity : AppCompatActivity() {
 
     private var url = "https://github.com/login"
-
     private var doubleBackToExitPressedOnce = false
+    private val quickActionProfile = QuickAction(this, QuickAction.HORIZONTAL)
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,15 +38,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mGifLayout.visibility = View.GONE
 
+        init()
+        setDash()
         initWebView()
-
         setUi()
 
     }
 
+    private fun init() {
+        quickActionProfile.setColorRes(R.color.colorGitHubDash)
+        quickActionProfile.setTextColorRes(R.color.white)
+        val starItem = ActionItem(3, "Starts", R.drawable.ic_star_black_24dp)
+        val settingsItem = ActionItem(4, "Settings", R.drawable.ic_settings_black_24dp)
+        val logOutItem = ActionItem(5, "Log out", R.drawable.logout_icon)
+        val userItem = ActionItem(6, "Profile", R.drawable.user)
+        quickActionProfile.addActionItem(starItem, settingsItem, logOutItem, userItem)
+    }
+
     private fun setUi() {
-        val quickActionProfile = QuickAction(this, QuickAction.HORIZONTAL)
-        changeLayout("dash")
         mSwipeRefreshLayout.setOnRefreshListener {
             webView.loadUrl(webView.url)
             mSwipeRefreshLayout.isRefreshing = false
@@ -56,18 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         mBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.navigation_find -> changeLayout("find")
-                R.id.navigation_user -> {
-
-                    quickActionProfile.setColorRes(R.color.colorGitHubDash)
-                    quickActionProfile.setTextColorRes(R.color.white)
-                    val starItem = ActionItem(3, "Starts", R.drawable.ic_star_black_24dp)
-                    val settingsItem = ActionItem(4, "Settings", R.drawable.ic_settings_black_24dp)
-                    val logOutItem = ActionItem(5, "Log out", R.drawable.logout_icon)
-                    val userItem = ActionItem(6, "Profile", R.drawable.user)
-                    quickActionProfile.addActionItem(starItem,settingsItem,logOutItem,userItem)
-                    quickActionProfile.show(mBottomNavigationView.getIconAt(4))
-                }
+                R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_feed -> webView.loadUrl("https://github.com/login")
                 R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
                 R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
@@ -115,18 +111,8 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl(url)
     }
 
-    private fun changeLayout(s: String) {
-
-        mBottomNavigationView.startAnimation(AnimationUtils.loadAnimation(mBottomNavigationView.context,
-                R.anim.fade_in))
-        mBottomNavigationView.menu.clear()
-
-        when (s) {
-            "dash" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
-            "find" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_find)
-            "user" -> mBottomNavigationView.inflateMenu(R.menu.bnvm_user)
-
-        }
+    private fun setDash() {
+        mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
         mBottomNavigationView.enableAnimation(false)
         mBottomNavigationView.enableItemShiftingMode(false)
         mBottomNavigationView.enableShiftingMode(false)
@@ -134,8 +120,6 @@ class MainActivity : AppCompatActivity() {
         mBottomNavigationView.setTextSize(12.0f)
         mBottomNavigationView.setIconsMarginTop(10)
         mBottomNavigationView.setIconSize(30.0F, 30.0F)
-
-
     }
 
 
@@ -161,7 +145,6 @@ class MainActivity : AppCompatActivity() {
         webView.settings.textZoom = 150
     }
 
-
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
             webView.goBack()
@@ -169,7 +152,6 @@ class MainActivity : AppCompatActivity() {
         } else
             super.onKeyUp(keyCode, event)
     }
-
 
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -179,6 +161,5 @@ class MainActivity : AppCompatActivity() {
         this.doubleBackToExitPressedOnce = true
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-
     }
 }
