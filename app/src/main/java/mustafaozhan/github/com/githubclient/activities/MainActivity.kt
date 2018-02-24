@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatDelegate
 import android.view.KeyEvent
 import android.view.View
 import android.view.Window
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         setContentView(R.layout.activity_main)
         mGifLayout.visibility = View.GONE
