@@ -12,7 +12,6 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
-import com.bumptech.glide.Glide.init
 import kotlinx.android.synthetic.main.activity_main.*
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
@@ -25,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     private var url = "https://github.com/login"
     private var doubleBackToExitPressedOnce = false
-    private val quickActionProfile = QuickAction(this, QuickAction.HORIZONTAL)
+    private var quickActionProfile: QuickAction? = null
+    private var quickActionFind: QuickAction? = null
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,16 +46,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        quickActionProfile.setColorRes(R.color.colorGitHubDash)
-        quickActionProfile.setTextColorRes(R.color.white)
-        val starItem = ActionItem(3, "Starts", R.drawable.ic_star_black_24dp)
-        val settingsItem = ActionItem(4, "Settings", R.drawable.ic_settings_black_24dp)
-        val logOutItem = ActionItem(5, "Log out", R.drawable.logout_icon)
-        val userItem = ActionItem(6, "Profile", R.drawable.user)
-        quickActionProfile.addActionItem(starItem, settingsItem, logOutItem, userItem)
+        quickActionProfile = QuickAction(this, QuickAction.HORIZONTAL)
+        quickActionProfile!!.setColorRes(R.color.colorGitHubDash)
+        quickActionProfile!!.setTextColorRes(R.color.white)
+        val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
+        val settingsItem = ActionItem(2, "Settings", R.drawable.ic_settings_black_24dp)
+        val logOutItem = ActionItem(3, "Log out", R.drawable.logout_icon)
+        val userItem = ActionItem(4, "Profile", R.drawable.user)
+        quickActionProfile!!.addActionItem(starItem, settingsItem, logOutItem, userItem)
+
+        quickActionFind = QuickAction(this, QuickAction.HORIZONTAL)
+        quickActionFind!!.setColorRes(R.color.colorGitHubDash)
+        quickActionFind!!.setTextColorRes(R.color.white)
+        val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
+        val notificationsItem = ActionItem(2, "Notifications", R.drawable.notifications)
+        val marketPlaceItem = ActionItem(3, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
+        val exploreItem = ActionItem(4, "Explore", R.drawable.ic_explore_black_24dp)
+        quickActionFind!!.addActionItem(searchItem, notificationsItem, marketPlaceItem, exploreItem)
+
     }
 
     private fun setUi() {
+        webView.loadUrl(url)
         mSwipeRefreshLayout.setOnRefreshListener {
             webView.loadUrl(webView.url)
             mSwipeRefreshLayout.isRefreshing = false
@@ -63,15 +75,18 @@ class MainActivity : AppCompatActivity() {
 
         mBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
+                R.id.navigation_user -> quickActionProfile!!.show(mBottomNavigationView.getIconAt(4))
+                R.id.navigation_find -> quickActionFind!!.show(mBottomNavigationView.getIconAt(1))
                 R.id.navigation_feed -> webView.loadUrl("https://github.com/login")
                 R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
                 R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
-                R.id.navigation_search -> webView.loadUrl("https://github.com/search")
-                R.id.navigation_notification -> webView.loadUrl("https://github.com/notifications")
-                R.id.navigation_marketplace -> webView.loadUrl("https://github.com/marketplace")
-                R.id.navigation_explore -> webView.loadUrl("https://github.com/explore")
-                R.id.navigation_stars -> {
+            }
+            true
+        }
+
+        quickActionProfile!!.setOnActionItemClickListener {
+            when (it.actionId) {
+                1 -> {
                     if (getStringPreferences(applicationContext, "username",
                                     resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
@@ -82,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                                 resources.getString(R.string.missUsername))
                                 + "?tab=stars")
                 }
-                R.id.navigation_settings -> {
+                2 -> {
                     val items = arrayOf("Application Settings", "GitHub Settings")
                     val builder = AlertDialog.Builder(this)
                     builder.setItems(items, { _, item ->
@@ -95,8 +110,8 @@ class MainActivity : AppCompatActivity() {
                     val alert = builder.create()
                     alert.show()
                 }
-                R.id.navigation_logout -> webView.loadUrl("https://github.com/logout")
-                R.id.navigation_profile -> {
+                3 -> webView.loadUrl("https://github.com/logout")
+                4 -> {
                     if (getStringPreferences(applicationContext, "username",
                                     resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
@@ -105,10 +120,19 @@ class MainActivity : AppCompatActivity() {
                         webView.loadUrl("https://github.com/"
                                 + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
                 }
+
             }
-            true
+
         }
-        webView.loadUrl(url)
+        quickActionFind!!.setOnActionItemClickListener {
+            when (it.actionId) {
+                1 -> webView.loadUrl("https://github.com/search")
+                2 -> webView.loadUrl("https://github.com/notifications")
+                3 -> webView.loadUrl("https://github.com/marketplace")
+                4 -> webView.loadUrl("https://github.com/explore")
+            }
+        }
+
     }
 
     private fun setDash() {
