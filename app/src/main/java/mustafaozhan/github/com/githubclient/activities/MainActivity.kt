@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
         val notificationsItem = ActionItem(2, "Notifications", R.drawable.notifications)
         val marketPlaceItem = ActionItem(3, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
-        val exploreItem = ActionItem(4, "Explore", R.drawable.ic_explore_black_24dp)
+        val exploreItem = ActionItem(4, "Trends", R.drawable.ic_explore_black_24dp)
         quickActionFind!!.addActionItem(searchItem, notificationsItem, marketPlaceItem, exploreItem)
 
     }
@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
             webView.loadUrl(webView.url)
             mSwipeRefreshLayout.isRefreshing = false
         }
-
         mBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_user -> quickActionProfile!!.show(mBottomNavigationView.getIconAt(4))
@@ -83,7 +82,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
         quickActionProfile!!.setOnActionItemClickListener {
             when (it.actionId) {
                 1 -> {
@@ -129,10 +127,9 @@ class MainActivity : AppCompatActivity() {
                 1 -> webView.loadUrl("https://github.com/search")
                 2 -> webView.loadUrl("https://github.com/notifications")
                 3 -> webView.loadUrl("https://github.com/marketplace")
-                4 -> webView.loadUrl("https://github.com/explore")
+                4 -> webView.loadUrl("https://github.com/trending")
             }
         }
-
     }
 
     private fun setDash() {
@@ -145,7 +142,6 @@ class MainActivity : AppCompatActivity() {
         mBottomNavigationView.setIconsMarginTop(10)
         mBottomNavigationView.setIconSize(30.0F, 30.0F)
     }
-
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
