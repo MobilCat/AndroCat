@@ -49,25 +49,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        quickActionProfile = QuickAction(this, QuickAction.HORIZONTAL)
-        quickActionProfile!!.setColorRes(R.color.colorGitHubDash)
-        quickActionProfile!!.setTextColorRes(R.color.white)
-        quickActionProfile!!.setEnabledDivider(false)
-        val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
-        val settingsItem = ActionItem(2, "Settings", R.drawable.ic_settings_black_24dp)
-        val logOutItem = ActionItem(3, "Log out", R.drawable.logout_icon)
-        val userItem = ActionItem(4, "Profile", R.drawable.user)
-        quickActionProfile!!.addActionItem(starItem, settingsItem, logOutItem, userItem)
-
-        quickActionFind = QuickAction(this, QuickAction.HORIZONTAL)
+        quickActionFind = QuickAction(this, QuickAction.VERTICAL)
         quickActionFind!!.setColorRes(R.color.colorGitHubDash)
         quickActionFind!!.setTextColorRes(R.color.white)
         quickActionFind!!.setEnabledDivider(false)
         val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
+        val marketPlaceItem = ActionItem(2, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
+        val exploreItem = ActionItem(3, "Trends", R.drawable.ic_trending_up_black_24dp)
+        quickActionFind!!.addActionItem(searchItem, marketPlaceItem, exploreItem)
+
+        quickActionProfile = QuickAction(this, QuickAction.VERTICAL)
+        quickActionProfile!!.setColorRes(R.color.colorGitHubDash)
+        quickActionProfile!!.setTextColorRes(R.color.white)
+        quickActionProfile!!.setEnabledDivider(false)
+        val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
         val notificationsItem = ActionItem(2, "Notifications", R.drawable.notifications)
-        val marketPlaceItem = ActionItem(3, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
-        val exploreItem = ActionItem(4, "Trends", R.drawable.ic_explore_black_24dp)
-        quickActionFind!!.addActionItem(searchItem, notificationsItem, marketPlaceItem, exploreItem)
+        val settingsItem = ActionItem(3, "Settings", R.drawable.ic_settings_black_24dp)
+        val logOutItem = ActionItem(4, "Log out", R.drawable.logout_icon)
+        val userItem = ActionItem(5, "Profile", R.drawable.user)
+        quickActionProfile!!.addActionItem(starItem, notificationsItem, settingsItem, logOutItem, userItem)
 
     }
 
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         mBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_user -> quickActionProfile!!.show(mBottomNavigationView.getIconAt(4))
-                R.id.navigation_find -> quickActionFind!!.show(mBottomNavigationView.getIconAt(1))
+                R.id.navigation_find -> quickActionFind!!.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> webView.loadUrl("https://github.com/login")
                 R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
                 R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
@@ -100,7 +100,8 @@ class MainActivity : AppCompatActivity() {
                                 resources.getString(R.string.missUsername))
                                 + "?tab=stars")
                 }
-                2 -> {
+                2 -> webView.loadUrl("https://github.com/notifications")
+                3 -> {
                     val items = arrayOf("Application Settings", "GitHub Settings")
                     val builder = AlertDialog.Builder(this)
                     builder.setItems(items, { _, item ->
@@ -113,8 +114,8 @@ class MainActivity : AppCompatActivity() {
                     val alert = builder.create()
                     alert.show()
                 }
-                3 -> webView.loadUrl("https://github.com/logout")
-                4 -> {
+                4 -> webView.loadUrl("https://github.com/logout")
+                5 -> {
                     if (getStringPreferences(applicationContext, "username",
                                     resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
@@ -130,9 +131,8 @@ class MainActivity : AppCompatActivity() {
         quickActionFind!!.setOnActionItemClickListener {
             when (it.actionId) {
                 1 -> webView.loadUrl("https://github.com/search")
-                2 -> webView.loadUrl("https://github.com/notifications")
-                3 -> webView.loadUrl("https://github.com/marketplace")
-                4 -> webView.loadUrl("https://github.com/trending")
+                2 -> webView.loadUrl("https://github.com/marketplace")
+                3 -> webView.loadUrl("https://github.com/trending")
             }
         }
     }

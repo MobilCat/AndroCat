@@ -4,21 +4,18 @@
         android:id="@+id/navigation_feed"
         android:icon="@drawable/octocat_dash_small"
         android:title="@string/news_feed" />
-
-    <item
-        android:id="@+id/navigation_find"
-        android:icon="@drawable/search_icon"
-        android:title="@string/find" />
-
     <item
         android:id="@+id/navigation_pull_request"
         android:icon="@drawable/pull_request_icon"
         android:title="@string/pull_requests" />
-
     <item
         android:id="@+id/navigation_Issues"
         android:icon="@drawable/issue_icon"
         android:title="@string/issues" />
+    <item
+        android:id="@+id/navigation_find"
+        android:icon="@drawable/ic_explore_black_24dp"
+        android:title="@string/explore" />
     <item
         android:id="@+id/navigation_user"
         android:icon="@drawable/user"
