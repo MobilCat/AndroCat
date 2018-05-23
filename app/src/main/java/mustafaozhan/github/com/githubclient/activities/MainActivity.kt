@@ -13,6 +13,10 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.*
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
@@ -49,6 +53,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        loadAd()
+
+
         quickActionFind = QuickAction(this, QuickAction.VERTICAL)
         quickActionFind!!.setColorRes(R.color.colorGitHubDash)
         quickActionFind!!.setTextColorRes(R.color.white)
@@ -186,5 +193,15 @@ class MainActivity : AppCompatActivity() {
         this.doubleBackToExitPressedOnce = true
         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    private fun loadAd() {
+        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id1))
+        val adRequest = AdRequest.Builder().build()
+        adView1.loadAd(adRequest)
+
+        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id2))
+        val adRequest2 = AdRequest.Builder().build()
+        adView2.loadAd(adRequest2)
     }
 }
