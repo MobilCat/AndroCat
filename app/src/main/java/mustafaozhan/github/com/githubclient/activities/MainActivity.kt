@@ -196,12 +196,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadAd() {
-        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id1))
-        val adRequest = AdRequest.Builder().build()
-        adView1.loadAd(adRequest)
-
-        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id2))
-        val adRequest2 = AdRequest.Builder().build()
-        adView2.loadAd(adRequest2)
+//        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id1))
+//        val adRequest = AdRequest.Builder().build()
+//        adView1.loadAd(adRequest)
+//
+//        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id2))
+//        val adRequest2 = AdRequest.Builder().build()
+//        adView2.loadAd(adRequest2)
     }
 }
