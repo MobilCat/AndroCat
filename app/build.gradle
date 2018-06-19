@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "mustafaozhan.github.com.githubclient"
+        applicationId "mustafaozhan.github_animation.com.githubclient"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 12
@@ -35,8 +35,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
     implementation 'com.android.support:design:27.1.1'
-    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
-    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    implementation 'com.github_animation.ittianyu:BottomNavigationViewEx:1.2.4'
+    implementation 'com.github_animation.bumptech.glide:glide:4.6.1'
     implementation 'me.piruin:quickaction:2.4.2'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
 }

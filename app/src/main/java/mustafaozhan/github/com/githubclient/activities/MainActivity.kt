@@ -27,7 +27,7 @@ import me.piruin.quickaction.ActionItem
 
 class MainActivity : AppCompatActivity() {
 
-    private var url = "https://github.com/login"
+    private var url = "https://github_animation.com/login"
     private var doubleBackToExitPressedOnce = false
     private var quickActionProfile: QuickAction? = null
     private var quickActionFind: QuickAction? = null
@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.navigation_user -> quickActionProfile!!.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_find -> quickActionFind!!.show(mBottomNavigationView.getIconAt(3))
-                R.id.navigation_feed -> webView.loadUrl("https://github.com/login")
-                R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
-                R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
+                R.id.navigation_feed -> webView.loadUrl("https://github_animation.com/login")
+                R.id.navigation_pull_request -> webView.loadUrl("https://github_animation.com/pulls")
+                R.id.navigation_Issues -> webView.loadUrl("https://github_animation.com/issues")
             }
             true
         }
@@ -102,33 +102,33 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     } else
-                        webView.loadUrl("https://github.com/"
+                        webView.loadUrl("https://github_animation.com/"
                                 + getStringPreferences(applicationContext, "username",
                                 resources.getString(R.string.missUsername))
                                 + "?tab=stars")
                 }
-                2 -> webView.loadUrl("https://github.com/notifications")
+                2 -> webView.loadUrl("https://github_animation.com/notifications")
                 3 -> {
                     val items = arrayOf("Application Settings", "GitHub Settings")
                     val builder = AlertDialog.Builder(this)
-                    builder.setItems(items, { _, item ->
+                    builder.setItems(items) { _, item ->
                         // Do something with the selection
                         if (item == 0)
                             startActivity(Intent(applicationContext, SettingsActivity::class.java))
                         else if (item == 1)
-                            webView.loadUrl("https://github.com/settings")
-                    })
+                            webView.loadUrl("https://github_animation.com/settings")
+                    }
                     val alert = builder.create()
                     alert.show()
                 }
-                4 -> webView.loadUrl("https://github.com/logout")
+                4 -> webView.loadUrl("https://github_animation.com/logout")
                 5 -> {
                     if (getStringPreferences(applicationContext, "username",
                                     resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(applicationContext, SettingsActivity::class.java))
                     } else
-                        webView.loadUrl("https://github.com/"
+                        webView.loadUrl("https://github_animation.com/"
                                 + getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
                 }
 
@@ -137,9 +137,9 @@ class MainActivity : AppCompatActivity() {
         }
         quickActionFind!!.setOnActionItemClickListener {
             when (it.actionId) {
-                1 -> webView.loadUrl("https://github.com/search")
-                2 -> webView.loadUrl("https://github.com/marketplace")
-                3 -> webView.loadUrl("https://github.com/trending")
+                1 -> webView.loadUrl("https://github_animation.com/search")
+                2 -> webView.loadUrl("https://github_animation.com/marketplace")
+                3 -> webView.loadUrl("https://github_animation.com/trending")
             }
         }
     }

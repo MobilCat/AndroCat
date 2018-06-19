@@ -28,14 +28,14 @@ class SettingsActivity : AppCompatActivity() {
             editText.setTextColor(Color.WHITE)
             editText.setText(getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
             editText.setSelection(editText.text.length)
-            alertDialog.setPositiveButton("SAVE", { _, _ ->
+            alertDialog.setPositiveButton("SAVE") { _, _ ->
                 putStringPreferences(applicationContext, "username", editText.text.toString())
                 txtUsernameInput.text = editText.text.toString()
-            })
+            }
 
-            alertDialog.setNegativeButton("CANCEL", { _, _ ->
+            alertDialog.setNegativeButton("CANCEL") { _, _ ->
                 // what ever you want to do with No option.
-            })
+            }
 
             alertDialog.show()
         }
