@@ -8,21 +8,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDelegate
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
 import kotlinx.android.synthetic.main.activity_main.*
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
 import me.piruin.quickaction.ActionItem
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
     private var quickActionProfile: QuickAction? = null
     private var quickActionFind: QuickAction? = null
-
+    private var mInterstitialAd: InterstitialAd? = null
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,10 +50,36 @@ class MainActivity : AppCompatActivity() {
         initWebView()
         setUi()
 
+        add()
+
+    }
+
+    private fun add() {
+        prepareAd()
+
+        val scheduler = Executors.newSingleThreadScheduledExecutor()
+        scheduler.scheduleAtFixedRate({
+            Log.i("hello", "world")
+            runOnUiThread {
+                if (mInterstitialAd?.isLoaded == true) {
+                    mInterstitialAd?.show()
+                } else {
+                    Log.d("TAG", " Interstitial not loaded")
+                }
+
+                prepareAd()
+            }
+        }, 20, 20, TimeUnit.SECONDS)
+    }
+
+    private fun prepareAd() {
+
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd?.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd?.loadAd(AdRequest.Builder().build())
     }
 
     private fun init() {
-        loadAd()
 
 
         quickActionFind = QuickAction(this, QuickAction.VERTICAL)
@@ -195,13 +221,5 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
-    private fun loadAd() {
-//        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id1))
-//        val adRequest = AdRequest.Builder().build()
-//        adView1.loadAd(adRequest)
-//
-//        MobileAds.initialize(applicationContext, resources.getString(R.string.banner_ad_unit_id2))
-//        val adRequest2 = AdRequest.Builder().build()
-//        adView2.loadAd(adRequest2)
-    }
+
 }
