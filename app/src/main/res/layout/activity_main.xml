@@ -40,7 +40,7 @@
             android:layout_height="0dp"
             android:contentDescription="@string/loading"
             android:scaleType="centerInside"
-            android:src="@drawable/octocat_animation"
+            android:src="@drawable/octocat_progress"
             app:layout_constraintBottom_toTopOf="@+id/adView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
