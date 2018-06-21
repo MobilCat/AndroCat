@@ -17,27 +17,3 @@ fun putStringPreferences(context: Context, key: String, value: String) {
     editor.putString(key, value)
     editor.apply()
 }
-
-fun getIntPreferences(context: Context, key: String, defValue: Int): Int {
-    val pref = PreferenceManager.getDefaultSharedPreferences(context)
-    return pref.getInt(key, defValue)
-}
-
-fun putIntPreferences(context: Context, key: String, value: Int) {
-    val pref = PreferenceManager.getDefaultSharedPreferences(context)
-    val editor = pref.edit()
-    editor.putInt(key, value)
-    editor.apply()
-}
-
-fun isExistsPreferences(context: Context, key: String): Boolean {
-    val pref = PreferenceManager.getDefaultSharedPreferences(context)
-    return pref.contains(key)
-}
-
-fun removePreferences(context: Context, key: String) {
-    val pref = PreferenceManager.getDefaultSharedPreferences(context)
-    val editor = pref.edit()
-    editor.remove(key)
-    editor.apply()
-}

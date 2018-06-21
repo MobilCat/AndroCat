@@ -1,7 +1,6 @@
 package mustafaozhan.github.com.githubclient.utils
 
 import android.graphics.Bitmap
-import android.support.constraint.ConstraintLayout
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.webkit.WebView
@@ -13,7 +12,7 @@ import mustafaozhan.github.com.githubclient.R
 /**
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
-class MyWebViewClient(private val mGifLayout: ConstraintLayout) : WebViewClient() {
+class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         view?.loadUrl(url)
         return true
