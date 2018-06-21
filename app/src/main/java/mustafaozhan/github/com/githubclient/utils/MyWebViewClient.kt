@@ -29,12 +29,12 @@ class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
         // hide element by class name
         view?.loadUrl("javascript:(function() { " +
                 "document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none'; })()")
+        view?.loadUrl("javascript:(function() { " +
+                "document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
+
         animate(false)
         mGifLayout.visibility = View.GONE
 
-        // hide element by id
-//        view?.loadUrl("javascript:(function() { " +
-//                "document.getElementById('your_id').style.display='none';})()");
     }
 
     private fun animate(boolean: Boolean) {
