@@ -6,18 +6,18 @@
     android:layout_height="match_parent"
     tools:context="mustafaozhan.github.com.githubclient.activities.SettingsActivity">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayoutUsername"
+    <LinearLayout
+
+        android:id="@+id/layoutUsername"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
+            android:padding="4dp"
             android:id="@+id/txtUsername"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/username"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,14 +25,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:padding="4dp"
             android:id="@+id/txtUsernameInput"
-            android:layout_width="0dp"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/missUsername"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
-    </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:padding="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

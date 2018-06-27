@@ -17,27 +17,38 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
+        init()
+        setListeners()
+
+
+    }
+
+    private fun setListeners() {
+        layoutUsername.setOnClickListener { showUsernameDialog() }
+    }
+
+    private fun init() {
         txtUsernameInput.text = getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername))
+    }
 
-        constraintLayoutUsername.setOnClickListener {
-            val alertDialog = AlertDialog.Builder(this)
-            val editText = EditText(applicationContext)
-            alertDialog.setTitle(resources.getString(R.string.missUsername))
+    private fun showUsernameDialog() {
+        val alertDialog = AlertDialog.Builder(this)
+        val editText = EditText(applicationContext)
+        alertDialog.setTitle(resources.getString(R.string.missUsername))
 
-            alertDialog.setView(editText)
-            editText.setTextColor(Color.WHITE)
-            editText.setText(getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
-            editText.setSelection(editText.text.length)
-            alertDialog.setPositiveButton("SAVE") { _, _ ->
-                putStringPreferences(applicationContext, "username", editText.text.toString())
-                txtUsernameInput.text = editText.text.toString()
-            }
-
-            alertDialog.setNegativeButton("CANCEL") { _, _ ->
-                // what ever you want to do with No option.
-            }
-
-            alertDialog.show()
+        alertDialog.setView(editText)
+        editText.setTextColor(Color.WHITE)
+        editText.setText(getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername)))
+        editText.setSelection(editText.text.length)
+        alertDialog.setPositiveButton("SAVE") { _, _ ->
+            putStringPreferences(applicationContext, "username", editText.text.toString())
+            txtUsernameInput.text = editText.text.toString()
         }
+
+        alertDialog.setNegativeButton("CANCEL") { _, _ ->
+            // what ever you want to do with No option.
+        }
+
+        alertDialog.show()
     }
 }
