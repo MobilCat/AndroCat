@@ -118,10 +118,11 @@ class MainActivity : AppCompatActivity() {
         quickActionProfile!!.setEnabledDivider(false)
         val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
         val notificationsItem = ActionItem(2, "Notifications", R.drawable.notifications)
-        val settingsItem = ActionItem(3, "Settings", R.drawable.ic_settings_black_24dp)
-        val logOutItem = ActionItem(4, "Log out", R.drawable.logout_icon)
-        val userItem = ActionItem(5, "Profile", R.drawable.user)
-        quickActionProfile!!.addActionItem(starItem, notificationsItem, settingsItem, logOutItem, userItem)
+        val applicationSettingsItem = ActionItem(3, "App Settings", R.drawable.ic_settings_black_24dp)
+        val userSettings = ActionItem(4, "User Settings", R.drawable.user_settings)
+        val logOutItem = ActionItem(5, "Log out", R.drawable.logout_icon)
+        val userItem = ActionItem(6, "Profile", R.drawable.user)
+        quickActionProfile!!.addActionItem(starItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, userItem)
 
     }
 
@@ -155,21 +156,10 @@ class MainActivity : AppCompatActivity() {
                                 + "?tab=stars")
                 }
                 2 -> webView.loadUrl("https://github.com/notifications")
-                3 -> {
-                    val items = arrayOf("Application Settings", "GitHub Settings")
-                    val builder = AlertDialog.Builder(this)
-                    builder.setItems(items) { _, item ->
-                        // Do something with the selection
-                        if (item == 0)
-                            startActivity(Intent(applicationContext, SettingsActivity::class.java))
-                        else if (item == 1)
-                            webView.loadUrl("https://github.com/settings")
-                    }
-                    val alert = builder.create()
-                    alert.show()
-                }
-                4 -> webView.loadUrl("https://github.com/logout")
-                5 -> {
+                3 -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                4 -> webView.loadUrl("https://github.com/settings")
+                5 -> webView.loadUrl("https://github.com/logout")
+                6 -> {
                     if (getStringPreferences(applicationContext, "username",
                                     resources.getString(R.string.missUsername)) == resources.getString(R.string.missUsername)) {
                         Toast.makeText(this, "Please enter your username", Toast.LENGTH_SHORT).show()
