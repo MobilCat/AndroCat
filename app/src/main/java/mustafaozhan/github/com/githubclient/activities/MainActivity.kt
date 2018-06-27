@@ -23,6 +23,8 @@ import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
 import me.piruin.quickaction.ActionItem
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import com.google.android.gms.ads.InterstitialAd
+import java.util.concurrent.ScheduledExecutorService
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     private var quickActionProfile: QuickAction? = null
     private var quickActionFind: QuickAction? = null
     private var mInterstitialAd: InterstitialAd? = null
+    private var scheduler: ScheduledExecutorService? = null
+    private var adVisibility = false
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,26 +55,35 @@ class MainActivity : AppCompatActivity() {
         initWebView()
         setUi()
 
+        prepareAd()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         ad()
+
 
     }
 
     private fun ad() {
-        prepareAd()
+        adVisibility = true
+        if (scheduler == null) {
+            scheduler = Executors.newSingleThreadScheduledExecutor()
+            (scheduler as ScheduledExecutorService).scheduleAtFixedRate({
+                Log.i("hello", "world")
+                runOnUiThread {
+                    if (mInterstitialAd?.isLoaded == true && adVisibility) {
+                        mInterstitialAd?.show()
+                    } else {
+                        Log.d("TAG", " Interstitial not loaded")
+                    }
 
-        val scheduler = Executors.newSingleThreadScheduledExecutor()
-        scheduler.scheduleAtFixedRate({
-            Log.i("hello", "world")
-            runOnUiThread {
-                if (mInterstitialAd?.isLoaded == true) {
-                    mInterstitialAd?.show()
-                } else {
-                    Log.d("TAG", " Interstitial not loaded")
+                    prepareAd()
                 }
+            }, 30, 360, TimeUnit.SECONDS)
 
-                prepareAd()
-            }
-        }, 24, 120, TimeUnit.SECONDS)
+        }
     }
 
     private fun prepareAd() {
@@ -77,6 +91,13 @@ class MainActivity : AppCompatActivity() {
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd?.adUnitId = "ca-app-pub-3940256099942544/1033173712"
         mInterstitialAd?.loadAd(AdRequest.Builder().build())
+    }
+
+    override fun onPause() {
+        super.onPause()
+        scheduler?.shutdownNow()
+        scheduler = null
+        adVisibility = false
     }
 
     private fun init() {
