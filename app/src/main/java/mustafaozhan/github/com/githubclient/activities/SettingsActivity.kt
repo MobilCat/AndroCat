@@ -1,11 +1,14 @@
 package mustafaozhan.github.com.githubclient.activities
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_settings.*
 import mustafaozhan.github.com.githubclient.R
 import android.graphics.Color
+import android.net.Uri
 import android.widget.EditText
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.extensions.putStringPreferences
@@ -25,10 +28,28 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setListeners() {
         layoutUsername.setOnClickListener { showUsernameDialog() }
+        layoutSupport.setOnClickListener { showRateDialog() }
     }
 
     private fun init() {
         txtUsernameInput.text = getStringPreferences(applicationContext, "username", resources.getString(R.string.missUsername))
+    }
+
+    private fun showRateDialog() {
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogCustom)
+                .setTitle("Support us !")
+                .setMessage("Please, rate and commend to the app at Google Play Store")
+                .setPositiveButton("RATE") { _, _ ->
+                    var link = "market://details?id="
+                    try {
+                        packageManager.getPackageInfo(MainActivity@ this.packageName + ":GitHub Client", 0)
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        link = "https://play.google.com/store/apps/details?id="
+                    }
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link + packageName)))
+                }
+                .setNegativeButton("CANCEL", null)
+        builder.show()
     }
 
     private fun showUsernameDialog() {
