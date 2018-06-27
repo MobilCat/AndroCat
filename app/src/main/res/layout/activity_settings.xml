@@ -14,10 +14,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:padding="4dp"
             android:id="@+id/txtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="4dp"
             android:text="@string/username"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,21 +25,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:padding="4dp"
             android:id="@+id/txtUsernameInput"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="4dp"
             android:text="@string/missUsername"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
         <View
-            android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray" />
+            android:background="@color/gray"
+            android:padding="4dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,6 +60,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:padding="4dp" />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/layoutFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSupport">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@string/feedback"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

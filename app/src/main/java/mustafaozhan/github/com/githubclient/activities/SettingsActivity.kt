@@ -29,6 +29,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun setListeners() {
         layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener { showRateDialog() }
+        layoutFeedback.setOnClickListener { sendFeedBack() }
     }
 
     private fun init() {
@@ -71,5 +72,14 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         alertDialog.show()
+    }
+
+    private fun sendFeedBack() {
+        val email = Intent(Intent.ACTION_SEND)
+        email.type = "text/email"
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf("mr.mustafa.ozhan@gmail.com"))
+        email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for GitHub Client")
+        email.putExtra(Intent.EXTRA_TEXT, "Dear Developer," + "")
+        startActivity(Intent.createChooser(email, "Send Feedback:"))
     }
 }
