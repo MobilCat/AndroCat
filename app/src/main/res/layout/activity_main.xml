@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <WebView
+        <im.delight.android.webview.AdvancedWebView
             android:id="@+id/webView"
             android:layout_width="0dp"
             android:layout_height="0dp" />
