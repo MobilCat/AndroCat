@@ -3,10 +3,9 @@ package mustafaozhan.github.com.githubclient.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.AppCompatDelegate
 import android.util.Log
 import android.view.KeyEvent
@@ -14,17 +13,17 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_main.*
+import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
-import me.piruin.quickaction.ActionItem
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
-import com.google.android.gms.ads.InterstitialAd
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -71,14 +70,11 @@ class MainActivity : AppCompatActivity() {
         if (scheduler == null) {
             scheduler = Executors.newSingleThreadScheduledExecutor()
             (scheduler as ScheduledExecutorService).scheduleAtFixedRate({
-                Log.i("hello", "world")
                 runOnUiThread {
-                    if (mInterstitialAd?.isLoaded == true && adVisibility) {
+                    if (mInterstitialAd?.isLoaded == true && adVisibility)
                         mInterstitialAd?.show()
-                    } else {
+                    else
                         Log.d("TAG", " Interstitial not loaded")
-                    }
-
                     prepareAd()
                 }
             }, 30, 360, TimeUnit.SECONDS)

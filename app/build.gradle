@@ -10,8 +10,8 @@ android {
         applicationId "mustafaozhan.github.com.githubclient"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 15
-        versionName "3.1"
+        versionCode 18
+        versionName "3.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -40,4 +40,5 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'me.piruin:quickaction:2.4.2'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 }
