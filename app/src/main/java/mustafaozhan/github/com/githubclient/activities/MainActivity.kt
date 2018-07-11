@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private var mInterstitialAd: InterstitialAd? = null
     private var scheduler: ScheduledExecutorService? = null
     private var adVisibility = false
+    private var occurs = 5
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         setDash()
         initWebView()
         setUi()
-
         prepareAd()
 
     }
@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         ad()
-
 
     }
 
@@ -71,13 +70,17 @@ class MainActivity : AppCompatActivity() {
             scheduler = Executors.newSingleThreadScheduledExecutor()
             (scheduler as ScheduledExecutorService).scheduleAtFixedRate({
                 runOnUiThread {
-                    if (mInterstitialAd?.isLoaded == true && adVisibility)
+
+                    if (mInterstitialAd?.isLoaded == true && adVisibility && occurs == 5) {
                         mInterstitialAd?.show()
-                    else
-                        Log.d("TAG", " Interstitial not loaded")
+                        occurs = 0
+                    } else
+                        Log.d("TAG", "Interstitial not loaded")
                     prepareAd()
+                    occurs++
+
                 }
-            }, 30, 360, TimeUnit.SECONDS)
+            }, 48, 48, TimeUnit.SECONDS)
 
         }
     }

@@ -23,7 +23,6 @@ class SettingsActivity : AppCompatActivity() {
         init()
         setListeners()
 
-
     }
 
     private fun setListeners() {

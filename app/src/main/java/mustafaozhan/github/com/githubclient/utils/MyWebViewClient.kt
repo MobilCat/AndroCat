@@ -1,12 +1,14 @@
 package mustafaozhan.github.com.githubclient.utils
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
-import mustafaozhan.github.com.githubclient.R
+import mustafaozhan.github.com.githubclient.extensions.fadeIO
+import mustafaozhan.github.com.githubclient.extensions.setState
 
 @Suppress("OverridingDeprecatedMember")
 /**
@@ -19,10 +21,9 @@ class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
     }
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-        animate(true)
+        mGifLayout.fadeIO(true)
         mGifLayout.visibility = View.VISIBLE
 
-        // mGifLayout.startAnimation()
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
@@ -32,17 +33,14 @@ class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
         view?.loadUrl("javascript:(function() { " +
                 "document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
 
-        animate(false)
-        mGifLayout.visibility = View.GONE
+        val manager = view?.context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val i = manager.activeNetworkInfo
+        val hasConnect = i != null && i.isConnected && i.isAvailable
 
-    }
-
-    private fun animate(boolean: Boolean) {
-        if (boolean)
-            mGifLayout.startAnimation(AnimationUtils.loadAnimation(mGifLayout.context,
-                    R.anim.fade_in))
+        mGifLayout.fadeIO(false)
+        if (hasConnect)
+            mGifLayout.setState(State.SUCCESS)
         else
-            mGifLayout.startAnimation(AnimationUtils.loadAnimation(mGifLayout.context,
-                    R.anim.fade_out))
+            mGifLayout.setState(State.FAILED)
     }
 }

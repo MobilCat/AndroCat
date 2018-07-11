@@ -6,4 +6,5 @@
     <color name="colorGitHubDash">#24292f</color>
     <color name="white">#ffffff</color>
     <color name="gray">#9E9E9E</color>
+    <color name="failed">#49516b</color>
 </resources>
