@@ -3,13 +3,13 @@ package mustafaozhan.github.com.githubclient.activities
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_settings.*
-import mustafaozhan.github.com.githubclient.R
 import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
+import kotlinx.android.synthetic.main.activity_settings.*
+import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.extensions.putStringPreferences
 

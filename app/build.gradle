@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 27
@@ -10,8 +11,8 @@ android {
         applicationId "mustafaozhan.github.com.githubclient"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 21
-        versionName "3.43"
+        versionCode 23
+        versionName "3.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -22,7 +23,10 @@ android {
         }
     }
 }
-
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -41,4 +45,7 @@ dependencies {
     implementation 'me.piruin:quickaction:2.4.2'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
+        transitive = true
+    }
 }

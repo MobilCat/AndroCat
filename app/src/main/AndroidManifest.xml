@@ -3,6 +3,7 @@
     package="mustafaozhan.github.com.githubclient">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,10 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="fbacbda6e429dfadcba3d54f47c1588d524b5b24" />
     </application>
 
 </manifest>
