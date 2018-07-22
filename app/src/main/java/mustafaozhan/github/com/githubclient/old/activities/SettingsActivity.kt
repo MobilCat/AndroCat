@@ -10,8 +10,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_settings.*
 import mustafaozhan.github.com.githubclient.R
-import mustafaozhan.github.com.githubclient.old.extensions.getStringPreferences
-import mustafaozhan.github.com.githubclient.old.extensions.putStringPreferences
+import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
+import mustafaozhan.github.com.githubclient.extensions.putStringPreferences
 
 
 class SettingsActivity : AppCompatActivity() {

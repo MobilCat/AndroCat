@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.githubclient.old.extensions
+package mustafaozhan.github.com.githubclient.extensions
 
 import android.content.Context
 import android.preference.PreferenceManager
@@ -7,9 +7,9 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 import mustafaozhan.github.com.githubclient.R
-import mustafaozhan.github.com.githubclient.old.utils.State
+import mustafaozhan.github.com.githubclient.tools.State
 
 /**
  * Created by Mustafa Ozhan on 1/30/18 at 12:42 AM on Arch Linux wit Love <3.

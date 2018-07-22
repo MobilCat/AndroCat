@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import mustafaozhan.github.com.githubclient.R
-import mustafaozhan.github.com.githubclient.old.activities.MainActivity
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
