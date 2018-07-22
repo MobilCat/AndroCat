@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.githubclient.main.fragment
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,6 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseMvvmFragment
-import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
 import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 import mustafaozhan.github.com.githubclient.tools.MyWebViewClient
 
@@ -26,16 +26,20 @@ import java.util.concurrent.TimeUnit
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     companion object {
-        val TAG=MainFragment().tag
         fun newInstance(): MainFragment = MainFragment()
     }
 
     private var url = "https://github.com/login"
+
     private var quickActionProfile: QuickAction? = null
     private var quickActionFind: QuickAction? = null
+
     private var mInterstitialAd: InterstitialAd? = null
+
     private var scheduler: ScheduledExecutorService? = null
+
     private var adVisibility = false
+
     private var occurs = 5
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,27 +90,34 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     private fun init() {
 
-        quickActionFind = context?.let { QuickAction(it, QuickAction.VERTICAL) }
-        quickActionFind!!.setColorRes(R.color.colorGitHubDash)
-        quickActionFind!!.setTextColorRes(R.color.white)
-        quickActionFind!!.setEnabledDivider(false)
-        val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
-        val marketPlaceItem = ActionItem(2, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
-        val exploreItem = ActionItem(3, "Trends", R.drawable.ic_trending_up_black_24dp)
-        quickActionFind!!.addActionItem(searchItem, marketPlaceItem, exploreItem)
+        viewModel.initUsername()
 
-        quickActionProfile = context?.let { QuickAction(it, QuickAction.VERTICAL) }
-        quickActionProfile!!.setColorRes(R.color.colorGitHubDash)
-        quickActionProfile!!.setTextColorRes(R.color.white)
-        quickActionProfile!!.setEnabledDivider(false)
-        val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
-        val notificationsItem = ActionItem(2, "Notifications", R.drawable.notifications)
-        val applicationSettingsItem = ActionItem(3, "App Settings", R.drawable.ic_settings_black_24dp)
-        val userSettings = ActionItem(4, "User Settings", R.drawable.user_settings)
-        val logOutItem = ActionItem(5, "Log out", R.drawable.logout_icon)
-        val userItem = ActionItem(6, "Profile", R.drawable.user)
-        quickActionProfile!!.addActionItem(starItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, userItem)
+        context?.let {
+            quickActionFind = QuickAction(it, QuickAction.VERTICAL)
+            quickActionFind?.apply {
+                setColorRes(R.color.colorGitHubDash)
+                setTextColorRes(R.color.white)
+                setEnabledDivider(false)
+                val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
+                val marketPlaceItem = ActionItem(2, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
+                val exploreItem = ActionItem(3, "Trends", R.drawable.ic_trending_up_black_24dp)
+                addActionItem(searchItem, marketPlaceItem, exploreItem)
+            }
 
+            quickActionProfile = QuickAction(it, QuickAction.VERTICAL)
+            quickActionProfile?.apply {
+                setColorRes(R.color.colorGitHubDash)
+                setTextColorRes(R.color.white)
+                setEnabledDivider(false)
+                val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
+                val notificationsItem = ActionItem(2, "Notifications", R.drawable.notifications)
+                val applicationSettingsItem = ActionItem(3, "App Settings", R.drawable.ic_settings_black_24dp)
+                val userSettings = ActionItem(4, "User Settings", R.drawable.user_settings)
+                val logOutItem = ActionItem(5, "Log out", R.drawable.logout_icon)
+                val userItem = ActionItem(6, "Profile", R.drawable.user)
+                quickActionProfile!!.addActionItem(starItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, userItem)
+            }
+        }
     }
 
     private fun setUi() {
@@ -128,34 +139,22 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         quickActionProfile!!.setOnActionItemClickListener {
             when (it.actionId) {
                 1 -> {
-                    if (context?.let { it1 ->
-                                getStringPreferences(it1, "username",
-                                        resources.getString(R.string.missUsername))
-                            } == resources.getString(R.string.missUsername)) {
+                    if (viewModel.userName == resources.getString(R.string.missUsername)) {
                         Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
                         replaceFragment(SettingsFragment.newInstance(), true)
                     } else
-                        webView.loadUrl("https://github.com/"
-                                + context?.let { it1 ->
-                            getStringPreferences(it1, "username",
-                                    resources.getString(R.string.missUsername))
-                        }
-                                + "?tab=stars")
+                        webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=stars")
                 }
                 2 -> webView.loadUrl("https://github.com/notifications")
                 3 -> replaceFragment(SettingsFragment.newInstance(), true)
                 4 -> webView.loadUrl("https://github.com/settings")
                 5 -> webView.loadUrl("https://github.com/logout")
                 6 -> {
-                    if (context?.let { it1 ->
-                                getStringPreferences(it1, "username",
-                                        resources.getString(R.string.missUsername))
-                            } == resources.getString(R.string.missUsername)) {
+                    if (viewModel.userName == resources.getString(R.string.missUsername)) {
                         Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
                         replaceFragment(SettingsFragment.newInstance(), true)
                     } else
-                        webView.loadUrl("https://github.com/"
-                                + context?.let { it1 -> getStringPreferences(it1, "username", resources.getString(R.string.missUsername)) })
+                        webView.loadUrl("https://github.com/" + viewModel.userName)
                 }
 
             }
@@ -181,6 +180,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         mBottomNavigationView.setIconSize(30.0F, 30.0F)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         webView.webViewClient = MyWebViewClient(mGifLayout)
         var newUserAgent: String? = webView.settings.userAgentString

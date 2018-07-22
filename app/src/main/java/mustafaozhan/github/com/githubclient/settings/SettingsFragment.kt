@@ -11,8 +11,6 @@ import android.widget.EditText
 import kotlinx.android.synthetic.main.fragment_settings.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseMvvmFragment
-import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
-import mustafaozhan.github.com.githubclient.extensions.putStringPreferences
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -36,7 +34,8 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun init() {
-        txtUsernameInput.text = context?.let { getStringPreferences(it, "username", resources.getString(R.string.missUsername)) }
+        viewModel.initUsername()
+        txtUsernameInput.text = viewModel.userName
     }
 
     private fun showRateDialog() {
@@ -63,10 +62,11 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
         alertDialog.setView(editText)
         editText.setTextColor(Color.WHITE)
-        editText.setText(context?.let { getStringPreferences(it, "username", resources.getString(R.string.missUsername)) })
+        editText.setText(viewModel.userName)
         editText.setSelection(editText.text.length)
         alertDialog.setPositiveButton("SAVE") { _, _ ->
-            context?.let { putStringPreferences(it, "username", editText.text.toString()) }
+            viewModel.userName = editText.text.toString()
+            viewModel.saveNewUserName(editText.text.toString())
             txtUsernameInput.text = editText.text.toString()
         }
 

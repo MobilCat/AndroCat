@@ -13,10 +13,15 @@ constructor() : BaseSharedPreferences() {
 
     companion object {
         const val GENERAL_SHARED_PREFS = "GENERAL_SHARED_PREFS"
+        const val USERNAME = "username"
     }
 
     override val preferencesName: String
         get() = GENERAL_SHARED_PREFS
 
+    fun persistUserName(userName: String) {
+        setStringEntry(USERNAME, userName)
+    }
 
+    fun loadUserName() = getStringEntry(USERNAME, "Please Enter Your Githup Username")
 }
