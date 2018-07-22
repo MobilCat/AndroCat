@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.githubclient.activities
+package mustafaozhan.github.com.githubclient.old.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -21,8 +21,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
-import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
-import mustafaozhan.github.com.githubclient.utils.MyWebViewClient
+import mustafaozhan.github.com.githubclient.old.extensions.getStringPreferences
+import mustafaozhan.github.com.githubclient.old.utils.MyWebViewClient
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit

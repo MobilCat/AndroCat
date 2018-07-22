@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.githubclient.utils
+package mustafaozhan.github.com.githubclient.old.utils
 
 /**
  * Created by Mustafa Ozhan on 2018-07-11.

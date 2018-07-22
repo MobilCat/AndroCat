@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.githubclient.utils
+package mustafaozhan.github.com.githubclient.old.utils
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -7,8 +7,8 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
-import mustafaozhan.github.com.githubclient.extensions.fadeIO
-import mustafaozhan.github.com.githubclient.extensions.setState
+import mustafaozhan.github.com.githubclient.old.extensions.fadeIO
+import mustafaozhan.github.com.githubclient.old.extensions.setState
 
 @Suppress("OverridingDeprecatedMember")
 /**

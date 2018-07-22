@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.githubclient.extensions
+package mustafaozhan.github.com.githubclient.old.extensions
 
 import android.content.Context
 import android.preference.PreferenceManager
@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.view.*
 import mustafaozhan.github.com.githubclient.R
-import mustafaozhan.github.com.githubclient.utils.State
+import mustafaozhan.github.com.githubclient.old.utils.State
 
 /**
  * Created by Mustafa Ozhan on 1/30/18 at 12:42 AM on Arch Linux wit Love <3.
