@@ -1,5 +1,14 @@
-# GitHubClient
+<p align="center">A GitHub client like how you used to</p>
+<p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.githubclient"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"></a></p>
 
-A GitHub client like how you used to
 
-<img src="https://s19.postimg.cc/ytaqsiqxv/Screenshot_1519494244.png" width="275px"/>  <img src="https://s19.postimg.cc/g0yvoy29f/Screenshot_1519494248.png" width="275px"/>  <img src="https://s19.postimg.cc/pliibtzb7/Screenshot_1519494252.png" width="275px"/>  <img src="https://s19.postimg.cc/py9wi14qb/Screenshot_1519494261.png" width="275px"/>  <img src="https://s19.postimg.cc/mrfcya9yr/Screenshot_1519494264.png" width="275px"/>  <img src="https://s19.postimg.cc/e95wtzlgj/Screenshot_1519494271.png" width="275px"/>
+## Screenshots
+
+
+<img src="https://s19.postimg.cc/ugqqekgwz/image.png" width="218px"/> <img src="https://s19.postimg.cc/kjfplioqr/image.png" width="218px"/> <img src="https://s19.postimg.cc/jh5j2zdn7/image.png" width="218px"/> <img src="https://s19.postimg.cc/k6obfbyr7/image.png" width="218px"/>
+
+<img src="https://s19.postimg.cc/9wlwg3w0z/image.png" width="218px"/> <img src="https://s19.postimg.cc/llpw41coz/image.png" width="218px"/> <img src="https://s19.postimg.cc/72ir2mr9v/image.png" width="218px"/> <img src="https://s19.postimg.cc/dg7u5x6gj/image.png" width="218px"/>
+
+
+
+
