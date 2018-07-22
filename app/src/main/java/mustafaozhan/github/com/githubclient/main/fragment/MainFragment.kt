@@ -13,6 +13,7 @@ import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseMvvmFragment
 import mustafaozhan.github.com.githubclient.extensions.getStringPreferences
+import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 import mustafaozhan.github.com.githubclient.tools.MyWebViewClient
 
 import java.util.concurrent.Executors
@@ -25,8 +26,10 @@ import java.util.concurrent.TimeUnit
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     companion object {
+        val TAG=MainFragment().tag
         fun newInstance(): MainFragment = MainFragment()
     }
+
     private var url = "https://github.com/login"
     private var quickActionProfile: QuickAction? = null
     private var quickActionFind: QuickAction? = null
@@ -37,11 +40,11 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-                init()
-                setDash()
-                initWebView()
-                setUi()
-                prepareAd()
+        init()
+        setDash()
+        initWebView()
+        setUi()
+        prepareAd()
     }
 
     override fun onResume() {
@@ -55,17 +58,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         if (scheduler == null) {
             scheduler = Executors.newSingleThreadScheduledExecutor()
             (scheduler as ScheduledExecutorService).scheduleAtFixedRate({
-//                runOnUiThread {
-
-                    if (mInterstitialAd?.isLoaded == true && adVisibility && occurs == 5) {
-                        mInterstitialAd?.show()
-                        occurs = 0
-                    } else
-                        Log.d("TAG", "Interstitial not loaded")
-                    prepareAd()
-                    occurs++
-
-//                }
+                if (mInterstitialAd?.isLoaded == true && adVisibility && occurs == 5) {
+                    mInterstitialAd?.show()
+                    occurs = 0
+                } else
+                    Log.d("TAG", "Interstitial not loaded")
+                prepareAd()
+                occurs++
             }, 48, 48, TimeUnit.SECONDS)
 
         }
@@ -86,7 +85,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun init() {
-
 
         quickActionFind = context?.let { QuickAction(it, QuickAction.VERTICAL) }
         quickActionFind!!.setColorRes(R.color.colorGitHubDash)
@@ -135,7 +133,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                                         resources.getString(R.string.missUsername))
                             } == resources.getString(R.string.missUsername)) {
                         Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
-//                        startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                        replaceFragment(SettingsFragment.newInstance(), true)
                     } else
                         webView.loadUrl("https://github.com/"
                                 + context?.let { it1 ->
@@ -145,7 +143,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                                 + "?tab=stars")
                 }
                 2 -> webView.loadUrl("https://github.com/notifications")
-//                3 -> startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                3 -> replaceFragment(SettingsFragment.newInstance(), true)
                 4 -> webView.loadUrl("https://github.com/settings")
                 5 -> webView.loadUrl("https://github.com/logout")
                 6 -> {
@@ -154,7 +152,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                                         resources.getString(R.string.missUsername))
                             } == resources.getString(R.string.missUsername)) {
                         Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
-//                        startActivity(Intent(applicationContext, SettingsActivity::class.java))
+                        replaceFragment(SettingsFragment.newInstance(), true)
                     } else
                         webView.loadUrl("https://github.com/"
                                 + context?.let { it1 -> getStringPreferences(it1, "username", resources.getString(R.string.missUsername)) })
@@ -203,7 +201,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         webView.setBackgroundColor(Color.parseColor("#FFFFFF"))
         webView.settings.textZoom = 150
     }
-
 
 
     override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java

@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
 import mustafaozhan.github.com.githubclient.R
+import mustafaozhan.github.com.githubclient.main.fragment.MainFragment
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -78,19 +79,28 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack()
-            true
+            val f = supportFragmentManager.findFragmentById(containerId)
+            if (f is MainFragment) {
+                webView.goBack()
+                true
+            } else
+                super.onKeyUp(keyCode, event)
         } else
             super.onKeyUp(keyCode, event)
     }
 
     override fun onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+
+        val f = supportFragmentManager.findFragmentById(containerId)
+        if (f is MainFragment) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed()
+                return
+            }
+            this.doubleBackToExitPressedOnce = true
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+        } else
             super.onBackPressed()
-            return
-        }
-        this.doubleBackToExitPressedOnce = true
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
-        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 }

@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGitHubDash"
-    tools:context=".old.activities.MainActivity">
+    android:background="@color/colorGitHubDash">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/mSwipeRefreshLayout"
@@ -40,8 +37,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/loading"
             android:scaleType="centerInside"
-            android:visibility="gone"
-            android:src="@drawable/octocat_walking_animation" />
+            android:src="@drawable/octocat_walking_animation"/>
 
     </LinearLayout>
 
@@ -57,5 +53,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <?xml version="1.0" encoding="utf-8"?>
+
 </android.support.constraint.ConstraintLayout>

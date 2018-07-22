@@ -22,11 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".old.activities.MainActivity"
+            android:name=".main.activity.MainActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="mustafaozhan.github.com.githubclient.old.activities.SettingsActivity"
-            android:label="@string/title_activity_settings" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

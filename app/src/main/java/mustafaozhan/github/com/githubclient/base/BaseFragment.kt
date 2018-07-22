@@ -37,7 +37,9 @@ abstract class BaseFragment : Fragment() {
 
     }
 
-
+    protected fun replaceFragment(fragment: BaseFragment, withBackStack: Boolean) {
+        getBaseActivity().replaceFragment(fragment, withBackStack)
+    }
 
     protected fun getBaseActivity(): BaseActivity = activity as BaseActivity
 
