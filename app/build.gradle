@@ -10,8 +10,8 @@ android {
         applicationId "mustafaozhan.github.com.githubclient"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 24
-        versionName "3.7"
+        versionCode 26
+        versionName "4.01"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -63,7 +63,4 @@ dependencies {
 
     //Bottom Navigation
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
-
-    //anko
-    implementation 'org.jetbrains.anko:anko-commons:0.10.5'
 }

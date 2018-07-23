@@ -28,10 +28,9 @@ class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
 
     override fun onPageFinished(view: WebView?, url: String?) {
         // hide element by class name
-        view?.loadUrl("javascript:(function() { " +
-                "document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none'; })()")
-        view?.loadUrl("javascript:(function() { " +
-                "document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
+        view?.loadUrl("javascript:(function() { document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none'; \n document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
+//        view?.loadUrl("javascript:(function() { " +
+//                "document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
 
         val manager = view?.context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val i = manager.activeNetworkInfo

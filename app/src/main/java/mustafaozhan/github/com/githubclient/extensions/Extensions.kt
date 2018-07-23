@@ -14,8 +14,8 @@ import mustafaozhan.github.com.githubclient.tools.State
  */
 
 
-fun LinearLayout.fadeIO(boolean: Boolean) {
-    if (boolean)
+fun LinearLayout.fadeIO(isIn: Boolean) {
+    if (isIn)
         this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
     else
         this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))

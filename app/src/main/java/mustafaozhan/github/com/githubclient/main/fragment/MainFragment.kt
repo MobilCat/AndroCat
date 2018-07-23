@@ -91,6 +91,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     private fun init() {
 
         viewModel.initUsername()
+        if (viewModel.userName!=resources.getString(R.string.username))
+            url="https://github.com"
 
         context?.let {
             quickActionFind = QuickAction(it, QuickAction.VERTICAL)
@@ -130,7 +132,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             when (it.itemId) {
                 R.id.navigation_user -> quickActionProfile!!.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_find -> quickActionFind!!.show(mBottomNavigationView.getIconAt(3))
-                R.id.navigation_feed -> webView.loadUrl("https://github.com/login")
+                R.id.navigation_feed -> {
+                    if (viewModel.userName == resources.getString(R.string.username))
+                        webView.loadUrl("https://github.com/login")
+                    else
+                        webView.loadUrl("https://github.com")
+                }
                 R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
                 R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
             }
