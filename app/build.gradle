@@ -63,4 +63,7 @@ dependencies {
 
     //Bottom Navigation
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+
+    //anko
+    implementation 'org.jetbrains.anko:anko-commons:0.10.5'
 }

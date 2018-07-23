@@ -5,8 +5,6 @@ import dagger.Module
 import dagger.Provides
 import mustafaozhan.github.com.githubclient.annontation.ApplicationContext
 import mustafaozhan.github.com.githubclient.application.Application
-import java.util.concurrent.Executors
-import javax.inject.Singleton
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.

@@ -82,9 +82,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        return if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            val f = supportFragmentManager.findFragmentById(containerId)
-            if (f is MainFragment) {
+        val f = supportFragmentManager.findFragmentById(containerId)
+
+        return if (f is MainFragment) {
+            if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
                 webView.goBack()
                 true
             } else

@@ -14,7 +14,6 @@ import mustafaozhan.github.com.githubclient.dagger.module.ApplicationModule
  * Created by Mustafa Ozhan on 2018-07-22.
  */
 class Application : android.app.Application() {
-    //For supporting multidex before android 5
     companion object {
         lateinit var instance: Application
 

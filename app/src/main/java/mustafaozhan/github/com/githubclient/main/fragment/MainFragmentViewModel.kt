@@ -17,6 +17,4 @@ class MainFragmentViewModel : BaseViewModel() {
         userName = dataManager.loadUserName()
     }
 
-
-
 }

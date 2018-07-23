@@ -1,7 +1,5 @@
 package mustafaozhan.github.com.githubclient.extensions
 
-import android.content.Context
-import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.animation.AnimationUtils
