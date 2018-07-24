@@ -1,18 +1,11 @@
 package mustafaozhan.github.com.githubclient.base
 
 import android.os.Bundle
-import android.os.Handler
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
-import android.view.KeyEvent
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_main.*
 import mustafaozhan.github.com.githubclient.R
-import mustafaozhan.github.com.githubclient.main.fragment.MainFragment
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -25,14 +18,8 @@ abstract class BaseActivity : AppCompatActivity() {
     @IdRes
     open var containerId: Int = R.id.content
 
-    private var doubleBackToExitPressedOnce = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         setContentView(getLayoutResId())
         getDefaultFragment()?.let {
@@ -79,33 +66,5 @@ abstract class BaseActivity : AppCompatActivity() {
     fun clearBackStack() {
         if (supportFragmentManager.backStackEntryCount > 0)
             supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-    }
-
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        val f = supportFragmentManager.findFragmentById(containerId)
-
-        return if (f is MainFragment) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-                webView.goBack()
-                true
-            } else
-                super.onKeyUp(keyCode, event)
-        } else
-            super.onKeyUp(keyCode, event)
-    }
-
-    override fun onBackPressed() {
-
-        val f = supportFragmentManager.findFragmentById(containerId)
-        if (f is MainFragment) {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed()
-                return
-            }
-            this.doubleBackToExitPressedOnce = true
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else
-            super.onBackPressed()
     }
 }

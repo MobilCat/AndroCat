@@ -56,9 +56,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         initWebView()
         setUi()
         prepareAd()
-        if (arguments?.getBoolean(ARGS_SHOW_ON_GITHUB) == true)
+        if (arguments?.getBoolean(ARGS_SHOW_ON_GITHUB) == true) {
+            getBaseActivity().clearBackStack()
             webView.loadUrl("https://github.com/mustafaozhan/GitHubClient")
-
+        }
     }
 
     override fun onResume() {
