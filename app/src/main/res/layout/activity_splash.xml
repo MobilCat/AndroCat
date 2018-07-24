@@ -7,6 +7,7 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/mGifSplash"
+        android:padding="64dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"

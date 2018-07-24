@@ -25,8 +25,7 @@ class SplashActivity : AppCompatActivity() {
             mGifSplash.visibility=View.INVISIBLE
             finish()
 
-
-        }, 1250)
+        }, 1500)
 
 
     }

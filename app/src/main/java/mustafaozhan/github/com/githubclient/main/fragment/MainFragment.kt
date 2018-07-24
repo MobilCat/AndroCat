@@ -231,7 +231,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         webView.settings.builtInZoomControls = true
         webView.settings.displayZoomControls = false
         webView.setBackgroundColor(Color.parseColor("#FFFFFF"))
-        webView.settings.textZoom = 150
+        webView.settings.textZoom = 120
     }
 
 

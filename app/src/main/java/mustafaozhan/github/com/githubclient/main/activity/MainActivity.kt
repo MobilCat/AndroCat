@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.githubclient.main.activity
 
+import android.content.Intent
 import android.os.Handler
 import android.view.KeyEvent
 import android.widget.Toast

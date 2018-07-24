@@ -32,6 +32,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <pl.droidsonroids.gif.GifImageView
+            android:padding="64dp"
             android:id="@+id/mImgViewOctocat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
