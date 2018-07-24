@@ -57,7 +57,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         setUi()
         prepareAd()
         if (arguments?.getBoolean(ARGS_SHOW_ON_GITHUB) == true) {
-            getBaseActivity().clearBackStack()
             webView.loadUrl("https://github.com/mustafaozhan/GitHubClient")
         }
     }

@@ -32,7 +32,10 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener { showRateDialog() }
         layoutFeedback.setOnClickListener { sendFeedBack() }
-        layoutOnGitHub.setOnClickListener { replaceFragment(MainFragment.newInstance(true),false) }
+        layoutOnGitHub.setOnClickListener {
+            getBaseActivity().clearBackStack()
+            replaceFragment(MainFragment.newInstance(true), false)
+        }
     }
 
     private fun init() {

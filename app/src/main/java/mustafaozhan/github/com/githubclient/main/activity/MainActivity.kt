@@ -1,10 +1,7 @@
 package mustafaozhan.github.com.githubclient.main.activity
 
-import android.os.Bundle
 import android.os.Handler
 import android.view.KeyEvent
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
 import mustafaozhan.github.com.githubclient.R
@@ -25,12 +22,6 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.activity_main
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
-    }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         val f = supportFragmentManager.findFragmentById(containerId)
