@@ -26,7 +26,14 @@ import java.util.concurrent.TimeUnit
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     companion object {
-        fun newInstance(): MainFragment = MainFragment()
+        private const val ARGS_SHOW_ON_GITHUB = "ARGS_SHOW_ON_GITHUB"
+        fun newInstance(showOnGitHub: Boolean = false): MainFragment {
+            val args = Bundle()
+            args.putBoolean(ARGS_SHOW_ON_GITHUB, showOnGitHub)
+            val fragment = MainFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     private var url = "https://github.com/login"
@@ -49,6 +56,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         initWebView()
         setUi()
         prepareAd()
+        if (arguments?.getBoolean(ARGS_SHOW_ON_GITHUB) == true)
+            webView.loadUrl("https://github.com/mustafaozhan/GitHubClient")
+
     }
 
     override fun onResume() {
@@ -103,9 +113,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
                 val marketPlaceItem = ActionItem(2, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
                 val trendsItem = ActionItem(3, "Trends", R.drawable.ic_trending_up_black_24dp)
-                val newGistItem=ActionItem(4, "New Gist", R.drawable.ic_code_black_24dp)
-                val newRepoItem=ActionItem(5, "New Repository", R.drawable.new_repo)
-                addActionItem(searchItem, marketPlaceItem, trendsItem,newGistItem,newRepoItem)
+                val newGistItem = ActionItem(4, "New Gist", R.drawable.ic_code_black_24dp)
+                val newRepoItem = ActionItem(5, "New Repository", R.drawable.new_repo)
+                addActionItem(searchItem, marketPlaceItem, trendsItem, newGistItem, newRepoItem)
             }
 
             quickActionProfile = QuickAction(it, QuickAction.VERTICAL)

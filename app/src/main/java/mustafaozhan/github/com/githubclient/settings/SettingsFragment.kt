@@ -11,6 +11,7 @@ import android.widget.EditText
 import kotlinx.android.synthetic.main.fragment_settings.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseMvvmFragment
+import mustafaozhan.github.com.githubclient.main.fragment.MainFragment
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -31,6 +32,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener { showRateDialog() }
         layoutFeedback.setOnClickListener { sendFeedBack() }
+        layoutOnGitHub.setOnClickListener { replaceFragment(MainFragment.newInstance(true),false) }
     }
 
     private fun init() {
