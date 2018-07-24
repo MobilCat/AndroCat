@@ -15,7 +15,7 @@
     <item
         android:id="@+id/navigation_find"
         android:icon="@drawable/ic_explore_black_24dp"
-        android:title="@string/explore" />
+        android:title="@string/explorer" />
     <item
         android:id="@+id/navigation_user"
         android:icon="@drawable/user"

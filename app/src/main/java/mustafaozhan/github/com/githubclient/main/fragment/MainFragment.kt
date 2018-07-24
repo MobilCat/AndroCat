@@ -32,7 +32,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     private var url = "https://github.com/login"
 
     private var quickActionProfile: QuickAction? = null
-    private var quickActionFind: QuickAction? = null
+    private var quickActionExplorer: QuickAction? = null
 
     private var mInterstitialAd: InterstitialAd? = null
 
@@ -91,19 +91,21 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     private fun init() {
 
         viewModel.initUsername()
-        if (viewModel.userName!=resources.getString(R.string.username))
-            url="https://github.com"
+        if (viewModel.userName != resources.getString(R.string.missUsername))
+            url = "https://github.com"
 
         context?.let {
-            quickActionFind = QuickAction(it, QuickAction.VERTICAL)
-            quickActionFind?.apply {
+            quickActionExplorer = QuickAction(it, QuickAction.VERTICAL)
+            quickActionExplorer?.apply {
                 setColorRes(R.color.colorGitHubDash)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
                 val marketPlaceItem = ActionItem(2, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
-                val exploreItem = ActionItem(3, "Trends", R.drawable.ic_trending_up_black_24dp)
-                addActionItem(searchItem, marketPlaceItem, exploreItem)
+                val trendsItem = ActionItem(3, "Trends", R.drawable.ic_trending_up_black_24dp)
+                val newGistItem=ActionItem(4, "New Gist", R.drawable.ic_code_black_24dp)
+                val newRepoItem=ActionItem(5, "New Repository", R.drawable.new_repo)
+                addActionItem(searchItem, marketPlaceItem, trendsItem,newGistItem,newRepoItem)
             }
 
             quickActionProfile = QuickAction(it, QuickAction.VERTICAL)
@@ -112,12 +114,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
-                val notificationsItem = ActionItem(2, "Notifications", R.drawable.notifications)
-                val applicationSettingsItem = ActionItem(3, "App Settings", R.drawable.ic_settings_black_24dp)
-                val userSettings = ActionItem(4, "User Settings", R.drawable.user_settings)
-                val logOutItem = ActionItem(5, "Log out", R.drawable.logout_icon)
-                val userItem = ActionItem(6, "Profile", R.drawable.user)
-                quickActionProfile!!.addActionItem(starItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, userItem)
+                val gistItem = ActionItem(2, "Gists", R.drawable.ic_code_black_24dp)
+                val notificationsItem = ActionItem(3, "Notifications", R.drawable.notifications)
+                val applicationSettingsItem = ActionItem(4, "App Settings", R.drawable.ic_settings_black_24dp)
+                val userSettings = ActionItem(5, "User Settings", R.drawable.user_settings)
+                val logOutItem = ActionItem(6, "Log out", R.drawable.logout_icon)
+                val loginItem = ActionItem(7, "Log in", R.drawable.login_icon)
+                val userItem = ActionItem(8, "Profile", R.drawable.user)
+                quickActionProfile!!.addActionItem(starItem, gistItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, loginItem, userItem)
             }
         }
     }
@@ -131,7 +135,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         mBottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_user -> quickActionProfile!!.show(mBottomNavigationView.getIconAt(4))
-                R.id.navigation_find -> quickActionFind!!.show(mBottomNavigationView.getIconAt(3))
+                R.id.navigation_find -> quickActionExplorer!!.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
                     if (viewModel.userName == resources.getString(R.string.username))
                         webView.loadUrl("https://github.com/login")
@@ -152,11 +156,19 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                     } else
                         webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=stars")
                 }
-                2 -> webView.loadUrl("https://github.com/notifications")
-                3 -> replaceFragment(SettingsFragment.newInstance(), true)
-                4 -> webView.loadUrl("https://github.com/settings")
-                5 -> webView.loadUrl("https://github.com/logout")
-                6 -> {
+                2 -> {
+                    if (viewModel.userName == resources.getString(R.string.missUsername)) {
+                        Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
+                        replaceFragment(SettingsFragment.newInstance(), true)
+                    } else
+                        webView.loadUrl("https://gist.github.com/" + viewModel.userName)
+                }
+                3 -> webView.loadUrl("https://github.com/notifications")
+                4 -> replaceFragment(SettingsFragment.newInstance(), true)
+                5 -> webView.loadUrl("https://github.com/settings")
+                6 -> webView.loadUrl("https://github.com/logout")
+                7 -> webView.loadUrl("https://gist.github.com/login")
+                8 -> {
                     if (viewModel.userName == resources.getString(R.string.missUsername)) {
                         Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
                         replaceFragment(SettingsFragment.newInstance(), true)
@@ -167,11 +179,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             }
 
         }
-        quickActionFind!!.setOnActionItemClickListener {
+        quickActionExplorer!!.setOnActionItemClickListener {
             when (it.actionId) {
                 1 -> webView.loadUrl("https://github.com/search")
                 2 -> webView.loadUrl("https://github.com/marketplace")
                 3 -> webView.loadUrl("https://github.com/trending")
+                4 -> webView.loadUrl("https://gist.github.com/")
+                5 -> webView.loadUrl("https://github.com/new")
+
             }
         }
     }
