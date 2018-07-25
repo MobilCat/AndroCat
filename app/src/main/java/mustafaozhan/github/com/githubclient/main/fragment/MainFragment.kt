@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -13,6 +12,7 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseMvvmFragment
+import mustafaozhan.github.com.githubclient.extensions.snacky
 import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 import mustafaozhan.github.com.githubclient.tools.MyWebViewClient
 
@@ -160,17 +160,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         quickActionProfile!!.setOnActionItemClickListener {
             when (it.actionId) {
                 1 -> {
-                    if (viewModel.userName == resources.getString(R.string.missUsername)) {
-                        Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
-                        replaceFragment(SettingsFragment.newInstance(), true)
-                    } else
+                    if (viewModel.userName == resources.getString(R.string.missUsername))
+                        snacky(getBaseActivity(), "Please enter your username", "Enter", ::openSettingsFragment)
+                    else
                         webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=stars")
                 }
                 2 -> {
-                    if (viewModel.userName == resources.getString(R.string.missUsername)) {
-                        Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
-                        replaceFragment(SettingsFragment.newInstance(), true)
-                    } else
+                    if (viewModel.userName == resources.getString(R.string.missUsername))
+                        snacky(getBaseActivity(), "Please enter your username", "Enter", ::openSettingsFragment)
+                    else
                         webView.loadUrl("https://gist.github.com/" + viewModel.userName)
                 }
                 3 -> webView.loadUrl("https://github.com/notifications")
@@ -179,10 +177,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 6 -> webView.loadUrl("https://github.com/logout")
                 7 -> webView.loadUrl("https://gist.github.com/login")
                 8 -> {
-                    if (viewModel.userName == resources.getString(R.string.missUsername)) {
-                        Toast.makeText(context, "Please enter your username", Toast.LENGTH_SHORT).show()
-                        replaceFragment(SettingsFragment.newInstance(), true)
-                    } else
+                    if (viewModel.userName == resources.getString(R.string.missUsername))
+                        snacky(getBaseActivity(), "Please enter your username", "Enter", ::openSettingsFragment)
+                    else
                         webView.loadUrl("https://github.com/" + viewModel.userName)
                 }
 
@@ -231,7 +228,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         webView.settings.builtInZoomControls = true
         webView.settings.displayZoomControls = false
         webView.setBackgroundColor(Color.parseColor("#FFFFFF"))
-        webView.settings.textZoom = 120
+        webView.settings.textZoom = 124
     }
 
 
@@ -239,5 +236,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
 
+    private fun openSettingsFragment() {
+        replaceFragment(SettingsFragment.newInstance(), true)
+    }
 
 }

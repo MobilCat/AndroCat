@@ -1,13 +1,12 @@
 package mustafaozhan.github.com.githubclient.main.activity
 
-import android.content.Intent
 import android.os.Handler
 import android.view.KeyEvent
-import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseFragment
 import mustafaozhan.github.com.githubclient.base.BaseMvvmActivity
+import mustafaozhan.github.com.githubclient.extensions.snacky
 import mustafaozhan.github.com.githubclient.main.fragment.MainFragment
 
 /**
@@ -46,7 +45,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                 return
             }
             this.doubleBackToExitPressedOnce = true
-            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+            snacky(this, "Please click BACK again to exit")
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
         } else
             super.onBackPressed()

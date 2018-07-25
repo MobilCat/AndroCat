@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_splash.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.extensions.fadeIO
@@ -21,13 +19,7 @@ class SplashActivity : AppCompatActivity() {
         linearSplash.fadeIO(true)
         Handler().postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
-            mGifSplash.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
-            mGifSplash.visibility=View.INVISIBLE
             finish()
-
         }, 1500)
-
-
     }
-
 }
