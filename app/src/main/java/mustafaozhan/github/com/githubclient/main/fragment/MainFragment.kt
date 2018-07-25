@@ -12,10 +12,9 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseMvvmFragment
-import mustafaozhan.github.com.githubclient.extensions.snacky
+import mustafaozhan.github.com.githubclient.main.activity.MainActivity
 import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 import mustafaozhan.github.com.githubclient.tools.MyWebViewClient
-
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -161,13 +160,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             when (it.actionId) {
                 1 -> {
                     if (viewModel.userName == resources.getString(R.string.missUsername))
-                        snacky(getBaseActivity(), "Please enter your username", "Enter", ::openSettingsFragment)
+                        (activity as MainActivity).snacky("Please enter your username", true, "Enter")
                     else
                         webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=stars")
                 }
                 2 -> {
                     if (viewModel.userName == resources.getString(R.string.missUsername))
-                        snacky(getBaseActivity(), "Please enter your username", "Enter", ::openSettingsFragment)
+                        (activity as MainActivity).snacky("Please enter your username", true, "Enter")
                     else
                         webView.loadUrl("https://gist.github.com/" + viewModel.userName)
                 }
@@ -178,7 +177,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 7 -> webView.loadUrl("https://gist.github.com/login")
                 8 -> {
                     if (viewModel.userName == resources.getString(R.string.missUsername))
-                        snacky(getBaseActivity(), "Please enter your username", "Enter", ::openSettingsFragment)
+                        (activity as MainActivity).snacky("Please enter your username", true, "Enter")
                     else
                         webView.loadUrl("https://github.com/" + viewModel.userName)
                 }
@@ -236,8 +235,5 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
 
-    private fun openSettingsFragment() {
-        replaceFragment(SettingsFragment.newInstance(), true)
-    }
 
 }

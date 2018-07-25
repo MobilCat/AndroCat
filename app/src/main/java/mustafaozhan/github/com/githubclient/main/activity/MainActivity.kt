@@ -1,13 +1,16 @@
 package mustafaozhan.github.com.githubclient.main.activity
 
+import android.graphics.Typeface
 import android.os.Handler
+import android.support.v4.content.ContextCompat
 import android.view.KeyEvent
+import de.mateware.snacky.Snacky
 import kotlinx.android.synthetic.main.fragment_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseFragment
 import mustafaozhan.github.com.githubclient.base.BaseMvvmActivity
-import mustafaozhan.github.com.githubclient.extensions.snacky
 import mustafaozhan.github.com.githubclient.main.fragment.MainFragment
+import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -45,9 +48,27 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                 return
             }
             this.doubleBackToExitPressedOnce = true
-            snacky(this, "Please click BACK again to exit")
+            snacky("Please click BACK again to exit")
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
         } else
             super.onBackPressed()
+    }
+
+    fun snacky(text: String, hasAction: Boolean = false, actionText: String = "") {
+
+        val mySnacky = Snacky.builder()
+                .setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setText(text)
+                .setIcon(R.mipmap.ic_launcher)
+                .setActivity(this)
+                .setDuration(Snacky.LENGTH_SHORT)
+
+        if (hasAction) {
+            mySnacky.setActionText(actionText.toUpperCase())
+                    .setActionTextTypefaceStyle(Typeface.BOLD)
+                    .setActionClickListener { replaceFragment(SettingsFragment.newInstance(), true) }
+
+        }
+        mySnacky.build().show()
     }
 }
