@@ -3,10 +3,7 @@ package mustafaozhan.github.com.githubclient.main.fragment
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
@@ -15,9 +12,6 @@ import mustafaozhan.github.com.githubclient.base.BaseMvvmFragment
 import mustafaozhan.github.com.githubclient.main.activity.MainActivity
 import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 import mustafaozhan.github.com.githubclient.tools.MyWebViewClient
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -40,13 +34,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     private var quickActionProfile: QuickAction? = null
     private var quickActionExplorer: QuickAction? = null
 
-    private var mInterstitialAd: InterstitialAd? = null
-
-    private var scheduler: ScheduledExecutorService? = null
-
-    private var adVisibility = false
-
-    private var occurs = 5
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,7 +41,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         setDash()
         initWebView()
         setUi()
-        prepareAd()
         if (arguments?.getBoolean(ARGS_SHOW_ON_GITHUB) == true) {
             webView.loadUrl("https://github.com/mustafaozhan/GitHubClient")
         }
@@ -68,46 +54,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             MainActivity.uri = null
         }
 
-        ad()
-
     }
 
-    private fun ad() {
-        adVisibility = true
-        if (scheduler == null) {
-            scheduler = Executors.newSingleThreadScheduledExecutor()
-            (scheduler as ScheduledExecutorService).scheduleAtFixedRate({
-                if (mInterstitialAd?.isLoaded == true && adVisibility && occurs == 5) {
-                    mInterstitialAd?.show()
-                    occurs = 0
-                } else
-                    Log.d("TAG", "Interstitial not loaded")
-                prepareAd()
-                occurs++
-            }, 48, 48, TimeUnit.SECONDS)
-
-        }
-    }
-
-    private fun prepareAd() {
-
-        mInterstitialAd = InterstitialAd(context)
-        mInterstitialAd?.adUnitId = "ca-app-pub-3940256099942544/1033173712"
-        mInterstitialAd?.loadAd(AdRequest.Builder().build())
-    }
-
-    override fun onPause() {
-        super.onPause()
-        scheduler?.shutdownNow()
-        scheduler = null
-        adVisibility = false
-    }
 
     private fun init() {
 
         viewModel.initUsername()
-        if (viewModel.userName != resources.getString(R.string.missUsername))
+        if (viewModel.userName != resources.getString(R.string.missUsername)) {
             url = "https://github.com"
+        }
 
         context?.let {
             quickActionExplorer = QuickAction(it, QuickAction.VERTICAL)
@@ -236,7 +191,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         webView.settings.builtInZoomControls = true
         webView.settings.displayZoomControls = false
         webView.setBackgroundColor(Color.parseColor("#FFFFFF"))
-        webView.settings.textZoom = 124
     }
 
 

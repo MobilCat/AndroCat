@@ -5,13 +5,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "mustafaozhan.github.com.githubclient"
         minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 34
-        versionName "4.13"
+        targetSdkVersion 28
+        versionCode 35
+        versionName "4.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -50,7 +50,7 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
 
     //Ad
-    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.google.firebase:firebase-ads:15.0.1'
 
     //Advanced WebView
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'

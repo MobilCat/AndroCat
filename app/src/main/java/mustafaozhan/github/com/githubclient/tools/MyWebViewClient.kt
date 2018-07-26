@@ -7,6 +7,7 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
+import android.widget.Toast
 import mustafaozhan.github.com.githubclient.extensions.fadeIO
 import mustafaozhan.github.com.githubclient.extensions.setState
 
@@ -27,10 +28,24 @@ class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
-        // hide element by class name
+
+        url?.let {
+            if (url.contains("https://github.com/login")
+                    || url.contains("https://github.com/logout")
+                    || url.contains("https://github.com/search")
+                    || url.contains("https://gist.github.com/login")
+                    || url.contains("https://github.com/marketplace")
+                    || url.contains("https://github.com/trending")
+                    || url.contains("https://github.com/marketplace")
+                    || url == "https://github.com/")
+                view?.settings?.textZoom = 100
+            else if (url.contains("stargazers"))
+                view?.settings?.textZoom = 124
+            else
+                view?.settings?.textZoom = 150
+        }
+
         view?.loadUrl("javascript:(function() { document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none'; \n document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
-//        view?.loadUrl("javascript:(function() { " +
-//                "document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
 
         val manager = view?.context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val i = manager.activeNetworkInfo
