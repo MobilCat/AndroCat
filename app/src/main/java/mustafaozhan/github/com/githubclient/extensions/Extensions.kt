@@ -4,9 +4,9 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
-import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import mustafaozhan.github.com.githubclient.R
+import mustafaozhan.github.com.githubclient.main.activity.MainActivity
 import mustafaozhan.github.com.githubclient.tools.State
 
 /**
@@ -31,7 +31,7 @@ fun LinearLayout.setState(state: State) {
         State.FAILED -> {
             this.mImgViewOctocat.setImageResource(R.drawable.mummytocat)
             this.setBackgroundColor(ContextCompat.getColor(context, R.color.failed))
-            Toast.makeText(context, "No internet connection", Toast.LENGTH_SHORT).show()
+            (this.context as MainActivity).snacky("No internet connection", isLong = true)
         }
     }
 }
