@@ -123,14 +123,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
-                val gistItem = ActionItem(2, "Gists", R.drawable.ic_code_black_24dp)
-                val notificationsItem = ActionItem(3, "Notifications", R.drawable.notifications)
-                val applicationSettingsItem = ActionItem(4, "App Settings", R.drawable.ic_settings_black_24dp)
-                val userSettings = ActionItem(5, "User Settings", R.drawable.user_settings)
-                val logOutItem = ActionItem(6, "Log out", R.drawable.logout_icon)
-                val loginItem = ActionItem(7, "Log in", R.drawable.login_icon)
-                val userItem = ActionItem(8, "Profile", R.drawable.user)
-                quickActionProfile!!.addActionItem(starItem, gistItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, loginItem, userItem)
+                val reposItem = ActionItem(2, "Repositories", R.drawable.new_repo)
+                val gistItem = ActionItem(3, "Gists", R.drawable.ic_code_black_24dp)
+                val notificationsItem = ActionItem(4, "Notifications", R.drawable.notifications)
+                val applicationSettingsItem = ActionItem(5, "App Settings", R.drawable.ic_settings_black_24dp)
+                val userSettings = ActionItem(6, "User Settings", R.drawable.user_settings)
+                val logOutItem = ActionItem(7, "Log out", R.drawable.logout_icon)
+                val loginItem = ActionItem(8, "Log in", R.drawable.login_icon)
+                val userItem = ActionItem(9, "Profile", R.drawable.user)
+                quickActionProfile!!.addActionItem(starItem, reposItem, gistItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, loginItem, userItem)
             }
         }
     }
@@ -158,29 +159,31 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
         quickActionProfile!!.setOnActionItemClickListener {
             when (it.actionId) {
-                1 -> {
-                    if (viewModel.userName == resources.getString(R.string.missUsername))
-                        (activity as MainActivity).snacky("Please enter your username", true, "Enter")
-                    else
-                        webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=stars")
-                }
-                2 -> {
-                    if (viewModel.userName == resources.getString(R.string.missUsername))
-                        (activity as MainActivity).snacky("Please enter your username", true, "Enter")
-                    else
-                        webView.loadUrl("https://gist.github.com/" + viewModel.userName)
-                }
-                3 -> webView.loadUrl("https://github.com/notifications")
-                4 -> replaceFragment(SettingsFragment.newInstance(), true)
-                5 -> webView.loadUrl("https://github.com/settings")
-                6 -> webView.loadUrl("https://github.com/logout")
-                7 -> webView.loadUrl("https://gist.github.com/login")
-                8 -> {
-                    if (viewModel.userName == resources.getString(R.string.missUsername))
-                        (activity as MainActivity).snacky("Please enter your username", true, "Enter")
-                    else
-                        webView.loadUrl("https://github.com/" + viewModel.userName)
-                }
+                1 -> if (viewModel.userName == resources.getString(R.string.missUsername))
+                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                else
+                    webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=stars")
+
+                2 -> if (viewModel.userName == resources.getString(R.string.missUsername))
+                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                else
+                    webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=repositories")
+
+                3 -> if (viewModel.userName == resources.getString(R.string.missUsername))
+                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                else
+                    webView.loadUrl("https://gist.github.com/" + viewModel.userName)
+
+                4 -> webView.loadUrl("https://github.com/notifications")
+                5 -> replaceFragment(SettingsFragment.newInstance(), true)
+                6 -> webView.loadUrl("https://github.com/settings")
+                7 -> webView.loadUrl("https://github.com/logout")
+                8 -> webView.loadUrl("https://gist.github.com/login")
+                9 -> if (viewModel.userName == resources.getString(R.string.missUsername))
+                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                else
+                    webView.loadUrl("https://github.com/" + viewModel.userName)
+
 
             }
 
