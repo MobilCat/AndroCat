@@ -17,6 +17,10 @@ import mustafaozhan.github.com.githubclient.settings.SettingsFragment
  */
 class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
+    companion object {
+        var uri: String? = null
+    }
+
     private var doubleBackToExitPressedOnce = false
 
     override fun getDefaultFragment(): BaseFragment = MainFragment.newInstance()
@@ -25,6 +29,12 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.activity_main
 
+    override fun onResume() {
+        super.onResume()
+        val data = this.intent.data
+        if (data != null && data.isHierarchical)
+            uri = this.intent.dataString
+    }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         val f = supportFragmentManager.findFragmentById(containerId)

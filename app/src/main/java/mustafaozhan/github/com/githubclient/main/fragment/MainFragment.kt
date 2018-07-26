@@ -62,6 +62,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun onResume() {
         super.onResume()
+
+        if (MainActivity.uri != null) {
+            webView.loadUrl(MainActivity.uri)
+            MainActivity.uri = null
+        }
+
         ad()
 
     }
