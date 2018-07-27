@@ -5,9 +5,9 @@
 ## Screenshots
 
 
-<img src="https://s19.postimg.cc/4634bgojn/image.png" width="218px"/> <img src="https://s19.postimg.cc/a70t8jivn/image.png" width="218px"/> <img src="https://s19.postimg.cc/3t7lb4vbn/image.png" width="218px"/> <img src="https://s19.postimg.cc/vgkap88sj/image.png" width="218px"/>
+<img src="https://s19.postimg.cc/wyexs7ff7/image.png" width="218px"/> <img src="https://s19.postimg.cc/3w0npe0v7/image.png" width="218px"/> <img src="https://s19.postimg.cc/h06823g2b/image.png" width="218px"/> <img src="https://s19.postimg.cc/qkpuoyxoj/image.png" width="218px"/>
 
-<img src="https://s19.postimg.cc/cbh1fgmer/image.png" width="218px"/> <img src="https://s19.postimg.cc/58dau19xv/image.png" width="218px"/> <img src="https://s19.postimg.cc/q59iypfoj/image.png" width="218px"/> <img src="https://s19.postimg.cc/wiym1x2k3/image.png" width="218px"/>
+<img src="https://s19.postimg.cc/vw4r9oc1f/image.png" width="218px"/> <img src="https://s19.postimg.cc/60l0qhxcz/image.png" width="218px"/> <img src="https://s19.postimg.cc/72v791nw3/image.png" width="218px"/> <img src="https://s19.postimg.cc/borbhcrer/image.png" width="218px"/>
 
 ## Dependencies
 ```
