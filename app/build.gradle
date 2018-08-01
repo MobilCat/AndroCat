@@ -10,8 +10,8 @@ android {
         applicationId "mustafaozhan.github.com.githubclient"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 35
-        versionName "4.14"
+        versionCode 36
+        versionName "4.15"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
