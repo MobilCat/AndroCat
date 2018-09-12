@@ -156,7 +156,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 3 -> webView.loadUrl("https://github.com/trending")
                 4 -> webView.loadUrl("https://gist.github.com/")
                 5 -> webView.loadUrl("https://github.com/new")
-
+                else -> webView.loadUrl("https://github.com/")
             }
         }
     }

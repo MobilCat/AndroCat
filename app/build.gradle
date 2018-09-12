@@ -10,8 +10,8 @@ android {
         applicationId "mustafaozhan.github.com.githubclient"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 39
-        versionName "4.18"
+        versionCode 40
+        versionName "4.19"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -39,7 +39,7 @@ dependencies {
     implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
 
     //Fabric
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true
     }
 

@@ -84,12 +84,16 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun sendFeedBack() {
-        val email = Intent(Intent.ACTION_SEND)
-        email.type = "text/email"
-        email.putExtra(Intent.EXTRA_EMAIL, arrayOf("mr.mustafa.ozhan@gmail.com"))
-        email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for GitHub Client")
-        email.putExtra(Intent.EXTRA_TEXT, "Dear Developer," + "")
-        startActivity(Intent.createChooser(email, "Send Feedback:"))
+        try {
+            val email = Intent(Intent.ACTION_SEND)
+            email.type = "text/email"
+            email.putExtra(Intent.EXTRA_EMAIL, arrayOf("mr.mustafa.ozhan@gmail.com"))
+            email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for GitHub Client")
+            email.putExtra(Intent.EXTRA_TEXT, "Dear Developer," + "")
+            startActivity(Intent.createChooser(email, "Send Feedback:"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 
