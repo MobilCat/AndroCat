@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.githubclient.settings
 
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -50,7 +51,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                 .setPositiveButton("RATE") { _, _ ->
                     var link = "market://details?id="
                     try {
-                        activity?.packageManager?.getPackageInfo(MainActivity@ activity?.packageName + ":GitHub Client", 0)
+                        activity?.packageManager?.getPackageInfo(activity?.packageName + ":GitHub Client", 0)
                     } catch (e: PackageManager.NameNotFoundException) {
                         link = "https://play.google.com/store/apps/details?id="
                     }
@@ -91,6 +92,8 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for GitHub Client")
             email.putExtra(Intent.EXTRA_TEXT, "Dear Developer," + "")
             startActivity(Intent.createChooser(email, "Send Feedback:"))
+        } catch (activityNotFoundException: ActivityNotFoundException) {
+            getBaseActivity().snacky("You do not have any mail application.")
         } catch (e: Exception) {
             e.printStackTrace()
         }

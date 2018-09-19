@@ -22,16 +22,22 @@ fun LinearLayout.fadeIO(isIn: Boolean) {
 }
 
 fun LinearLayout.setState(state: State) {
-    when (state) {
-        State.SUCCESS -> {
-            this.mImgViewOctocat.setImageResource(R.drawable.octocat_walking_animation)
-            this.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-            this.visibility = View.GONE
+    try {
+
+
+        when (state) {
+            State.SUCCESS -> {
+                this.mImgViewOctocat.setImageResource(R.drawable.octocat_walking_animation)
+                this.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                this.visibility = View.GONE
+            }
+            State.FAILED -> {
+                this.mImgViewOctocat.setImageResource(R.drawable.mummytocat)
+                this.setBackgroundColor(ContextCompat.getColor(context, R.color.failed))
+                (this.context as MainActivity).snacky("No internet connection", isLong = true)
+            }
         }
-        State.FAILED -> {
-            this.mImgViewOctocat.setImageResource(R.drawable.mummytocat)
-            this.setBackgroundColor(ContextCompat.getColor(context, R.color.failed))
-            (this.context as MainActivity).snacky("No internet connection", isLong = true)
-        }
+    } catch (outOfMemoryError: OutOfMemoryError) {
+        (this.context as MainActivity).snacky("Your device do not have enough memory", isLong = true)
     }
 }

@@ -1,21 +1,17 @@
 package mustafaozhan.github.com.githubclient.main.activity
 
 
-import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
-import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.KeyEvent
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
-import de.mateware.snacky.Snacky
 import kotlinx.android.synthetic.main.fragment_main.*
 import mustafaozhan.github.com.githubclient.R
 import mustafaozhan.github.com.githubclient.base.BaseFragment
 import mustafaozhan.github.com.githubclient.base.BaseMvvmActivity
 import mustafaozhan.github.com.githubclient.main.fragment.MainFragment
-import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -82,27 +78,6 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             super.onBackPressed()
     }
 
-    fun snacky(text: String, hasAction: Boolean = false, actionText: String = "", isLong: Boolean = false) {
-
-        val mySnacky = Snacky.builder()
-                .setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                .setText(text)
-                .setIcon(R.mipmap.ic_launcher)
-                .setActivity(this)
-        if (isLong)
-            mySnacky.setDuration(Snacky.LENGTH_LONG)
-        else
-            mySnacky.setDuration(Snacky.LENGTH_SHORT)
-
-        if (hasAction) {
-            mySnacky.setActionText(actionText.toUpperCase())
-                    .setActionTextTypefaceStyle(Typeface.BOLD)
-                    .setActionClickListener { replaceFragment(SettingsFragment.newInstance(), true) }
-
-        }
-        mySnacky.build().show()
-    }
-
     private fun ad() {
         adVisibility = true
         if (scheduler == null) {
@@ -125,7 +100,6 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
     }
 
     private fun prepareAd() {
-
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd?.adUnitId = "ca-app-pub-3940256099942544/1033173712"
         mInterstitialAd?.loadAd(AdRequest.Builder().build())

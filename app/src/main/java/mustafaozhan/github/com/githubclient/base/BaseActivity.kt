@@ -1,11 +1,15 @@
 package mustafaozhan.github.com.githubclient.base
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import de.mateware.snacky.Snacky
 import mustafaozhan.github.com.githubclient.R
+import mustafaozhan.github.com.githubclient.settings.SettingsFragment
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -58,7 +62,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected fun replaceFragment(containerViewId: Int, fragment: BaseFragment) {
         val ft = supportFragmentManager.beginTransaction()
-        if (fragmentManager.backStackEntryCount != 0)
+        if (supportFragmentManager.backStackEntryCount != 0)
             ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
         ft.replace(containerViewId, fragment, fragment.fragmentTag)
         ft.commit()
@@ -67,5 +71,26 @@ abstract class BaseActivity : AppCompatActivity() {
     fun clearBackStack() {
         if (supportFragmentManager.backStackEntryCount > 0)
             supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+    fun snacky(text: String, hasAction: Boolean = false, actionText: String = "", isLong: Boolean = false) {
+
+        val mySnacky = Snacky.builder()
+                .setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setText(text)
+                .setIcon(R.mipmap.ic_launcher)
+                .setActivity(this)
+        if (isLong)
+            mySnacky.setDuration(Snacky.LENGTH_LONG)
+        else
+            mySnacky.setDuration(Snacky.LENGTH_SHORT)
+
+        if (hasAction) {
+            mySnacky.setActionText(actionText.toUpperCase())
+                    .setActionTextTypefaceStyle(Typeface.BOLD)
+                    .setActionClickListener { replaceFragment(SettingsFragment.newInstance(), true) }
+
+        }
+        mySnacky.build().show()
     }
 }

@@ -23,5 +23,5 @@ constructor() : BaseSharedPreferences() {
         setStringEntry(USERNAME, userName)
     }
 
-    fun loadUserName() = getStringEntry(USERNAME, "Please Enter Your Githup Username")
+    fun loadUserName() = getStringEntry(USERNAME, "Please Enter Your GitHup Username")
 }

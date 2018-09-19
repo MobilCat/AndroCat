@@ -83,7 +83,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 setColorRes(R.color.colorGitHubDash)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
-                val starItem = ActionItem(1, "Starts", R.drawable.ic_star_black_24dp)
+                val starItem = ActionItem(1, "Stars", R.drawable.ic_star_black_24dp)
                 val reposItem = ActionItem(2, "Repositories", R.drawable.new_repo)
                 val gistItem = ActionItem(3, "Gists", R.drawable.ic_code_black_24dp)
                 val notificationsItem = ActionItem(4, "Notifications", R.drawable.notifications)
@@ -121,17 +121,17 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         quickActionProfile!!.setOnActionItemClickListener {
             when (it.actionId) {
                 1 -> if (viewModel.userName == resources.getString(R.string.missUsername))
-                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                    getBaseActivity().snacky("Please enter your username", true, "Enter", true)
                 else
                     webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=stars")
 
                 2 -> if (viewModel.userName == resources.getString(R.string.missUsername))
-                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                    getBaseActivity().snacky("Please enter your username", true, "Enter", true)
                 else
                     webView.loadUrl("https://github.com/" + viewModel.userName + "?tab=repositories")
 
                 3 -> if (viewModel.userName == resources.getString(R.string.missUsername))
-                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                    getBaseActivity().snacky("Please enter your username", true, "Enter", true)
                 else
                     webView.loadUrl("https://gist.github.com/" + viewModel.userName)
 
@@ -141,7 +141,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 7 -> webView.loadUrl("https://github.com/logout")
                 8 -> webView.loadUrl("https://gist.github.com/login")
                 9 -> if (viewModel.userName == resources.getString(R.string.missUsername))
-                    (activity as MainActivity).snacky("Please enter your username", true, "Enter")
+                    getBaseActivity().snacky("Please enter your username", true, "Enter", true)
                 else
                     webView.loadUrl("https://github.com/" + viewModel.userName)
 
