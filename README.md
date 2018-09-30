@@ -1,5 +1,6 @@
 <p align="center">A GitHub client like how you used to</p>
-<p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.githubclient"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"></a></p>
+<p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.githubclient"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="300px"></a></p>
+<p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.githubclient"><img src="https://www.androidpolice.com/wp-content/uploads/2016/03/nexus2cee_apkm2.gif" width="250px"></a></p>
 
 
 ## Screenshots
