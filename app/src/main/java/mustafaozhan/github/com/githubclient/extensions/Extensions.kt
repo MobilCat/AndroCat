@@ -23,8 +23,6 @@ fun LinearLayout.fadeIO(isIn: Boolean) {
 
 fun LinearLayout.setState(state: State) {
     try {
-
-
         when (state) {
             State.SUCCESS -> {
                 this.mImgViewOctocat.setImageResource(R.drawable.octocat_walking_animation)

@@ -94,7 +94,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                     occurs++
 
                 }
-            }, 40, 40, TimeUnit.SECONDS)
+            }, 44, 44, TimeUnit.SECONDS)
 
         }
     }
