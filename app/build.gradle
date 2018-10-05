@@ -7,7 +7,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "mustafaozhan.github.com.githubclient"
+        applicationId "mustafaozhan.github.com.androcat"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 43
