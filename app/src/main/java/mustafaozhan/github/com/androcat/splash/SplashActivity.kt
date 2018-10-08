@@ -2,11 +2,7 @@ package mustafaozhan.github.com.androcat.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_splash.*
-import mustafaozhan.github.com.androcat.R
-import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 
 /**
@@ -15,11 +11,7 @@ import mustafaozhan.github.com.androcat.main.activity.MainActivity
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-        linearSplash.fadeIO(true)
-        Handler().postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }, 1500)
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

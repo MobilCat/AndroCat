@@ -17,6 +17,15 @@
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Fullscreen.SplashTheme">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:windowAnimationStyle">@style/AppTheme.WindowTransition</item>
+    </style>
+
+    <style name="AppTheme.Fullscreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <!-- Setting window animation -->
     <style name="AppTheme.WindowTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
