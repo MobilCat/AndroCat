@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="130" />
+                                                <entry key="scalingPercent" value="96" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -35,8 +35,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="C:\Users\Mustafa Ozhan\Documents\androcat_with_background_dash.png" />
+                                      <entry key="backgroundColor" value="eceff1" />
+                                      <entry key="foregroundImage" value="C:\Users\Mustafa Ozhan\Desktop\androcat.png" />
                                       <entry key="showGrid" value="true" />
                                     </map>
                                   </option>
