@@ -8,7 +8,7 @@
 
 <img src="https://i.postimg.cc/s37V6NKR/1.png?dl=1" width="218px"/> <img src="https://s19.postimg.cc/3w0npe0v7/image.png" width="218px"/> <img src="https://s19.postimg.cc/h06823g2b/image.png" width="218px"/> <img src="https://s19.postimg.cc/qkpuoyxoj/image.png" width="218px"/>
 
-<img src="https://s19.postimg.cc/vw4r9oc1f/image.png" width="218px"/> <img src="https://s19.postimg.cc/60l0qhxcz/image.png" width="218px"/> <img src="https://s19.postimg.cc/72v791nw3/image.png" width="218px"/> <img src="https://s19.postimg.cc/borbhcrer/image.png" width="218px"/>
+<img src="https://s19.postimg.cc/vw4r9oc1f/image.png" width="218px"/> <img src="https://s19.postimg.cc/60l0qhxcz/image.png" width="218px"/> <img src="https://i.postimg.cc/QsWDfzfx/7.png?dl=1" width="218px"/> <img src="https://s19.postimg.cc/borbhcrer/image.png" width="218px"/>
 
 ## Dependencies
 ```
