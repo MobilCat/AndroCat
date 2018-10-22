@@ -38,7 +38,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/loading"
             android:scaleType="centerInside"
-            android:src="@drawable/octocat_walking_animation"/>
+            android:src="@drawable/octocat_walk" />
 
     </LinearLayout>
 

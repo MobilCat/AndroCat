@@ -25,7 +25,7 @@ fun LinearLayout.setState(state: State) {
     try {
         when (state) {
             State.SUCCESS -> {
-                this.mImgViewOctocat.setImageResource(R.drawable.octocat_walking_animation)
+                this.mImgViewOctocat.setImageResource(R.drawable.octocat_walk)
                 this.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
                 this.visibility = View.GONE
             }

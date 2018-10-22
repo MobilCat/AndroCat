@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_feed"
-        android:icon="@drawable/octocat_dash_small"
+        android:icon="@drawable/androcat_dash"
         android:title="@string/news_feed" />
     <item
         android:id="@+id/navigation_pull_request"
