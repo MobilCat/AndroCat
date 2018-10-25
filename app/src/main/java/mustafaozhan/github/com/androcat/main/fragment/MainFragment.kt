@@ -1,8 +1,10 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.piruin.quickaction.ActionItem
@@ -95,6 +97,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 quickActionProfile!!.addActionItem(starItem, reposItem, gistItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, loginItem, userItem)
             }
         }
+
+
     }
 
     private fun setUi() {
@@ -159,6 +163,18 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 else -> webView.loadUrl("https://github.com/")
             }
         }
+
+        mImgViewAndroCat.apply {
+            setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.splash), 114.0f)
+            setCircleSize(130.0f)
+            setArchSize(132.75f)
+            setCircleColor(ContextCompat.getColor(context, R.color.white))
+            setArchColor(ContextCompat.getColor(context, R.color.colorGitHubDash))
+            setArchLength(150)
+            setArchStroke(15f)
+            setArchSpeed(10)
+        }
+
     }
 
     private fun setDash() {

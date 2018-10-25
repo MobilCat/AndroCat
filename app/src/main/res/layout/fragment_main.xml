@@ -31,14 +31,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:padding="64dp"
-            android:id="@+id/mImgViewOctocat"
+        <com.mrtyvz.archedimageprogress.ArchedImageProgressBar
+            android:id="@+id/mImgViewAndroCat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/loading"
-            android:scaleType="centerInside"
-            android:src="@drawable/octocat_walk" />
+            android:padding="64dp"
+            android:scaleType="centerInside" />
 
     </LinearLayout>
 
