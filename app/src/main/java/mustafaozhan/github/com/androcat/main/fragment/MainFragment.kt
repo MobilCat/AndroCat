@@ -165,9 +165,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
 
         mImgViewAndroCat.apply {
-            setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.splash), 114.0f)
-            setCircleSize(130.0f)
-            setArchSize(132.75f)
+            setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat), 120f)
+            setCircleSize(130f)
+            setArchSize(132f)
             setCircleColor(ContextCompat.getColor(context, R.color.white))
             setArchColor(ContextCompat.getColor(context, R.color.colorGitHubDash))
             setArchLength(150)

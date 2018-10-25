@@ -46,7 +46,6 @@
         android:id="@+id/mBottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:itemBackground="@color/colorGitHubDash"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"

@@ -46,12 +46,10 @@ class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
 
         view?.loadUrl("javascript:(function() { document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none'; \n document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
 
-        val manager = view?.context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val i = manager.activeNetworkInfo
-        val hasConnect = i != null && i.isConnected && i.isAvailable
-
+        val connectivityManager = view?.context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         mGifLayout.fadeIO(false)
-        if (hasConnect)
+
+        if (connectivityManager.activeNetworkInfo != null)
             mGifLayout.setState(State.SUCCESS)
         else
             mGifLayout.setState(State.FAILED)
