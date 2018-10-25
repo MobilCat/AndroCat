@@ -30,6 +30,7 @@ fun ArchedImageProgressBar.setState(state: State) {
                 this.visibility = View.GONE
             }
             State.FAILED -> {
+                this.visibility = View.VISIBLE
                 this.setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning), 120f)
                 this.setArchSpeed(1)
                 (this.context as MainActivity).snacky("No internet connection", isLong = true)
