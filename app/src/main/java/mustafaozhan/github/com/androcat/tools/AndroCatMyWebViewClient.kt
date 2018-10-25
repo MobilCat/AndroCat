@@ -42,6 +42,7 @@ class AndroCatMyWebViewClient(private val mProgressBar: ArchedImageProgressBar) 
                         || contains("https://github.com/marketplace")
                         || contains("https://github.com/trending")
                         || contains("https://github.com/marketplace")
+                        || contains("https://github.com/org")//for organizations
                         || this == "https://github.com/") {
                     settings?.textZoom = 100
                     state = State.SUCCESS
