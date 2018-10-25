@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.LinearLayout
+import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.setState
 
@@ -14,7 +14,7 @@ import mustafaozhan.github.com.androcat.extensions.setState
 /**
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
-class MyWebViewClient(private val mGifLayout: LinearLayout) : WebViewClient() {
+class MyWebViewClient(private val mGifLayout: ArchedImageProgressBar) : WebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         view?.loadUrl(url)
         return true

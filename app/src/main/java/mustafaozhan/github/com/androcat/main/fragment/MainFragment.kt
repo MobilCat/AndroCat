@@ -190,7 +190,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        webView.webViewClient = MyWebViewClient(mGifLayout)
+        webView.webViewClient = MyWebViewClient(mImgViewAndroCat)
         var newUserAgent: String? = webView.settings.userAgentString
         try {
             val ua = webView.settings.userAgentString

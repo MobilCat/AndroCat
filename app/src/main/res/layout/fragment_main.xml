@@ -21,26 +21,19 @@
             android:layout_height="0dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <LinearLayout
-        android:id="@+id/mGifLayout"
+
+    <com.mrtyvz.archedimageprogress.ArchedImageProgressBar
+        android:id="@+id/mImgViewAndroCat"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"
+        android:contentDescription="@string/loading"
+        android:padding="64dp"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.mrtyvz.archedimageprogress.ArchedImageProgressBar
-            android:id="@+id/mImgViewAndroCat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/loading"
-            android:padding="64dp"
-            android:scaleType="centerInside" />
-
-    </LinearLayout>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/mBottomNavigationView"

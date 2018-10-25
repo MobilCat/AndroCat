@@ -1,11 +1,9 @@
 package mustafaozhan.github.com.androcat.extensions
 
 import android.graphics.BitmapFactory
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.fragment_main.view.*
+import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.tools.State
@@ -16,26 +14,24 @@ import mustafaozhan.github.com.androcat.tools.State
  */
 
 
-fun LinearLayout.fadeIO(isIn: Boolean) {
+fun ArchedImageProgressBar.fadeIO(isIn: Boolean) {
     if (isIn)
         this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
     else
         this.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
 }
 
-fun LinearLayout.setState(state: State) {
+fun ArchedImageProgressBar.setState(state: State) {
     try {
         when (state) {
             State.SUCCESS -> {
-                this.mImgViewAndroCat.setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat), 120f)
-                this.mImgViewAndroCat.setArchSpeed(10)
-                this.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                this.setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat), 120f)
+                this.setArchSpeed(10)
                 this.visibility = View.GONE
             }
             State.FAILED -> {
-                this.mImgViewAndroCat.setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning), 120f)
-                this.mImgViewAndroCat.setArchSpeed(1)
-                this.setBackgroundColor(ContextCompat.getColor(context, R.color.failed))
+                this.setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning), 120f)
+                this.setArchSpeed(1)
                 (this.context as MainActivity).snacky("No internet connection", isLong = true)
             }
         }
