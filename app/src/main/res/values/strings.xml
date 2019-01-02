@@ -22,4 +22,22 @@
     <string name="support">Support</string>
     <string name="feedback">Feedback</string>
     <string name="on_github">On GitHub</string>
+
+    <!--URL-->
+    <string name="url_login">https://github.com/login</string>
+    <string name="url_logout">https://github.com/logout</string>
+    <string name="url_search">https://github.com/search</string>
+    <string name="url_gist_login">https://gist.github.com/login</string>
+    <string name="url_market_place">https://github.com/marketplace</string>
+    <string name="url_trending">https://github.com/trending</string>
+    <string name="url_str_organization">https://github.com/org</string>
+    <string name="url_github">https://github.com/</string>
+    <string name="url_str_github">github</string>
+    <string name="url_str_stargazers">stargazers</string>
+    <string name="url_blank">about:blank</string>
+    <string name="url_str_google_play">https://play.google.com</string>
+
+    <!--Java Script-->
+    <string name="js_script">javascript:(function() { document.getElementsByClassName(\'position-relative js-header-wrapper \\\\\')[0].style.display='none'; \n document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()</string>
+
 </resources>

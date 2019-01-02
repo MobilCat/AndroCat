@@ -13,7 +13,7 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
-import mustafaozhan.github.com.androcat.tools.AndroCatMyWebViewClient
+import mustafaozhan.github.com.androcat.tools.AndroCatWebViewClient
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -190,7 +190,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        webView.webViewClient = AndroCatMyWebViewClient(mImgViewAndroCat)
+        webView.webViewClient = AndroCatWebViewClient(mImgViewAndroCat)
         var newUserAgent: String? = webView.settings.userAgentString
         try {
             val ua = webView.settings.userAgentString
