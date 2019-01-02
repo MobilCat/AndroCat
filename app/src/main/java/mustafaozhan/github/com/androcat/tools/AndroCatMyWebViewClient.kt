@@ -7,6 +7,18 @@ import android.webkit.WebViewClient
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.setState
+import mustafaozhan.github.com.androcat.tools.Links.Companion.GIST_LOGIN
+import mustafaozhan.github.com.androcat.tools.Links.Companion.GITHUB
+import mustafaozhan.github.com.androcat.tools.Links.Companion.LOGIN
+import mustafaozhan.github.com.androcat.tools.Links.Companion.LOGOUT
+import mustafaozhan.github.com.androcat.tools.Links.Companion.MARKET_PLACE
+import mustafaozhan.github.com.androcat.tools.Links.Companion.SEARCH
+import mustafaozhan.github.com.androcat.tools.Links.Companion.STR_BLANK
+import mustafaozhan.github.com.androcat.tools.Links.Companion.STR_GITHUB
+import mustafaozhan.github.com.androcat.tools.Links.Companion.STR_GOOGLE_PLAY
+import mustafaozhan.github.com.androcat.tools.Links.Companion.STR_ORGANIZATION
+import mustafaozhan.github.com.androcat.tools.Links.Companion.STR_STARGAZERS
+import mustafaozhan.github.com.androcat.tools.Links.Companion.TRENDING
 
 @Suppress("OverridingDeprecatedMember")
 /**
@@ -35,25 +47,32 @@ class AndroCatMyWebViewClient(private val mProgressBar: ArchedImageProgressBar) 
         mWebView?.apply {
             loadUrl("javascript:(function() { document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none'; \n document.getElementsByClassName('footer container-lg px-3')[0].style.display='none'; })()")
             url?.apply {
-                if (contains("https://github.com/login")
-                        || contains("https://github.com/logout")
-                        || contains("https://github.com/search")
-                        || contains("https://gist.github.com/login")
-                        || contains("https://github.com/marketplace")
-                        || contains("https://github.com/trending")
-                        || contains("https://github.com/marketplace")
-                        || contains("https://github.com/org")//for organizations
-                        || this == "https://github.com/") {
-                    settings?.textZoom = 100
-                    state = State.SUCCESS
-                } else if (contains("stargazers")) {
-                    settings?.textZoom = 124
-                    state = State.SUCCESS
-                } else if (contains("about:blank")) {
-                    state = State.FAILED
-                } else {
-                    state = State.SUCCESS
-                    settings?.textZoom = 150
+                when {
+                    contains(LOGIN)
+                            || contains(LOGOUT)
+                            || contains(SEARCH)
+                            || contains(GIST_LOGIN)
+                            || contains(MARKET_PLACE)
+                            || contains(TRENDING)
+                            || contains(STR_ORGANIZATION)
+                            || contains(STR_GOOGLE_PLAY)
+                            || !contains(STR_GITHUB)
+                            || this == GITHUB -> {
+
+                        settings?.textZoom = 100
+                        state = State.SUCCESS
+                    }
+                    contains(STR_STARGAZERS) -> {
+                        settings?.textZoom = 124
+                        state = State.SUCCESS
+                    }
+                    contains(STR_BLANK) -> {
+                        state = State.FAILED
+                    }
+                    else -> {
+                        state = State.SUCCESS
+                        settings?.textZoom = 150
+                    }
                 }
             }
         }
