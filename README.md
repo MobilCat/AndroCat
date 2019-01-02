@@ -1,14 +1,15 @@
 <p align="center">AndroCat is a GitHub client for Android phones like how you used to</p>
-<p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.githubclient"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="300px"></a></p>
-<!---<p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.githubclient"><img src="https://www.androidpolice.com/wp-content/uploads/2016/03/nexus2cee_apkm2.gif" width="250px"></a></p>--->
+<p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="300px"></a></p>
+<p align="center">Important! old version has removed from Google Play Strore be sure that you have downloaded AndroCat from store icon above if you want to get lastest updates</p>
+
 
 
 ## Screenshots
 
 
-<img src="https://i.postimg.cc/syxDZZTF/1.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/Dnbvx3VB/3.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/r8qqydDP/4.png?dl=1" width="218px"/>
+<img src="https://i.postimg.cc/D2QTN7jQ/1.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/7Hmyxmyf/2.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/Dnbvx3VB/3.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/r8qqydDP/4.png?dl=1" width="218px"/>
 
-<img src="https://i.postimg.cc/mTfbqpBR/5.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/ZJ8ThP5N/6.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/qrjvRGXX/8.png?dl=1" width="218px"/>
+<img src="https://i.postimg.cc/mTfbqpBR/5.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/ZJ8ThP5N/6.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/Q8X3Gvw2/7.png?dl=1" width="218px"/> <img src="https://i.postimg.cc/qrjvRGXX/8.png?dl=1" width="218px"/>
 
 ## Dependencies
 ```
