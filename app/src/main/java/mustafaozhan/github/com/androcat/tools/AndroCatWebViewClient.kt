@@ -47,15 +47,15 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                                 || contains(getString(R.string.url_gist_login))
                                 || contains(getString(R.string.url_market_place))
                                 || contains(getString(R.string.url_trending))
-                                || contains(getString(R.string.url_str_organization))
-                                || contains(getString(R.string.url_str_google_play))
-                                || !contains(getString(R.string.url_str_github))
+                                || contains(getString(R.string.str_organization))
+                                || contains(getString(R.string.str_google_play))
+                                || !contains(getString(R.string.str_github))
                                 || this == getString(R.string.url_github) -> {
 
                             settings?.textZoom = 100
                             state = State.SUCCESS
                         }
-                        contains(getString(R.string.url_str_stargazers)) -> {
+                        contains(getString(R.string.str_stargazers)) -> {
                             settings?.textZoom = 124
                             state = State.SUCCESS
                         }

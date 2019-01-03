@@ -31,7 +31,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
     }
 
-    private var url = "https://github.com/login"
+    private var url = getString(R.string.url_login)
 
     private var quickActionProfile: QuickAction? = null
     private var quickActionExplorer: QuickAction? = null
@@ -44,7 +44,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         initWebView()
         setUi()
         if (arguments?.getBoolean(ARGS_SHOW_ON_GITHUB) == true) {
-            webView.loadUrl("https://github.com/mustafaozhan/AndroCat")
+            webView.loadUrl(getString(R.string.url_project_repository))
         }
     }
 
@@ -72,11 +72,11 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 setColorRes(R.color.colorGitHubDash)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
-                val searchItem = ActionItem(1, "Search", R.drawable.search_icon)
-                val marketPlaceItem = ActionItem(2, "Market Place", R.drawable.ic_shopping_cart_black_24dp)
-                val trendsItem = ActionItem(3, "Trends", R.drawable.ic_trending_up_black_24dp)
-                val newGistItem = ActionItem(4, "New Gist", R.drawable.ic_code_black_24dp)
-                val newRepoItem = ActionItem(5, "New Repository", R.drawable.new_repo)
+                val searchItem = ActionItem(1, getString(R.string.search), R.drawable.search_icon)
+                val marketPlaceItem = ActionItem(2, getString(R.string.market_place), R.drawable.ic_shopping_cart_black_24dp)
+                val trendsItem = ActionItem(3, getString(R.string.trends), R.drawable.ic_trending_up_black_24dp)
+                val newGistItem = ActionItem(4, getString(R.string.new_gist), R.drawable.ic_code_black_24dp)
+                val newRepoItem = ActionItem(5, getString(R.string.new_repository), R.drawable.new_repo)
                 addActionItem(searchItem, marketPlaceItem, trendsItem, newGistItem, newRepoItem)
             }
 
@@ -85,15 +85,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 setColorRes(R.color.colorGitHubDash)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
-                val starItem = ActionItem(1, "Stars", R.drawable.ic_star_black_24dp)
-                val reposItem = ActionItem(2, "Repositories", R.drawable.new_repo)
-                val gistItem = ActionItem(3, "Gists", R.drawable.ic_code_black_24dp)
-                val notificationsItem = ActionItem(4, "Notifications", R.drawable.notifications)
-                val applicationSettingsItem = ActionItem(5, "App Settings", R.drawable.ic_settings_black_24dp)
-                val userSettings = ActionItem(6, "User Settings", R.drawable.user_settings)
-                val logOutItem = ActionItem(7, "Log out", R.drawable.logout_icon)
-                val loginItem = ActionItem(8, "Log in", R.drawable.login_icon)
-                val userItem = ActionItem(9, "Profile", R.drawable.user)
+                val starItem = ActionItem(1, getString(R.string.starts), R.drawable.ic_star_black_24dp)
+                val reposItem = ActionItem(2, getString(R.string.repositories), R.drawable.new_repo)
+                val gistItem = ActionItem(3, getString(R.string.gists), R.drawable.ic_code_black_24dp)
+                val notificationsItem = ActionItem(4, getString(R.string.notifications), R.drawable.notifications)
+                val applicationSettingsItem = ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings_black_24dp)
+                val userSettings = ActionItem(6, getString(R.string.user_settings), R.drawable.user_settings)
+                val logOutItem = ActionItem(7, getString(R.string.log_out), R.drawable.logout_icon)
+                val loginItem = ActionItem(8, getString(R.string.log_in), R.drawable.login_icon)
+                val userItem = ActionItem(9, getString(R.string.profile), R.drawable.user)
                 quickActionProfile!!.addActionItem(starItem, reposItem, gistItem, notificationsItem, applicationSettingsItem, userSettings, logOutItem, loginItem, userItem)
             }
         }
@@ -113,12 +113,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 R.id.navigation_find -> quickActionExplorer!!.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
                     if (viewModel.userName == resources.getString(R.string.username))
-                        webView.loadUrl("https://github.com/login")
+                        webView.loadUrl(getString(R.string.url_login))
                     else
-                        webView.loadUrl("https://github.com")
+                        webView.loadUrl(getString(R.string.url_github))
                 }
-                R.id.navigation_pull_request -> webView.loadUrl("https://github.com/pulls")
-                R.id.navigation_Issues -> webView.loadUrl("https://github.com/issues")
+                R.id.navigation_pull_request -> webView.loadUrl(getString(R.string.url_pulls))
+                R.id.navigation_Issues -> webView.loadUrl(getString(R.string.url_issues))
             }
             true
         }

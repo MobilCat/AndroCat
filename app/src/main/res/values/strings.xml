@@ -16,12 +16,20 @@
     <string name="user">User</string>
     <string name="starts">Starts</string>
     <string name="show_profile">Show Profile</string>
+    <string name="log_in">Log in</string>
     <string name="log_out">Log out</string>
     <string name="settings">Settings</string>
     <string name="notifications">Notifications</string>
     <string name="support">Support</string>
     <string name="feedback">Feedback</string>
     <string name="on_github">On GitHub</string>
+    <string name="trends">Trends</string>
+    <string name="new_gist">New Gist</string>
+    <string name="new_repository">New Repository</string>
+    <string name="repositories">Repositories</string>
+    <string name="gists">Gists</string>
+    <string name="app_settings">App Settings</string>
+    <string name="user_settings">User Settings</string>
 
     <!--URL-->
     <string name="url_login">https://github.com/login</string>
@@ -30,11 +38,16 @@
     <string name="url_gist_login">https://gist.github.com/login</string>
     <string name="url_market_place">https://github.com/marketplace</string>
     <string name="url_trending">https://github.com/trending</string>
-    <string name="url_str_organization">https://github.com/org</string>
     <string name="url_github">https://github.com/</string>
-    <string name="url_str_github">github</string>
-    <string name="url_str_stargazers">stargazers</string>
-    <string name="url_blank">about:blank</string>
-    <string name="url_str_google_play">https://play.google.com</string>
+    <string name="url_pulls">https://github.com/pulls</string>
+    <string name="url_issues">https://github.com/issues</string>
 
+    <string name="url_blank">about:blank</string>
+    <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
+
+    <!--STR-->
+    <string name="str_github">github</string>
+    <string name="str_stargazers">stargazers</string>
+    <string name="str_google_play">https://play.google.com</string>
+    <string name="str_organization">https://github.com/org</string>
 </resources>
