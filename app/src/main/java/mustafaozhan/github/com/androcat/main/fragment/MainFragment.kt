@@ -31,7 +31,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
     }
 
-    private var url = getString(R.string.url_login)
+    private lateinit var url: String
 
     private var quickActionProfile: QuickAction? = null
     private var quickActionExplorer: QuickAction? = null
@@ -60,7 +60,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
 
     private fun init() {
-
+        url = getString(R.string.url_login)
         viewModel.initUsername()
         if (viewModel.userName != resources.getString(R.string.missUsername)) {
             url = "https://github.com"
