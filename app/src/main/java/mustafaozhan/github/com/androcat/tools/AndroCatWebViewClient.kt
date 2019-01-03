@@ -34,10 +34,12 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
 
     override fun onPageFinished(mWebView: WebView?, url: String?) {
         mWebView?.apply {
-
+            loadUrl("javascript:(function() {" +
+                    " document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none';" +
+                    " document.getElementsByClassName('footer container-lg px-3')[0].style.display='none';" +
+                    " })()")
             context?.apply {
                 url?.apply {
-                    loadUrl(getString(R.string.js_script))
                     when {
                         contains(getString(R.string.url_login))
                                 || contains(getString(R.string.url_logout))
