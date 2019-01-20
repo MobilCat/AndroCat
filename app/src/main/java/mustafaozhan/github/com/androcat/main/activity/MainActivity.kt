@@ -39,12 +39,12 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        prepareAd()
+        prepareAd()
     }
 
     override fun onResume() {
         super.onResume()
-//        ad()
+        ad()
         val data = this.intent.data
         if (data != null && data.isHierarchical)
             uri = this.intent.dataString
