@@ -3,10 +3,12 @@ package mustafaozhan.github.com.androcat.extensions
 import android.graphics.BitmapFactory
 import android.view.View
 import android.view.animation.AnimationUtils
+import com.crashlytics.android.Crashlytics
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.tools.State
+import java.lang.Exception
 
 
 /**
@@ -36,7 +38,7 @@ fun ArchedImageProgressBar.setState(state: State) {
                 (this.context as MainActivity).snacky("No internet connection", isLong = true)
             }
         }
-    } catch (outOfMemoryError: OutOfMemoryError) {
-        (this.context as MainActivity).snacky("Your device do not have enough memory", isLong = true)
+    } catch (e: Exception) {
+        Crashlytics.logException(e)
     }
 }

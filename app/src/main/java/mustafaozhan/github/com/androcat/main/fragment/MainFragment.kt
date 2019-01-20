@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_main.*
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
@@ -197,6 +198,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             val androidOSString = webView.settings.userAgentString.substring(ua.indexOf("("), ua.indexOf(")") + 1)
             newUserAgent = webView.settings.userAgentString.replace(androidOSString, "(X11; Linux x86_64)")
         } catch (e: Exception) {
+            Crashlytics.logException(e)
             e.printStackTrace()
         }
         webView.settings.userAgentString = newUserAgent

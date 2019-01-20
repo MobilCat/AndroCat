@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_settings.*
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
@@ -54,6 +55,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                         activity?.packageManager?.getPackageInfo(activity?.packageName + ":AndroCat", 0)
                     } catch (e: PackageManager.NameNotFoundException) {
                         link = "https://play.google.com/store/apps/details?id="
+                        Crashlytics.logException(e)
                     }
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link + activity?.packageName)))
                 }
@@ -93,8 +95,10 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             email.putExtra(Intent.EXTRA_TEXT, "Dear Developer," + "")
             startActivity(Intent.createChooser(email, "Send Feedback:"))
         } catch (activityNotFoundException: ActivityNotFoundException) {
+            Crashlytics.logException(activityNotFoundException)
             getBaseActivity().snacky("You do not have any mail application.")
         } catch (e: Exception) {
+            Crashlytics.logException(e)
             e.printStackTrace()
         }
     }
