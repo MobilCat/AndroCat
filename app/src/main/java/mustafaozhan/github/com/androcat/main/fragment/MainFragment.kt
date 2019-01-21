@@ -51,7 +51,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun onResume() {
         super.onResume()
-
+        webView.onResume()
         if (MainActivity.uri != null) {
             webView.loadUrl(MainActivity.uri)
             MainActivity.uri = null
@@ -59,6 +59,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        webView.onPause()
+    }
 
     private fun init() {
         url = getString(R.string.url_login)
@@ -166,7 +170,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
 
         mImgViewAndroCat.apply {
-            setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat),120f)
+            setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat), 120f)
 
             setArchSize(160f)
             setCircleColor(ContextCompat.getColor(context, R.color.white))
