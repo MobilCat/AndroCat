@@ -49,21 +49,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        webView.onResume()
-        if (MainActivity.uri != null) {
-            webView.loadUrl(MainActivity.uri)
-            MainActivity.uri = null
-        }
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        webView.onPause()
-    }
-
     private fun init() {
         url = getString(R.string.url_login)
         viewModel.initUsername()
@@ -220,5 +205,19 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
 
+    override fun onResume() {
+        super.onResume()
+        webView.onResume()
+        if (MainActivity.uri != null) {
+            webView.loadUrl(MainActivity.uri)
+            MainActivity.uri = null
+        }
 
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        webView.onPause()
+    }
 }

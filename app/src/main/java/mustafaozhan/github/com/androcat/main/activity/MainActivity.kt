@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseFragment
@@ -39,16 +42,10 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        prepareAd()
+        prepareAd()
     }
 
-    override fun onResume() {
-        super.onResume()
-//        ad()
-        val data = this.intent.data
-        if (data != null && data.isHierarchical)
-            uri = this.intent.dataString
-    }
+
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         val f = supportFragmentManager.findFragmentById(containerId)
@@ -110,5 +107,12 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         scheduler?.shutdownNow()
         scheduler = null
         adVisibility = false
+    }
+    override fun onResume() {
+        super.onResume()
+        ad()
+        val data = this.intent.data
+        if (data != null && data.isHierarchical)
+            uri = this.intent.dataString
     }
 }
