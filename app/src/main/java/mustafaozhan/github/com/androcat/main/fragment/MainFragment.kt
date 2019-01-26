@@ -206,7 +206,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        webView.onResume()
+        webView?.onResume()
         if (MainActivity.uri != null) {
             webView.loadUrl(MainActivity.uri)
             MainActivity.uri = null
@@ -217,6 +217,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        webView.onPause()
+        webView?.onPause()
     }
 }
