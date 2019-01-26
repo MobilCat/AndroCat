@@ -10,8 +10,8 @@ android {
         applicationId "mustafaozhan.github.com.androcat"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.06"
+        versionCode 9
+        versionName "1.08"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

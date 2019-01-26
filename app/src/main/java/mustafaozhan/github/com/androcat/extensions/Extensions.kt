@@ -27,7 +27,7 @@ fun ArchedImageProgressBar.setState(state: State) {
     try {
         when (state) {
             State.SUCCESS -> {
-                this.setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat), 120f)
+                this.setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle), 120f)
                 this.setArchSpeed(10)
                 this.visibility = View.GONE
             }
