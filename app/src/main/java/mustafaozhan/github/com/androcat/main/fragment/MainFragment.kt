@@ -159,9 +159,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             setArchSize(124f)
             setCircleColor(ContextCompat.getColor(context, R.color.white))
             setArchColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-            setArchLength(280)
-            setArchStroke(30f)
-            setArchSpeed(15)
+            setArchLength(240)
+            setArchStroke(24f)
+            setArchSpeed(12)
         }
 
     }
