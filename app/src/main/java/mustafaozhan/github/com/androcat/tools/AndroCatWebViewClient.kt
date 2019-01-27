@@ -17,8 +17,7 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
     private var state: State = State.SUCCESS
     override fun onReceivedError(mWebView: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
         mWebView?.loadUrl(mWebView.context.getString(R.string.url_blank))
-        state = State.FAILED
-        mProgressBar.setState(state)
+        mProgressBar.setState(State.FAILED)
     }
 
     override fun shouldOverrideUrlLoading(mWebView: WebView?, url: String?): Boolean {
@@ -40,31 +39,32 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                     " })()")
             context?.apply {
                 url?.apply {
-                    when {
-                        contains(getString(R.string.url_login))
-                                || contains(getString(R.string.url_logout))
-                                || contains(getString(R.string.url_search))
-                                || contains(getString(R.string.url_gist_login))
-                                || contains(getString(R.string.url_market_place))
-                                || contains(getString(R.string.url_trending))
-                                || contains(getString(R.string.str_organization))
-                                || contains(getString(R.string.str_google_play))
-                                || !contains(getString(R.string.str_github))
-                                || this == getString(R.string.url_github) -> {
+                    if (contains(getString(R.string.url_blank))) {
+                        state = State.FAILED
+                    } else {
+                        when {
+                            contains(getString(R.string.url_login))
+                                    || contains(getString(R.string.url_logout))
+                                    || contains(getString(R.string.url_search))
+                                    || contains(getString(R.string.url_gist_login))
+                                    || contains(getString(R.string.url_market_place))
+                                    || contains(getString(R.string.url_trending))
+                                    || contains(getString(R.string.str_organization))
+                                    || contains(getString(R.string.str_google_play))
+                                    || !contains(getString(R.string.str_github))
+                                    || this == getString(R.string.url_github) -> {
 
-                            settings?.textZoom = 100
-                            state = State.SUCCESS
-                        }
-                        contains(getString(R.string.str_stargazers)) -> {
-                            settings?.textZoom = 124
-                            state = State.SUCCESS
-                        }
-                        contains(getString(R.string.url_blank)) -> {
-                            state = State.FAILED
-                        }
-                        else -> {
-                            state = State.SUCCESS
-                            settings?.textZoom = 150
+                                settings?.textZoom = 100
+                                state = State.SUCCESS
+                            }
+                            contains(getString(R.string.str_stargazers)) -> {
+                                settings?.textZoom = 124
+                                state = State.SUCCESS
+                            }
+                            else -> {
+                                state = State.SUCCESS
+                                settings?.textZoom = 150
+                            }
                         }
                     }
                 }
