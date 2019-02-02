@@ -3,7 +3,6 @@ package mustafaozhan.github.com.androcat.settings
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -50,14 +49,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                 .setTitle("Support us !")
                 .setMessage("Please, rate and commend to the app at Google Play Store")
                 .setPositiveButton("RATE") { _, _ ->
-                    var link = "market://details?id="
-                    try {
-                        activity?.packageManager?.getPackageInfo(activity?.packageName + ":AndroCat", 0)
-                    } catch (e: PackageManager.NameNotFoundException) {
-                        link = "https://play.google.com/store/apps/details?id="
-                        Crashlytics.logException(e)
-                    }
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link + activity?.packageName)))
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat")))
                 }
                 .setNegativeButton("CANCEL", null)
         builder.show()
