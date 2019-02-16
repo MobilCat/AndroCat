@@ -30,6 +30,7 @@
     <string name="gists">Gists</string>
     <string name="app_settings">App Settings</string>
     <string name="user_settings">User Settings</string>
+    <string name="enter">Enter</string>
 
     <!--URL-->
     <string name="url_login">https://github.com/login</string>
@@ -41,6 +42,10 @@
     <string name="url_github">https://github.com/</string>
     <string name="url_pulls">https://github.com/pulls</string>
     <string name="url_issues">https://github.com/issues</string>
+    <string name="url_new">https://github.com/new</string>
+    <string name="url_gist">https://gist.github.com/</string>
+    <string name="url_settings">https://github.com/issues</string>
+    <string name="url_notifications">https://github.com/notifications</string>
 
     <string name="url_blank">about:blank</string>
     <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
@@ -50,4 +55,5 @@
     <string name="str_stargazers">stargazers</string>
     <string name="str_google_play">https://play.google.com</string>
     <string name="str_organization">https://github.com/org</string>
+
 </resources>
