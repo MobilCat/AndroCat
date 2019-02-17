@@ -16,7 +16,7 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
-import mustafaozhan.github.com.androcat.tools.AndroCatWebViewClient
+import mustafaozhan.github.com.androcat.utils.AndroCatWebViewClient
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.

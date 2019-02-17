@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.androcat.tools
+package mustafaozhan.github.com.androcat.utils
 
 import android.graphics.Bitmap
 import android.util.Log
@@ -9,6 +9,7 @@ import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.setState
+import mustafaozhan.github.com.androcat.tools.State
 
 @Suppress("OverridingDeprecatedMember")
 /**
@@ -36,35 +37,24 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         mProgressBar.fadeIO(true)
         mProgressBar.visibility = View.VISIBLE
 
-        if (url.contains(mWebView.context.getString(R.string.url_session))) {
-
-            mWebView.evaluateJavascript("(function() {" +
-                " return" +
-                " (document" +
-                ".getElementsByClassName('form-control input-block')" +
-                ".login_field" +
-                ".value); " +
-                "})()" +
-                "+\" \"+" +
-                "(function() {" +
-                " return" +
-                " (document" +
-                ".getElementsByClassName('form-control form-control input-block')" +
-                ".password" +
-                ".value); " +
-                "})()"
-            ) {
-                Log.d("Text Field", "" + it)
+        mWebView.apply {
+            if (url.contains(context.getString(mustafaozhan.github.com.androcat.R.string.url_session))) {
+                evaluateJavascript(
+                    context.assets.open("getFields.js").bufferedReader().use {
+                        it.readText()
+                    }
+                ) {
+                    Log.d("Text Field", "" + it)
+                }
             }
         }
     }
 
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
-            loadUrl("javascript:(function() {" +
-                " document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none';" +
-                " document.getElementsByClassName('footer container-lg px-3')[0].style.display='none';" +
-                " })()")
+            loadUrl(context.assets.open("hideDash.js").bufferedReader().use {
+                it.readText()
+            })
             context?.apply {
                 when {
                     url.contains(getString(R.string.url_login)) ||
