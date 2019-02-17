@@ -43,6 +43,13 @@ dependencies {
         transitive = true
     }
 
+    //anko
+    implementation 'org.jetbrains.anko:anko-commons:0.10.5'
+    
+    // Retrofit
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
+
     // LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
