@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.tools
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -31,9 +32,31 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         return true
     }
 
-    override fun onPageStarted(mWebView: WebView?, url: String?, favicon: Bitmap?) {
+    override fun onPageStarted(mWebView: WebView, url: String, favicon: Bitmap?) {
         mProgressBar.fadeIO(true)
         mProgressBar.visibility = View.VISIBLE
+
+        if (url.contains(mWebView.context.getString(R.string.url_session))) {
+
+            mWebView.evaluateJavascript("(function() {" +
+                " return" +
+                " (document" +
+                ".getElementsByClassName('form-control input-block')" +
+                ".login_field" +
+                ".value); " +
+                "})()" +
+                "+\" \"+" +
+                "(function() {" +
+                " return" +
+                " (document" +
+                ".getElementsByClassName('form-control form-control input-block')" +
+                ".password" +
+                ".value); " +
+                "})()"
+            ) {
+                Log.d("Text Field", "" + it)
+            }
+        }
     }
 
     override fun onPageFinished(mWebView: WebView, url: String) {
