@@ -35,6 +35,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
     }
 
+    override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
+
+    override fun getLayoutResId(): Int = R.layout.fragment_main
+
     private lateinit var url: String
 
     private var quickActionProfile: QuickAction? = null
@@ -127,12 +131,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
     }
 
-    private fun loadIfUserNameSet(url: String) {
+    private fun loadIfUserNameSet(url: String) =
         if (viewModel.userName == resources.getString(R.string.missUsername))
-            getBaseActivity().snacky(getString(R.string.missUsername), true, getString(R.string.enter), true)
+            snacky(getString(R.string.missUsername), getString(R.string.enter)) {
+                replaceFragment(SettingsFragment.newInstance(), true)
+            }
         else
             webView.loadUrl(url)
-    }
 
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
@@ -162,14 +167,16 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun setDash() {
-        mBottomNavigationView.inflateMenu(R.menu.bnvm_dash)
-        mBottomNavigationView.enableAnimation(false)
-        mBottomNavigationView.enableItemShiftingMode(false)
-        mBottomNavigationView.enableShiftingMode(false)
-        mBottomNavigationView.enableAnimation(false)
-        mBottomNavigationView.setTextSize(12.0f)
-        mBottomNavigationView.setIconsMarginTop(10)
-        mBottomNavigationView.setIconSize(30.0F, 30.0F)
+        mBottomNavigationView.apply {
+            inflateMenu(R.menu.bnvm_dash)
+            enableAnimation(false)
+            enableItemShiftingMode(false)
+            enableShiftingMode(false)
+            enableAnimation(false)
+            setTextSize(12.0f)
+            setIconsMarginTop(10)
+            setIconSize(30.0F, 30.0F)
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -192,10 +199,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             }
         }
     }
-
-    override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
-
-    override fun getLayoutResId(): Int = R.layout.fragment_main
 
     override fun onResume() {
         super.onResume()

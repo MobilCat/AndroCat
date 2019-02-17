@@ -14,11 +14,10 @@ class SettingsFragmentViewModel : BaseViewModel() {
     lateinit var userName: String
 
     fun initUsername() {
-        userName = dataManager.loadUserName()
+        userName = dataManager.loadUserName().toString()
     }
 
     fun saveNewUserName(userName: String) {
         dataManager.persistUserName(userName)
     }
-
 }

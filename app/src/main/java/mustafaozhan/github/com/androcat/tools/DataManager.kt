@@ -10,7 +10,6 @@ import javax.inject.Singleton
 class DataManager @Inject
 constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
-
     fun loadUserName() = generalSharedPreferences.loadUserName()
 
     fun persistUserName(userName: String) {

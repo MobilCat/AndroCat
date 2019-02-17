@@ -14,6 +14,12 @@ import mustafaozhan.github.com.androcat.extensions.setState
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
 class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : WebViewClient() {
+    companion object {
+        const val TEXT_SIZE_SMALL = 100
+        const val TEXT_SIZE_MEDIUM = 124
+        const val TEXT_SIZE_LARGE = 150
+    }
+
     private var state: State = State.SUCCESS
     override fun onReceivedError(mWebView: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
         mWebView?.loadUrl(mWebView.context.getString(R.string.url_blank))
@@ -28,44 +34,40 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
     override fun onPageStarted(mWebView: WebView?, url: String?, favicon: Bitmap?) {
         mProgressBar.fadeIO(true)
         mProgressBar.visibility = View.VISIBLE
-
     }
 
-    override fun onPageFinished(mWebView: WebView?, url: String?) {
-        mWebView?.apply {
+    override fun onPageFinished(mWebView: WebView, url: String) {
+        mWebView.apply {
             loadUrl("javascript:(function() {" +
-                    " document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none';" +
-                    " document.getElementsByClassName('footer container-lg px-3')[0].style.display='none';" +
-                    " })()")
+                " document.getElementsByClassName('position-relative js-header-wrapper ')[0].style.display='none';" +
+                " document.getElementsByClassName('footer container-lg px-3')[0].style.display='none';" +
+                " })()")
             context?.apply {
-                url?.apply {
-                    if (contains(getString(R.string.url_blank))) {
-                        state = State.FAILED
-                    } else {
-                        when {
-                            contains(getString(R.string.url_login))
-                                    || contains(getString(R.string.url_logout))
-                                    || contains(getString(R.string.url_search))
-                                    || contains(getString(R.string.url_gist_login))
-                                    || contains(getString(R.string.url_market_place))
-                                    || contains(getString(R.string.url_trending))
-                                    || contains(getString(R.string.str_organization))
-                                    || contains(getString(R.string.str_google_play))
-                                    || !contains(getString(R.string.str_github))
-                                    || this == getString(R.string.url_github) -> {
+                when {
+                    url.contains(getString(R.string.url_login)) ||
+                        url.contains(getString(R.string.url_logout)) ||
+                        url.contains(getString(R.string.url_search)) ||
+                        url.contains(getString(R.string.url_gist_login)) ||
+                        url.contains(getString(R.string.url_market_place)) ||
+                        url.contains(getString(R.string.url_trending)) ||
+                        url.contains(getString(R.string.str_organization)) ||
+                        url.contains(getString(R.string.str_google_play)) ||
+                        !url.contains(getString(R.string.str_github)) ||
+                        url == getString(R.string.url_github) -> {
 
-                                settings?.textZoom = 100
-                                state = State.SUCCESS
-                            }
-                            contains(getString(R.string.str_stargazers)) -> {
-                                settings?.textZoom = 124
-                                state = State.SUCCESS
-                            }
-                            else -> {
-                                state = State.SUCCESS
-                                settings?.textZoom = 150
-                            }
-                        }
+                        settings?.textZoom = TEXT_SIZE_SMALL
+                        state = State.SUCCESS
+                    }
+                    url.contains(getString(R.string.str_stargazers)) -> {
+                        settings?.textZoom = TEXT_SIZE_MEDIUM
+                        state = State.SUCCESS
+                    }
+                    url.contains(getString(R.string.url_blank)) -> {
+                        state = State.FAILED
+                    }
+                    else -> {
+                        state = State.SUCCESS
+                        settings?.textZoom = TEXT_SIZE_LARGE
                     }
                 }
             }

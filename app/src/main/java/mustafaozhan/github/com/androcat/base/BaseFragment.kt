@@ -21,7 +21,6 @@ abstract class BaseFragment : Fragment() {
     @MenuRes
     open var menuResID: Int? = null
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutResId(), container, false)
     }
@@ -32,4 +31,6 @@ abstract class BaseFragment : Fragment() {
 
     protected fun getBaseActivity(): BaseActivity = activity as BaseActivity
 
+    protected fun snacky(text: String, actionText: String = "", action: () -> Unit = {}) =
+        getBaseActivity().snacky(text, actionText, action)
 }

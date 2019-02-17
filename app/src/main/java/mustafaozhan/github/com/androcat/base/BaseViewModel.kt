@@ -21,6 +21,4 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     protected abstract fun inject()
-
-
 }

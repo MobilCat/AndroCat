@@ -9,7 +9,6 @@ import mustafaozhan.github.com.androcat.dagger.component.ApplicationComponent
 import mustafaozhan.github.com.androcat.dagger.component.DaggerApplicationComponent
 import mustafaozhan.github.com.androcat.dagger.module.ApplicationModule
 
-
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
@@ -33,7 +32,6 @@ class Application : android.app.Application() {
 
     val component: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder() // will be auto generated after build
-                .applicationModule(ApplicationModule(this)).build()
+            .applicationModule(ApplicationModule(this)).build()
     }
-
 }

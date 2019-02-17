@@ -9,7 +9,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import com.crashlytics.android.Crashlytics
-import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
+import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
+import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
+import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
+import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
@@ -22,6 +26,10 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     companion object {
         fun newInstance(): SettingsFragment = SettingsFragment()
     }
+
+    override fun getViewModelClass(): Class<SettingsFragmentViewModel> = SettingsFragmentViewModel::class.java
+
+    override fun getLayoutResId(): Int = R.layout.fragment_settings
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,12 +54,12 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
     private fun showRateDialog() {
         val builder = AlertDialog.Builder(context, R.style.AlertDialogCustom)
-                .setTitle("Support us !")
-                .setMessage("Please, rate and commend to the app at Google Play Store")
-                .setPositiveButton("RATE") { _, _ ->
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat")))
-                }
-                .setNegativeButton("CANCEL", null)
+            .setTitle("Support us !")
+            .setMessage("Please, rate and commend to the app at Google Play Store")
+            .setPositiveButton("RATE") { _, _ ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat))))
+            }
+            .setNegativeButton("CANCEL", null)
         builder.show()
     }
 
@@ -88,17 +96,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             startActivity(Intent.createChooser(email, "Send Feedback:"))
         } catch (activityNotFoundException: ActivityNotFoundException) {
             Crashlytics.logException(activityNotFoundException)
-            getBaseActivity().snacky("You do not have any mail application.")
-        } catch (e: Exception) {
-            Crashlytics.logException(e)
-            e.printStackTrace()
+            snacky("You do not have any mail application.")
         }
     }
-
-
-    override fun getViewModelClass(): Class<SettingsFragmentViewModel> = SettingsFragmentViewModel::class.java
-
-    override fun getLayoutResId(): Int = R.layout.fragment_settings
-
-
 }

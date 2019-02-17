@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import de.mateware.snacky.Snacky
 import mustafaozhan.github.com.androcat.R
-import mustafaozhan.github.com.androcat.settings.SettingsFragment
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -33,7 +32,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     open fun getDefaultFragment(): BaseFragment? = null
 
-
     protected fun addFragment(containerViewId: Int, fragment: BaseFragment) {
         val ft = supportFragmentManager.beginTransaction()
         ft.add(containerViewId, fragment, fragment.fragmentTag)
@@ -54,7 +52,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected fun replaceFragmentWithBackStack(containerViewId: Int, fragment: BaseFragment) {
         val ft = supportFragmentManager.beginTransaction()
-        ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+        ft.setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_left,
+            R.anim.enter_from_left,
+            R.anim.exit_to_right
+        )
         ft.replace(containerViewId, fragment, fragment.fragmentTag)
         ft.addToBackStack(null)
         ft.commit()
@@ -73,24 +76,20 @@ abstract class BaseActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
-    fun snacky(text: String, hasAction: Boolean = false, actionText: String = "", isLong: Boolean = false) {
-
-        val mySnacky = Snacky.builder()
-                .setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                .setText(text)
-                .setIcon(R.mipmap.ic_launcher)
-                .setActivity(this)
-        if (isLong)
-            mySnacky.setDuration(Snacky.LENGTH_LONG)
-        else
-            mySnacky.setDuration(Snacky.LENGTH_SHORT)
-
-        if (hasAction) {
-            mySnacky.setActionText(actionText.toUpperCase())
-                    .setActionTextTypefaceStyle(Typeface.BOLD)
-                    .setActionClickListener { replaceFragment(SettingsFragment.newInstance(), true) }
-
-        }
-        mySnacky.build().show()
+    fun snacky(text: String, actionText: String = "", action: () -> Unit = {}) {
+        Snacky.builder()
+            .setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            .setText(text)
+            .setIcon(R.mipmap.ic_launcher)
+            .setActivity(this)
+            .setDuration(Snacky.LENGTH_SHORT)
+            .setActionText(actionText.toUpperCase())
+            .setActionTextColor(ContextCompat.getColor(this, R.color.blue_gray_50))
+            .setActionTextTypefaceStyle(Typeface.BOLD)
+            .setActionClickListener {
+                action()
+            }
+            .build()
+            .show()
     }
 }

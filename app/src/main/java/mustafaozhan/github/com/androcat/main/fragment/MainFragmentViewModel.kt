@@ -14,7 +14,6 @@ class MainFragmentViewModel : BaseViewModel() {
     lateinit var userName: String
 
     fun initUsername() {
-        userName = dataManager.loadUserName()
+        userName = dataManager.loadUserName().toString()
     }
-
 }

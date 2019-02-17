@@ -1,16 +1,12 @@
 package mustafaozhan.github.com.androcat.main.activity
 
-
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.webView
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseFragment
 import mustafaozhan.github.com.androcat.base.BaseMvvmActivity
@@ -26,11 +22,14 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     companion object {
         var uri: String? = null
+        const val HANDLER_CYCLE = 7
+        const val HANDLER_SECOND: Long = 44
+        const val BACK_DELAY: Long = 2000
     }
 
     private var mInterstitialAd: InterstitialAd? = null
     private var scheduler: ScheduledExecutorService? = null
-    private var occurs = 7
+    private var occurs = HANDLER_CYCLE
     private var adVisibility = false
     private var doubleBackToExitPressedOnce = false
 
@@ -44,8 +43,6 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         super.onCreate(savedInstanceState)
         prepareAd()
     }
-
-
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         val f = supportFragmentManager.findFragmentById(containerId)
@@ -70,9 +67,10 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             }
             this.doubleBackToExitPressedOnce = true
             snacky("Please click BACK again to exit")
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else
+            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, BACK_DELAY)
+        } else {
             super.onBackPressed()
+        }
     }
 
     private fun ad() {
@@ -82,23 +80,22 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             (scheduler as ScheduledExecutorService).scheduleAtFixedRate({
                 runOnUiThread {
 
-                    if (mInterstitialAd?.isLoaded == true && adVisibility && occurs == 7) {
+                    if (mInterstitialAd?.isLoaded == true && adVisibility && occurs == HANDLER_CYCLE) {
                         mInterstitialAd?.show()
                         occurs = 0
-                    } else
+                    } else {
                         Log.d("TAG", "Interstitial not loaded")
+                    }
                     prepareAd()
                     occurs++
-
                 }
-            }, 44, 44, TimeUnit.SECONDS)
-
+            }, HANDLER_SECOND, HANDLER_SECOND, TimeUnit.SECONDS)
         }
     }
 
     private fun prepareAd() {
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd?.adUnitId =getString(R.string.ad_id)
+        mInterstitialAd?.adUnitId = getString(R.string.ad_id)
         mInterstitialAd?.loadAd(AdRequest.Builder().build())
     }
 
@@ -108,6 +105,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         scheduler = null
         adVisibility = false
     }
+
     override fun onResume() {
         super.onResume()
         ad()
