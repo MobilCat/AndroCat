@@ -3,6 +3,7 @@ package mustafaozhan.github.com.androcat.extensions
 import android.graphics.BitmapFactory
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.webkit.WebView
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
@@ -22,7 +23,7 @@ fun ArchedImageProgressBar.fadeIO(isIn: Boolean) =
     else
         startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
 
-fun ArchedImageProgressBar.setState(state: State) {
+fun ArchedImageProgressBar.setState(state: State) =
     when (state) {
         State.SUCCESS -> {
             setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle), RADIUS)
@@ -36,4 +37,16 @@ fun ArchedImageProgressBar.setState(state: State) {
             (context as MainActivity).snacky("No internet connection")
         }
     }
-}
+
+
+fun WebView.runScript(source: String, action: (String) -> Unit = {}) =
+    evaluateJavascript(
+        context
+            .assets
+            .open(source)
+            .bufferedReader()
+            .use {
+                it.readText()
+            },
+        action
+    )

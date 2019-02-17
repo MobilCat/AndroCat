@@ -1,14 +1,15 @@
 package mustafaozhan.github.com.androcat.utils
 
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.fadeIO
+import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setState
+import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
 
 @Suppress("OverridingDeprecatedMember")
@@ -23,7 +24,13 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
     }
 
     private var state: State = State.SUCCESS
-    override fun onReceivedError(mWebView: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+
+    override fun onReceivedError(
+        mWebView: WebView?,
+        errorCode: Int,
+        description: String?,
+        failingUrl: String?
+    ) {
         mWebView?.loadUrl(mWebView.context.getString(R.string.url_blank))
         mProgressBar.setState(State.FAILED)
     }
@@ -33,18 +40,19 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         return true
     }
 
-    override fun onPageStarted(mWebView: WebView, url: String, favicon: Bitmap?) {
+    override fun onPageStarted(
+        mWebView: WebView,
+        url: String,
+        favicon: Bitmap?
+    ) {
         mProgressBar.fadeIO(true)
         mProgressBar.visibility = View.VISIBLE
 
         mWebView.apply {
             if (url.contains(context.getString(mustafaozhan.github.com.androcat.R.string.url_session))) {
-                evaluateJavascript(
-                    context.assets.open("getFields.js").bufferedReader().use {
-                        it.readText()
-                    }
-                ) {
-                    Log.d("Text Field", "" + it)
+                runScript("getFields.js") { str ->
+                    val list = str.split("\"")[1].split(" ")
+                    GeneralSharedPreferences().persistUserName(list[0])
                 }
             }
         }
@@ -52,10 +60,9 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
 
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
-            loadUrl(context.assets.open("hideDash.js").bufferedReader().use {
-                it.readText()
-            })
+            runScript("hideDash.js")
             context?.apply {
+
                 when {
                     url.contains(getString(R.string.url_login)) ||
                         url.contains(getString(R.string.url_logout)) ||
@@ -65,6 +72,7 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                         url.contains(getString(R.string.url_trending)) ||
                         url.contains(getString(R.string.str_organization)) ||
                         url.contains(getString(R.string.str_google_play)) ||
+                        url.contains(getString(R.string.url_session)) ||
                         !url.contains(getString(R.string.str_github)) ||
                         url == getString(R.string.url_github) -> {
 
