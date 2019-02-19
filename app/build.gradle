@@ -11,8 +11,8 @@ android {
         applicationId "mustafaozhan.github.com.androcat"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 12
-        versionName "1.12"
+        versionCode 14
+        versionName "1.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

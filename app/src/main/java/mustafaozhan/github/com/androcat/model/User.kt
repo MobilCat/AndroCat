@@ -1,7 +1,7 @@
 package mustafaozhan.github.com.androcat.model
 
 data class User(
-    val username: String,
-    val isLoggedIn: Boolean? = null,
-    val token: String? = null
+    var username: String? = null,
+    var isLoggedIn: Boolean? = null,
+    var token: String? = null
 )

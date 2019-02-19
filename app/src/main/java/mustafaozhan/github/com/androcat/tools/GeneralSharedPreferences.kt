@@ -24,7 +24,16 @@ constructor() : BaseSharedPreferences() {
 
     fun persistUser(user: User) = setStringEntry(USER, Gson().toJson(user))
 
-    fun loadUser() = Gson().fromJson(getStringEntry(USER), User::class.java)
+    fun updateUser(username: String? = null, isLoggedIn: Boolean? = null, token: String? = null) {
+        val user = loadUser()
+        username?.let { user.username = it }
+        isLoggedIn?.let { user.isLoggedIn = it }
+        token?.let { user.token = it }
+    }
+
+    fun loadUser() =
+        Gson().fromJson(getStringEntry(USER), User::class.java)
+            ?: User(null, false, null)
 
     fun persistUserName(userName: String) = setStringEntry(USERNAME, userName)
 

@@ -9,7 +9,6 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setState
-import mustafaozhan.github.com.androcat.model.User
 import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
 
@@ -36,16 +35,7 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         mProgressBar.setState(State.FAILED)
     }
 
-    override fun shouldOverrideUrlLoading(mWebView: WebView?, url: String?): Boolean {
-        mWebView?.loadUrl(url)
-        return true
-    }
-
-    override fun onPageStarted(
-        mWebView: WebView,
-        url: String,
-        favicon: Bitmap?
-    ) {
+    override fun onPageStarted(mWebView: WebView, url: String, favicon: Bitmap?) {
         mProgressBar.fadeIO(true)
         mProgressBar.visibility = View.VISIBLE
 
@@ -53,11 +43,19 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
             if (url.contains(context.getString(mustafaozhan.github.com.androcat.R.string.url_session))) {
                 runScript("getFields.js") { str ->
                     val list = str.split("\"")[1].split(" ")
+                    GeneralSharedPreferences().updateUser(username = list[0], isLoggedIn = true)
                     GeneralSharedPreferences().persistUserName(list[0])
-                    GeneralSharedPreferences().persistUser(User(list[0], true))
                 }
             }
+            if (url.contains(context.getString(R.string.url_app_auth))) {
+                GeneralSharedPreferences().updateUser(token = url.replace(context.getString(R.string.url_app_auth), ""))
+            }
         }
+    }
+
+    override fun shouldOverrideUrlLoading(mWebView: WebView?, url: String?): Boolean {
+        mWebView?.loadUrl(url)
+        return true
     }
 
     override fun onPageFinished(mWebView: WebView, url: String) {
@@ -74,12 +72,19 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                         url.contains(getString(R.string.url_trending)) ||
                         url.contains(getString(R.string.str_organization)) ||
                         url.contains(getString(R.string.str_google_play)) ||
-                        url.contains(getString(R.string.url_session)) ||
                         !url.contains(getString(R.string.str_github)) ||
                         url == getString(R.string.url_github) -> {
 
                         settings?.textZoom = TEXT_SIZE_SMALL
                         state = State.SUCCESS
+                    }
+                    url.contains(getString(R.string.url_session)) -> {
+                        settings?.textZoom = TEXT_SIZE_SMALL
+                        state = State.SUCCESS
+//                        webView.loadUrl(
+//                            "https://github.com/login/oauth/authorize?client_id=" +
+//                                context.getString(R.string.client_id)
+//                        ) TODO
                     }
                     url.contains(getString(R.string.str_stargazers)) -> {
                         settings?.textZoom = TEXT_SIZE_MEDIUM
