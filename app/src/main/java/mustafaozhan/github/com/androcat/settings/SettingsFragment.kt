@@ -70,8 +70,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
         alertDialog.setView(editText)
         editText.setTextColor(Color.WHITE)
-        if (viewModel.userName != resources.getString(R.string.missUsername))
-            editText.setText(viewModel.userName)
+        editText.setText(viewModel.userName)
         editText.setSelection(editText.text.length)
         alertDialog.setPositiveButton("SAVE") { _, _ ->
             viewModel.userName = editText.text.toString()

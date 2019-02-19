@@ -58,4 +58,9 @@
     <string name="str_google_play">https://play.google.com</string>
     <string name="str_organization">https://github.com/org</string>
 
+    <!--Network-->
+    <string name="network_error_connection">Problem with the Internet connection.</string>
+    <string name="network_error_server">Server is temporarily not available.</string>
+    <string name="network_error_unexpected">An unexpected error occurred.</string>
+
 </resources>

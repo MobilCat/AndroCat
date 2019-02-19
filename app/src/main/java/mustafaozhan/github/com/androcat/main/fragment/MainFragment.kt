@@ -58,8 +58,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     private fun init() {
         url = getString(R.string.url_login)
-        viewModel.initUsername()
-        if (viewModel.userName != resources.getString(R.string.missUsername)) {
+
+        if (viewModel.getUsername() != resources.getString(R.string.missUsername)) {
             url = getString(R.string.url_github)
         }
 
@@ -108,7 +108,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 R.id.navigation_user -> quickActionProfile?.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_find -> quickActionExplorer?.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
-                    if (viewModel.userName == resources.getString(R.string.username)) {
+                    if (viewModel.getUsername() == resources.getString(R.string.username)) {
                         webView.loadUrl(getString(R.string.url_login))
                     } else {
                         webView.loadUrl(getString(R.string.url_github))
@@ -132,7 +132,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun loadIfUserNameSet(url: String) =
-        if (viewModel.userName == resources.getString(R.string.missUsername))
+        if (viewModel.getUsername() == resources.getString(R.string.missUsername))
             snacky(getString(R.string.missUsername), getString(R.string.enter)) {
                 replaceFragment(SettingsFragment.newInstance(), true)
             }
@@ -143,15 +143,18 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     private fun setActionListeners() {
         quickActionProfile?.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.userName + "?tab=stars")
-                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.userName + "?tab=repositories")
-                3 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.userName)
+                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
+                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
+                3 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
                 4 -> webView.loadUrl(getString(R.string.url_notifications))
                 5 -> replaceFragment(SettingsFragment.newInstance(), true)
                 6 -> webView.loadUrl(getString(R.string.url_settings))
-                7 -> webView.loadUrl(getString(R.string.url_logout))
+                7 -> {
+                    webView.loadUrl(getString(R.string.url_logout))
+                    url = getString(R.string.url_login)
+                }
                 8 -> webView.loadUrl(getString(R.string.url_gist_login))
-                9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.userName)
+                9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
             }
         }
         quickActionExplorer?.setOnActionItemClickListener { item ->
