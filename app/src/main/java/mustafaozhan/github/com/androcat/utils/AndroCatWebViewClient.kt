@@ -9,6 +9,7 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setState
+import mustafaozhan.github.com.androcat.model.User
 import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
 
@@ -53,6 +54,7 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                 runScript("getFields.js") { str ->
                     val list = str.split("\"")[1].split(" ")
                     GeneralSharedPreferences().persistUserName(list[0])
+                    GeneralSharedPreferences().persistUser(User(list[0], true))
                 }
             }
         }
