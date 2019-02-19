@@ -7,6 +7,7 @@ import android.webkit.WebViewClient
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.fadeIO
+import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
@@ -42,13 +43,11 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         mWebView.apply {
             if (url.contains(context.getString(mustafaozhan.github.com.androcat.R.string.url_session))) {
                 runScript("getFields.js") { str ->
-                    val list = str.split("\"")[1].split(" ")
-                    GeneralSharedPreferences().updateUser(username = list[0], isLoggedIn = true)
-                    GeneralSharedPreferences().persistUserName(list[0])
+                    GeneralSharedPreferences().updateUser(username = str.remove("\""), isLoggedIn = true)
                 }
             }
             if (url.contains(context.getString(R.string.url_app_auth))) {
-                GeneralSharedPreferences().updateUser(token = url.replace(context.getString(R.string.url_app_auth), ""))
+                GeneralSharedPreferences().updateUser(token = url.remove(context.getString(R.string.url_app_auth)))
             }
         }
     }

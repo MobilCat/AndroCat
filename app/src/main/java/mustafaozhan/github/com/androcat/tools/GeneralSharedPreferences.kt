@@ -26,7 +26,10 @@ constructor() : BaseSharedPreferences() {
 
     fun updateUser(username: String? = null, isLoggedIn: Boolean? = null, token: String? = null) {
         val user = loadUser()
-        username?.let { user.username = it }
+        username?.let { value ->
+            user.username = value
+            persistUserName(value)
+        }
         isLoggedIn?.let { user.isLoggedIn = it }
         token?.let { user.token = it }
     }

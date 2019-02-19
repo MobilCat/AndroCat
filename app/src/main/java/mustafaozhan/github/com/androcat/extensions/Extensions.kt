@@ -50,3 +50,5 @@ fun WebView.runScript(source: String, action: (String) -> Unit = {}) =
             },
         action
     )
+
+fun String.remove(str: String) = replace(str, "")
