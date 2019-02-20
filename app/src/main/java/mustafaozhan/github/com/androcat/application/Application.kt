@@ -1,10 +1,7 @@
 package mustafaozhan.github.com.androcat.application
 
 import android.content.Context
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
-import io.fabric.sdk.android.Fabric
-import mustafaozhan.github.com.androcat.BuildConfig
+import com.google.firebase.analytics.FirebaseAnalytics
 import mustafaozhan.github.com.androcat.dagger.component.ApplicationComponent
 import mustafaozhan.github.com.androcat.dagger.component.DaggerApplicationComponent
 import mustafaozhan.github.com.androcat.dagger.module.ApplicationModule
@@ -23,10 +20,7 @@ class Application : android.app.Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        val core = CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()
-        Fabric.with(this, Crashlytics.Builder().core(core).build())
-
+        FirebaseAnalytics.getInstance(this)
         instance = this
     }
 
