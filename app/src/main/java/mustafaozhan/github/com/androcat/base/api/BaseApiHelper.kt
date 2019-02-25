@@ -2,6 +2,7 @@ package mustafaozhan.github.com.androcat.base.api
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import io.reactivex.schedulers.Schedulers
 import mustafaozhan.github.com.androcat.application.Application
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -24,6 +25,7 @@ abstract class BaseApiHelper {
             .baseUrl(endpoint)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClient)
+            .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create(Schedulers.io()))
             .build()
     }
 }
