@@ -1,11 +1,11 @@
-package mustafaozhan.github.com.androcat.utils
+package mustafaozhan.github.com.androcat.webview
 
 import android.graphics.Bitmap
 import android.view.View
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
+import mustafaozhan.github.com.androcat.base.BaseWebViewClient
 import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.remove
@@ -20,7 +20,12 @@ import org.jetbrains.anko.uiThread
 /**
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
-class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : WebViewClient() {
+class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : BaseWebViewClient() {
+
+    override fun inject() {
+        webViewComponent.inject(this)
+    }
+
     companion object {
         const val TEXT_SIZE_SMALL = 100
         const val TEXT_SIZE_MEDIUM = 124
