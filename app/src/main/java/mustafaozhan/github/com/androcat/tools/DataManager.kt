@@ -15,6 +15,9 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
     fun persistUser(user: User) = generalSharedPreferences.persistUser(user)
 
+    fun updateUser(username: String? = null, isLoggedIn: Boolean? = null, token: String? = null) =
+        generalSharedPreferences.updateUser(username, isLoggedIn, token)
+
     fun loadUserName() = generalSharedPreferences.loadUserName()
 
     fun persistUserName(userName: String) = generalSharedPreferences.persistUserName(userName)
