@@ -6,12 +6,15 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
+import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 @Suppress("OverridingDeprecatedMember")
 /**
@@ -43,7 +46,17 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         mWebView.apply {
             if (url.contains(context.getString(mustafaozhan.github.com.androcat.R.string.url_session))) {
                 runScript("getFields.js") { str ->
-                    GeneralSharedPreferences().updateUser(username = str.remove("\""), isLoggedIn = true)
+                    doAsync {
+
+                        val token = GitHubApiHelper().gitHubApiServices.getUserAccessToken(
+                            "Basic bXVzdGFmYW96aGFuOjE4Mzc4MzdyYXN5b25hbGlzdDgxMzg=",
+                            context.getString(R.string.client_id)
+                        )
+
+                        uiThread {
+                            GeneralSharedPreferences().updateUser(str.remove("\""), true, token)
+                        }
+                    }
                 }
             }
             if (url.contains(context.getString(R.string.url_app_auth))) {

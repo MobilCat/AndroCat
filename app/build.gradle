@@ -8,6 +8,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
     defaultConfig {
+        multiDexEnabled true
         applicationId "mustafaozhan.github.com.androcat"
         minSdkVersion 19
         targetSdkVersion 28
@@ -77,4 +78,7 @@ dependencies {
 
     // Snacky
     implementation 'com.github.matecode:Snacky:1.0.3'
+
+    // Multidex
+    implementation 'com.android.support:multidex:1.0.3'
 }

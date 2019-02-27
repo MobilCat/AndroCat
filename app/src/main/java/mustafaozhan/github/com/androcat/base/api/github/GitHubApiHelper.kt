@@ -27,7 +27,7 @@ constructor() : BaseApiHelper() {
         clientBuilder.addInterceptor {
             it.proceed(createInterceptorRequest(it))
         }
-        val endpoint = getString(R.string.github_api)
+        val endpoint = getString(R.string.api_auth)
         val retrofit = initRxRetrofit(endpoint, clientBuilder.build())
         return retrofit.create(GitHubApiServices::class.java)
     }

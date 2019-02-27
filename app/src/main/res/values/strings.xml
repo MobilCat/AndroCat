@@ -64,6 +64,7 @@
     <string name="network_error_connection">Problem with the Internet connection.</string>
     <string name="network_error_server">Server is temporarily not available.</string>
     <string name="network_error_unexpected">An unexpected error occurred.</string>
+    <string name="api_auth">https://github.com/login/oauth/authorize/</string>
 
 
 </resources>
