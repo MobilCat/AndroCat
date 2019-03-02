@@ -21,40 +21,54 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
-    //Dagger
+    // Dagger
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
     implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
 
-    //Fabric
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.4@aar') {
-        transitive = true
-    }
+    // Crashlytics
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+
+    // Anko
+    implementation 'org.jetbrains.anko:anko-commons:0.10.5'
+
+    // Retrofit
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
     // LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
-    //Gif View
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
+    // Arched Image Progress Bar
+    implementation 'com.github.smrtyvz:ArchedImageProgressBar:2.01'
 
-    //Ad
-    implementation 'com.google.firebase:firebase-ads:15.0.1'
+    // Ad
+    implementation 'com.google.firebase:firebase-ads:17.1.3'
 
-    //Advanced WebView
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.firebase:firebase-config:16.3.0'
+
+    // Advanced WebView
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 
-    //Quick Action
+    // Quick Action
     implementation 'me.piruin:quickaction:2.4.2'
 
-    //Glide
+    // Glide
     implementation 'com.github.bumptech.glide:glide:4.6.1'
 
-    //Bottom Navigation
+    // Bottom Navigation
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
 
-    //Snacky
+    // Snacky
     implementation 'com.github.matecode:Snacky:1.0.3'
+
+    // Multidex
+    implementation 'com.android.support:multidex:1.0.3'
 }
 ```
 

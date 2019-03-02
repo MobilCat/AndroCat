@@ -33,4 +33,12 @@ abstract class BaseFragment : Fragment() {
 
     protected fun snacky(text: String, actionText: String = "", action: () -> Unit = {}) =
         getBaseActivity().snacky(text, actionText, action)
+
+    protected fun showDialog(
+        title: String,
+        description: String,
+        positiveButton: String,
+        cancelable: Boolean = true,
+        function: () -> Unit = {}
+    ) = getBaseActivity().showDialog(title, description, positiveButton, cancelable, function)
 }

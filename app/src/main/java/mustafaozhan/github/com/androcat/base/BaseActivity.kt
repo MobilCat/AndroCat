@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.androcat.base
 
+import android.app.AlertDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.annotation.IdRes
@@ -13,6 +14,7 @@ import mustafaozhan.github.com.androcat.R
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
+@Suppress("TooManyFunctions")
 abstract class BaseActivity : AppCompatActivity() {
 
     @LayoutRes
@@ -91,5 +93,28 @@ abstract class BaseActivity : AppCompatActivity() {
             }
             .build()
             .show()
+    }
+
+    fun showDialog(
+        title: String,
+        description: String,
+        positiveButton: String,
+        cancelable: Boolean = true,
+        function: () -> Unit = {}
+    ) {
+        val builder = AlertDialog
+            .Builder(this, R.style.AlertDialogCustom)
+            .setIcon(R.mipmap.ic_launcher)
+            .setTitle(title)
+            .setMessage(description)
+            .setPositiveButton(positiveButton) { _, _ ->
+                function()
+            }
+            .setCancelable(cancelable)
+
+        if (cancelable)
+            builder.setNegativeButton(getString(R.string.cancel), null)
+
+        builder.show()
     }
 }

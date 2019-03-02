@@ -59,7 +59,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     private fun init() {
         url = getString(R.string.url_login)
 
-        if (viewModel.getUsername() != resources.getString(R.string.missUsername)) {
+        if (viewModel.getUsername() != getString(R.string.missUsername)) {
             url = getString(R.string.url_github)
         }
 
@@ -108,7 +108,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 R.id.navigation_user -> quickActionProfile?.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_find -> quickActionExplorer?.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
-                    if (viewModel.getUsername() == resources.getString(R.string.username)) {
+                    if (viewModel.getUsername() == getString(R.string.username)) {
                         webView.loadUrl(getString(R.string.url_login))
                     } else {
                         webView.loadUrl(getString(R.string.url_github))
@@ -132,7 +132,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun loadIfUserNameSet(url: String) =
-        if (viewModel.getUsername() == resources.getString(R.string.missUsername))
+        if (viewModel.getUsername() == getString(R.string.missUsername))
             snacky(getString(R.string.missUsername), getString(R.string.enter)) {
                 replaceFragment(SettingsFragment.newInstance(), true)
             }

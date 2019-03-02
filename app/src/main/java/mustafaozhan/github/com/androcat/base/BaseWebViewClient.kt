@@ -17,5 +17,4 @@ abstract class BaseWebViewClient : WebViewClient() {
     }
 
     abstract fun inject()
-
 }

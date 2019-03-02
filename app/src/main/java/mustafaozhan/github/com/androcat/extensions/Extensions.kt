@@ -38,7 +38,6 @@ fun ArchedImageProgressBar.setState(state: State) =
         }
     }
 
-
 fun WebView.runScript(source: String, action: (String) -> Unit = {}) =
     evaluateJavascript(
         context

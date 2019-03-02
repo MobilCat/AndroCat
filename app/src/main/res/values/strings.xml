@@ -31,6 +31,8 @@
     <string name="app_settings">App Settings</string>
     <string name="user_settings">User Settings</string>
     <string name="enter">Enter</string>
+    <string name="cancel">@android:string/cancel</string>
+    <string name="update">Update</string>
 
     <!--URL-->
     <string name="url_login">https://github.com/login</string>
@@ -66,5 +68,12 @@
     <string name="network_error_unexpected">An unexpected error occurred.</string>
     <string name="api_auth">https://github.com/login/oauth/authorize/</string>
 
+    <!--Update Dialog-->
+    <string name="support_us">Support us !</string>
+
+    <string name="rate_and_support">Please rate and comment to the app at Google Play Store :)</string>
+    <string name="rate">RATE</string>
+    <string name="remote_config_title">App Update</string>
+    <string name="remote_config_description">Looks like you have an older\nversion of the app.\nPlease update to get latest\nfeatures and best experience.</string>
 
 </resources>

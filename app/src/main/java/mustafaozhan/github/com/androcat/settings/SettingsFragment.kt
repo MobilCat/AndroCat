@@ -39,7 +39,15 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
     private fun setListeners() {
         layoutUsername.setOnClickListener { showUsernameDialog() }
-        layoutSupport.setOnClickListener { showRateDialog() }
+        layoutSupport.setOnClickListener {
+            showDialog(
+                getString(R.string.support_us),
+                getString(R.string.rate_and_support),
+                getString(R.string.rate)
+            ) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat))))
+            }
+        }
         layoutFeedback.setOnClickListener { sendFeedBack() }
         layoutOnGitHub.setOnClickListener {
             getBaseActivity().clearBackStack()
@@ -52,21 +60,10 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         txtUsernameInput.text = viewModel.userName
     }
 
-    private fun showRateDialog() {
-        val builder = AlertDialog.Builder(context, R.style.AlertDialogCustom)
-            .setTitle("Support us !")
-            .setMessage("Please, rate and commend to the app at Google Play Store")
-            .setPositiveButton("RATE") { _, _ ->
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat))))
-            }
-            .setNegativeButton("CANCEL", null)
-        builder.show()
-    }
-
     private fun showUsernameDialog() {
         val alertDialog = AlertDialog.Builder(context)
         val editText = EditText(context)
-        alertDialog.setTitle(resources.getString(R.string.missUsername))
+        alertDialog.setTitle(getString(R.string.missUsername))
 
         alertDialog.setView(editText)
         editText.setTextColor(Color.WHITE)
