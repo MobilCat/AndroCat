@@ -40,5 +40,5 @@ constructor() : BaseSharedPreferences() {
 
     fun persistUserName(userName: String) = setStringEntry(USERNAME, userName)
 
-    fun loadUserName() = getStringEntry(USERNAME, "Please Enter Your GitHup Username")
+    fun loadUserName() = getStringEntry(USERNAME, "Please Enter Your GitHub Username")
 }
