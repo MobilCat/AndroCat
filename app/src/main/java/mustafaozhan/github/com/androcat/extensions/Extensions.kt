@@ -4,6 +4,9 @@ import android.graphics.BitmapFactory
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.webkit.WebView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
@@ -51,3 +54,9 @@ fun WebView.runScript(source: String, action: (String) -> Unit = {}) =
     )
 
 fun String.remove(str: String) = replace(str, "")
+
+fun AdView.loadAd(adId: Int) {
+    MobileAds.initialize(context, resources.getString(adId))
+    val adRequest = AdRequest.Builder().build()
+    loadAd(adRequest)
+}

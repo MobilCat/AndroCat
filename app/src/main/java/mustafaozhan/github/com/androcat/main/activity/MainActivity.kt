@@ -108,7 +108,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     private fun prepareAd() {
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd?.adUnitId = getString(R.string.ad_id)
+        mInterstitialAd?.adUnitId = getString(R.string.interstitial_ad_id)
         mInterstitialAd?.loadAd(AdRequest.Builder().build())
     }
 

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import com.crashlytics.android.Crashlytics
+import kotlinx.android.synthetic.main.fragment_settings.adView
 import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
 import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
 import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
 import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
+import mustafaozhan.github.com.androcat.extensions.loadAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 
 /**
@@ -94,5 +96,10 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             Crashlytics.logException(activityNotFoundException)
             snacky("You do not have any mail application.")
         }
+    }
+
+    override fun onResume() {
+        adView.loadAd(R.string.banner_ad_id)
+        super.onResume()
     }
 }
