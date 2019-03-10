@@ -1,6 +1,6 @@
 <p align="center">AndroCat is a GitHub client for Android phones like how you used to</p>
 <p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="300px"></a></p>
-<p align="center">Important! old version has removed from Google Play Strore be sure that you have downloaded AndroCat from store icon above if you want to get lastest updates</p>
+<p align="center">Important! The old version has been removed from the Google Play Store. Download the updated AndroCat from the store icon above to get the lastest updates.</p>
 
 
 
