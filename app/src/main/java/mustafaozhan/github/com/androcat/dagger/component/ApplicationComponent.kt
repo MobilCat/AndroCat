@@ -16,6 +16,4 @@ interface ApplicationComponent {
     fun context(): Context
 
     fun viewModelComponent(): ViewModelComponent
-
-    fun webViewComponent(): WebViewComponent
 }

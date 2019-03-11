@@ -32,6 +32,7 @@ constructor() : BaseSharedPreferences() {
         }
         isLoggedIn?.let { user.isLoggedIn = it }
         token?.let { user.token = it }
+        persistUser(user)
     }
 
     fun loadUser() =

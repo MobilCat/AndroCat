@@ -32,8 +32,10 @@ task clean(type: Delete) {
 }
 
 ext {
+    rxBindingVersion = '2.0.0'
     retrofitVersion = '2.1.0'
     gsonVersion = '2.8.2'
     supportLibraryVersion = '27.1.1'
     daggerVersion = '2.14.1'
+    okHttpVersion = '3.9.0'
 }

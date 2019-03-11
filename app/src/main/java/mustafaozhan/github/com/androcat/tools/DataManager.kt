@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.androcat.tools
 
+import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
 import mustafaozhan.github.com.androcat.model.User
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,6 +12,9 @@ import javax.inject.Singleton
 class DataManager @Inject
 constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
+    @Inject
+    lateinit var gitHubApiHelper: GitHubApiHelper
+
     fun loadUser() = generalSharedPreferences.loadUser()
 
     fun persistUser(user: User) = generalSharedPreferences.persistUser(user)
@@ -21,4 +25,6 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
     fun loadUserName() = generalSharedPreferences.loadUserName()
 
     fun persistUserName(userName: String) = generalSharedPreferences.persistUserName(userName)
+
+    fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
 }

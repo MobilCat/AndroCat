@@ -3,25 +3,28 @@ package mustafaozhan.github.com.androcat.webview
 import android.graphics.Bitmap
 import android.view.View
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
-import mustafaozhan.github.com.androcat.base.BaseWebViewClient
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONObject
+import java.io.IOException
 
 @Suppress("OverridingDeprecatedMember")
 /**
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
-class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : BaseWebViewClient() {
-
-    override fun inject() {
-        webViewComponent.inject(this)
-    }
+class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : WebViewClient() {
 
     companion object {
         const val TEXT_SIZE_SMALL = 100
@@ -46,19 +49,61 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         mProgressBar.visibility = View.VISIBLE
 
         mWebView.apply {
-            if (url.contains(context.getString(mustafaozhan.github.com.androcat.R.string.url_session))) {
-                runScript("getFields.js") { str ->
-                    dataManager.updateUser(str.remove("\""), true)
-                }
-            }
-            if (url.contains(context.getString(R.string.url_app_auth))) {
-                GeneralSharedPreferences().updateUser(token = url.remove(context.getString(R.string.url_app_auth)))
+            when {
+                url.contains(context.getString(R.string.url_session)) ->
+                    runScript("getFields.js") { str ->
+                        GeneralSharedPreferences().updateUser(str.remove("\""), true)
+                    }
             }
         }
     }
 
     override fun shouldOverrideUrlLoading(mWebView: WebView?, url: String?): Boolean {
         mWebView?.loadUrl(url)
+
+        if (url?.contains("?code=") == true) {
+            mWebView?.context?.apply {
+
+                val tokenCode = url.substring(url.lastIndexOf("?code=") + 1)
+                    .split("=".toRegex())
+                    .dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+
+                val cleanToken = tokenCode[1]
+                    .split("&".toRegex())
+                    .dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+
+                val code = cleanToken[0]
+                val client = OkHttpClient()
+                val requestUrl = HttpUrl.parse(getString(R.string.url_github_access_token))!!.newBuilder()
+
+                requestUrl.addQueryParameter("client_id", getString(R.string.client_id))
+                requestUrl.addQueryParameter("client_secret", getString(R.string.client_secret))
+                requestUrl.addQueryParameter("code", code)
+
+                val urlOauth = requestUrl.build().toString()
+
+                val request = Request.Builder()
+                    .header("Accept", "application/json")
+                    .url(urlOauth)
+                    .build()
+
+                client.newCall(request).enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                    }
+
+                    override fun onResponse(call: Call, response: okhttp3.Response) {
+                        if (response.isSuccessful) {
+                            val jSonData = response.body()!!.string()
+                            val jsonObject = JSONObject(jSonData)
+                            val authToken = jsonObject.getString("access_token")
+                            GeneralSharedPreferences().updateUser(token = authToken)
+                        }
+                    }
+                })
+            }
+        }
         return true
     }
 
@@ -85,10 +130,10 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                     url.contains(getString(R.string.url_session)) -> {
                         settings?.textZoom = TEXT_SIZE_SMALL
                         state = State.SUCCESS
-//                        webView.loadUrl(
-//                            "https://github.com/login/oauth/authorize?client_id=" +
-//                                context.getString(R.string.client_id)
-//                        ) TODO
+                        loadUrl(
+                            context.getString(R.string.url_github_authorize) +
+                                "?client_id=" +
+                                context.getString(R.string.client_id))
                     }
                     url.contains(getString(R.string.str_stargazers)) -> {
                         settings?.textZoom = TEXT_SIZE_MEDIUM

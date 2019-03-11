@@ -51,7 +51,9 @@
     <string name="url_session">https://github.com/session</string>
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
 
-    <string name="url_app_auth">https://github.com/mustafaozhan/AndroCat?code=</string>
+    <string name="url_github_code">https://github.com/mustafaozhan/AndroCat?code=</string>
+    <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
+    <string name="url_github_authorize">https://github.com/login/oauth/authorize/</string>
 
     <string name="url_blank">about:blank</string>
     <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
@@ -66,7 +68,6 @@
     <string name="network_error_connection">Problem with the Internet connection.</string>
     <string name="network_error_server">Server is temporarily not available.</string>
     <string name="network_error_unexpected">An unexpected error occurred.</string>
-    <string name="api_auth">https://github.com/login/oauth/authorize/</string>
 
     <!--Update Dialog-->
     <string name="support_us">Support us !</string>

@@ -53,8 +53,6 @@ fun WebView.runScript(source: String, action: (String) -> Unit = {}) =
         action
     )
 
-fun String.remove(str: String) = replace(str, "")
-
 fun AdView.loadAd(adId: Int) {
     MobileAds.initialize(context, resources.getString(adId))
     val adRequest = AdRequest.Builder().build()
