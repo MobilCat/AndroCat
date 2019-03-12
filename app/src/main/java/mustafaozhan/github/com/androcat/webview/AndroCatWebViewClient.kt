@@ -64,44 +64,48 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         if (url?.contains("?code=") == true) {
             mWebView?.context?.apply {
 
-                val tokenCode = url.substring(url.lastIndexOf("?code=") + 1)
+                val tokenCode = url
+                    .substring(url.lastIndexOf("?code=") + 1)
                     .split("=".toRegex())
                     .dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
-
-                val cleanToken = tokenCode[1]
+                    .toTypedArray()[1]
                     .split("&".toRegex())
                     .dropLastWhile { it.isEmpty() }
-                    .toTypedArray()
+                    .toTypedArray()[0]
 
-                val code = cleanToken[0]
-                val client = OkHttpClient()
-                val requestUrl = HttpUrl.parse(getString(R.string.url_github_access_token))!!.newBuilder()
+                val urlOauth = HttpUrl
+                    .parse(getString(R.string.url_github_access_token))
+                    ?.newBuilder()
+                    ?.addQueryParameter("client_id", getString(R.string.client_id))
+                    ?.addQueryParameter("client_secret", getString(R.string.client_secret))
+                    ?.addQueryParameter("code", tokenCode)
+                    ?.build()
+                    ?.toString()
+                    ?: ""
 
-                requestUrl.addQueryParameter("client_id", getString(R.string.client_id))
-                requestUrl.addQueryParameter("client_secret", getString(R.string.client_secret))
-                requestUrl.addQueryParameter("code", code)
+                OkHttpClient()
+                    .newCall(Request
+                        .Builder()
+                        .header("Accept", "application/json")
+                        .url(urlOauth)
+                        .build()
+                    ).enqueue(object : Callback {
 
-                val urlOauth = requestUrl.build().toString()
+                        override fun onFailure(call: Call, e: IOException) {}
 
-                val request = Request.Builder()
-                    .header("Accept", "application/json")
-                    .url(urlOauth)
-                    .build()
+                        override fun onResponse(call: Call, response: okhttp3.Response) {
+                            if (response.isSuccessful) {
+                                val authToken = JSONObject(
+                                    response
+                                        .body()
+                                        ?.string()
+                                ).getString("access_token")
 
-                client.newCall(request).enqueue(object : Callback {
-                    override fun onFailure(call: Call, e: IOException) {
-                    }
-
-                    override fun onResponse(call: Call, response: okhttp3.Response) {
-                        if (response.isSuccessful) {
-                            val jSonData = response.body()!!.string()
-                            val jsonObject = JSONObject(jSonData)
-                            val authToken = jsonObject.getString("access_token")
-                            GeneralSharedPreferences().updateUser(token = authToken)
+                                GeneralSharedPreferences().updateUser(token = authToken)
+                            }
                         }
-                    }
-                })
+                    })
+
             }
         }
         return true
