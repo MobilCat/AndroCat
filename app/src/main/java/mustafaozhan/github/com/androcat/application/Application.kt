@@ -3,6 +3,7 @@ package mustafaozhan.github.com.androcat.application
 import android.content.Context
 import android.support.multidex.MultiDexApplication
 import com.google.firebase.analytics.FirebaseAnalytics
+import mustafaozhan.github.com.androcat.BuildConfig
 import mustafaozhan.github.com.androcat.dagger.component.ApplicationComponent
 import mustafaozhan.github.com.androcat.dagger.component.DaggerApplicationComponent
 import mustafaozhan.github.com.androcat.dagger.module.ApplicationModule
@@ -21,8 +22,10 @@ class Application : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        FirebaseAnalytics.getInstance(this)
         instance = this
+        if (!BuildConfig.DEBUG) {
+            FirebaseAnalytics.getInstance(this)
+        }
     }
 
     val component: ApplicationComponent by lazy {

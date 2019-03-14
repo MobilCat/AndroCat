@@ -105,7 +105,6 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                             }
                         }
                     })
-
             }
         }
         return true
@@ -135,9 +134,9 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                         settings?.textZoom = TEXT_SIZE_SMALL
                         state = State.SUCCESS
                         loadUrl(
-                            context.getString(R.string.url_github_authorize) +
+                            getString(R.string.url_github_authorize) +
                                 "?client_id=" +
-                                context.getString(R.string.client_id))
+                                getString(R.string.client_id))
                     }
                     url.contains(getString(R.string.str_stargazers)) -> {
                         settings?.textZoom = TEXT_SIZE_MEDIUM
