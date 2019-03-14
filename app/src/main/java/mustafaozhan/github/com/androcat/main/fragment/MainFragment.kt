@@ -14,6 +14,7 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
+import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.webview.AndroCatWebViewClient
@@ -74,7 +75,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                     ActionItem(2, getString(R.string.market_place), R.drawable.ic_shopping_cart_black_24dp),
                     ActionItem(3, getString(R.string.trends), R.drawable.ic_trending_up_black_24dp),
                     ActionItem(4, getString(R.string.new_gist), R.drawable.ic_code_black_24dp),
-                    ActionItem(5, getString(R.string.new_repository), R.drawable.new_repo))
+                    ActionItem(5, getString(R.string.new_repository), R.drawable.new_repo),
+                    ActionItem(6, getString(R.string.invert), R.drawable.invert)
+                )
             }
 
             quickActionProfile = QuickAction(ctx, QuickAction.VERTICAL)
@@ -164,9 +167,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 3 -> webView.loadUrl(getString(R.string.url_trending))
                 4 -> webView.loadUrl(getString(R.string.url_gist))
                 5 -> webView.loadUrl(getString(R.string.url_new))
+                6 -> invert()
                 else -> webView.loadUrl(getString(R.string.url_github))
             }
         }
+    }
+
+    private fun invert() {
+        webView.runScript("invertColors.js")
+        viewModel.updateInvertSettings()
     }
 
     private fun setDash() {

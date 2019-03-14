@@ -2,6 +2,7 @@ package mustafaozhan.github.com.androcat.tools
 
 import com.google.gson.Gson
 import mustafaozhan.github.com.androcat.base.BaseSharedPreferences
+import mustafaozhan.github.com.androcat.model.Settings
 import mustafaozhan.github.com.androcat.model.User
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,6 +18,7 @@ constructor() : BaseSharedPreferences() {
         const val GENERAL_SHARED_PREFS = "GENERAL_SHARED_PREFS"
         const val USERNAME = "username"
         const val USER = "user"
+        const val SETTINGS = "settings"
     }
 
     override val preferencesName: String
@@ -42,4 +44,10 @@ constructor() : BaseSharedPreferences() {
     fun persistUserName(userName: String) = setStringEntry(USERNAME, userName)
 
     fun loadUserName() = getStringEntry(USERNAME, "Please Enter Your GitHub Username")
+
+    fun persistSettings(settings: Settings) = setStringEntry(SETTINGS, Gson().toJson(settings))
+
+    fun loadSettings() =
+        Gson().fromJson(getStringEntry(SETTINGS), Settings::class.java)
+            ?: Settings(false)
 }

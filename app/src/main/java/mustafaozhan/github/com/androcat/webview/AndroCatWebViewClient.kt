@@ -113,6 +113,11 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
             runScript("hideDash.js")
+
+            if (GeneralSharedPreferences().loadSettings().isInvert) {
+                runScript("invertColors.js")
+            }
+
             context?.apply {
 
                 when {
