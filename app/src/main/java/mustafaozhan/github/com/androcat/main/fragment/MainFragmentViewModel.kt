@@ -20,4 +20,6 @@ class MainFragmentViewModel : BaseViewModel() {
                 Settings(!loadSettings().isInvert)
             )
         }
+
+    fun getSettings() = dataManager.loadSettings()
 }

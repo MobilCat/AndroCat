@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mImgViewAndroCat
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
@@ -176,6 +177,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     private fun invert() {
         webView.runScript("invertColors.js")
         viewModel.updateInvertSettings()
+        if (viewModel.getSettings().isInvert) {
+            Toast.makeText(context, "It is Beta, Under production !", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setDash() {
