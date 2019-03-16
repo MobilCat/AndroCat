@@ -27,6 +27,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     companion object {
         private const val ARGS_SHOW_ON_GITHUB = "ARGS_SHOW_ON_GITHUB"
+        lateinit var url: String
         fun newInstance(showOnGitHub: Boolean = false): MainFragment {
             val args = Bundle()
             args.putBoolean(ARGS_SHOW_ON_GITHUB, showOnGitHub)
@@ -39,8 +40,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
-
-    private lateinit var url: String
 
     private var quickActionProfile: QuickAction? = null
     private var quickActionExplorer: QuickAction? = null
@@ -58,7 +57,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun init() {
-        url = getString(R.string.url_login)
+        url = getString(R.string.url_github_authorize) +
+            "?client_id=" +
+            getString(R.string.client_id)
 
         if (viewModel.getUsername() != getString(R.string.missUsername)) {
             url = getString(R.string.url_github)
@@ -111,7 +112,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 R.id.navigation_user -> quickActionProfile?.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_find -> quickActionExplorer?.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
-                    if (viewModel.getUsername() == getString(R.string.username)) {
+                    if (viewModel.getUsername() == getString(R.string.username) ||
+                        viewModel.getUser().isLoggedIn == false) {
                         webView.loadUrl(getString(R.string.url_login))
                     } else {
                         webView.loadUrl(getString(R.string.url_github))
@@ -144,9 +146,16 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 6 -> webView.loadUrl(getString(R.string.url_settings))
                 7 -> {
                     webView.loadUrl(getString(R.string.url_logout))
-                    url = getString(R.string.url_login)
+                    url = getString(
+                        R.string.url_github_authorize) +
+                        "?client_id=" +
+                        getString(R.string.client_id)
                 }
-                8 -> webView.loadUrl(getString(R.string.url_gist_login))
+                8 -> webView.loadUrl(
+                    getString(R.string.url_github_authorize) +
+                        "?client_id=" +
+                        getString(R.string.client_id)
+                )
                 9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
             }
         }
@@ -172,7 +181,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             setArchSpeed(12)
         }
         webView.runScript("invertColors.js")
-        if (invert) {
+        if (!invert) {
             Toast.makeText(context, "Inversion is Beta !, Under production !", Toast.LENGTH_SHORT).show()
         }
         viewModel.updateInvertSettings(!invert)
