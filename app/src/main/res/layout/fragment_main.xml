@@ -26,7 +26,6 @@
         android:id="@+id/mImgViewAndroCat"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/white"
         android:contentDescription="@string/loading"
         android:padding="64dp"
         android:scaleType="centerInside"

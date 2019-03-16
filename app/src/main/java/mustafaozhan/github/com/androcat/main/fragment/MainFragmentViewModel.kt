@@ -12,12 +12,12 @@ class MainFragmentViewModel : BaseViewModel() {
         viewModelComponent.inject(this)
     }
 
-    fun getUsername() = dataManager.loadUserName().toString()
+    fun getUsername() = dataManager.loadUserName()
 
-    fun updateInvertSettings() =
+    fun updateInvertSettings(invert: Boolean) =
         dataManager.apply {
             updateSettings(
-                Settings(!loadSettings().isInvert)
+                Settings(invert)
             )
         }
 

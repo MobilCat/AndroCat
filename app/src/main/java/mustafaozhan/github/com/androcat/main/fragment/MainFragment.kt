@@ -1,10 +1,8 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
 import android.annotation.SuppressLint
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
@@ -16,6 +14,7 @@ import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.runScript
+import mustafaozhan.github.com.androcat.extensions.setInversion
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.webview.AndroCatWebViewClient
@@ -64,7 +63,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         if (viewModel.getUsername() != getString(R.string.missUsername)) {
             url = getString(R.string.url_github)
         }
-
+        invert(!viewModel.getSettings().isInvert)
         context?.let { ctx ->
             quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
             quickActionExplorer?.apply {
@@ -123,16 +122,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             }
             true
         }
-
-        mImgViewAndroCat.apply {
-            setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle), 120f)
-            setArchSize(124f)
-            setCircleColor(ContextCompat.getColor(context, R.color.white))
-            setArchColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
-            setArchLength(240)
-            setArchStroke(24f)
-            setArchSpeed(12)
-        }
     }
 
     private fun loadIfUserNameSet(url: String) =
@@ -168,18 +157,25 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 3 -> webView.loadUrl(getString(R.string.url_trending))
                 4 -> webView.loadUrl(getString(R.string.url_gist))
                 5 -> webView.loadUrl(getString(R.string.url_new))
-                6 -> invert()
+                6 -> invert(viewModel.getSettings().isInvert)
                 else -> webView.loadUrl(getString(R.string.url_github))
             }
         }
     }
 
-    private fun invert() {
-        webView.runScript("invertColors.js")
-        viewModel.updateInvertSettings()
-        if (viewModel.getSettings().isInvert) {
-            Toast.makeText(context, "It is Beta, Under production !", Toast.LENGTH_SHORT).show()
+    private fun invert(invert: Boolean) {
+        mImgViewAndroCat.apply {
+            setInversion(invert)
+            setArchSize(124f)
+            setArchLength(240)
+            setArchStroke(24f)
+            setArchSpeed(12)
         }
+        webView.runScript("invertColors.js")
+        if (invert) {
+            Toast.makeText(context, "Inversion is Beta !, Under production !", Toast.LENGTH_SHORT).show()
+        }
+        viewModel.updateInvertSettings(!invert)
     }
 
     private fun setDash() {
