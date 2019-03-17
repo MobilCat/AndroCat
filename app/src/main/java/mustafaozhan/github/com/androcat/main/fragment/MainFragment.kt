@@ -184,7 +184,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         mImgViewAndroCat.setInversion(invert)
         if (invert) {
             webView.runScript("getInvertedColors.js")
-            Toast.makeText(context, "Inversion is Beta !, Under production !", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Color Inversion is Beta !", Toast.LENGTH_SHORT).show()
         } else {
             webView.runScript("getNormalColors.js")
         }

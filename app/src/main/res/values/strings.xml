@@ -34,6 +34,7 @@
     <string name="enter">Enter</string>
     <string name="cancel">@android:string/cancel</string>
     <string name="update">Update</string>
+    <string name="colorInversion">Color Inversion</string>
 
     <!--URL-->
     <string name="url_login">https://github.com/login</string>

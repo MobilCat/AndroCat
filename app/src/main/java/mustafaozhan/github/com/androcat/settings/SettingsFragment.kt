@@ -10,7 +10,9 @@ import android.view.View
 import android.widget.EditText
 import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_settings.adView
+import kotlinx.android.synthetic.main.fragment_settings.inversionSwitch
 import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
+import kotlinx.android.synthetic.main.fragment_settings.layoutInversion
 import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
 import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
 import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
@@ -40,6 +42,12 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun setListeners() {
+        inversionSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateInvertSettings(isChecked)
+        }
+        layoutInversion.setOnClickListener {
+            inversionSwitch.isChecked = !inversionSwitch.isChecked
+        }
         layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener {
             showDialog(
@@ -60,6 +68,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     private fun init() {
         viewModel.initUsername()
         txtUsernameInput.text = viewModel.userName
+        inversionSwitch.isChecked = viewModel.getSettings().isInvert
     }
 
     private fun showUsernameDialog() {
