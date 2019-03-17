@@ -26,15 +26,17 @@ import mustafaozhan.github.com.androcat.webview.AndroCatWebViewClient
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     companion object {
-        private const val ARGS_SHOW_ON_GITHUB = "ARGS_SHOW_ON_GITHUB"
+        private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
         lateinit var url: String
-        fun newInstance(showOnGitHub: Boolean = false): MainFragment {
+        fun newInstance(url: String): MainFragment {
             val args = Bundle()
-            args.putBoolean(ARGS_SHOW_ON_GITHUB, showOnGitHub)
+            args.putString(ARGS_OPEN_URL, url)
             val fragment = MainFragment()
             fragment.arguments = args
             return fragment
         }
+
+        fun newInstance() = MainFragment()
     }
 
     override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
@@ -51,8 +53,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         initWebView()
         setListeners()
         setActionListeners()
-        if (arguments?.getBoolean(ARGS_SHOW_ON_GITHUB) == true) {
-            webView.loadUrl(getString(R.string.url_project_repository))
+
+        arguments?.getString(ARGS_OPEN_URL)?.let { url ->
+            webView.loadUrl(url)
+            arguments?.clear()
         }
     }
 

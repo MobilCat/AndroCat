@@ -29,6 +29,8 @@ abstract class BaseFragment : Fragment() {
         getBaseActivity().replaceFragment(fragment, withBackStack)
     }
 
+    protected fun clearBackStack() = getBaseActivity().clearBackStack()
+
     protected fun getBaseActivity(): BaseActivity = activity as BaseActivity
 
     protected fun snacky(text: String, actionText: String = "", action: () -> Unit = {}) =

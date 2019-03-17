@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_settings.inversionSwitch
 import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
 import kotlinx.android.synthetic.main.fragment_settings.layoutInversion
 import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
+import kotlinx.android.synthetic.main.fragment_settings.layoutReportIssue
 import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
 import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
 import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
@@ -60,8 +61,12 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         }
         layoutFeedback.setOnClickListener { sendFeedBack() }
         layoutOnGitHub.setOnClickListener {
-            getBaseActivity().clearBackStack()
-            replaceFragment(MainFragment.newInstance(true), false)
+            clearBackStack()
+            replaceFragment(MainFragment.newInstance(getString(R.string.url_project_repository)), false)
+        }
+        layoutReportIssue.setOnClickListener {
+            clearBackStack()
+            replaceFragment(MainFragment.newInstance(getString(R.string.report_issue_url)), false)
         }
     }
 

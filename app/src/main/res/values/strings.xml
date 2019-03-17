@@ -34,7 +34,8 @@
     <string name="enter">Enter</string>
     <string name="cancel">@android:string/cancel</string>
     <string name="update">Update</string>
-    <string name="colorInversion">Color Inversion</string>
+    <string name="color_inversion">Color Inversion</string>
+    <string name="report_issue">Report Issue</string>
 
     <!--URL-->
     <string name="url_login">https://github.com/login</string>
@@ -52,6 +53,7 @@
     <string name="url_notifications">https://github.com/notifications</string>
     <string name="url_session">https://github.com/session</string>
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
+    <string name="report_issue_url">https://github.com/mustafaozhan/AndroCat/issues</string>
 
     <string name="url_github_code">https://github.com/mustafaozhan/AndroCat?code=</string>
     <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
