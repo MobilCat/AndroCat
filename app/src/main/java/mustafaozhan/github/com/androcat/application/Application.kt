@@ -2,7 +2,10 @@ package mustafaozhan.github.com.androcat.application
 
 import android.content.Context
 import android.support.multidex.MultiDexApplication
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.google.firebase.analytics.FirebaseAnalytics
+import io.fabric.sdk.android.Fabric
 import mustafaozhan.github.com.androcat.BuildConfig
 import mustafaozhan.github.com.androcat.dagger.component.ApplicationComponent
 import mustafaozhan.github.com.androcat.dagger.component.DaggerApplicationComponent
@@ -26,6 +29,8 @@ class Application : MultiDexApplication() {
         if (!BuildConfig.DEBUG) {
             FirebaseAnalytics.getInstance(this)
         }
+        val core = CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()
+        Fabric.with(this, Crashlytics.Builder().core(core).build())
     }
 
     val component: ApplicationComponent by lazy {
