@@ -27,12 +27,6 @@ import java.io.IOException
  */
 class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : WebViewClient() {
 
-    companion object {
-        const val TEXT_SIZE_SMALL = 100
-        const val TEXT_SIZE_MEDIUM = 124
-        const val TEXT_SIZE_LARGE = 150
-    }
-
     private var logoutCount = 0
     private var state: State = State.SUCCESS
 
@@ -114,9 +108,10 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         return true
     }
 
-    @Suppress("ComplexMethod")
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
+
+            state = State.SUCCESS
             runScript("hideDash.js")
 
             if (GeneralSharedPreferences().loadSettings().isInvert) {
@@ -125,57 +120,25 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                 runScript("getNormalColors.js")
             }
 
-            context?.apply {
-
-                when {
-                    url.contains(getString(R.string.url_login)) ||
-                        url.contains(getString(R.string.url_search)) ||
-                        url.contains(getString(R.string.url_gist_login)) ||
-                        url.contains(getString(R.string.url_market_place)) ||
-                        url.contains(getString(R.string.url_trending)) ||
-                        url.contains(getString(R.string.str_organization)) ||
-                        url.contains(getString(R.string.str_google_play)) ||
-                        !url.contains(getString(R.string.str_github)) ||
-                        url == getString(R.string.url_github) -> {
-
-                        settings?.textZoom = TEXT_SIZE_SMALL
-                        state = State.SUCCESS
-                    }
-                    url.contains(getString(R.string.url_session)) -> {
-                        settings?.textZoom = TEXT_SIZE_SMALL
-                        state = State.SUCCESS
-                        loadUrl(
-                            getString(R.string.url_github_authorize) +
-                                "?client_id=" +
-                                getString(R.string.client_id)
-                        )
-                    }
-                    url.contains(getString(R.string.str_stargazers)) -> {
-                        settings?.textZoom = TEXT_SIZE_MEDIUM
-                        state = State.SUCCESS
-                    }
-                    url.contains(getString(R.string.url_blank)) -> {
-                        state = State.FAILED
-                    }
-                    url.contains(getString(R.string.url_logout)) -> {
-                        logoutCount++
-                        settings?.textZoom = TEXT_SIZE_SMALL
-                        state = State.SUCCESS
-                        if (logoutCount == 2) {
-                            MainFragment.url = getString(R.string.url_github_authorize) +
-                                "?client_id=" +
-                                getString(R.string.client_id)
-                            loadUrl(
-                                getString(R.string.url_github_authorize) +
-                                    "?client_id=" +
-                                    getString(R.string.client_id)
-                            )
-                            GeneralSharedPreferences().updateUser(isLoggedIn = false)
-                        }
-                    }
-                    else -> {
-                        state = State.SUCCESS
-                        settings?.textZoom = TEXT_SIZE_LARGE
+            when {
+                url.contains(context.getString(R.string.url_session)) -> {
+                    loadUrl(context.getString(R.string.url_github_authorize) +
+                        "?client_id=" +
+                        context.getString(R.string.client_id))
+                }
+                url.contains(context.getString(R.string.url_blank)) -> {
+                    state = State.FAILED
+                }
+                url.contains(context.getString(R.string.url_logout)) -> {
+                    logoutCount++
+                    if (logoutCount == 2) {
+                        MainFragment.url = context.getString(R.string.url_github_authorize) +
+                            "?client_id=" +
+                            context.getString(R.string.client_id)
+                        loadUrl(context.getString(R.string.url_github_authorize) +
+                            "?client_id=" +
+                            context.getString(R.string.client_id))
+                        GeneralSharedPreferences().updateUser(isLoggedIn = false)
                     }
                 }
             }

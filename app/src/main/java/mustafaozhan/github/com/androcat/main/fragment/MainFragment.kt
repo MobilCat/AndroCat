@@ -64,7 +64,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         if (viewModel.getUsername() != getString(R.string.missUsername)) {
             url = getString(R.string.url_github)
         }
-        invert(!viewModel.getSettings().isInvert)
+        invert(viewModel.getSettings().isInvert)
+
+        mImgViewAndroCat.apply {
+            setArchSize(124f)
+            setArchLength(240)
+            setArchStroke(24f)
+            setArchSpeed(12)
+        }
+
         context?.let { ctx ->
             quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
             quickActionExplorer?.apply {
@@ -166,30 +174,24 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 3 -> webView.loadUrl(getString(R.string.url_trending))
                 4 -> webView.loadUrl(getString(R.string.url_gist))
                 5 -> webView.loadUrl(getString(R.string.url_new))
-                6 -> invert(viewModel.getSettings().isInvert)
+                6 -> invert(!viewModel.getSettings().isInvert, true)
                 else -> webView.loadUrl(getString(R.string.url_github))
             }
         }
     }
 
-    private fun invert(invert: Boolean) {
-        mImgViewAndroCat.apply {
-            setInversion(invert)
-            setArchSize(124f)
-            setArchLength(240)
-            setArchStroke(24f)
-            setArchSpeed(12)
-        }
+    private fun invert(invert: Boolean, changeSettings: Boolean = false) {
+        mImgViewAndroCat.setInversion(invert)
         if (invert) {
             webView.runScript("getInvertedColors.js")
+            Toast.makeText(context, "Inversion is Beta !, Under production !", Toast.LENGTH_SHORT).show()
         } else {
             webView.runScript("getNormalColors.js")
         }
 
-        if (!invert) {
-            Toast.makeText(context, "Inversion is Beta !, Under production !", Toast.LENGTH_SHORT).show()
+        if (changeSettings) {
+            viewModel.updateInvertSettings(invert)
         }
-        viewModel.updateInvertSettings(!invert)
     }
 
     private fun setDash() {
