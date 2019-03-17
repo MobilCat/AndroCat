@@ -180,7 +180,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             setArchStroke(24f)
             setArchSpeed(12)
         }
-        webView.runScript("invertColors.js")
+        if (invert) {
+            webView.runScript("getInvertedColors.js")
+        } else {
+            webView.runScript("getNormalColors.js")
+        }
+
         if (!invert) {
             Toast.makeText(context, "Inversion is Beta !, Under production !", Toast.LENGTH_SHORT).show()
         }
