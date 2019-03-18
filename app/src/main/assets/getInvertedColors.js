@@ -1,5 +1,9 @@
 javascript: (
     function() {
+        document.getElementsByClassName('position-relative js-header-wrapper ')[0]
+                .style
+                .display = 'none';
+
         var css = 'html {-webkit-filter: grayscale(50%) invert(100%);}' +
             'img {-webkit-filter:invert(100%);}';
 

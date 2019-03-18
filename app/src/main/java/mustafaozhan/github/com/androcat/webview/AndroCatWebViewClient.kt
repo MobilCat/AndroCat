@@ -37,27 +37,23 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         mProgressBar.fadeIO(true)
         mProgressBar.visibility = View.VISIBLE
 
-        mWebView.apply {
-            when {
-                url.contains(context.getString(R.string.url_session)) -> {
-                    runScript("getFields.js") { str ->
-                        GeneralSharedPreferences().updateUser(str.remove("\""), true)
-                    }
-                    logoutCount = 0
-                }
+        if (url.contains(mWebView.context.getString(R.string.url_session))) {
+            mWebView.runScript("getFields.js") { str ->
+                GeneralSharedPreferences().updateUser(str.remove("\""), true)
             }
+            logoutCount = 0
         }
     }
 
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
-            runScript("hideDash.js")
 
             if (GeneralSharedPreferences().loadSettings().isInvert) {
                 runScript("getInvertedColors.js")
             } else {
                 runScript("getNormalColors.js")
             }
+
             state = State.SUCCESS
 
             when {
