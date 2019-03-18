@@ -31,16 +31,21 @@ fun ArchedImageProgressBar.fadeIO(isIn: Boolean) =
 fun ArchedImageProgressBar.setState(state: State) =
     when (state) {
         State.SUCCESS -> {
-            if (GeneralSharedPreferences().loadSettings().isInvert)
+            if (GeneralSharedPreferences().loadSettings().isInvert) {
                 setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle_inverted), RADIUS)
-            else
+            } else {
                 setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle), RADIUS)
+            }
             setArchSpeed(ARC_SPEED_SUCCESS)
             visibility = View.GONE
         }
         State.FAILED -> {
             visibility = View.VISIBLE
-            setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning), RADIUS)
+            if (GeneralSharedPreferences().loadSettings().isInvert) {
+                setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning_inverted), RADIUS)
+            } else {
+                setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning), RADIUS)
+            }
             setArchSpeed(ARC_SPEED_FAILED)
             (context as MainActivity).snacky("No internet connection")
         }
