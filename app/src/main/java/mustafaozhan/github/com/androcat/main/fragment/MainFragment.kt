@@ -159,8 +159,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                     webView.loadUrl(getString(R.string.url_logout))
                     url = getString(R.string.url_login)
                 }
-                8 -> webView.loadUrl(
-                    getString(R.string.url_login)
+                8 -> webView.loadUrl(getString(R.string.url_login)
                 )
                 9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
             }

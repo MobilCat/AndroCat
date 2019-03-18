@@ -11,7 +11,6 @@ import com.google.android.gms.ads.MobileAds
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
-import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
 
 /**
@@ -28,10 +27,10 @@ fun ArchedImageProgressBar.fadeIO(isIn: Boolean) =
     else
         startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
 
-fun ArchedImageProgressBar.setState(state: State) =
+fun ArchedImageProgressBar.setState(state: State, invert: Boolean) =
     when (state) {
         State.SUCCESS -> {
-            if (GeneralSharedPreferences().loadSettings().isInvert) {
+            if (invert) {
                 setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle_inverted), RADIUS)
             } else {
                 setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle), RADIUS)
@@ -41,7 +40,7 @@ fun ArchedImageProgressBar.setState(state: State) =
         }
         State.FAILED -> {
             visibility = View.VISIBLE
-            if (GeneralSharedPreferences().loadSettings().isInvert) {
+            if (invert) {
                 setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning_inverted), RADIUS)
             } else {
                 setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning), RADIUS)
