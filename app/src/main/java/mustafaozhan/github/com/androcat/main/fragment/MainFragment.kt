@@ -61,9 +61,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun init() {
-        url = getString(R.string.url_github_authorize) +
-            "?client_id=" +
-            getString(R.string.client_id)
+        url = getString(R.string.url_login)
 
         if (viewModel.getUsername() != getString(R.string.missUsername)) {
             url = getString(R.string.url_github)
@@ -139,12 +137,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun loadIfUserNameSet(url: String) =
-        if (viewModel.getUsername() == getString(R.string.missUsername))
+        if (viewModel.getUsername() == getString(R.string.missUsername)) {
             snacky(getString(R.string.missUsername), getString(R.string.enter)) {
                 replaceFragment(SettingsFragment.newInstance(), true)
             }
-        else
+        } else {
             webView.loadUrl(url)
+        }
 
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
@@ -158,15 +157,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 6 -> webView.loadUrl(getString(R.string.url_settings))
                 7 -> {
                     webView.loadUrl(getString(R.string.url_logout))
-                    url = getString(
-                        R.string.url_github_authorize) +
-                        "?client_id=" +
-                        getString(R.string.client_id)
+                    url = getString(R.string.url_login)
                 }
                 8 -> webView.loadUrl(
-                    getString(R.string.url_github_authorize) +
-                        "?client_id=" +
-                        getString(R.string.client_id)
+                    getString(R.string.url_login)
                 )
                 9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
             }

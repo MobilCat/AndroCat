@@ -13,13 +13,6 @@ import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONObject
-import java.io.IOException
 
 @Suppress("OverridingDeprecatedMember")
 /**
@@ -56,58 +49,6 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         }
     }
 
-    override fun shouldOverrideUrlLoading(mWebView: WebView?, url: String?): Boolean {
-        mWebView?.loadUrl(url)
-
-        if (url?.contains("?code=") == true) {
-            mWebView?.context?.apply {
-
-                val tokenCode = url
-                    .substring(url.lastIndexOf("?code=") + 1)
-                    .split("=".toRegex())
-                    .dropLastWhile { it.isEmpty() }
-                    .toTypedArray()[1]
-                    .split("&".toRegex())
-                    .dropLastWhile { it.isEmpty() }
-                    .toTypedArray()[0]
-
-                val urlOauth = HttpUrl
-                    .parse(getString(R.string.url_github_access_token))
-                    ?.newBuilder()
-                    ?.addQueryParameter("client_id", getString(R.string.client_id))
-                    ?.addQueryParameter("client_secret", getString(R.string.client_secret))
-                    ?.addQueryParameter("code", tokenCode)
-                    ?.build()
-                    ?.toString()
-                    ?: ""
-
-                OkHttpClient()
-                    .newCall(Request
-                        .Builder()
-                        .header("Accept", "application/json")
-                        .url(urlOauth)
-                        .build()
-                    ).enqueue(object : Callback {
-
-                        override fun onFailure(call: Call, e: IOException) {}
-
-                        override fun onResponse(call: Call, response: okhttp3.Response) {
-                            if (response.isSuccessful) {
-                                val authToken = JSONObject(
-                                    response
-                                        .body()
-                                        ?.string()
-                                ).getString("access_token")
-
-                                GeneralSharedPreferences().updateUser(token = authToken)
-                            }
-                        }
-                    })
-            }
-        }
-        return true
-    }
-
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
             runScript("hideDash.js")
@@ -120,23 +61,14 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
             state = State.SUCCESS
 
             when {
-                url.contains(context.getString(R.string.url_session)) -> {
-                    loadUrl(context.getString(R.string.url_github_authorize) +
-                        "?client_id=" +
-                        context.getString(R.string.client_id))
-                }
                 url.contains(context.getString(R.string.url_blank)) -> {
                     state = State.FAILED
                 }
                 url.contains(context.getString(R.string.url_logout)) -> {
                     logoutCount++
                     if (logoutCount == 2) {
-                        MainFragment.url = context.getString(R.string.url_github_authorize) +
-                            "?client_id=" +
-                            context.getString(R.string.client_id)
-                        loadUrl(context.getString(R.string.url_github_authorize) +
-                            "?client_id=" +
-                            context.getString(R.string.client_id))
+                        MainFragment.url = context.getString(R.string.url_login)
+                        loadUrl(context.getString(R.string.url_login))
                         GeneralSharedPreferences().updateUser(isLoggedIn = false)
                     }
                 }
