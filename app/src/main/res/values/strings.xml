@@ -38,10 +38,10 @@
     <string name="report_issue">Report Issue</string>
 
     <!--URL-->
+    <string name="url_blank">about:blank</string>
     <string name="url_login">https://github.com/login</string>
     <string name="url_logout">https://github.com/logout</string>
     <string name="url_search">https://github.com/search</string>
-    <string name="url_gist_login">https://gist.github.com/login</string>
     <string name="url_market_place">https://github.com/marketplace</string>
     <string name="url_trending">https://github.com/trending</string>
     <string name="url_github">https://github.com/</string>
@@ -49,18 +49,17 @@
     <string name="url_issues">https://github.com/issues</string>
     <string name="url_new">https://github.com/new</string>
     <string name="url_gist">https://gist.github.com/</string>
-    <string name="url_settings">https://github.com/issues</string>
+    <string name="url_settings">https://github.com/settings/profile</string>
     <string name="url_notifications">https://github.com/notifications</string>
     <string name="url_session">https://github.com/session</string>
+
+    <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
-    <string name="report_issue_url">https://github.com/mustafaozhan/AndroCat/issues</string>
+    <string name="url_report_issue">https://github.com/mustafaozhan/AndroCat/issues</string>
 
     <string name="url_github_code">https://github.com/mustafaozhan/AndroCat?code=</string>
     <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
     <string name="url_github_authorize">https://github.com/login/oauth/authorize/</string>
-
-    <string name="url_blank">about:blank</string>
-    <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
 
     <!--STR-->
     <string name="str_github">github</string>
@@ -73,9 +72,8 @@
     <string name="network_error_server">Server is temporarily not available.</string>
     <string name="network_error_unexpected">An unexpected error occurred.</string>
 
-    <!--Update Dialog-->
+    <!--Dialog-->
     <string name="support_us">Support us !</string>
-
     <string name="rate_and_support">Please rate and comment to the app at Google Play Store :)</string>
     <string name="rate">RATE</string>
     <string name="remote_config_title">App Update</string>

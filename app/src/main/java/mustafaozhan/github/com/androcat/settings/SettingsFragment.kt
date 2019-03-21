@@ -66,7 +66,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         }
         layoutReportIssue.setOnClickListener {
             clearBackStack()
-            replaceFragment(MainFragment.newInstance(getString(R.string.report_issue_url)), false)
+            replaceFragment(MainFragment.newInstance(getString(R.string.url_report_issue)), false)
         }
     }
 

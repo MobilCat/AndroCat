@@ -162,6 +162,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 8 -> webView.loadUrl(getString(R.string.url_login)
                 )
                 9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
+                else -> webView.loadUrl(getString(R.string.url_github))
             }
         }
         quickActionExplorer?.setOnActionItemClickListener { item ->
