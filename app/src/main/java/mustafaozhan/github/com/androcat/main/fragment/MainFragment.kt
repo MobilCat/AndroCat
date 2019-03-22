@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mImgViewAndroCat
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
@@ -188,12 +187,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
 
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {
         mImgViewAndroCat.setInversion(invert)
-        if (invert) {
-            webView.runScript(JsScrip.GET_INVERTED_COLORS)
-            Toast.makeText(context, "Color Inversion is Beta !", Toast.LENGTH_SHORT).show()
-        } else {
-            webView.runScript(JsScrip.GET_NORMAL_COLORS)
-        }
+        webView.runScript(JsScrip.getInversion(invert))
 
         if (changeSettings) {
             viewModel.updateInvertSettings(invert)

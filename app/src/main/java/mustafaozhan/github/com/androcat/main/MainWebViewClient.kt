@@ -32,7 +32,6 @@ class MainWebViewClient(
         failingUrl: String?
     ) {
         mWebView?.loadUrl(mWebView.context.getString(R.string.url_blank))
-        progressBarStateChangeListener.setProgressBarState(State.FAILED, dataManager.loadSettings().isInvert)
     }
 
     override fun onPageStarted(mWebView: WebView, url: String, favicon: Bitmap?) {
@@ -49,12 +48,7 @@ class MainWebViewClient(
 
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
-
-            if (dataManager.loadSettings().isInvert) {
-                runScript(JsScrip.GET_INVERTED_COLORS)
-            } else {
-                runScript(JsScrip.GET_NORMAL_COLORS)
-            }
+            runScript(JsScrip.getInversion(dataManager.loadSettings().isInvert))
 
             state = State.SUCCESS
 
