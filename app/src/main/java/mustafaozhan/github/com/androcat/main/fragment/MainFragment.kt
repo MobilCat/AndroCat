@@ -13,17 +13,21 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
+import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setInversion
+import mustafaozhan.github.com.androcat.extensions.setState
+import mustafaozhan.github.com.androcat.main.MainWebViewClient
+import mustafaozhan.github.com.androcat.main.ProgressBarStateChangeListener
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
-import mustafaozhan.github.com.androcat.webview.AndroCatWebViewClient
+import mustafaozhan.github.com.androcat.tools.State
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
 @Suppress("TooManyFunctions", "MagicNumber")
-class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
+class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarStateChangeListener {
 
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
@@ -43,8 +47,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
 
-    private var quickActionProfile: QuickAction? = null
-    private var quickActionExplorer: QuickAction? = null
+    private lateinit var progressBarStateChangeListener: ProgressBarStateChangeListener
+    private lateinit var quickActionProfile: QuickAction
+    private lateinit var quickActionExplorer: QuickAction
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,6 +66,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun init() {
+        progressBarStateChangeListener = this
+
         url = getString(R.string.url_login)
 
         if (viewModel.getUsername() != getString(R.string.missUsername)) {
@@ -77,7 +84,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
         context?.let { ctx ->
             quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionExplorer?.apply {
+            quickActionExplorer.apply {
                 setColorRes(R.color.colorGitHubDash)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
@@ -92,7 +99,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
             }
 
             quickActionProfile = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionProfile?.apply {
+            quickActionProfile.apply {
                 setColorRes(R.color.colorGitHubDash)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
@@ -119,8 +126,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
         mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_user -> quickActionProfile?.show(mBottomNavigationView.getIconAt(4))
-                R.id.navigation_find -> quickActionExplorer?.show(mBottomNavigationView.getIconAt(3))
+                R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
+                R.id.navigation_find -> quickActionExplorer.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
                     if (viewModel.getUsername() == getString(R.string.username) ||
                         viewModel.getUser().isLoggedIn == false) {
@@ -147,7 +154,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
-        quickActionProfile?.setOnActionItemClickListener { item ->
+        quickActionProfile.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
                 2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
@@ -165,7 +172,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 else -> webView.loadUrl(getString(R.string.url_github))
             }
         }
-        quickActionExplorer?.setOnActionItemClickListener { item ->
+        quickActionExplorer.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> webView.loadUrl(getString(R.string.url_search))
                 2 -> webView.loadUrl(getString(R.string.url_market_place))
@@ -207,8 +214,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
+        webView.webViewClient = MainWebViewClient(progressBarStateChangeListener)
         webView.apply {
-            webViewClient = AndroCatWebViewClient(mImgViewAndroCat)
+
             setBackgroundColor(Color.parseColor("#FFFFFF"))
 
             settings.apply {
@@ -224,6 +232,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
                 displayZoomControls = false
             }
         }
+    }
+
+    override fun animateProgressBar(isFade: Boolean) {
+        mImgViewAndroCat.fadeIO(isFade)
+    }
+
+    override fun setProgressBarState(state: State, inversion: Boolean) {
+        mImgViewAndroCat.setState(state, inversion)
     }
 
     override fun onResume() {

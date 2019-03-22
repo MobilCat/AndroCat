@@ -22,10 +22,12 @@ const val ARC_SPEED_SUCCESS = 12
 const val ARC_SPEED_FAILED = 1
 
 fun ArchedImageProgressBar.fadeIO(isIn: Boolean) =
-    if (isIn)
+    if (isIn) {
         startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-    else
+        visibility = View.VISIBLE
+    } else {
         startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
+    }
 
 fun ArchedImageProgressBar.setState(state: State, invert: Boolean) =
     when (state) {
