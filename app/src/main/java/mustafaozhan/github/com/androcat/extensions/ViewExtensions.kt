@@ -11,6 +11,7 @@ import com.google.android.gms.ads.MobileAds
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
+import mustafaozhan.github.com.androcat.tools.JsScrip
 import mustafaozhan.github.com.androcat.tools.State
 
 /**
@@ -52,11 +53,11 @@ fun ArchedImageProgressBar.setState(state: State, invert: Boolean) =
         }
     }
 
-fun WebView.runScript(source: String, action: (String) -> Unit = {}) =
+fun WebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
     evaluateJavascript(
         context
             .assets
-            .open(source)
+            .open(jsScrip.value)
             .bufferedReader()
             .use {
                 it.readText()

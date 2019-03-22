@@ -21,6 +21,7 @@ import mustafaozhan.github.com.androcat.main.MainWebViewClient
 import mustafaozhan.github.com.androcat.main.ProgressBarStateChangeListener
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
+import mustafaozhan.github.com.androcat.tools.JsScrip
 import mustafaozhan.github.com.androcat.tools.State
 
 /**
@@ -188,10 +189,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {
         mImgViewAndroCat.setInversion(invert)
         if (invert) {
-            webView.runScript("getInvertedColors.js")
+            webView.runScript(JsScrip.GET_INVERTED_COLORS)
             Toast.makeText(context, "Color Inversion is Beta !", Toast.LENGTH_SHORT).show()
         } else {
-            webView.runScript("getNormalColors.js")
+            webView.runScript(JsScrip.GET_NORMAL_COLORS)
         }
 
         if (changeSettings) {

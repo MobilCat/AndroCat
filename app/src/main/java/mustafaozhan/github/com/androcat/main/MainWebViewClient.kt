@@ -7,14 +7,16 @@ import mustafaozhan.github.com.androcat.base.BaseWebViewClient
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
+import mustafaozhan.github.com.androcat.tools.JsScrip
 import mustafaozhan.github.com.androcat.tools.State
 
 @Suppress("OverridingDeprecatedMember")
 /**
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
-class MainWebViewClient(private var progressBarStateChangeListener: ProgressBarStateChangeListener)
-    : BaseWebViewClient() {
+class MainWebViewClient(
+    private var progressBarStateChangeListener: ProgressBarStateChangeListener
+) : BaseWebViewClient() {
 
     override fun inject() {
         webViewClientComponent.inject(this)
@@ -37,7 +39,7 @@ class MainWebViewClient(private var progressBarStateChangeListener: ProgressBarS
         progressBarStateChangeListener.animateProgressBar(true)
 
         if (url.contains(mWebView.context.getString(R.string.url_session))) {
-            mWebView.runScript("getFields.js") { str ->
+            mWebView.runScript(JsScrip.GET_USERNAME) { str ->
                 if (str != "null")
                     dataManager.updateUser(str.remove("\""), true)
             }
@@ -49,9 +51,9 @@ class MainWebViewClient(private var progressBarStateChangeListener: ProgressBarS
         mWebView.apply {
 
             if (dataManager.loadSettings().isInvert) {
-                runScript("getInvertedColors.js")
+                runScript(JsScrip.GET_INVERTED_COLORS)
             } else {
-                runScript("getNormalColors.js")
+                runScript(JsScrip.GET_NORMAL_COLORS)
             }
 
             state = State.SUCCESS
