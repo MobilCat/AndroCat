@@ -3,22 +3,25 @@ package mustafaozhan.github.com.androcat.webview
 import android.graphics.Bitmap
 import android.view.View
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
+import mustafaozhan.github.com.androcat.base.BaseWebViewClient
 import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
-import mustafaozhan.github.com.androcat.tools.GeneralSharedPreferences
 import mustafaozhan.github.com.androcat.tools.State
 
 @Suppress("OverridingDeprecatedMember")
 /**
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
-class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : WebViewClient() {
+class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : BaseWebViewClient() {
+
+    override fun inject() {
+        webViewClientComponent.inject(this)
+    }
 
     private var logoutCount = 0
     private var state: State = State.SUCCESS
@@ -30,7 +33,7 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         failingUrl: String?
     ) {
         mWebView?.loadUrl(mWebView.context.getString(R.string.url_blank))
-        mProgressBar.setState(State.FAILED, GeneralSharedPreferences().loadSettings().isInvert)
+        mProgressBar.setState(State.FAILED, dataManager.loadSettings().isInvert)
     }
 
     override fun onPageStarted(mWebView: WebView, url: String, favicon: Bitmap?) {
@@ -40,7 +43,7 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
         if (url.contains(mWebView.context.getString(R.string.url_session))) {
             mWebView.runScript("getFields.js") { str ->
                 if (str != "null")
-                    GeneralSharedPreferences().updateUser(str.remove("\""), true)
+                    dataManager.updateUser(str.remove("\""), true)
             }
             logoutCount = 0
         }
@@ -49,7 +52,7 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
 
-            if (GeneralSharedPreferences().loadSettings().isInvert) {
+            if (dataManager.loadSettings().isInvert) {
                 runScript("getInvertedColors.js")
             } else {
                 runScript("getNormalColors.js")
@@ -66,12 +69,12 @@ class AndroCatWebViewClient(private val mProgressBar: ArchedImageProgressBar) : 
                     if (logoutCount == 2) {
                         MainFragment.url = context.getString(R.string.url_login)
                         loadUrl(context.getString(R.string.url_login))
-                        GeneralSharedPreferences().updateUser(isLoggedIn = false)
+                        dataManager.updateUser(isLoggedIn = false)
                     }
                 }
             }
         }
         mProgressBar.fadeIO(false)
-        mProgressBar.setState(state, GeneralSharedPreferences().loadSettings().isInvert)
+        mProgressBar.setState(state, dataManager.loadSettings().isInvert)
     }
 }

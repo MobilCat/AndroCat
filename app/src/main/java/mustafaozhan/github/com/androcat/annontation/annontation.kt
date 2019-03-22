@@ -17,4 +17,4 @@ annotation class PerViewModel
 
 @Scope
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class PerWebView
+annotation class PerWebViewClient
