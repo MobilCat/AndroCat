@@ -2,10 +2,13 @@ package mustafaozhan.github.com.androcat.main
 
 import android.graphics.Bitmap
 import android.webkit.WebView
+import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseWebViewClient
+import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
+import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
 import mustafaozhan.github.com.androcat.tools.State
@@ -14,9 +17,7 @@ import mustafaozhan.github.com.androcat.tools.State
 /**
  * Created by Mustafa Ozhan on 1/29/18 at 1:06 AM on Arch Linux wit Love <3.
  */
-class MainWebViewClient(
-    private var progressBarStateChangeListener: ProgressBarStateChangeListener
-) : BaseWebViewClient() {
+class MainWebViewClient(private var mImgViewAndroCat: ArchedImageProgressBar) : BaseWebViewClient() {
 
     override fun inject() {
         webViewClientComponent.inject(this)
@@ -35,7 +36,7 @@ class MainWebViewClient(
     }
 
     override fun onPageStarted(mWebView: WebView, url: String, favicon: Bitmap?) {
-        progressBarStateChangeListener.animateProgressBar(true)
+        mImgViewAndroCat.fadeIO(true)
 
         if (url.contains(mWebView.context.getString(R.string.url_session))) {
             mWebView.runScript(JsScrip.GET_USERNAME) { str ->
@@ -69,7 +70,7 @@ class MainWebViewClient(
                 }
             }
         }
-        progressBarStateChangeListener.animateProgressBar(false)
-        progressBarStateChangeListener.setProgressBarState(state, dataManager.loadSettings().isInvert)
+        mImgViewAndroCat.fadeIO(false)
+        mImgViewAndroCat.setState(state, dataManager.loadSettings().isInvert)
     }
 }

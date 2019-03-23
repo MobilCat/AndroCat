@@ -12,22 +12,18 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
-import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setInversion
-import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.main.MainWebViewClient
-import mustafaozhan.github.com.androcat.main.ProgressBarStateChangeListener
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
-import mustafaozhan.github.com.androcat.tools.State
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
 @Suppress("TooManyFunctions", "MagicNumber")
-class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarStateChangeListener {
+class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
 
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
@@ -47,7 +43,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
 
-    private lateinit var progressBarStateChangeListener: ProgressBarStateChangeListener
     private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
 
@@ -66,8 +61,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
     }
 
     private fun init() {
-        progressBarStateChangeListener = this
-
         url = if (viewModel.isLoggedIn() == true) {
             getString(R.string.url_github)
         } else {
@@ -202,7 +195,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         webView.apply {
-            webViewClient = MainWebViewClient(progressBarStateChangeListener)
+            webViewClient = MainWebViewClient(mImgViewAndroCat)
             setBackgroundColor(Color.parseColor("#FFFFFF"))
 
             settings.apply {
@@ -222,12 +215,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
             }
         }
     }
-
-    override fun animateProgressBar(isFade: Boolean) =
-        mImgViewAndroCat.fadeIO(isFade)
-
-    override fun setProgressBarState(state: State, inversion: Boolean) =
-        mImgViewAndroCat.setState(state, inversion)
 
     override fun onResume() {
         super.onResume()
