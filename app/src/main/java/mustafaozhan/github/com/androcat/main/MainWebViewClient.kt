@@ -49,20 +49,23 @@ class MainWebViewClient(
     override fun onPageFinished(mWebView: WebView, url: String) {
         mWebView.apply {
             runScript(JsScrip.getInversion(dataManager.loadSettings().isInvert))
-
-            state = State.SUCCESS
-
-            when {
-                url.contains(context.getString(R.string.url_blank)) -> {
+            when (url) {
+                context.getString(R.string.url_blank) -> {
                     state = State.FAILED
+                    logoutCount = 0
                 }
-                url.contains(context.getString(R.string.url_logout)) -> {
+                context.getString(R.string.url_logout) -> {
                     logoutCount++
                     if (logoutCount == 2) {
                         MainFragment.url = context.getString(R.string.url_login)
                         loadUrl(context.getString(R.string.url_login))
                         dataManager.updateUser(isLoggedIn = false)
                     }
+                    state = State.SUCCESS
+                }
+                else -> {
+                    logoutCount = 0
+                    state = State.SUCCESS
                 }
             }
         }

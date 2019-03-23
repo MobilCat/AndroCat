@@ -23,5 +23,7 @@ class MainFragmentViewModel : BaseViewModel() {
             )
         }
 
+    fun isLoggedIn() = dataManager.loadUser().isLoggedIn
+
     fun getSettings() = dataManager.loadSettings()
 }

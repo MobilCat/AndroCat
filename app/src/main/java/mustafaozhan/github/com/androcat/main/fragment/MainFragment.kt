@@ -68,11 +68,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
     private fun init() {
         progressBarStateChangeListener = this
 
-        url = getString(R.string.url_login)
-
-        if (viewModel.getUsername() != getString(R.string.missUsername)) {
-            url = getString(R.string.url_github)
+        url = if (viewModel.isLoggedIn() == true) {
+            getString(R.string.url_github)
+        } else {
+            getString(R.string.url_login)
         }
+
         invert(viewModel.getSettings().isInvert)
 
         mImgViewAndroCat.apply {
@@ -209,14 +210,16 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        webView.webViewClient = MainWebViewClient(progressBarStateChangeListener)
         webView.apply {
-
+            webViewClient = MainWebViewClient(progressBarStateChangeListener)
             setBackgroundColor(Color.parseColor("#FFFFFF"))
 
             settings.apply {
-                val ua = userAgentString
-                val androidOSString = userAgentString.substring(ua.indexOf("("), ua.indexOf(")") + 1)
+                val androidOSString = userAgentString
+                    .substring(
+                        userAgentString.indexOf("("),
+                        userAgentString.indexOf(")") + 1
+                    )
 
                 userAgentString = userAgentString.replace(androidOSString, "(X11; Linux x86_64)")
                 useWideViewPort = true
@@ -229,13 +232,11 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
         }
     }
 
-    override fun animateProgressBar(isFade: Boolean) {
+    override fun animateProgressBar(isFade: Boolean) =
         mImgViewAndroCat.fadeIO(isFade)
-    }
 
-    override fun setProgressBarState(state: State, inversion: Boolean) {
+    override fun setProgressBarState(state: State, inversion: Boolean) =
         mImgViewAndroCat.setState(state, inversion)
-    }
 
     override fun onResume() {
         super.onResume()
