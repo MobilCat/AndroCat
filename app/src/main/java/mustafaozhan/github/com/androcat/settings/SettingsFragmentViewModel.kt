@@ -12,16 +12,6 @@ class SettingsFragmentViewModel : BaseViewModel() {
         viewModelComponent.inject(this)
     }
 
-    lateinit var userName: String
-
-    fun initUsername() {
-        userName = dataManager.loadUserName()
-    }
-
-    fun saveNewUserName(userName: String) {
-        dataManager.persistUserName(userName)
-    }
-
     fun updateInvertSettings(invert: Boolean) =
         dataManager.apply {
             updateSettings(

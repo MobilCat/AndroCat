@@ -130,12 +130,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
                 R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_find -> quickActionExplorer.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
-                    if (viewModel.getUsername() == getString(R.string.username) ||
-                        viewModel.getUser().isLoggedIn == false) {
-                        webView.loadUrl(getString(R.string.url_login))
-                    } else {
-                        webView.loadUrl(getString(R.string.url_github))
-                    }
+                    webView.loadUrl(
+                        if (viewModel.isLoggedIn() == false) {
+                            getString(R.string.url_login)
+                        } else {
+                            getString(R.string.url_github)
+                        }
+                    )
                 }
                 R.id.navigation_pull_request -> webView.loadUrl(getString(R.string.url_pulls))
                 R.id.navigation_Issues -> webView.loadUrl(getString(R.string.url_issues))
@@ -144,22 +145,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
         }
     }
 
-    private fun loadIfUserNameSet(url: String) =
-        if (viewModel.getUsername() == getString(R.string.missUsername)) {
-            snacky(getString(R.string.missUsername), getString(R.string.enter)) {
-                replaceFragment(SettingsFragment.newInstance(), true)
-            }
-        } else {
-            webView.loadUrl(url)
-        }
-
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
         quickActionProfile.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
-                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
-                3 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
+                1 -> webView.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
+                2 -> webView.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
+                3 -> webView.loadUrl(getString(R.string.url_gist) + viewModel.getUsername())
                 4 -> webView.loadUrl(getString(R.string.url_notifications))
                 5 -> replaceFragment(SettingsFragment.newInstance(), true)
                 6 -> webView.loadUrl(getString(R.string.url_settings))
@@ -167,9 +159,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), ProgressBarState
                     webView.loadUrl(getString(R.string.url_logout))
                     url = getString(R.string.url_login)
                 }
-                8 -> webView.loadUrl(getString(R.string.url_login)
-                )
-                9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
+                8 -> webView.loadUrl(getString(R.string.url_login))
+                9 -> webView.loadUrl(getString(R.string.url_github) + viewModel.getUsername())
                 else -> webView.loadUrl(getString(R.string.url_github))
             }
         }

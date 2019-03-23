@@ -1,13 +1,10 @@
 package mustafaozhan.github.com.androcat.settings
 
-import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_settings.adView
 import kotlinx.android.synthetic.main.fragment_settings.inversionSwitch
@@ -16,8 +13,6 @@ import kotlinx.android.synthetic.main.fragment_settings.layoutInversion
 import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
 import kotlinx.android.synthetic.main.fragment_settings.layoutReportIssue
 import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
-import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
-import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.loadAd
@@ -49,7 +44,6 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layoutInversion.setOnClickListener {
             inversionSwitch.isChecked = !inversionSwitch.isChecked
         }
-        layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener {
             showDialog(
                 getString(R.string.support_us),
@@ -71,31 +65,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun init() {
-        viewModel.initUsername()
-        txtUsernameInput.text = viewModel.userName
         inversionSwitch.isChecked = viewModel.getSettings().isInvert
-    }
-
-    private fun showUsernameDialog() {
-        val alertDialog = AlertDialog.Builder(context)
-        val editText = EditText(context)
-        alertDialog.setTitle(getString(R.string.missUsername))
-
-        alertDialog.setView(editText)
-        editText.setTextColor(Color.WHITE)
-        editText.setText(viewModel.userName)
-        editText.setSelection(editText.text.length)
-        alertDialog.setPositiveButton("SAVE") { _, _ ->
-            viewModel.userName = editText.text.toString()
-            viewModel.saveNewUserName(editText.text.toString())
-            txtUsernameInput.text = editText.text.toString()
-        }
-
-        alertDialog.setNegativeButton("CANCEL") { _, _ ->
-            // what ever you want to do with No option.
-        }
-
-        alertDialog.show()
     }
 
     private fun sendFeedBack() {

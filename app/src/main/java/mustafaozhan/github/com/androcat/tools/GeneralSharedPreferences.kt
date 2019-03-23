@@ -24,26 +24,17 @@ constructor() : BaseSharedPreferences() {
     override val preferencesName: String
         get() = GENERAL_SHARED_PREFS
 
-    fun persistUser(user: User) = setStringEntry(USER, Gson().toJson(user))
-
     fun updateUser(username: String? = null, isLoggedIn: Boolean? = null, token: String? = null) {
         val user = loadUser()
-        username?.let { value ->
-            user.username = value
-            persistUserName(value)
-        }
+        username?.let { user.username = it }
         isLoggedIn?.let { user.isLoggedIn = it }
         token?.let { user.token = it }
-        persistUser(user)
+        setStringEntry(USER, Gson().toJson(user))
     }
 
     fun loadUser() =
         Gson().fromJson(getStringEntry(USER), User::class.java)
             ?: User(null, false, null)
-
-    fun persistUserName(userName: String) = setStringEntry(USERNAME, userName)
-
-    fun loadUserName() = getStringEntry(USERNAME, "Please Enter Your GitHub Username")
 
     fun persistSettings(settings: Settings) = setStringEntry(SETTINGS, Gson().toJson(settings))
 
