@@ -32,9 +32,14 @@ constructor() : BaseSharedPreferences() {
         setStringEntry(USER, Gson().toJson(user))
     }
 
-    fun loadUser() =
-        Gson().fromJson(getStringEntry(USER), User::class.java)
+    fun loadUser(): User {
+        val user = Gson().fromJson(getStringEntry(USER), User::class.java)
             ?: User(null, false, null)
+        if (user.username == null) {
+            user.username = getStringEntry(USERNAME, "")
+        }
+        return user
+    }
 
     fun persistSettings(settings: Settings) = setStringEntry(SETTINGS, Gson().toJson(settings))
 
