@@ -178,4 +178,13 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         if (data != null && data.isHierarchical)
             uri = this.intent.dataString
     }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        supportFragmentManager?.findFragmentByTag(MainFragment.TAG)?.let {
+            if (it.isVisible) {
+                it.onActivityResult(requestCode, resultCode, intent)
+            }
+        }
+    }
 }

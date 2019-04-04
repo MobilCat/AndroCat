@@ -24,4 +24,14 @@ class MainFragmentViewModel : BaseViewModel() {
     fun isLoggedIn() = dataManager.loadUser().isLoggedIn
 
     fun getSettings() = dataManager.loadSettings()
+
+    fun loadUser() = dataManager.loadUser()
+
+    fun updateUser(username: String? = null, isLoggedIn: Boolean? = null, token: String? = null) =
+        dataManager.updateUser(username, isLoggedIn, token)
+
+    fun loadSettings() = dataManager.loadSettings()
+
+    fun updateSettings(settings: Settings) =
+        dataManager.updateSettings(settings)
 }

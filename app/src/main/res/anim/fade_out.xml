@@ -3,4 +3,4 @@
     android:duration="750"
     android:fromAlpha="1.0"
     android:repeatMode="reverse"
-    android:toAlpha="0.0" />
+    android:toAlpha="0.125" />

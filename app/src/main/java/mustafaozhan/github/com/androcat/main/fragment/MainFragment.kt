@@ -1,9 +1,12 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mImgViewAndroCat
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
@@ -12,20 +15,24 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
+import mustafaozhan.github.com.androcat.extensions.fadeIO
+import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setInversion
-import mustafaozhan.github.com.androcat.main.MainWebViewClient
+import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
+import mustafaozhan.github.com.androcat.tools.State
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
 @Suppress("TooManyFunctions", "MagicNumber")
-class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
+class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
+        var TAG = MainFragment::class.java.simpleName
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
         lateinit var url: String
         fun newInstance(url: String): MainFragment {
@@ -42,6 +49,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
+
+    private var logoutCount = 0
+    private var state: State = State.SUCCESS
 
     private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
@@ -61,6 +71,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     }
 
     private fun init() {
+        webView.setListener(getBaseActivity(), this)
         url = if (viewModel.isLoggedIn() == true) {
             getString(R.string.url_github)
         } else {
@@ -195,7 +206,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         webView.apply {
-            webViewClient = MainWebViewClient(mImgViewAndroCat)
+            //            webViewClient = MainWebViewClient(mImgViewAndroCat)
             setBackgroundColor(Color.parseColor("#FFFFFF"))
 
             settings.apply {
@@ -216,6 +227,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
     }
 
+    @SuppressLint("NewApi")
     override fun onResume() {
         super.onResume()
         webView?.onResume()
@@ -225,8 +237,76 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>() {
         }
     }
 
+    @SuppressLint("NewApi")
+    override fun onPause() {
+        webView.onPause()
+        // ...
+        super.onPause()
+    }
+
     override fun onDestroy() {
+        webView.onDestroy()
         super.onDestroy()
-        webView?.onPause()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        webView.onActivityResult(requestCode, resultCode, intent)
+    }
+
+    override fun onPageFinished(url: String?) {
+        webView.apply {
+            runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert))
+            when (url) {
+                context.getString(R.string.url_blank) -> {
+                    state = State.FAILED
+                    logoutCount = 0
+                }
+                context.getString(R.string.url_logout) -> {
+                    logoutCount++
+                    if (logoutCount == 2) {
+                        MainFragment.url = context.getString(R.string.url_login)
+                        loadUrl(context.getString(R.string.url_login))
+                        viewModel.updateUser(isLoggedIn = false)
+                    }
+                    state = State.SUCCESS
+                }
+                else -> {
+                    logoutCount = 0
+                    state = State.SUCCESS
+                }
+            }
+        }
+        mImgViewAndroCat.fadeIO(false)
+        mImgViewAndroCat.setState(state, viewModel.loadSettings().isInvert)
+    }
+
+    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
+        webView?.loadUrl(webView.context.getString(R.string.url_blank))
+    }
+
+    override fun onDownloadRequested(
+        url: String?,
+        suggestedFilename: String?,
+        mimeType: String?,
+        contentLength: Long,
+        contentDisposition: String?,
+        userAgent: String?
+    ) {
+    }
+
+    override fun onExternalPageRequest(url: String?) {
+    }
+
+    override fun onPageStarted(url: String, favicon: Bitmap?) {
+        mImgViewAndroCat.fadeIO(true)
+
+        if (url.contains(webView.context.getString(R.string.url_session))) {
+            webView.runScript(JsScrip.GET_USERNAME) { str ->
+                if (str != "null")
+                    viewModel.updateUser(str.remove("\""), true)
+            }
+            logoutCount = 0
+        }
     }
 }
