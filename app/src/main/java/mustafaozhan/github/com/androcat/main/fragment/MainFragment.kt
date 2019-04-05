@@ -232,14 +232,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    override fun onPause() {
-        webView?.onPause()
-        super.onPause()
-    }
 
     override fun onDestroy() {
-        webView?.onDestroy()
         super.onDestroy()
+        webView?.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
@@ -277,7 +273,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageFinished(url: String?) {
-        mImgViewAndroCat?.fadeIO(false)
+
         webView?.apply {
             runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert))
             when (url) {
@@ -300,6 +296,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 }
             }
         }
+        mImgViewAndroCat?.fadeIO(false)
         mImgViewAndroCat?.setState(state, viewModel.loadSettings().isInvert)
     }
 }
