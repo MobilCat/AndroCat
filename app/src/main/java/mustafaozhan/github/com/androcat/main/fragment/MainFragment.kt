@@ -32,7 +32,7 @@ import mustafaozhan.github.com.androcat.tools.State
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
-        var TAG = MainFragment::class.java.simpleName
+        var TAG: String = MainFragment::class.java.simpleName
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
         lateinit var url: String
         fun newInstance(url: String): MainFragment {
@@ -71,12 +71,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun init() {
-        webView.setListener(getBaseActivity(), this)
         url = if (viewModel.isLoggedIn() == true) {
             getString(R.string.url_github)
         } else {
             getString(R.string.url_login)
         }
+
+        webView.loadUrl(url)
 
         invert(viewModel.getSettings().isInvert)
 
@@ -124,11 +125,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun setListeners() {
-        webView.loadUrl(url)
+        webView.setListener(getBaseActivity(), this)
+
         mSwipeRefreshLayout.setOnRefreshListener {
             webView.loadUrl(webView.url)
             mSwipeRefreshLayout.isRefreshing = false
         }
+
         mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
@@ -206,17 +209,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         webView.apply {
-            //            webViewClient = MainWebViewClient(mImgViewAndroCat)
             setBackgroundColor(Color.parseColor("#FFFFFF"))
 
             settings.apply {
-                val androidOSString = userAgentString
-                    .substring(
-                        userAgentString.indexOf("("),
-                        userAgentString.indexOf(")") + 1
-                    )
-
-                userAgentString = userAgentString.replace(androidOSString, "(X11; Linux x86_64)")
+                setDesktopMode(true)
                 useWideViewPort = true
                 loadWithOverviewMode = true
                 javaScriptEnabled = true
@@ -227,7 +223,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    @SuppressLint("NewApi")
     override fun onResume() {
         super.onResume()
         webView?.onResume()
@@ -237,10 +232,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    @SuppressLint("NewApi")
     override fun onPause() {
         webView.onPause()
-        // ...
         super.onPause()
     }
 
@@ -254,7 +247,37 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         webView.onActivityResult(requestCode, resultCode, intent)
     }
 
+    override fun onDownloadRequested(
+        url: String?,
+        suggestedFilename: String?,
+        mimeType: String?,
+        contentLength: Long,
+        contentDisposition: String?,
+        userAgent: String?
+    ) {
+    }
+
+    override fun onExternalPageRequest(url: String?) {
+    }
+
+    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
+        webView?.loadUrl(webView.context.getString(R.string.url_blank))
+    }
+
+    override fun onPageStarted(url: String, favicon: Bitmap?) {
+        mImgViewAndroCat.fadeIO(true)
+
+        if (url.contains(webView.context.getString(R.string.url_session))) {
+            webView.runScript(JsScrip.GET_USERNAME) { str ->
+                if (str != "null")
+                    viewModel.updateUser(str.remove("\""), true)
+            }
+            logoutCount = 0
+        }
+    }
+
     override fun onPageFinished(url: String?) {
+        mImgViewAndroCat.fadeIO(false)
         webView.apply {
             runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert))
             when (url) {
@@ -277,36 +300,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 }
             }
         }
-        mImgViewAndroCat.fadeIO(false)
         mImgViewAndroCat.setState(state, viewModel.loadSettings().isInvert)
-    }
-
-    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-        webView?.loadUrl(webView.context.getString(R.string.url_blank))
-    }
-
-    override fun onDownloadRequested(
-        url: String?,
-        suggestedFilename: String?,
-        mimeType: String?,
-        contentLength: Long,
-        contentDisposition: String?,
-        userAgent: String?
-    ) {
-    }
-
-    override fun onExternalPageRequest(url: String?) {
-    }
-
-    override fun onPageStarted(url: String, favicon: Bitmap?) {
-        mImgViewAndroCat.fadeIO(true)
-
-        if (url.contains(webView.context.getString(R.string.url_session))) {
-            webView.runScript(JsScrip.GET_USERNAME) { str ->
-                if (str != "null")
-                    viewModel.updateUser(str.remove("\""), true)
-            }
-            logoutCount = 0
-        }
     }
 }

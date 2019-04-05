@@ -7,11 +7,13 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.KeyEvent
+import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import kotlinx.android.synthetic.main.fragment_main.webView
 import mustafaozhan.github.com.androcat.BuildConfig
 import mustafaozhan.github.com.androcat.R
@@ -148,17 +150,21 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                         else
                             firebaseRemoteConfig.getString(REMOTE_CONFIG)
 
-                    Gson().fromJson(
-                        remoteConfigStr,
-                        RemoteConfig::class.java
-                    ).apply {
-                        val isCancelable = forceVersion <= BuildConfig.VERSION_CODE
+                    try {
+                        Gson().fromJson(
+                            remoteConfigStr,
+                            RemoteConfig::class.java
+                        ).apply {
+                            val isCancelable = forceVersion <= BuildConfig.VERSION_CODE
 
-                        if (latestVersion > BuildConfig.VERSION_CODE) {
-                            showDialog(title, description, getString(R.string.update), isCancelable) {
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl)))
+                            if (latestVersion > BuildConfig.VERSION_CODE) {
+                                showDialog(title, description, getString(R.string.update), isCancelable) {
+                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl)))
+                                }
                             }
                         }
+                    } catch (e: JsonSyntaxException) {
+                        Crashlytics.logException(e)
                     }
                 }
             }
@@ -181,9 +187,9 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        supportFragmentManager?.findFragmentByTag(MainFragment.TAG)?.let {
-            if (it.isVisible) {
-                it.onActivityResult(requestCode, resultCode, intent)
+        supportFragmentManager?.findFragmentByTag(MainFragment.TAG)?.let { mainFragment ->
+            if (mainFragment.isVisible) {
+                mainFragment.onActivityResult(requestCode, resultCode, intent)
             }
         }
     }

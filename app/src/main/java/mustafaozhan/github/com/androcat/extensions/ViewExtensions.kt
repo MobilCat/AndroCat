@@ -71,7 +71,7 @@ fun AdView.loadAd(adId: Int) {
     loadAd(adRequest)
 }
 
-fun ArchedImageProgressBar.setInversion(invert: Boolean) {
+fun ArchedImageProgressBar.setInversion(invert: Boolean) =
     if (invert) {
         setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle_inverted), RADIUS)
         setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
@@ -83,4 +83,3 @@ fun ArchedImageProgressBar.setInversion(invert: Boolean) {
         setCircleColor(ContextCompat.getColor(context, R.color.white))
         setArchColor(ContextCompat.getColor(context, R.color.colorGitHubDash))
     }
-}
