@@ -65,7 +65,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         setActionListeners()
 
         arguments?.getString(ARGS_OPEN_URL)?.let { url ->
-            webView.loadUrl(url)
+            webView?.loadUrl(url)
             arguments?.clear()
         }
     }
@@ -77,7 +77,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             getString(R.string.url_login)
         }
 
-        webView.loadUrl(url)
+        webView?.loadUrl(url)
 
         invert(viewModel.getSettings().isInvert)
 
@@ -125,10 +125,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun setListeners() {
-        webView.setListener(getBaseActivity(), this)
+        webView?.setListener(getBaseActivity(), this)
 
         mSwipeRefreshLayout.setOnRefreshListener {
-            webView.loadUrl(webView.url)
+            webView?.loadUrl(webView?.url)
             mSwipeRefreshLayout.isRefreshing = false
         }
 
@@ -137,7 +137,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
                 R.id.navigation_find -> quickActionExplorer.show(mBottomNavigationView.getIconAt(3))
                 R.id.navigation_feed -> {
-                    webView.loadUrl(
+                    webView?.loadUrl(
                         if (viewModel.isLoggedIn() == false) {
                             getString(R.string.url_login)
                         } else {
@@ -145,8 +145,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                         }
                     )
                 }
-                R.id.navigation_pull_request -> webView.loadUrl(getString(R.string.url_pulls))
-                R.id.navigation_Issues -> webView.loadUrl(getString(R.string.url_issues))
+                R.id.navigation_pull_request -> webView?.loadUrl(getString(R.string.url_pulls))
+                R.id.navigation_Issues -> webView?.loadUrl(getString(R.string.url_issues))
             }
             true
         }
@@ -156,37 +156,37 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private fun setActionListeners() {
         quickActionProfile.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> webView.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
-                2 -> webView.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
-                3 -> webView.loadUrl(getString(R.string.url_gist) + viewModel.getUsername())
-                4 -> webView.loadUrl(getString(R.string.url_notifications))
+                1 -> webView?.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
+                2 -> webView?.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
+                3 -> webView?.loadUrl(getString(R.string.url_gist) + viewModel.getUsername())
+                4 -> webView?.loadUrl(getString(R.string.url_notifications))
                 5 -> replaceFragment(SettingsFragment.newInstance(), true)
-                6 -> webView.loadUrl(getString(R.string.url_settings))
+                6 -> webView?.loadUrl(getString(R.string.url_settings))
                 7 -> {
-                    webView.loadUrl(getString(R.string.url_logout))
+                    webView?.loadUrl(getString(R.string.url_logout))
                     url = getString(R.string.url_login)
                 }
-                8 -> webView.loadUrl(getString(R.string.url_login))
-                9 -> webView.loadUrl(getString(R.string.url_github) + viewModel.getUsername())
-                else -> webView.loadUrl(getString(R.string.url_github))
+                8 -> webView?.loadUrl(getString(R.string.url_login))
+                9 -> webView?.loadUrl(getString(R.string.url_github) + viewModel.getUsername())
+                else -> webView?.loadUrl(getString(R.string.url_github))
             }
         }
         quickActionExplorer.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> webView.loadUrl(getString(R.string.url_search))
-                2 -> webView.loadUrl(getString(R.string.url_market_place))
-                3 -> webView.loadUrl(getString(R.string.url_trending))
-                4 -> webView.loadUrl(getString(R.string.url_gist))
-                5 -> webView.loadUrl(getString(R.string.url_new))
+                1 -> webView?.loadUrl(getString(R.string.url_search))
+                2 -> webView?.loadUrl(getString(R.string.url_market_place))
+                3 -> webView?.loadUrl(getString(R.string.url_trending))
+                4 -> webView?.loadUrl(getString(R.string.url_gist))
+                5 -> webView?.loadUrl(getString(R.string.url_new))
                 6 -> invert(!viewModel.getSettings().isInvert, true)
-                else -> webView.loadUrl(getString(R.string.url_github))
+                else -> webView?.loadUrl(getString(R.string.url_github))
             }
         }
     }
 
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {
         mImgViewAndroCat.setInversion(invert)
-        webView.runScript(JsScrip.getInversion(invert))
+        webView?.runScript(JsScrip.getInversion(invert))
 
         if (changeSettings) {
             viewModel.updateInvertSettings(invert)
@@ -208,7 +208,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        webView.apply {
+        webView?.apply {
             setBackgroundColor(Color.parseColor("#FFFFFF"))
 
             settings.apply {
@@ -227,24 +227,24 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         super.onResume()
         webView?.onResume()
         if (MainActivity.uri != null) {
-            webView.loadUrl(MainActivity.uri)
+            webView?.loadUrl(MainActivity.uri)
             MainActivity.uri = null
         }
     }
 
     override fun onPause() {
-        webView.onPause()
+        webView?.onPause()
         super.onPause()
     }
 
     override fun onDestroy() {
-        webView.onDestroy()
+        webView?.onDestroy()
         super.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        webView.onActivityResult(requestCode, resultCode, intent)
+        webView?.onActivityResult(requestCode, resultCode, intent)
     }
 
     override fun onDownloadRequested(
@@ -261,14 +261,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-        webView?.loadUrl(webView.context.getString(R.string.url_blank))
+        webView?.loadUrl(webView?.context?.getString(R.string.url_blank))
     }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
         mImgViewAndroCat.fadeIO(true)
 
-        if (url.contains(webView.context.getString(R.string.url_session))) {
-            webView.runScript(JsScrip.GET_USERNAME) { str ->
+        if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
+            webView?.runScript(JsScrip.GET_USERNAME) { str ->
                 if (str != "null")
                     viewModel.updateUser(str.remove("\""), true)
             }
@@ -278,7 +278,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     override fun onPageFinished(url: String?) {
         mImgViewAndroCat.fadeIO(false)
-        webView.apply {
+        webView?.apply {
             runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert))
             when (url) {
                 context.getString(R.string.url_blank) -> {
