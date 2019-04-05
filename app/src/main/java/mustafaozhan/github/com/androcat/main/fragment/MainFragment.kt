@@ -81,7 +81,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
         invert(viewModel.getSettings().isInvert)
 
-        mImgViewAndroCat.apply {
+        mImgViewAndroCat?.apply {
             setArchSize(124f)
             setArchLength(240)
             setArchStroke(24f)
@@ -185,7 +185,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {
-        mImgViewAndroCat.setInversion(invert)
+        mImgViewAndroCat?.setInversion(invert)
         webView?.runScript(JsScrip.getInversion(invert))
 
         if (changeSettings) {
@@ -265,7 +265,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
-        mImgViewAndroCat.fadeIO(true)
+        mImgViewAndroCat?.fadeIO(true)
 
         if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
             webView?.runScript(JsScrip.GET_USERNAME) { str ->
@@ -277,7 +277,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageFinished(url: String?) {
-        mImgViewAndroCat.fadeIO(false)
+        mImgViewAndroCat?.fadeIO(false)
         webView?.apply {
             runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert))
             when (url) {
@@ -300,6 +300,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 }
             }
         }
-        mImgViewAndroCat.setState(state, viewModel.loadSettings().isInvert)
+        mImgViewAndroCat?.setState(state, viewModel.loadSettings().isInvert)
     }
 }
