@@ -34,7 +34,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     open fun getDefaultFragment(): BaseFragment? = null
 
-    protected fun addFragment(containerViewId: Int, fragment: BaseFragment) {
+    private fun addFragment(containerViewId: Int, fragment: BaseFragment) {
         val ft = supportFragmentManager.beginTransaction()
         ft.add(containerViewId, fragment, fragment.fragmentTag)
         ft.commit()
@@ -52,7 +52,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun replaceFragmentWithBackStack(containerViewId: Int, fragment: BaseFragment) {
+    private fun replaceFragmentWithBackStack(containerViewId: Int, fragment: BaseFragment) {
         val ft = supportFragmentManager.beginTransaction()
         ft.setCustomAnimations(
             R.anim.enter_from_right,
@@ -65,7 +65,7 @@ abstract class BaseActivity : AppCompatActivity() {
         ft.commit()
     }
 
-    protected fun replaceFragment(containerViewId: Int, fragment: BaseFragment) {
+    private fun replaceFragment(containerViewId: Int, fragment: BaseFragment) {
         val ft = supportFragmentManager.beginTransaction()
         if (supportFragmentManager.backStackEntryCount != 0)
             ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)

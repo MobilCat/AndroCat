@@ -33,8 +33,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     companion object {
         var TAG: String = MainFragment::class.java.simpleName
+
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
-        lateinit var url: String
+
         fun newInstance(url: String): MainFragment {
             val args = Bundle()
             args.putString(ARGS_OPEN_URL, url)
@@ -46,12 +47,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         fun newInstance() = MainFragment()
     }
 
-    override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
-
-    override fun getLayoutResId(): Int = R.layout.fragment_main
-
     private var logoutCount = 0
     private var state: State = State.SUCCESS
+    private lateinit var baseUrl: String
 
     private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
@@ -71,13 +69,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun init() {
-        url = if (viewModel.isLoggedIn() == true) {
+        baseUrl = if (viewModel.isLoggedIn() == true) {
             getString(R.string.url_github)
         } else {
             getString(R.string.url_login)
         }
 
-        webView?.loadUrl(url)
+        webView?.loadUrl(baseUrl)
 
         invert(viewModel.getSettings().isInvert)
 
@@ -164,7 +162,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 6 -> webView?.loadUrl(getString(R.string.url_settings))
                 7 -> {
                     webView?.loadUrl(getString(R.string.url_logout))
-                    url = getString(R.string.url_login)
+                    baseUrl = getString(R.string.url_login)
                 }
                 8 -> webView?.loadUrl(getString(R.string.url_login))
                 9 -> webView?.loadUrl(getString(R.string.url_github) + viewModel.getUsername())
@@ -232,7 +230,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         webView?.onPause()
@@ -284,7 +281,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 context.getString(R.string.url_logout) -> {
                     logoutCount++
                     if (logoutCount == 2) {
-                        MainFragment.url = context.getString(R.string.url_login)
+                        baseUrl = context.getString(R.string.url_login)
                         loadUrl(context.getString(R.string.url_login))
                         viewModel.updateUser(isLoggedIn = false)
                     }
@@ -299,4 +296,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         mImgViewAndroCat?.fadeIO(false)
         mImgViewAndroCat?.setState(state, viewModel.loadSettings().isInvert)
     }
+
+    override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
+
+    override fun getLayoutResId(): Int = R.layout.fragment_main
 }

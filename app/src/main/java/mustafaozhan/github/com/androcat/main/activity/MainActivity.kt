@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
@@ -14,6 +13,9 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_main.webView
 import mustafaozhan.github.com.androcat.BuildConfig
 import mustafaozhan.github.com.androcat.R
@@ -21,8 +23,6 @@ import mustafaozhan.github.com.androcat.base.BaseFragment
 import mustafaozhan.github.com.androcat.base.BaseMvvmActivity
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 import mustafaozhan.github.com.androcat.model.RemoteConfig
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
 /**
@@ -33,19 +33,17 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     companion object {
         var uri: String? = null
-        const val HANDLER_CYCLE = 7
-        const val HANDLER_SECOND: Long = 44
         const val BACK_DELAY: Long = 2000
         const val CHECK_DURATION: Long = 6
         const val REMOTE_CONFIG = "remote_config"
     }
 
-    private lateinit var firebaseRemoteConfig: FirebaseRemoteConfig
-    private var mInterstitialAd: InterstitialAd? = null
-    private var scheduler: ScheduledExecutorService? = null
-    private var occurs = HANDLER_CYCLE
-    private var adVisibility = false
+    private lateinit var adObservableInterval: Disposable
+    private lateinit var mInterstitialAd: InterstitialAd
+
     private var doubleBackToExitPressedOnce = false
+    private var adVisibility = false
+    private var isInitial = true
 
     override fun getDefaultFragment(): BaseFragment = MainFragment.newInstance()
 
@@ -90,28 +88,27 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     private fun ad() {
         adVisibility = true
-        if (scheduler == null) {
-            scheduler = Executors.newSingleThreadScheduledExecutor()
-            (scheduler as ScheduledExecutorService).scheduleAtFixedRate({
-                runOnUiThread {
-
-                    if (mInterstitialAd?.isLoaded == true && adVisibility && occurs == HANDLER_CYCLE) {
-                        mInterstitialAd?.show()
-                        occurs = 0
-                    } else {
-                        Log.d("TAG", "Interstitial not loaded")
+        adObservableInterval = Observable.interval(45, 300, TimeUnit.SECONDS)
+            .debounce(0, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { count ->
+                if (mInterstitialAd.isLoaded && adVisibility) {
+                    if (isInitial) {
+                        mInterstitialAd.show()
+                        isInitial = false
+                    } else if (count > 0) {
+                        mInterstitialAd.show()
                     }
-                    prepareAd()
-                    occurs++
                 }
-            }, HANDLER_SECOND, HANDLER_SECOND, TimeUnit.SECONDS)
-        }
+                prepareAd()
+            }
+            .subscribe()
     }
 
     private fun prepareAd() {
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd?.adUnitId = getString(R.string.interstitial_ad_id)
-        mInterstitialAd?.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.adUnitId = getString(R.string.interstitial_ad_id)
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 
     private fun checkAppUpdate() {
@@ -123,7 +120,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             getString(R.string.url_androcat)
         )
 
-        firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
         firebaseRemoteConfig.setConfigSettings(
             FirebaseRemoteConfigSettings
                 .Builder()
@@ -133,47 +130,49 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
         firebaseRemoteConfig.setDefaults(defaultMap)
 
-        firebaseRemoteConfig
-            .fetch(
-                if (BuildConfig.DEBUG)
-                    0
-                else
-                    TimeUnit.HOURS.toSeconds(CHECK_DURATION)
-            )
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    firebaseRemoteConfig.activateFetched()
+        firebaseRemoteConfig.fetch(
+            if (BuildConfig.DEBUG)
+                0
+            else
+                TimeUnit.HOURS.toSeconds(CHECK_DURATION)
+        ).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                firebaseRemoteConfig.activateFetched()
 
-                    val remoteConfigStr =
-                        if (TextUtils.isEmpty(firebaseRemoteConfig.getString(REMOTE_CONFIG)))
-                            defaultMap[REMOTE_CONFIG] as String
-                        else
-                            firebaseRemoteConfig.getString(REMOTE_CONFIG)
+                val remoteConfigStr =
+                    if (TextUtils.isEmpty(firebaseRemoteConfig.getString(REMOTE_CONFIG))) {
+                        defaultMap[REMOTE_CONFIG] as String
+                    } else {
+                        firebaseRemoteConfig.getString(REMOTE_CONFIG)
+                    }
 
-                    try {
-                        Gson().fromJson(
-                            remoteConfigStr,
-                            RemoteConfig::class.java
-                        ).apply {
-                            val isCancelable = forceVersion <= BuildConfig.VERSION_CODE
+                showUpdateDialog(remoteConfigStr)
+            }
+        }
+    }
 
-                            if (latestVersion > BuildConfig.VERSION_CODE) {
-                                showDialog(title, description, getString(R.string.update), isCancelable) {
-                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl)))
-                                }
-                            }
-                        }
-                    } catch (e: JsonSyntaxException) {
-                        Crashlytics.logException(e)
+    private fun showUpdateDialog(remoteConfigStr: String) {
+        try {
+            Gson().fromJson(
+                remoteConfigStr,
+                RemoteConfig::class.java
+            ).apply {
+                val isCancelable = forceVersion <= BuildConfig.VERSION_CODE
+
+                if (latestVersion > BuildConfig.VERSION_CODE) {
+                    showDialog(title, description, getString(R.string.update), isCancelable) {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl)))
                     }
                 }
             }
+        } catch (e: JsonSyntaxException) {
+            Crashlytics.logException(e)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        scheduler?.shutdownNow()
-        scheduler = null
+        adObservableInterval.dispose()
         adVisibility = false
     }
 
