@@ -82,7 +82,7 @@ dependencies {
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-config:16.4.1'
+    implementation 'com.google.firebase:firebase-config:16.5.0'
 
     // Advanced WebView
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'

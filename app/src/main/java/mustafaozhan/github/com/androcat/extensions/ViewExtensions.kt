@@ -4,11 +4,11 @@ import android.graphics.BitmapFactory
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.webkit.WebView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.mrtyvz.archedimageprogress.ArchedImageProgressBar
+import im.delight.android.webview.AdvancedWebView
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.tools.JsScrip
@@ -33,27 +33,25 @@ fun ArchedImageProgressBar.fadeIO(isIn: Boolean) =
 fun ArchedImageProgressBar.setState(state: State, invert: Boolean) =
     when (state) {
         State.SUCCESS -> {
-            if (invert) {
-                setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle_inverted), RADIUS)
-            } else {
-                setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.androcat_ciycle), RADIUS)
-            }
+            setProgressImage(BitmapFactory.decodeResource(resources,
+                if (invert) R.drawable.androcat_ciycle_inverted else R.drawable.androcat_ciycle
+            ), RADIUS)
+
             setArchSpeed(ARC_SPEED_SUCCESS)
             visibility = View.GONE
         }
         State.FAILED -> {
             visibility = View.VISIBLE
-            if (invert) {
-                setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning_inverted), RADIUS)
-            } else {
-                setProgressImage(BitmapFactory.decodeResource(resources, R.drawable.warning), RADIUS)
-            }
+            setProgressImage(BitmapFactory.decodeResource(resources,
+                if (invert) R.drawable.warning_inverted else R.drawable.warning
+            ), RADIUS)
+
             setArchSpeed(ARC_SPEED_FAILED)
             (context as MainActivity).snacky("No internet connection")
         }
     }
 
-fun WebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
+fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
     evaluateJavascript(
         context
             .assets
