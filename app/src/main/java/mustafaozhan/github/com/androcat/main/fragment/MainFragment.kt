@@ -254,13 +254,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-        webView?.loadUrl(getString(R.string.url_blank))
+        webView?.loadUrl(webView?.context?.getString(R.string.url_blank))
     }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
         mImgViewAndroCat?.fadeIO(true)
 
-        if (url.contains(getString(R.string.url_session))) {
+        if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
             webView?.runScript(JsScrip.GET_USERNAME) { str ->
                 if (str != "null")
                     viewModel.updateUser(str.remove("\""), true)
