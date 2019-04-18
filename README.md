@@ -80,3 +80,8 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/mustafaozhan/AndroCat/badge.svg?style=beer-square)](https://beerpay.io/mustafaozhan/AndroCat)  [![Beerpay](https://beerpay.io/mustafaozhan/AndroCat/make-wish.svg?style=flat-square)](https://beerpay.io/mustafaozhan/AndroCat?focus=wish)
