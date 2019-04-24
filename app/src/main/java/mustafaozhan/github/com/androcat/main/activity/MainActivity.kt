@@ -36,6 +36,8 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         const val BACK_DELAY: Long = 2000
         const val CHECK_DURATION: Long = 6
         const val REMOTE_CONFIG = "remote_config"
+        const val AD_INITIAL_DELAY: Long = 45
+        const val AD_PERIOD: Long = 300
     }
 
     private lateinit var adObservableInterval: Disposable
@@ -88,7 +90,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     private fun ad() {
         adVisibility = true
-        adObservableInterval = Observable.interval(45, 300, TimeUnit.SECONDS)
+        adObservableInterval = Observable.interval(AD_INITIAL_DELAY, AD_PERIOD, TimeUnit.SECONDS)
             .debounce(0, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { count ->
