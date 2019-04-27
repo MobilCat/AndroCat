@@ -5,30 +5,31 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.view.animation.AnimationUtils
+import com.github.jorgecastillo.FillableLoader
 import im.delight.android.webview.AdvancedWebView
+import kotlinx.android.synthetic.main.fragment_main.fillableLoader
+import kotlinx.android.synthetic.main.fragment_main.fillableLoaderInverted
+import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
-import kotlinx.android.synthetic.main.fragment_main.mImgViewAndroCat
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_main.webView
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
-import mustafaozhan.github.com.androcat.extensions.fadeIO
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
-import mustafaozhan.github.com.androcat.extensions.setInversion
-import mustafaozhan.github.com.androcat.extensions.setState
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
-import mustafaozhan.github.com.androcat.tools.State
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
-@Suppress("TooManyFunctions", "MagicNumber")
+@Suppress("TooManyFunctions", "MagicNumber", "LargeClass")
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
@@ -48,8 +49,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private var logoutCount = 0
-    private var state: State = State.SUCCESS
     private lateinit var baseUrl: String
+    private var loader: FillableLoader? = null
 
     private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
@@ -69,6 +70,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun init() {
+        fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
+        fillableLoaderInverted.setSvgPath(getString(R.string.androcat_svg_path))
+
         baseUrl = if (viewModel.isLoggedIn() == true) {
             getString(R.string.url_github)
         } else {
@@ -78,13 +82,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         webView?.loadUrl(baseUrl)
 
         invert(viewModel.getSettings().isInvert)
-
-        mImgViewAndroCat?.apply {
-            setArchSize(124f)
-            setArchLength(240)
-            setArchStroke(24f)
-            setArchSpeed(12)
-        }
 
         context?.let { ctx ->
             quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
@@ -183,7 +180,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {
-        mImgViewAndroCat?.setInversion(invert)
+        setInversion(invert)
         webView?.runScript(JsScrip.getInversion(invert))
 
         if (changeSettings) {
@@ -258,8 +255,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
-        mImgViewAndroCat?.fadeIO(true)
-
+        loadingView(true)
         if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
             webView?.runScript(JsScrip.GET_USERNAME) { str ->
                 if (str != "null")
@@ -275,7 +271,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert))
             when (url) {
                 context.getString(R.string.url_blank) -> {
-                    state = State.FAILED
                     logoutCount = 0
                 }
                 context.getString(R.string.url_logout) -> {
@@ -285,16 +280,41 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                         loadUrl(context.getString(R.string.url_login))
                         viewModel.updateUser(isLoggedIn = false)
                     }
-                    state = State.SUCCESS
                 }
                 else -> {
                     logoutCount = 0
-                    state = State.SUCCESS
                 }
             }
         }
-        mImgViewAndroCat?.fadeIO(false)
-        mImgViewAndroCat?.setState(state, viewModel.loadSettings().isInvert)
+        loadingView(false)
+    }
+
+    private fun loadingView(show: Boolean) =
+        if (show) {
+            fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+            fillableLoaderLayout?.visibility = View.VISIBLE
+            loader?.visibility = View.VISIBLE
+            fillableLoader?.start()
+            fillableLoaderInverted?.start()
+        } else {
+            fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
+            fillableLoaderLayout?.visibility = View.GONE
+            fillableLoader?.visibility = View.GONE
+            fillableLoaderInverted?.visibility = View.GONE
+            fillableLoader?.reset()
+            fillableLoaderInverted?.reset()
+        }
+
+    private fun setInversion(inversion: Boolean) = context?.let { ctx ->
+        loader = if (inversion) {
+            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorGitHubDash))
+            fillableLoader?.visibility = View.GONE
+            fillableLoaderInverted
+        } else {
+            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.white))
+            fillableLoaderInverted?.visibility = View.GONE
+            fillableLoader
+        }
     }
 
     override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java

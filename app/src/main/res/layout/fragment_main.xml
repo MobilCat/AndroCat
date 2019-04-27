@@ -21,18 +21,46 @@
             android:layout_height="0dp" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
-    <com.mrtyvz.archedimageprogress.ArchedImageProgressBar
-        android:id="@+id/mImgViewAndroCat"
+    <RelativeLayout
+        android:id="@+id/fillableLoaderLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/loading"
-        android:padding="64dp"
-        android:scaleType="centerInside"
+        android:background="@color/white"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.github.jorgecastillo.FillableLoader
+            android:id="@+id/fillableLoader"
+            android:layout_width="200dp"
+            android:layout_height="285dp"
+            app:fl_clippingTransform="waves"
+            app:fl_fillColor="@color/colorGitHubDash"
+            app:fl_fillDuration="500"
+            app:fl_fillPercentage="72"
+            app:fl_originalHeight="575"
+            app:fl_originalWidth="400"
+            app:fl_strokeColor="@color/colorGitHubDash"
+            app:fl_strokeDrawingDuration="500"
+            app:fl_strokeWidth="5dp" />
+
+        <com.github.jorgecastillo.FillableLoader
+            android:id="@+id/fillableLoaderInverted"
+            android:layout_width="200dp"
+            android:layout_height="285dp"
+            app:fl_clippingTransform="waves"
+            app:fl_fillColor="@color/white"
+            app:fl_fillDuration="500"
+            app:fl_fillPercentage="72"
+            app:fl_originalHeight="575"
+            app:fl_originalWidth="400"
+            app:fl_strokeColor="@color/white"
+            app:fl_strokeDrawingDuration="500"
+            app:fl_strokeWidth="5dp" />
+    </RelativeLayout>
+
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/mBottomNavigationView"

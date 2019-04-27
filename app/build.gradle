@@ -104,4 +104,7 @@ dependencies {
 
     // Http client
     implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+
+    // Android Fillable Loader
+    implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
 }
