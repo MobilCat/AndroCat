@@ -8,15 +8,16 @@
 ## Screenshots
 
 
-<img src="https://i.postimg.cc/Fr1pcM2b/1.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/Hp63rYPs/2.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/TdS9ck6z/3.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/KZGJckfH/4.png?dl=1" width="215px"/>
+<img src="https://i.postimg.cc/HpTsfXyS/1.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/fD0LXwsv/2.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/Fmz1ryn8/3.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/GbFm7qH8/4.png?dl=1" width="215px"/>
 
-<img src="https://i.postimg.cc/4XbWTb6c/5.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/rqLfbYrc/6.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/6tZHMNTY/7.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/92NJVf7L/8.png?dl=1" width="215px"/>
+<img src="https://i.postimg.cc/9Vk0rD6M/5.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/tb2YGSDF/6.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/QjGMJRxZ/7.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/6Wj3VqTM/8.png?dl=1" width="215px"/>
 
 ## Dependencies
 ```
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //noinspection GradleCompatible
     implementation "com.android.support:design:${rootProject.ext.supportLibraryVersion}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -31,6 +32,11 @@ dependencies {
     // Crashlytics
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 
+    // Fabric
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
+        transitive = true
+    }
+
     // Anko
     implementation 'org.jetbrains.anko:anko-commons:0.10.5'
 
@@ -40,18 +46,18 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    // Rx
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:${rootProject.ext.rxBindingVersion}"
+
     // LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
-    // Arched Image Progress Bar
-    implementation 'com.github.smrtyvz:ArchedImageProgressBar:2.01'
-
     // Ad
-    implementation 'com.google.firebase:firebase-ads:17.1.3'
+    implementation 'com.google.firebase:firebase-ads:17.2.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.7'
-    implementation 'com.google.firebase:firebase-config:16.3.0'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-config:16.5.0'
 
     // Advanced WebView
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
@@ -70,6 +76,12 @@ dependencies {
 
     // Multidex
     implementation 'com.android.support:multidex:1.0.3'
+
+    // Http client
+    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+
+    // Android Fillable Loader
+    implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
 }
 ```
 
