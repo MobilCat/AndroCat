@@ -38,12 +38,12 @@
             android:layout_height="285dp"
             app:fl_clippingTransform="waves"
             app:fl_fillColor="@color/colorGitHubDash"
-            app:fl_fillDuration="500"
+            app:fl_fillDuration="360"
             app:fl_fillPercentage="72"
             app:fl_originalHeight="575"
             app:fl_originalWidth="400"
             app:fl_strokeColor="@color/colorGitHubDash"
-            app:fl_strokeDrawingDuration="500"
+            app:fl_strokeDrawingDuration="400"
             app:fl_strokeWidth="5dp" />
 
         <com.github.jorgecastillo.FillableLoader
@@ -52,12 +52,12 @@
             android:layout_height="285dp"
             app:fl_clippingTransform="waves"
             app:fl_fillColor="@color/white"
-            app:fl_fillDuration="500"
+            app:fl_fillDuration="360"
             app:fl_fillPercentage="72"
             app:fl_originalHeight="575"
             app:fl_originalWidth="400"
             app:fl_strokeColor="@color/white"
-            app:fl_strokeDrawingDuration="500"
+            app:fl_strokeDrawingDuration="400"
             app:fl_strokeWidth="5dp" />
     </RelativeLayout>
 
@@ -75,9 +75,9 @@
         android:id="@+id/newsFeedFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="36dp"
         android:src="@drawable/androcat_fab"
-        app:backgroundTint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/colorGitHubDash"
         app:layout_constraintBottom_toBottomOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="@+id/mBottomNavigationView"
         app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView" />

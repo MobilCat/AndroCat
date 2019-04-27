@@ -3,6 +3,7 @@
     <string name="loading">loading</string>
     <string name="title_activity_settings">Settings</string>
     <string name="username">Username</string>
+    <string name="missUsername">Please Enter Your GitHub Username</string>
     <string name="news_feed">News Feed</string>
     <string name="search">Search</string>
     <string name="pull_requests">Pull Requests</string>

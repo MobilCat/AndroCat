@@ -18,7 +18,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
      * the CURVE_CIRCLE_RADIUS represent the radius of the fab button
      */
     companion object {
-        const val CURVE_CIRCLE_RADIUS = 100
+        const val CURVE_CIRCLE_RADIUS = 90
     }
 
     private var mPath = Path()
@@ -51,7 +51,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     private fun init() {
 
         mPaint.style = Paint.Style.FILL_AND_STROKE
-        mPaint.color = ContextCompat.getColor(context, R.color.colorPrimaryDark)
+        mPaint.color = ContextCompat.getColor(context, R.color.colorGitHubDash)
         setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
     }
 
@@ -61,16 +61,16 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
         // Navigation bar bounds (width & height)
 
         // the coordinates (x,y) of the start point before curve
-        mFirstCurveStartPoint.set(width / 2 - CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS / 3, 0)
+        mFirstCurveStartPoint.set(width / 2 - CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS / 8, 0)
         // the coordinates (x,y) of the end point after curve
-        mFirstCurveEndPoint.set(width / 2, CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 4)
+        mFirstCurveEndPoint.set(width / 2, CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 8)
         // same thing for the second curve
         mSecondCurveStartPoint = mFirstCurveEndPoint
-        mSecondCurveEndPoint.set(width / 2 + CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS / 3, 0)
+        mSecondCurveEndPoint.set(width / 2 + CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS / 8, 0)
 
         // the coordinates (x,y)  of the 1st control point on a cubic curve
         mFirstCurveControlPoint1
-            .set(mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 4, mFirstCurveStartPoint.y)
+            .set(mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 6, mFirstCurveStartPoint.y)
         // the coordinates (x,y)  of the 2nd control point on a cubic curve
         mFirstCurveControlPoint2
             .set(mFirstCurveEndPoint.x - CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS, mFirstCurveEndPoint.y)
@@ -78,7 +78,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
         mSecondCurveControlPoint1
             .set(mSecondCurveStartPoint.x + CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS, mSecondCurveStartPoint.y)
         mSecondCurveControlPoint2
-            .set(mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 4), mSecondCurveEndPoint.y)
+            .set(mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 6), mSecondCurveEndPoint.y)
 
         mPath.apply {
             reset()

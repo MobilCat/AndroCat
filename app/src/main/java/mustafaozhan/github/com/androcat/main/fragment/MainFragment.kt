@@ -152,9 +152,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private fun setActionListeners() {
         quickActionProfile.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> webView?.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
-                2 -> webView?.loadUrl(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
-                3 -> webView?.loadUrl(getString(R.string.url_gist) + viewModel.getUsername())
+                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
+                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
+                3 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
                 4 -> webView?.loadUrl(getString(R.string.url_notifications))
                 5 -> replaceFragment(SettingsFragment.newInstance(), true)
                 6 -> webView?.loadUrl(getString(R.string.url_settings))
@@ -163,7 +163,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     baseUrl = getString(R.string.url_login)
                 }
                 8 -> webView?.loadUrl(getString(R.string.url_login))
-                9 -> webView?.loadUrl(getString(R.string.url_github) + viewModel.getUsername())
+                9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
                 else -> webView?.loadUrl(getString(R.string.url_github))
             }
         }
@@ -220,6 +220,17 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             }
         }
     }
+
+    private fun loadIfUserNameSet(url: String) =
+        viewModel.getUsername()?.let { username ->
+            if (username.isEmpty()) {
+                snacky(getString(R.string.missUsername), getString(R.string.enter)) {
+                    replaceFragment(SettingsFragment.newInstance(), true)
+                }
+            } else {
+                webView?.loadUrl(url)
+            }
+        }
 
     override fun onResume() {
         super.onResume()
@@ -284,6 +295,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                         viewModel.updateUser(isLoggedIn = false)
                     }
                 }
+                context?.getString(R.string.url_session) -> {
+                    webView?.runScript(JsScrip.GET_USERNAME) { str ->
+                        if (str != "null")
+                            viewModel.updateUser(str.remove("\""), true)
+                    }
+                    logoutCount = 0
+                }
                 else -> {
                     logoutCount = 0
                 }
@@ -310,7 +328,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     private fun setInversion(inversion: Boolean) = context?.let { ctx ->
         loader = if (inversion) {
-            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorGitHubDash))
+            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorPrimaryDark))
             fillableLoader?.visibility = View.GONE
             fillableLoaderInverted
         } else {

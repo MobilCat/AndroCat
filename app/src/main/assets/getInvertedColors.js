@@ -48,5 +48,5 @@ javascript: (
         if (document.getElementsByClassName(rightSideBarName)[0] != null) {
             document.getElementsByClassName(rightSideBarName)[0].style.backgroundColor = darkDashInverted;
         }
-        document.body.style.marginBottom='20px'
+        document.body.style.marginBottom='30px'
     })()
