@@ -47,4 +47,5 @@ javascript: (
         if (document.getElementsByClassName(newsName)[0] != null) {
             document.getElementsByClassName(newsName)[0].style.backgroundColor = lightBlue;
         }
+        document.body.style.marginBottom='20px'
     })()

@@ -8,4 +8,5 @@
     <color name="gray">#9E9E9E</color>
     <color name="failed">#49516b</color>
     <color name="blue_gray_50">#ECEFF1</color>
+    <color name="transparent">#00000000</color>
 </resources>

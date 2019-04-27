@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGitHubDash">
+    android:background="@color/white">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/mSwipeRefreshLayout"
@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:layout_constraintBottom_toTopOf="@+id/mBottomNavigationView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +27,7 @@
         android:layout_height="0dp"
         android:background="@color/white"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/mBottomNavigationView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
         app:layout_constraintTop_toTopOf="parent">
@@ -61,16 +61,25 @@
             app:fl_strokeWidth="5dp" />
     </RelativeLayout>
 
-
-    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+    <mustafaozhan.github.com.androcat.view.CurvedBottomNavigationView
         android:id="@+id/mBottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/colorGitHubDash"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/newsFeedFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/androcat_fab"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="@+id/mBottomNavigationView"
+        app:layout_constraintEnd_toEndOf="@+id/mBottomNavigationView"
+        app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView" />
 
 </android.support.constraint.ConstraintLayout>

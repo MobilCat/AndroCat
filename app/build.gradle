@@ -74,9 +74,6 @@ dependencies {
     // LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
-    // Arched Image Progress Bar
-    implementation 'com.github.smrtyvz:ArchedImageProgressBar:2.01'
-
     // Ad
     implementation 'com.google.firebase:firebase-ads:17.2.0'
 

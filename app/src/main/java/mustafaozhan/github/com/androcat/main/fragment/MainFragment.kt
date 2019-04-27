@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_main.fillableLoaderInverted
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
+import kotlinx.android.synthetic.main.fragment_main.newsFeedFab
 import kotlinx.android.synthetic.main.fragment_main.webView
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
@@ -120,6 +121,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun setListeners() {
+        newsFeedFab.setOnClickListener {
+            webView?.loadUrl(
+                if (viewModel.isLoggedIn() == false) {
+                    getString(R.string.url_login)
+                } else {
+                    getString(R.string.url_github)
+                }
+            )
+        }
         webView?.setListener(getBaseActivity(), this)
 
         mSwipeRefreshLayout.setOnRefreshListener {
@@ -130,16 +140,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
-                R.id.navigation_find -> quickActionExplorer.show(mBottomNavigationView.getIconAt(3))
-                R.id.navigation_feed -> {
-                    webView?.loadUrl(
-                        if (viewModel.isLoggedIn() == false) {
-                            getString(R.string.url_login)
-                        } else {
-                            getString(R.string.url_github)
-                        }
-                    )
-                }
+                R.id.navigation_find -> quickActionExplorer.show(mBottomNavigationView.getIconAt(0))
                 R.id.navigation_pull_request -> webView?.loadUrl(getString(R.string.url_pulls))
                 R.id.navigation_Issues -> webView?.loadUrl(getString(R.string.url_issues))
             }
@@ -188,17 +189,19 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    private fun setDash() {
-        mBottomNavigationView.apply {
-            inflateMenu(R.menu.bnvm_dash)
-            enableAnimation(false)
-            enableItemShiftingMode(false)
-            enableShiftingMode(false)
-            enableAnimation(false)
-            setTextSize(12.0f)
-            setIconsMarginTop(10)
-            setIconSize(30.0F, 30.0F)
-        }
+    private fun setDash() = mBottomNavigationView.apply {
+        inflateMenu(R.menu.bnvm_dash)
+        enableAnimation(false)
+        enableItemShiftingMode(false)
+        enableShiftingMode(false)
+        enableAnimation(false)
+        setTextSize(10.0f)
+        setIconsMarginTop(10)
+        setIconSize(32.0F, 32.0F)
+        getBottomNavigationItemView(2).background = null
+        getBottomNavigationItemView(1).background = null
+        getBottomNavigationItemView(3).background = null
+        getBottomNavigationItemView(2).isClickable = false
     }
 
     @SuppressLint("SetJavaScriptEnabled")
