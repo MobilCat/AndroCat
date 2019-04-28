@@ -51,7 +51,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     private fun init() {
 
         mPaint.style = Paint.Style.FILL_AND_STROKE
-        mPaint.color = ContextCompat.getColor(context, R.color.colorGitHubDash)
+        mPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
         setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
     }
 

@@ -6,7 +6,7 @@ javascript: (
 
         var leftSideBarName = 'dashboard-sidebar js-sticky top-0 px-3 px-md-4 px-lg-4 overflow-auto';
         var rightSideBarName = 'col-12 col-md-8 col-lg-6 p-responsive mt-3 border-bottom';
-        var newsName = 'team-left-column col-12 col-md-3 col-lg-3 pr-5 mt-5 hide-lg hide-md hide-sm border-bottom';
+        var newsName = 'news';
         var issuesNavBarName = 'reponav-wrapper reponav-small d-lg-none';
         var gitHubNavBarName = 'position-relative js-header-wrapper ';
 

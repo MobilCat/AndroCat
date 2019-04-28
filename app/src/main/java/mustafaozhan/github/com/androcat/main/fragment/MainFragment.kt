@@ -87,7 +87,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         context?.let { ctx ->
             quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
             quickActionExplorer.apply {
-                setColorRes(R.color.colorGitHubDash)
+                setColorRes(R.color.colorPrimary)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
@@ -96,13 +96,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     ActionItem(3, getString(R.string.trends), R.drawable.ic_trending_up_black_24dp),
                     ActionItem(4, getString(R.string.new_gist), R.drawable.ic_code_black_24dp),
                     ActionItem(5, getString(R.string.new_repository), R.drawable.new_repo),
-                    ActionItem(6, getString(R.string.invert), R.drawable.invert)
+                    ActionItem(6, getString(R.string.invert), R.drawable.invert),
+                    ActionItem(7, getString(R.string.forward), R.drawable.forward),
+                    ActionItem(8, getString(R.string.back), R.drawable.back)
                 )
             }
 
             quickActionProfile = QuickAction(ctx, QuickAction.VERTICAL)
             quickActionProfile.apply {
-                setColorRes(R.color.colorGitHubDash)
+                setColorRes(R.color.colorPrimary)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
@@ -175,6 +177,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 4 -> webView?.loadUrl(getString(R.string.url_gist))
                 5 -> webView?.loadUrl(getString(R.string.url_new))
                 6 -> invert(!viewModel.getSettings().isInvert, true)
+                7 -> webView?.goForward()
+                8 -> webView?.goBack()
                 else -> webView?.loadUrl(getString(R.string.url_github))
             }
         }

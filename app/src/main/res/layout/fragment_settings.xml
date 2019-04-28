@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGitHubDash"
+    android:background="@color/colorPrimary"
     android:padding="8dp">
 
     <LinearLayout
@@ -39,7 +39,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/blue_gray_50"
             android:padding="4dp" />
     </LinearLayout>
 
@@ -78,7 +78,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/blue_gray_50"
             android:padding="4dp" />
     </LinearLayout>
 
@@ -103,7 +103,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/blue_gray_50"
             android:padding="4dp" />
     </LinearLayout>
 
@@ -128,7 +128,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/blue_gray_50"
             android:padding="4dp" />
     </LinearLayout>
 
@@ -153,7 +153,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/blue_gray_50"
             android:padding="4dp" />
     </LinearLayout>
 
@@ -178,7 +178,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/gray"
+            android:background="@color/blue_gray_50"
             android:padding="4dp" />
     </LinearLayout>
 
