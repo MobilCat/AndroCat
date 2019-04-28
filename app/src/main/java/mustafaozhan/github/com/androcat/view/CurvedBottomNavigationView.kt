@@ -18,7 +18,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
      * the CURVE_CIRCLE_RADIUS represent the radius of the fab button
      */
     companion object {
-        const val CURVE_CIRCLE_RADIUS = 90
+        const val CURVE_CIRCLE_RADIUS = 88
     }
 
     private var mPath = Path()
@@ -70,7 +70,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
 
         // the coordinates (x,y)  of the 1st control point on a cubic curve
         mFirstCurveControlPoint1
-            .set(mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 6, mFirstCurveStartPoint.y)
+            .set(mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 32, mFirstCurveStartPoint.y)
         // the coordinates (x,y)  of the 2nd control point on a cubic curve
         mFirstCurveControlPoint2
             .set(mFirstCurveEndPoint.x - CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS, mFirstCurveEndPoint.y)
@@ -78,7 +78,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
         mSecondCurveControlPoint1
             .set(mSecondCurveStartPoint.x + CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS, mSecondCurveStartPoint.y)
         mSecondCurveControlPoint2
-            .set(mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 6), mSecondCurveEndPoint.y)
+            .set(mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 32), mSecondCurveEndPoint.y)
 
         mPath.apply {
             reset()

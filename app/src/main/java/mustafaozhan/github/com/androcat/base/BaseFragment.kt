@@ -26,15 +26,15 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected fun replaceFragment(fragment: BaseFragment, withBackStack: Boolean) {
-        getBaseActivity().replaceFragment(fragment, withBackStack)
+        getBaseActivity()?.replaceFragment(fragment, withBackStack)
     }
 
-    protected fun clearBackStack() = getBaseActivity().clearBackStack()
+    protected fun clearBackStack() = getBaseActivity()?.clearBackStack()
 
-    protected fun getBaseActivity(): BaseActivity = activity as BaseActivity
+    protected fun getBaseActivity(): BaseActivity? = activity as? BaseActivity
 
     protected fun snacky(text: String, actionText: String = "", action: () -> Unit = {}) =
-        getBaseActivity().snacky(text, actionText, action)
+        getBaseActivity()?.snacky(text, actionText, action)
 
     protected fun showDialog(
         title: String,
@@ -42,5 +42,5 @@ abstract class BaseFragment : Fragment() {
         positiveButton: String,
         cancelable: Boolean = true,
         function: () -> Unit = {}
-    ) = getBaseActivity().showDialog(title, description, positiveButton, cancelable, function)
+    ) = getBaseActivity()?.showDialog(title, description, positiveButton, cancelable, function)
 }

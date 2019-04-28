@@ -102,19 +102,21 @@ abstract class BaseActivity : AppCompatActivity() {
         cancelable: Boolean = true,
         function: () -> Unit = {}
     ) {
-        val builder = AlertDialog
-            .Builder(this, R.style.AlertDialogCustom)
-            .setIcon(R.mipmap.ic_launcher)
-            .setTitle(title)
-            .setMessage(description)
-            .setPositiveButton(positiveButton) { _, _ ->
-                function()
-            }
-            .setCancelable(cancelable)
+        if (!isFinishing) {
+            val builder = AlertDialog
+                .Builder(this, R.style.AlertDialogCustom)
+                .setIcon(R.mipmap.ic_launcher)
+                .setTitle(title)
+                .setMessage(description)
+                .setPositiveButton(positiveButton) { _, _ ->
+                    function()
+                }
+                .setCancelable(cancelable)
 
-        if (cancelable)
-            builder.setNegativeButton(getString(R.string.cancel), null)
+            if (cancelable)
+                builder.setNegativeButton(getString(R.string.cancel), null)
 
-        builder.show()
+            builder.show()
+        }
     }
 }

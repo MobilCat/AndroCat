@@ -73,8 +73,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/newsFeedFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginBottom="36dp"
         android:src="@drawable/androcat_fab"
         app:backgroundTint="@color/colorPrimary"
