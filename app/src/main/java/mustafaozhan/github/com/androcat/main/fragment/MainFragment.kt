@@ -52,7 +52,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private var logoutCount = 0
     private lateinit var baseUrl: String
     private var loader: FillableLoader? = null
-    private var firstLoad = 0
 
     private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
@@ -239,7 +238,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     override fun onResume() {
         super.onResume()
-        firstLoad++
         webView?.onResume()
         if (MainActivity.uri != null) {
             loadUrlWithAnimation(MainActivity.uri)
@@ -275,13 +273,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
-        when (firstLoad) {
-            1 -> firstLoad++
-            2 -> {
-                loadingView(true)
-                firstLoad = 0
-            }
-        }
+        loadingView(true)
+
         if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
             webView?.runScript(JsScrip.GET_USERNAME) { str ->
                 if (str != "null")
@@ -322,13 +315,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         loadingView(false)
     }
 
-    private fun loadingView(show: Boolean) =
+    private fun loadingView(show: Boolean) {
         if (show) {
-            fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-            fillableLoaderLayout?.visibility = View.VISIBLE
-            loader?.visibility = View.VISIBLE
-            fillableLoader?.start()
-            fillableLoaderInverted?.start()
+            if (loader?.visibility == View.GONE) {
+                fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+                fillableLoaderLayout?.visibility = View.VISIBLE
+                loader?.visibility = View.VISIBLE
+                fillableLoader?.start()
+                fillableLoaderInverted?.start()
+            }
         } else {
             fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
             fillableLoaderLayout?.visibility = View.GONE
@@ -337,6 +332,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             fillableLoader?.reset()
             fillableLoaderInverted?.reset()
         }
+    }
 
     private fun setInversion(inversion: Boolean) = context?.let { ctx ->
         loader = if (inversion) {
