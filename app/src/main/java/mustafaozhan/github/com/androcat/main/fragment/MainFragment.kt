@@ -52,7 +52,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private var logoutCount = 0
     private lateinit var baseUrl: String
     private var loader: FillableLoader? = null
-    private var firstLoad = true
+    private var firstLoad = 0
 
     private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
@@ -239,7 +239,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     override fun onResume() {
         super.onResume()
-        firstLoad = true
+        firstLoad++
         webView?.onResume()
         if (MainActivity.uri != null) {
             loadUrlWithAnimation(MainActivity.uri)
@@ -275,9 +275,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
-        if (firstLoad) {
-            loadingView(true)
-            firstLoad = false
+        when (firstLoad) {
+            1 -> firstLoad++
+            2 -> {
+                loadingView(true)
+                firstLoad = 0
+            }
         }
         if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
             webView?.runScript(JsScrip.GET_USERNAME) { str ->
@@ -351,7 +354,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
 
-    private fun loadUrlWithAnimation(url: String?) = url?.let { url ->
+    private fun loadUrlWithAnimation(urlToLoad: String?) = urlToLoad?.let { url ->
         loadingView(true)
         webView?.loadUrl(url)
     }
