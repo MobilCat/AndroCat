@@ -285,9 +285,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageFinished(url: String?) {
-
         webView?.apply {
-            runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert))
+            runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert)) {
+                loadingView(false)
+            }
             when (url) {
                 context.getString(R.string.url_blank) -> {
                     logoutCount = 0
@@ -312,7 +313,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 }
             }
         }
-        loadingView(false)
     }
 
     private fun loadingView(show: Boolean) {
