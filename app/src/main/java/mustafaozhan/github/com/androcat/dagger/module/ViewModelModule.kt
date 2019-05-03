@@ -1,6 +1,6 @@
 package mustafaozhan.github.com.androcat.dagger.module
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
 

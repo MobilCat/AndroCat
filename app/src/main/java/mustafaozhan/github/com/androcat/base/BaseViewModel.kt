@@ -1,6 +1,6 @@
 package mustafaozhan.github.com.androcat.base
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import mustafaozhan.github.com.androcat.application.Application
 import mustafaozhan.github.com.androcat.dagger.component.ViewModelComponent
 import mustafaozhan.github.com.androcat.tools.DataManager

@@ -5,9 +5,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.content.ContextCompat
 import com.github.jorgecastillo.FillableLoader
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.fragment_main.fillableLoader

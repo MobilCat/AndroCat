@@ -5,11 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Point
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-
+import androidx.core.content.ContextCompat
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-
 import mustafaozhan.github.com.androcat.R
 
 @Suppress("MagicNumber")

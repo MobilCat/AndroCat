@@ -1,6 +1,6 @@
 package mustafaozhan.github.com.androcat.base
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.

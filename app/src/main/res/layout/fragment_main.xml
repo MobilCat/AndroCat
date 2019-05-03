@@ -1,10 +1,10 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/mSwipeRefreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -19,7 +19,7 @@
             android:id="@+id/webView"
             android:layout_width="0dp"
             android:layout_height="0dp" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/fillableLoaderLayout"
@@ -38,12 +38,12 @@
             android:layout_height="285dp"
             app:fl_clippingTransform="waves"
             app:fl_fillColor="@color/colorPrimaryDark"
-            app:fl_fillDuration="360"
+            app:fl_fillDuration="500"
             app:fl_fillPercentage="72"
             app:fl_originalHeight="575"
             app:fl_originalWidth="400"
             app:fl_strokeColor="@color/colorPrimaryDark"
-            app:fl_strokeDrawingDuration="400"
+            app:fl_strokeDrawingDuration="500"
             app:fl_strokeWidth="5dp" />
 
         <com.github.jorgecastillo.FillableLoader
@@ -52,12 +52,12 @@
             android:layout_height="285dp"
             app:fl_clippingTransform="waves"
             app:fl_fillColor="@color/white"
-            app:fl_fillDuration="360"
+            app:fl_fillDuration="500"
             app:fl_fillPercentage="72"
             app:fl_originalHeight="575"
             app:fl_originalWidth="400"
             app:fl_strokeColor="@color/white"
-            app:fl_strokeDrawingDuration="400"
+            app:fl_strokeDrawingDuration="500"
             app:fl_strokeWidth="5dp" />
     </RelativeLayout>
 
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newsFeedFab"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -84,4 +84,4 @@
         app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
         app:maxImageSize="32dp"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
