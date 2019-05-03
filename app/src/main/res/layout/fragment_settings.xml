@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:padding="8dp">
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:id="@+id/layoutUsername"
@@ -19,35 +18,35 @@
             android:id="@+id/txtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:padding="@dimen/four"
             android:text="@string/username"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/txtUsernameInput"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:padding="@dimen/four"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/txtUsername"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="4dp" />
+            android:padding="@dimen/four"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutInversion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/layoutUsername">
 
@@ -59,132 +58,132 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="4dp"
+                android:layout_weight="@integer/one"
+                android:padding="@dimen/four"
                 android:text="@string/color_inversion"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <Switch
                 android:id="@+id/inversionSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1" />
+                android:layout_weight="@integer/one"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="4dp" />
+            android:padding="@dimen/four"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutSupport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/layoutInversion">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:padding="@dimen/four"
             android:text="@string/support"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="4dp" />
+            android:padding="@dimen/four"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutFeedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/layoutSupport">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:padding="@dimen/four"
             android:text="@string/feedback"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="4dp" />
+            android:padding="@dimen/four"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutOnGitHub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/layoutFeedback">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:padding="@dimen/four"
             android:text="@string/on_github"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="4dp" />
+            android:padding="@dimen/four"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutReportIssue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/layoutOnGitHub">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
+            android:padding="@dimen/four"
             android:text="@string/report_issue"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="4dp" />
+            android:padding="@dimen/four"/>
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -192,5 +191,5 @@
         ads:adUnitId="@string/banner_ad_id"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent" />
+        ads:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

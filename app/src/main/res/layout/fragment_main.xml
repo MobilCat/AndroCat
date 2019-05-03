@@ -6,8 +6,8 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/mSwipeRefreshLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,14 +17,14 @@
 
         <im.delight.android.webview.AdvancedWebView
             android:id="@+id/webView"
-            android:layout_width="0dp"
-            android:layout_height="0dp" />
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/fillableLoaderLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
         android:background="@color/white"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,54 +34,54 @@
 
         <com.github.jorgecastillo.FillableLoader
             android:id="@+id/fillableLoader"
-            android:layout_width="200dp"
-            android:layout_height="285dp"
+            android:layout_width="@dimen/fillable_loader_width"
+            android:layout_height="@dimen/fillable_loader_height"
             app:fl_clippingTransform="waves"
             app:fl_fillColor="@color/colorPrimaryDark"
-            app:fl_fillDuration="500"
-            app:fl_fillPercentage="72"
-            app:fl_originalHeight="575"
-            app:fl_originalWidth="400"
+            app:fl_fillDuration="@integer/fillable_loader_duration"
+            app:fl_fillPercentage="@integer/fillable_loader_percentage"
+            app:fl_originalHeight="@integer/fillable_loader_height"
+            app:fl_originalWidth="@integer/fillable_loader_width"
             app:fl_strokeColor="@color/colorPrimaryDark"
-            app:fl_strokeDrawingDuration="500"
-            app:fl_strokeWidth="5dp" />
+            app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
+            app:fl_strokeWidth="@dimen/four"/>
 
         <com.github.jorgecastillo.FillableLoader
             android:id="@+id/fillableLoaderInverted"
-            android:layout_width="200dp"
-            android:layout_height="285dp"
+            android:layout_width="@dimen/fillable_loader_width"
+            android:layout_height="@dimen/fillable_loader_height"
             app:fl_clippingTransform="waves"
             app:fl_fillColor="@color/white"
-            app:fl_fillDuration="500"
-            app:fl_fillPercentage="72"
-            app:fl_originalHeight="575"
-            app:fl_originalWidth="400"
+            app:fl_fillDuration="@integer/fillable_loader_duration"
+            app:fl_fillPercentage="@integer/fillable_loader_percentage"
+            app:fl_originalHeight="@integer/fillable_loader_height"
+            app:fl_originalWidth="@integer/fillable_loader_width"
             app:fl_strokeColor="@color/white"
-            app:fl_strokeDrawingDuration="500"
-            app:fl_strokeWidth="5dp" />
+            app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
+            app:fl_strokeWidth="@dimen/four"/>
     </RelativeLayout>
 
     <mustafaozhan.github.com.androcat.view.CurvedBottomNavigationView
         android:id="@+id/mBottomNavigationView"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newsFeedFab"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="36dp"
+        android:layout_width="@dimen/fab_width_height"
+        android:layout_height="@dimen/fab_width_height"
+        android:layout_marginBottom="@dimen/thirty_six"
         android:src="@drawable/androcat_fab"
         app:backgroundTint="@color/colorPrimary"
-        app:fabCustomSize="64dp"
+        app:fabCustomSize="@dimen/fab_width_height"
         app:layout_constraintBottom_toBottomOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="@+id/mBottomNavigationView"
         app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
-        app:maxImageSize="32dp"/>
+        app:maxImageSize="@dimen/thirty_six"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
