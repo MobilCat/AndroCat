@@ -35,10 +35,9 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
-        var TAG: String = MainFragment::class.java.simpleName
-
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
-        private const val QICK_ACTION_SIZE = 15
+
+        var TAG: String = MainFragment::class.java.simpleName
 
         fun newInstance(url: String): MainFragment {
             val args = Bundle()
@@ -51,12 +50,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         fun newInstance() = MainFragment()
     }
 
-    private var logoutCount = 0
-    private lateinit var baseUrl: String
-    private var loader: FillableLoader? = null
-
     private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
+    private lateinit var baseUrl: String
+
+    private var logoutCount = 0
+    private var loader: FillableLoader? = null
+    private var isAnimating = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,9 +82,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             getString(R.string.url_login)
         }
 
-        loadUrlWithAnimation(baseUrl)
-
         invert(viewModel.getSettings().isInvert)
+
+        loadUrlWithAnimation(baseUrl)
 
         context?.let { ctx ->
             quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
@@ -274,8 +274,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
-        loadingView(true)
-
+        if (!isAnimating) {
+            loadingView(true)
+        }
         if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
             webView?.runScript(JsScrip.GET_USERNAME) { str ->
                 if (str != "null")
@@ -317,14 +318,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun loadingView(show: Boolean) {
-        if (show) {
-            if (loader?.visibility == View.GONE) {
-                fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-                fillableLoaderLayout?.visibility = View.VISIBLE
-                loader?.visibility = View.VISIBLE
-                fillableLoader?.start()
-                fillableLoaderInverted?.start()
-            }
+        if (show && !isAnimating) {
+            isAnimating = true
+            fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+            fillableLoaderLayout?.visibility = View.VISIBLE
+            loader?.visibility = View.VISIBLE
+            fillableLoader?.start()
+            fillableLoaderInverted?.start()
         } else {
             fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
             fillableLoaderLayout?.visibility = View.GONE
@@ -332,6 +332,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             fillableLoaderInverted?.visibility = View.GONE
             fillableLoader?.reset()
             fillableLoaderInverted?.reset()
+            isAnimating = false
         }
     }
 
