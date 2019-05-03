@@ -4,11 +4,11 @@
 
     <item
         android:id="@+id/navigation_find"
-        android:icon="@drawable/ic_explore_black_24dp"
+        android:icon="@drawable/ic_explore"
         android:title="@string/explorer" />
     <item
         android:id="@+id/navigation_pull_request"
-        android:icon="@drawable/pull_request_icon"
+        android:icon="@drawable/ic_pull_request"
         android:title="@string/pull_requests" />
     <item
         android:id="@+id/navigation_feed"
@@ -16,11 +16,11 @@
 
     <item
         android:id="@+id/navigation_Issues"
-        android:icon="@drawable/issue_icon"
+        android:icon="@drawable/ic_issue"
         android:title="@string/issues" />
 
     <item
         android:id="@+id/navigation_user"
-        android:icon="@drawable/user"
+        android:icon="@drawable/ic_user"
         android:title="@string/user" />
 </menu>

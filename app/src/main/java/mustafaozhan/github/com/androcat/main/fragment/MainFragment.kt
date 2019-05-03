@@ -93,14 +93,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(1, getString(R.string.search).toQuickActionSize(), R.drawable.search),
-                    ActionItem(2, getString(R.string.market_place).toQuickActionSize(), R.drawable.market_place),
-                    ActionItem(3, getString(R.string.trends).toQuickActionSize(), R.drawable.trends),
-                    ActionItem(4, getString(R.string.new_gist).toQuickActionSize(), R.drawable.gist),
-                    ActionItem(5, getString(R.string.new_repository).toQuickActionSize(), R.drawable.repository),
-                    ActionItem(6, getString(R.string.invert).toQuickActionSize(), R.drawable.invert),
-                    ActionItem(7, getString(R.string.forward).toQuickActionSize(), R.drawable.forward),
-                    ActionItem(8, getString(R.string.back).toQuickActionSize(), R.drawable.back)
+                    ActionItem(1, getString(R.string.search).toQuickActionSize(), R.drawable.ic_search),
+                    ActionItem(2, getString(R.string.market_place).toQuickActionSize(), R.drawable.ic_market_place),
+                    ActionItem(3, getString(R.string.trends).toQuickActionSize(), R.drawable.ic_trends),
+                    ActionItem(4, getString(R.string.new_gist).toQuickActionSize(), R.drawable.ic_gist),
+                    ActionItem(5, getString(R.string.new_repository).toQuickActionSize(), R.drawable.ic_repository),
+                    ActionItem(6, getString(R.string.invert).toQuickActionSize(), R.drawable.ic_invert),
+                    ActionItem(7, getString(R.string.forward).toQuickActionSize(), R.drawable.ic_forward),
+                    ActionItem(8, getString(R.string.back).toQuickActionSize(), R.drawable.ic_back)
                 )
             }
 
@@ -110,15 +110,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(1, getString(R.string.starts).toQuickActionSize(), R.drawable.stars),
-                    ActionItem(2, getString(R.string.repositories).toQuickActionSize(), R.drawable.repository),
-                    ActionItem(3, getString(R.string.gists).toQuickActionSize(), R.drawable.gist),
-                    ActionItem(4, getString(R.string.notifications).toQuickActionSize(), R.drawable.notifications),
-                    ActionItem(5, getString(R.string.app_settings).toQuickActionSize(), R.drawable.settings),
-                    ActionItem(6, getString(R.string.user_settings).toQuickActionSize(), R.drawable.user_settings),
-                    ActionItem(7, getString(R.string.log_out).toQuickActionSize(), R.drawable.logout),
-                    ActionItem(8, getString(R.string.log_in).toQuickActionSize(), R.drawable.login),
-                    ActionItem(9, getString(R.string.profile).toQuickActionSize(), R.drawable.user)
+                    ActionItem(1, getString(R.string.starts).toQuickActionSize(), R.drawable.ic_stars),
+                    ActionItem(2, getString(R.string.repositories).toQuickActionSize(), R.drawable.ic_repository),
+                    ActionItem(3, getString(R.string.gists).toQuickActionSize(), R.drawable.ic_gist),
+                    ActionItem(4, getString(R.string.notifications).toQuickActionSize(), R.drawable.ic_notifications),
+                    ActionItem(5, getString(R.string.app_settings).toQuickActionSize(), R.drawable.ic_settings),
+                    ActionItem(6, getString(R.string.user_settings).toQuickActionSize(), R.drawable.ic_user_settings),
+                    ActionItem(7, getString(R.string.log_out).toQuickActionSize(), R.drawable.ic_logout),
+                    ActionItem(8, getString(R.string.log_in).toQuickActionSize(), R.drawable.ic_login),
+                    ActionItem(9, getString(R.string.profile).toQuickActionSize(), R.drawable.ic_user)
                 )
             }
         }
