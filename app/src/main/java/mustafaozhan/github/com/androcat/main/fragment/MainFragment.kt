@@ -196,8 +196,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private fun setDash() = mBottomNavigationView.apply {
         inflateMenu(R.menu.bnvm_dash)
         enableAnimation(false)
-        enableItemShiftingMode(false)
-        enableShiftingMode(false)
+        labelVisibilityMode = 1
         enableAnimation(false)
         setTextSize(10.0f)
         setIconsMarginTop(10)

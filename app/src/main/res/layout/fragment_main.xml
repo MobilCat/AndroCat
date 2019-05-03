@@ -78,8 +78,10 @@
         android:layout_marginBottom="36dp"
         android:src="@drawable/androcat_fab"
         app:backgroundTint="@color/colorPrimary"
+        app:fabCustomSize="64dp"
         app:layout_constraintBottom_toBottomOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="@+id/mBottomNavigationView"
-        app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView" />
+        app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
+        app:maxImageSize="32dp"/>
 
 </android.support.constraint.ConstraintLayout>
