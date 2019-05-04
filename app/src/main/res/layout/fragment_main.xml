@@ -18,7 +18,7 @@
         <im.delight.android.webview.AdvancedWebView
             android:id="@+id/webView"
             android:layout_width="@dimen/zero"
-            android:layout_height="@dimen/zero"/>
+            android:layout_height="@dimen/zero" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <RelativeLayout
@@ -44,7 +44,7 @@
             app:fl_originalWidth="@integer/fillable_loader_width"
             app:fl_strokeColor="@color/colorPrimaryDark"
             app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
-            app:fl_strokeWidth="@dimen/four"/>
+            app:fl_strokeWidth="@dimen/four" />
 
         <com.github.jorgecastillo.FillableLoader
             android:id="@+id/fillableLoaderInverted"
@@ -58,7 +58,7 @@
             app:fl_originalWidth="@integer/fillable_loader_width"
             app:fl_strokeColor="@color/white"
             app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
-            app:fl_strokeWidth="@dimen/four"/>
+            app:fl_strokeWidth="@dimen/four" />
     </RelativeLayout>
 
     <mustafaozhan.github.com.androcat.view.CurvedBottomNavigationView
@@ -69,19 +69,19 @@
         app:itemTextColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newsFeedFab"
         android:layout_width="@dimen/fab_width_height"
         android:layout_height="@dimen/fab_width_height"
-        android:layout_marginBottom="@dimen/thirty_six"
+        android:layout_marginBottom="@dimen/forty_eight"
         android:src="@drawable/androcat_fab"
         app:backgroundTint="@color/colorPrimary"
         app:fabCustomSize="@dimen/fab_width_height"
         app:layout_constraintBottom_toBottomOf="@+id/mBottomNavigationView"
         app:layout_constraintEnd_toEndOf="@+id/mBottomNavigationView"
         app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
-        app:maxImageSize="@dimen/thirty_six"/>
+        app:maxImageSize="@dimen/thirty_six" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
