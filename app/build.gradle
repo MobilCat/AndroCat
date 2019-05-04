@@ -25,7 +25,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "mustafaozhan.github.com.androcat"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode getGitVersionCode()
         versionName "1.${getGitVersionCode()}"
