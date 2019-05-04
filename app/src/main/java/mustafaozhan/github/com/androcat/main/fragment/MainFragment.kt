@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.github.jorgecastillo.FillableLoader
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.fragment_main.fillableLoader
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderInverted
@@ -197,8 +200,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     private fun setDash() = mBottomNavigationView.apply {
         inflateMenu(R.menu.bnvm_dash)
-        enableAnimation(false)
-        labelVisibilityMode = 1
+        labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         enableAnimation(false)
         setTextSize(10.0f)
         setIconsMarginTop(10)
@@ -256,6 +258,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         webView?.onActivityResult(requestCode, resultCode, intent)
     }
 
+    @WithPermissions([Manifest.permission.WRITE_EXTERNAL_STORAGE])
     override fun onDownloadRequested(
         url: String?,
         suggestedFilename: String?,
@@ -264,6 +267,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         contentDisposition: String?,
         userAgent: String?
     ) {
+        if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
+            snacky("Download unsuccessful, download manager has been disabled on device")
+        }
     }
 
     override fun onExternalPageRequest(url: String?) {
