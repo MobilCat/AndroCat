@@ -16,14 +16,13 @@
 ```
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //noinspection GradleCompatible
-    implementation "com.android.support:design:${rootProject.ext.supportLibraryVersion}"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     // Dagger
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
@@ -50,7 +49,7 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:${rootProject.ext.rxBindingVersion}"
 
     // LiveData
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Ad
     implementation 'com.google.firebase:firebase-ads:17.2.0'
@@ -63,19 +62,19 @@ dependencies {
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 
     // Quick Action
-    implementation 'me.piruin:quickaction:2.4.2'
+    implementation 'com.github.mustafaozhan:quickaction:3.0.0'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.6.1'
 
     // Bottom Navigation
-    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
 
     // Snacky
     implementation 'com.github.matecode:Snacky:1.0.3'
 
     // Multidex
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     // Http client
     implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"

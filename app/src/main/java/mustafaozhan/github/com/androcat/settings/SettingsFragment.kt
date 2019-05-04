@@ -51,12 +51,17 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         }
         layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener {
-            showDialog(
-                getString(R.string.support_us),
-                getString(R.string.rate_and_support),
-                getString(R.string.rate)
-            ) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat))))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat)))
+            getBaseActivity()?.packageManager?.let { packageManager ->
+                intent.resolveActivity(packageManager)?.let {
+                    showDialog(
+                        getString(R.string.support_us),
+                        getString(R.string.rate_and_support),
+                        getString(R.string.rate)
+                    ) {
+                        startActivity(intent)
+                    }
+                }
             }
         }
         layoutFeedback.setOnClickListener { sendFeedBack() }
@@ -95,6 +100,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
         alertDialog.show()
     }
+
     private fun sendFeedBack() {
         try {
             val email = Intent(Intent.ACTION_SEND)
