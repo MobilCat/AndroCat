@@ -26,7 +26,6 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
-import mustafaozhan.github.com.androcat.extensions.toQuickActionSize
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
@@ -96,14 +95,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(1, getString(R.string.search).toQuickActionSize(), R.drawable.ic_search),
-                    ActionItem(2, getString(R.string.market_place).toQuickActionSize(), R.drawable.ic_market_place),
-                    ActionItem(3, getString(R.string.trends).toQuickActionSize(), R.drawable.ic_trends),
-                    ActionItem(4, getString(R.string.new_gist).toQuickActionSize(), R.drawable.ic_gist),
-                    ActionItem(5, getString(R.string.new_repository).toQuickActionSize(), R.drawable.ic_repository),
-                    ActionItem(6, getString(R.string.invert).toQuickActionSize(), R.drawable.ic_invert),
-                    ActionItem(7, getString(R.string.forward).toQuickActionSize(), R.drawable.ic_forward),
-                    ActionItem(8, getString(R.string.back).toQuickActionSize(), R.drawable.ic_back)
+                    ActionItem(1, getString(R.string.search), R.drawable.ic_search),
+                    ActionItem(2, getString(R.string.market_place), R.drawable.ic_market_place),
+                    ActionItem(3, getString(R.string.trends), R.drawable.ic_trends),
+                    ActionItem(4, getString(R.string.new_gist), R.drawable.ic_gist),
+                    ActionItem(5, getString(R.string.new_repository), R.drawable.ic_repository),
+                    ActionItem(6, getString(R.string.invert), R.drawable.ic_invert),
+                    ActionItem(7, getString(R.string.forward), R.drawable.ic_forward),
+                    ActionItem(8, getString(R.string.back), R.drawable.ic_back)
                 )
             }
 
@@ -113,15 +112,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(1, getString(R.string.starts).toQuickActionSize(), R.drawable.ic_stars),
-                    ActionItem(2, getString(R.string.repositories).toQuickActionSize(), R.drawable.ic_repository),
-                    ActionItem(3, getString(R.string.gists).toQuickActionSize(), R.drawable.ic_gist),
-                    ActionItem(4, getString(R.string.notifications).toQuickActionSize(), R.drawable.ic_notifications),
-                    ActionItem(5, getString(R.string.app_settings).toQuickActionSize(), R.drawable.ic_settings),
-                    ActionItem(6, getString(R.string.user_settings).toQuickActionSize(), R.drawable.ic_user_settings),
-                    ActionItem(7, getString(R.string.log_out).toQuickActionSize(), R.drawable.ic_logout),
-                    ActionItem(8, getString(R.string.log_in).toQuickActionSize(), R.drawable.ic_login),
-                    ActionItem(9, getString(R.string.profile).toQuickActionSize(), R.drawable.ic_user)
+                    ActionItem(1, getString(R.string.starts), R.drawable.ic_stars),
+                    ActionItem(2, getString(R.string.repositories), R.drawable.ic_repository),
+                    ActionItem(3, getString(R.string.gists), R.drawable.ic_gist),
+                    ActionItem(4, getString(R.string.notifications), R.drawable.ic_notifications),
+                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
+                    ActionItem(6, getString(R.string.user_settings), R.drawable.ic_user_settings),
+                    ActionItem(7, getString(R.string.log_out), R.drawable.ic_logout),
+                    ActionItem(8, getString(R.string.log_in), R.drawable.ic_login),
+                    ActionItem(9, getString(R.string.profile), R.drawable.ic_user)
                 )
             }
         }

@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.androcat.extensions
 
+import android.os.Build
 import android.util.Log
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
@@ -13,16 +14,20 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
  */
 fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
     try {
-        evaluateJavascript(
-            context
-                .assets
-                .open(jsScrip.value)
-                .bufferedReader()
-                .use {
-                    it.readText()
-                },
-            action
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            evaluateJavascript(
+                context
+                    .assets
+                    .open(jsScrip.value)
+                    .bufferedReader()
+                    .use {
+                        it.readText()
+                    },
+                action
+            )
+        } else {
+            action.invoke("")
+        }
     } catch (exception: NoSuchMethodError) {
         Crashlytics.logException(exception)
         Crashlytics.log(Log.ERROR,

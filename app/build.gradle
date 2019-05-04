@@ -86,7 +86,7 @@ dependencies {
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 
     // Quick Action
-    implementation 'com.github.mustafaozhan:quickaction:3.0.1'
+    implementation 'com.github.mustafaozhan:quickaction:3.0.2'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.6.1'
