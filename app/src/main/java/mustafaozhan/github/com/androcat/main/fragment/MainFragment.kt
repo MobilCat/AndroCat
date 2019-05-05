@@ -202,8 +202,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         enableAnimation(false)
         setTextSize(10.0f)
-        setIconsMarginTop(16)
-        setIconSize(32.0F, 32.0F)
+        setIconsMarginTop(12)
+        setIconSize(30.0F, 30.0F)
         getBottomNavigationItemView(2).background = null
         getBottomNavigationItemView(1).background = null
         getBottomNavigationItemView(3).background = null
