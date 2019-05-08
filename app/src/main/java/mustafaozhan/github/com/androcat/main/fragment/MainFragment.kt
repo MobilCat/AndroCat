@@ -13,12 +13,17 @@ import com.github.jorgecastillo.FillableLoader
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
+import kotlinx.android.synthetic.main.fragment_main.eTxtSearch
 import kotlinx.android.synthetic.main.fragment_main.fillableLoader
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderInverted
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_main.newsFeedFab
+import kotlinx.android.synthetic.main.fragment_main.searchDismissButton
+import kotlinx.android.synthetic.main.fragment_main.searchLayout
+import kotlinx.android.synthetic.main.fragment_main.searchNextButton
+import kotlinx.android.synthetic.main.fragment_main.searchPreviousButton
 import kotlinx.android.synthetic.main.fragment_main.webView
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
@@ -153,6 +158,16 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             }
             true
         }
+        searchNextButton.setOnClickListener {
+            webView?.findAllAsync(eTxtSearch.text.toString())
+        }
+        searchPreviousButton.setOnClickListener {
+            webView?.findNext(false)
+        }
+        searchDismissButton.setOnClickListener {
+            searchLayout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+            searchLayout.visibility = View.GONE
+        }
     }
 
     @Suppress("ComplexMethod")
@@ -177,7 +192,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         quickActionExplorer.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadUrlWithAnimation(getString(R.string.url_search))
-                2 -> findInPage()
+                2 -> {
+                    searchLayout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+                    searchLayout.visibility = View.VISIBLE
+                }
                 3 -> loadUrlWithAnimation(getString(R.string.url_market_place))
                 4 -> loadUrlWithAnimation(getString(R.string.url_trending))
                 5 -> loadUrlWithAnimation(getString(R.string.url_gist))
@@ -188,9 +206,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 else -> loadUrlWithAnimation(getString(R.string.url_github))
             }
         }
-    }
-
-    private fun findInPage() {
     }
 
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {

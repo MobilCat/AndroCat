@@ -5,14 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchLayout"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:orientation="horizontal"
         android:visibility="gone"
-        android:weightSum="@integer/one"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,30 +18,47 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/eTxtSearch"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_weight="@integer/one" />
+            android:layout_marginStart="@dimen/eight"
+            android:layout_marginEnd="@dimen/eight"
+            app:layout_constraintEnd_toStartOf="@+id/searchPreviousButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <View
             android:id="@+id/searchPreviousButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="@integer/one"
-            android:background="@drawable/ic_back" />
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginEnd="@dimen/eight"
+            android:background="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/searchNextButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <View
             android:id="@+id/searchNextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="@integer/one"
-            android:background="@drawable/ic_forward" />
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginEnd="@dimen/eight"
+            android:background="@drawable/ic_forward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/searchDismissButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <View
             android:id="@+id/searchDismissButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="@integer/one" />
-    </LinearLayout>
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginEnd="@dimen/eight"
+            android:background="@drawable/ic_dismiss"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/mSwipeRefreshLayout"
@@ -68,6 +83,7 @@
         android:layout_height="@dimen/zero"
         android:background="@color/white"
         android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
