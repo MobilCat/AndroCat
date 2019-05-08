@@ -18,6 +18,7 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/eTxtSearch"
+            android:maxLines="1"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"

@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
     // Rx
+    implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:${rootProject.ext.rxBindingVersion}"
 
     // LiveData

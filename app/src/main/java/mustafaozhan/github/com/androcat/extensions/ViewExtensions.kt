@@ -1,8 +1,10 @@
 package mustafaozhan.github.com.androcat.extensions
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -47,4 +49,19 @@ fun View.setVisibleWithAnimation(isVisible: Boolean) {
         startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
         View.GONE
     }
+}
+
+fun View.hideKeyboard(): Boolean {
+    try {
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    } catch (exception: RuntimeException) {
+        Crashlytics.logException(exception)
+        Crashlytics.log(
+            Log.ERROR,
+            "View.hideKeyboard()",
+            "exception:$exception"
+        )
+    }
+    return false
 }

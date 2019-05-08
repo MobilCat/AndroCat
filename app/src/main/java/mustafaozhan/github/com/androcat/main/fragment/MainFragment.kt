@@ -10,8 +10,10 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.github.jorgecastillo.FillableLoader
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.jakewharton.rxbinding2.widget.textChanges
 import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_main.eTxtSearch
 import kotlinx.android.synthetic.main.fragment_main.fillableLoader
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderInverted
@@ -28,6 +30,7 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
+import mustafaozhan.github.com.androcat.extensions.hideKeyboard
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
@@ -158,14 +161,25 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             }
             true
         }
+
+        eTxtSearch
+            .textChanges()
+            .subscribe { txt ->
+                webView?.findAllAsync(txt.toString())
+            }.addTo(compositeDisposable)
+
         searchNextButton.setOnClickListener {
-            webView?.findAllAsync(eTxtSearch.text.toString())
+            webView?.findNext(true)
+            searchNextButton.hideKeyboard()
         }
         searchPreviousButton.setOnClickListener {
             webView?.findNext(false)
+            searchPreviousButton.hideKeyboard()
         }
         searchDismissButton.setOnClickListener {
+            eTxtSearch.setText("")
             searchLayout.setVisibleWithAnimation(false)
+            searchLayout.hideKeyboard()
         }
     }
 
