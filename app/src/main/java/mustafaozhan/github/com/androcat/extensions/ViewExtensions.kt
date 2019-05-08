@@ -1,11 +1,14 @@
 package mustafaozhan.github.com.androcat.extensions
 
 import android.util.Log
+import android.view.View
+import android.view.animation.AnimationUtils
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import im.delight.android.webview.AdvancedWebView
+import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.tools.JsScrip
 
 /**
@@ -34,4 +37,14 @@ fun AdView.loadAd(adId: Int) {
     MobileAds.initialize(context, resources.getString(adId))
     val adRequest = AdRequest.Builder().build()
     loadAd(adRequest)
+}
+
+fun View.setVisibleWithAnimation(isVisible: Boolean) {
+    visibility = if (isVisible) {
+        startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+        View.VISIBLE
+    } else {
+        startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
+        View.GONE
+    }
 }

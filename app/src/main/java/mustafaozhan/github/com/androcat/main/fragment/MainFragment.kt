@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.github.jorgecastillo.FillableLoader
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -31,6 +30,7 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
+import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
@@ -165,8 +165,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             webView?.findNext(false)
         }
         searchDismissButton.setOnClickListener {
-            searchLayout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-            searchLayout.visibility = View.GONE
+            searchLayout.setVisibleWithAnimation(false)
         }
     }
 
@@ -192,10 +191,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         quickActionExplorer.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadUrlWithAnimation(getString(R.string.url_search))
-                2 -> {
-                    searchLayout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-                    searchLayout.visibility = View.VISIBLE
-                }
+                2 -> searchLayout.setVisibleWithAnimation(true)
                 3 -> loadUrlWithAnimation(getString(R.string.url_market_place))
                 4 -> loadUrlWithAnimation(getString(R.string.url_trending))
                 5 -> loadUrlWithAnimation(getString(R.string.url_gist))
@@ -344,14 +340,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private fun loadingView(show: Boolean) =
         if (show && !isAnimating) {
             isAnimating = true
-            fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-            fillableLoaderLayout?.visibility = View.VISIBLE
+            fillableLoaderLayout?.setVisibleWithAnimation(true)
             loader?.visibility = View.VISIBLE
             fillableLoader?.start()
             fillableLoaderInverted?.start()
         } else {
-            fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_out))
-            fillableLoaderLayout?.visibility = View.GONE
+            fillableLoaderLayout?.setVisibleWithAnimation(false)
             fillableLoader?.visibility = View.GONE
             fillableLoaderInverted?.visibility = View.GONE
             fillableLoader?.reset()
