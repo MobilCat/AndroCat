@@ -18,14 +18,13 @@ fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
                 .assets
                 .open(jsScrip.value)
                 .bufferedReader()
-                .use {
-                    it.readText()
-                },
+                .use { it.readText() },
             action
         )
     } catch (exception: NoSuchMethodError) {
         Crashlytics.logException(exception)
-        Crashlytics.log(Log.ERROR,
+        Crashlytics.log(
+            Log.ERROR,
             "NoSuchMethodError at AdvancedWebView.runScript",
             "jsScript:${jsScrip.value}"
         )

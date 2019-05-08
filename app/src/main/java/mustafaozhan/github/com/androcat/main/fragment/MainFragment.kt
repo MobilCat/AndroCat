@@ -33,7 +33,7 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
-@Suppress("TooManyFunctions", "MagicNumber", "LargeClass")
+@Suppress("TooManyFunctions", "MagicNumber")
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
@@ -211,19 +211,18 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun initWebView() {
-        webView?.apply {
-            setBackgroundColor(Color.parseColor("#FFFFFF"))
-
-            settings.apply {
-                setDesktopMode(true)
-                useWideViewPort = true
-                loadWithOverviewMode = true
-                javaScriptEnabled = true
-                setSupportZoom(true)
-                builtInZoomControls = true
-                displayZoomControls = false
-            }
+    private fun initWebView() = webView?.apply {
+        setBackgroundColor(Color.parseColor("#FFFFFF"))
+        settings.apply {
+            setDesktopMode(true)
+            useWideViewPort = true
+            loadWithOverviewMode = true
+            javaScriptEnabled = true
+            setSupportZoom(true)
+            builtInZoomControls = true
+            displayZoomControls = false
+            domStorageEnabled = true
+            databaseEnabled = true
         }
     }
 
@@ -322,7 +321,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    private fun loadingView(show: Boolean) {
+    private fun loadingView(show: Boolean) =
         if (show && !isAnimating) {
             isAnimating = true
             fillableLoaderLayout?.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
@@ -339,7 +338,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             fillableLoaderInverted?.reset()
             isAnimating = false
         }
-    }
 
     private fun setInversion(inversion: Boolean) = context?.let { ctx ->
         loader = if (inversion) {

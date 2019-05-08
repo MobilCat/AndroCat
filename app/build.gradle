@@ -53,10 +53,10 @@ dependencies {
     implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
 
     // Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
 
     // Fabric
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.0@aar') {
         transitive = true
     }
 
