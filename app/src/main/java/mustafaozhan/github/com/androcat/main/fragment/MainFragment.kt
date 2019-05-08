@@ -96,13 +96,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setEnabledDivider(false)
                 addActionItem(
                     ActionItem(1, getString(R.string.search), R.drawable.ic_search),
-                    ActionItem(2, getString(R.string.market_place), R.drawable.ic_market_place),
-                    ActionItem(3, getString(R.string.trends), R.drawable.ic_trends),
-                    ActionItem(4, getString(R.string.new_gist), R.drawable.ic_gist),
-                    ActionItem(5, getString(R.string.new_repository), R.drawable.ic_repository),
-                    ActionItem(6, getString(R.string.invert), R.drawable.ic_invert),
-                    ActionItem(7, getString(R.string.forward), R.drawable.ic_forward),
-                    ActionItem(8, getString(R.string.back), R.drawable.ic_back)
+                    ActionItem(2, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
+                    ActionItem(3, getString(R.string.market_place), R.drawable.ic_market_place),
+                    ActionItem(4, getString(R.string.trends), R.drawable.ic_trends),
+                    ActionItem(5, getString(R.string.new_gist), R.drawable.ic_gist),
+                    ActionItem(6, getString(R.string.new_repository), R.drawable.ic_repository),
+                    ActionItem(7, getString(R.string.invert), R.drawable.ic_invert),
+                    ActionItem(8, getString(R.string.forward), R.drawable.ic_forward),
+                    ActionItem(9, getString(R.string.back), R.drawable.ic_back)
                 )
             }
 
@@ -176,16 +177,20 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         quickActionExplorer.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadUrlWithAnimation(getString(R.string.url_search))
-                2 -> loadUrlWithAnimation(getString(R.string.url_market_place))
-                3 -> loadUrlWithAnimation(getString(R.string.url_trending))
-                4 -> loadUrlWithAnimation(getString(R.string.url_gist))
-                5 -> loadUrlWithAnimation(getString(R.string.url_new))
-                6 -> invert(!viewModel.getSettings().isInvert, true)
-                7 -> webView?.goForward()
-                8 -> webView?.goBack()
+                2 -> findInPage()
+                3 -> loadUrlWithAnimation(getString(R.string.url_market_place))
+                4 -> loadUrlWithAnimation(getString(R.string.url_trending))
+                5 -> loadUrlWithAnimation(getString(R.string.url_gist))
+                6 -> loadUrlWithAnimation(getString(R.string.url_new))
+                7 -> invert(!viewModel.getSettings().isInvert, true)
+                8 -> webView?.goForward()
+                9 -> webView?.goBack()
                 else -> loadUrlWithAnimation(getString(R.string.url_github))
             }
         }
+    }
+
+    private fun findInPage() {
     }
 
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {

@@ -37,6 +37,7 @@
     <string name="update">Update</string>
     <string name="color_inversion">Color Inversion</string>
     <string name="report_issue">Report Issue</string>
+    <string name="find_in_page">Find in page</string>
 
     <!--URL-->
     <string name="url_blank">about:blank</string>
