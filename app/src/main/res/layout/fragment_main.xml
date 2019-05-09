@@ -18,11 +18,14 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/eTxtSearch"
-            android:maxLines="1"
+            style="@style/BaseEditTextTheme"
             android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/eight"
             android:layout_marginEnd="@dimen/eight"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/searchPreviousButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

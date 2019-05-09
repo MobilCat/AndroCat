@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import com.crashlytics.android.Crashlytics
@@ -83,6 +84,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     private fun showUsernameDialog() {
         val alertDialog = AlertDialog.Builder(context)
         val editText = EditText(context)
+        editText.inputType = InputType.TYPE_CLASS_TEXT
         alertDialog.setTitle(getString(R.string.username))
 
         alertDialog.setView(editText)

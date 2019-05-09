@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -34,6 +35,7 @@ import mustafaozhan.github.com.androcat.extensions.hideKeyboard
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
+import mustafaozhan.github.com.androcat.extensions.showKeyboard
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
@@ -85,6 +87,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private fun init() {
         fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
         fillableLoaderInverted.setSvgPath(getString(R.string.androcat_svg_path))
+        eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
 
         baseUrl = if (viewModel.isLoggedIn() == true) {
             getString(R.string.url_github)
@@ -205,7 +208,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         quickActionExplorer.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadUrlWithAnimation(getString(R.string.url_search))
-                2 -> searchLayout.setVisibleWithAnimation(true)
+                2 -> {
+                    searchLayout.setVisibleWithAnimation(true)
+                    eTxtSearch.showKeyboard()
+                }
                 3 -> loadUrlWithAnimation(getString(R.string.url_market_place))
                 4 -> loadUrlWithAnimation(getString(R.string.url_trending))
                 5 -> loadUrlWithAnimation(getString(R.string.url_gist))
