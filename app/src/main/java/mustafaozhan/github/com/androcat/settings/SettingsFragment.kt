@@ -77,7 +77,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun init() {
-        txtUsernameInput.text = viewModel.getUserName()
+        txtUsernameInput?.text = viewModel.getUserName()
         inversionSwitch.isChecked = viewModel.getSettings().isInvert
     }
 
@@ -93,7 +93,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         editText.setSelection(editText.text.length)
         alertDialog.setPositiveButton("SAVE") { _, _ ->
             viewModel.updateUserName(editText.text.toString())
-            txtUsernameInput.text = editText.text.toString()
+            txtUsernameInput?.text = editText.text.toString()
         }
 
         alertDialog.setNegativeButton("CANCEL") { _, _ ->
