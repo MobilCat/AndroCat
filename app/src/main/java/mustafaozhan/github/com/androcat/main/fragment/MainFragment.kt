@@ -50,7 +50,9 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
-
+        const val TEXT_SIZE_SMALL = 100
+        const val TEXT_SIZE_MEDIUM = 124
+        const val TEXT_SIZE_LARGE = 150
         var TAG: String = MainFragment::class.java.simpleName
 
         fun newInstance(url: String): MainFragment {
@@ -338,16 +340,29 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    override fun onPageFinished(url: String?) {
+    @Suppress("ComplexMethod")
+    override fun onPageFinished(url: String) {
         webView?.apply {
             runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert)) {
                 loadingView(false)
             }
-            when (url) {
-                context.getString(R.string.url_blank) -> {
+            when {
+                url.contains(getString(R.string.url_login)) ||
+                    url.contains(getString(R.string.url_search)) ||
+                    url.contains(getString(R.string.url_market_place)) ||
+                    url.contains(getString(R.string.url_trending)) ||
+                    url.contains(getString(R.string.str_organization)) ||
+                    url.contains(getString(R.string.str_google_play)) ||
+                    !url.contains(getString(R.string.str_github)) ||
+                    url == getString(R.string.url_github) -> {
+
+                    settings?.textZoom = TEXT_SIZE_SMALL
+                }
+                url.contains(context.getString(R.string.url_blank)) -> {
                     logoutCount = 0
                 }
-                context.getString(R.string.url_logout) -> {
+                url.contains(context.getString(R.string.url_logout)) -> {
+                    settings?.textZoom = TEXT_SIZE_SMALL
                     logoutCount++
                     if (logoutCount == 2) {
                         baseUrl = context.getString(R.string.url_login)
@@ -355,14 +370,19 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                         viewModel.updateUser(isLoggedIn = false)
                     }
                 }
-                context?.getString(R.string.url_session) -> {
+                url.contains(context.getString(R.string.url_session)) -> {
+                    settings?.textZoom = TEXT_SIZE_SMALL
                     webView?.runScript(JsScrip.GET_USERNAME) { str ->
                         if (str != "null")
                             viewModel.updateUser(str.remove("\""), true)
                     }
                     logoutCount = 0
                 }
+                url.contains(getString(R.string.str_stargazers)) -> {
+                    settings?.textZoom = TEXT_SIZE_MEDIUM
+                }
                 else -> {
+                    settings?.textZoom = TEXT_SIZE_LARGE
                     logoutCount = 0
                 }
             }
