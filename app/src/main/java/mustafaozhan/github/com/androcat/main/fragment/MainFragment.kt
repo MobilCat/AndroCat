@@ -343,18 +343,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     @Suppress("ComplexMethod")
     override fun onPageFinished(url: String) {
         webView?.apply {
-            runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert)) {
-                loadingView(false)
-            }
             when {
-                url.contains(getString(R.string.url_login)) ||
-                    url.contains(getString(R.string.url_search)) ||
-                    url.contains(getString(R.string.url_market_place)) ||
-                    url.contains(getString(R.string.url_trending)) ||
-                    url.contains(getString(R.string.str_organization)) ||
-                    url.contains(getString(R.string.str_google_play)) ||
-                    !url.contains(getString(R.string.str_github)) ||
-                    url == getString(R.string.url_github) -> {
+                url.contains(getString(R.string.url_login)) or
+                    url.contains(getString(R.string.url_search)) or
+                    url.contains(getString(R.string.url_market_place)) or
+                    url.contains(getString(R.string.url_trending)) or
+                    url.contains(getString(R.string.str_organization)) or
+                    url.contains(getString(R.string.str_google_play)) or
+                    !url.contains(getString(R.string.str_github)) or
+                    (url == getString(R.string.url_github)) -> {
 
                     settings?.textZoom = TEXT_SIZE_SMALL
                 }
@@ -386,11 +383,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     logoutCount = 0
                 }
             }
+            runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert)) {
+                loadingView(false)
+            }
         }
     }
 
     private fun loadingView(show: Boolean) =
-        if (show && !isAnimating) {
+        if (show and !isAnimating) {
             isAnimating = true
             fillableLoaderLayout?.setVisibleWithAnimation(true)
             loader?.visibility = View.VISIBLE
