@@ -7,8 +7,10 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.crashlytics.android.Crashlytics
 import com.github.jorgecastillo.FillableLoader
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -292,6 +294,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         webView?.onActivityResult(requestCode, resultCode, intent)
     }
 
+    @Suppress("TooGenericExceptionCaught")
     @WithPermissions([Manifest.permission.WRITE_EXTERNAL_STORAGE])
     override fun onDownloadRequested(
         url: String?,
@@ -301,8 +304,17 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         contentDisposition: String?,
         userAgent: String?
     ) {
-        if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
-            snacky("Download unsuccessful, download manager has been disabled on device")
+        try {
+            if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
+                snacky("Download unsuccessful, download manager has been disabled on device")
+            }
+        } catch (e: Exception) {
+            Crashlytics.logException(e)
+            Crashlytics.log(
+                Log.ERROR,
+                "Download Unseccessful",
+                e.message
+            )
         }
     }
 
