@@ -8,9 +8,9 @@
 ## Screenshots
 
 
-<img src="https://i.postimg.cc/w9w4Pgps/1.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/GbLSq9ZC/2.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/8Dv3C2hq/3.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/Gd1fTXK9/4.png?dl=1" width="215px"/>
+<img src="https://i.postimg.cc/mLGX9fWV/1.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/SS7Z7Ty4/2.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/NQSPg2N3/3.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/LHPQh4wn/4.png?dl=1" width="215px"/>
 
-<img src="https://i.postimg.cc/m4JJBLFY/5.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/gYgL6q51/6.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/TRhNvFdN/7.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/MqbF7135/8.png?dl=1" width="215px"/>
+<img src="https://i.postimg.cc/D78MkPcQ/5.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/jt8FFFyd/6.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/pVWs0fTF/7.png?dl=1" width="215px"/> <img src="https://i.postimg.cc/V1mZL8Rk/8.png?dl=1" width="215px"/>
 
 ## Dependencies
 ```
