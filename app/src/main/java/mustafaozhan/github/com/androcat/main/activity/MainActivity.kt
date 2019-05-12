@@ -36,8 +36,8 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         const val BACK_DELAY: Long = 2000
         const val CHECK_DURATION: Long = 6
         const val REMOTE_CONFIG = "remote_config"
-        const val AD_INITIAL_DELAY: Long = 45
-        const val AD_PERIOD: Long = 300
+        const val AD_INITIAL_DELAY: Long = 44
+        const val AD_PERIOD: Long = 256
     }
 
     private lateinit var adObservableInterval: Disposable
@@ -117,7 +117,11 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     private fun prepareAd() {
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = getString(R.string.interstitial_ad_id)
+        mInterstitialAd.adUnitId = if (isInitial) {
+            getString(R.string.interstitial_ad_text)
+        } else {
+            getString(R.string.interstitial_ad_mix)
+        }
         mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 
