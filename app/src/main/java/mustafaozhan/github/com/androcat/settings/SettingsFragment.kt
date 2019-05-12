@@ -45,7 +45,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
     private fun setListeners() {
         inversionSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.updateInvertSettings(isChecked)
+            viewModel.updateSetting(isInvert = isChecked)
         }
         layoutInversion.setOnClickListener {
             inversionSwitch.isChecked = !inversionSwitch.isChecked
@@ -78,7 +78,9 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
     private fun init() {
         txtUsernameInput?.text = viewModel.getUserName()
-        inversionSwitch.isChecked = viewModel.getSettings().isInvert
+        viewModel.loadSettings().isInvert?.let {
+            inversionSwitch.isChecked = it
+        }
     }
 
     private fun showUsernameDialog() {

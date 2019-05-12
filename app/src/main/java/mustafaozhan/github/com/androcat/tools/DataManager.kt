@@ -1,7 +1,6 @@
 package mustafaozhan.github.com.androcat.tools
 
 import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
-import mustafaozhan.github.com.androcat.model.Settings
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,8 +21,8 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
     fun loadSettings() = generalSharedPreferences.loadSettings()
 
-    fun updateSettings(settings: Settings) =
-        generalSharedPreferences.persistSettings(settings)
+    fun updateSettings(isInvert: Boolean? = null, isFirstTime: Boolean? = null) =
+        generalSharedPreferences.updateSettings(isInvert = isInvert, isFirstTime = isFirstTime)
 
     fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
 }

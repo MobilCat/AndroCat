@@ -9,4 +9,9 @@ class MainActivityViewModel : BaseViewModel() {
     override fun inject() {
         viewModelComponent.inject(this)
     }
+
+    fun loadSettings() = getSettings()
+
+    fun updateSetting(isInvert: Boolean? = null, isFirstTime: Boolean? = null) =
+        updateSettings(isInvert, isFirstTime)
 }

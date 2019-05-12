@@ -32,6 +32,13 @@ constructor() : BaseSharedPreferences() {
         setStringEntry(USER, Gson().toJson(user))
     }
 
+    fun updateSettings(isInvert: Boolean? = null, isFirstTime: Boolean? = null) {
+        val settings = loadSettings()
+        isInvert?.let { settings.isInvert = it }
+        isFirstTime?.let { settings.isFirstTime = it }
+        setStringEntry(SETTINGS, Gson().toJson(settings))
+    }
+
     fun loadUser(): User {
         val user = Gson().fromJson(getStringEntry(USER), User::class.java)
             ?: User(null, false, null)
@@ -41,9 +48,7 @@ constructor() : BaseSharedPreferences() {
         return user
     }
 
-    fun persistSettings(settings: Settings) = setStringEntry(SETTINGS, Gson().toJson(settings))
-
     fun loadSettings() =
         Gson().fromJson(getStringEntry(SETTINGS), Settings::class.java)
-            ?: Settings(false)
+            ?: Settings(isInvert = false, isFirstTime = true)
 }

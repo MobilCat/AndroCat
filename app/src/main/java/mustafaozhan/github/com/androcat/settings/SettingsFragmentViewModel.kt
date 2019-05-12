@@ -1,7 +1,6 @@
 package mustafaozhan.github.com.androcat.settings
 
 import mustafaozhan.github.com.androcat.base.BaseViewModel
-import mustafaozhan.github.com.androcat.model.Settings
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -18,12 +17,8 @@ class SettingsFragmentViewModel : BaseViewModel() {
         dataManager.updateUser(username = userName)
     }
 
-    fun updateInvertSettings(invert: Boolean) =
-        dataManager.apply {
-            updateSettings(
-                Settings(invert)
-            )
-        }
+    fun loadSettings() = getSettings()
 
-    fun getSettings() = dataManager.loadSettings()
+    fun updateSetting(isInvert: Boolean? = null, isFirstTime: Boolean? = null) =
+        updateSettings(isInvert, isFirstTime)
 }

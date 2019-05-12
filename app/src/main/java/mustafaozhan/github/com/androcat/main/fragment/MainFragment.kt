@@ -99,7 +99,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             getString(R.string.url_login)
         }
 
-        invert(viewModel.getSettings().isInvert)
+        viewModel.loadSettings().isInvert?.let { invert(it) }
 
         loadUrlWithAnimation(baseUrl)
 
@@ -220,7 +220,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 4 -> loadUrlWithAnimation(getString(R.string.url_trending))
                 5 -> loadUrlWithAnimation(getString(R.string.url_gist))
                 6 -> loadUrlWithAnimation(getString(R.string.url_new))
-                7 -> invert(!viewModel.getSettings().isInvert, true)
+                7 -> viewModel.loadSettings().isInvert?.let { invert(!it, true) }
                 8 -> webView?.goForward()
                 9 -> webView?.goBack()
                 else -> loadUrlWithAnimation(getString(R.string.url_github))
@@ -233,7 +233,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         webView?.runScript(JsScrip.getInversion(invert))
 
         if (changeSettings) {
-            viewModel.updateInvertSettings(invert)
+            viewModel.updateSetting(isInvert = invert)
         }
     }
 
@@ -383,8 +383,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     logoutCount = 0
                 }
             }
-            runScript(JsScrip.getInversion(viewModel.loadSettings().isInvert)) {
-                loadingView(false)
+            viewModel.loadSettings().isInvert?.let {
+                runScript(JsScrip.getInversion(it)) {
+                    loadingView(false)
+                }
             }
         }
     }
