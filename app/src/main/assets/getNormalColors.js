@@ -1,17 +1,11 @@
 javascript: (
     function() {
 
-        var css = 'html {-webkit-filter: invert(0%);}' +
-            'img {-webkit-filter:invert(0%);}';
+        var css = '';
 
-        var leftSideBarName = 'dashboard-sidebar js-sticky top-0 px-3 px-md-4 px-lg-4 overflow-auto';
-        var rightSideBarName = 'col-12 col-md-8 col-lg-6 p-responsive mt-3 border-bottom';
-        var newsName = 'news';
         var issuesNavBarName = 'reponav-wrapper reponav-small d-lg-none';
         var gitHubNavBarName = 'position-relative js-header-wrapper ';
 
-        var white = '#ffffff';
-        var lightBlue = '#f6f8fa';
         if (document.getElementsByClassName(gitHubNavBarName)[0] != null) {
             document.getElementsByClassName(gitHubNavBarName)[0]
                 .style
@@ -36,16 +30,6 @@ javascript: (
 
         head.appendChild(style);
         body.appendChild(style);
-        body.style.backgroundColor = white;
 
-        if (document.getElementsByClassName(leftSideBarName)[0] != null) {
-            document.getElementsByClassName(leftSideBarName)[0].style.backgroundColor = white;
-        }
-        if (document.getElementsByClassName(rightSideBarName)[0] != null) {
-            document.getElementsByClassName(rightSideBarName)[0].style.backgroundColor = lightBlue;
-        }
-        if (document.getElementsByClassName(newsName)[0] != null) {
-            document.getElementsByClassName(newsName)[0].style.backgroundColor = lightBlue;
-        }
         document.body.style.marginBottom='36px'
     })()

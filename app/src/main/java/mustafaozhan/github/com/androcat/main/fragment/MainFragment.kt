@@ -231,6 +231,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private fun invert(invert: Boolean, changeSettings: Boolean = false) {
         setInversion(invert)
         webView?.runScript(JsScrip.getInversion(invert))
+        if (!invert)
+            webView?.reload()
 
         if (changeSettings) {
             viewModel.updateSetting(isInvert = invert)
