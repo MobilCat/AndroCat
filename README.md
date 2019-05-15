@@ -56,8 +56,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:17.2.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.8'
-    implementation 'com.google.firebase:firebase-config:16.5.0'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-config:17.0.0'
 
     // Advanced WebView
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
