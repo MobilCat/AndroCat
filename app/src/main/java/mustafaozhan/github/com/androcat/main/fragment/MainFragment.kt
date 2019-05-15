@@ -186,7 +186,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         searchDismissButton.setOnClickListener {
             eTxtSearch.setText("")
             searchLayout.setVisibleWithAnimation(false)
-            webView?.reload()
             searchLayout.hideKeyboard()
         }
     }
@@ -216,7 +215,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 2 -> {
                     searchLayout.setVisibleWithAnimation(true)
                     eTxtSearch.showKeyboard()
-                    searchLayout.bringToFront()
                 }
                 3 -> loadUrlWithAnimation(getString(R.string.url_market_place))
                 4 -> loadUrlWithAnimation(getString(R.string.url_trending))
@@ -284,6 +282,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     override fun onResume() {
         super.onResume()
         webView?.onResume()
+        webView?.reload()
         if (MainActivity.uri != null) {
             loadUrlWithAnimation(MainActivity.uri)
             MainActivity.uri = null

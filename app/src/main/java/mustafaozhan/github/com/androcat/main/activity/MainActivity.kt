@@ -35,6 +35,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         var uri: String? = null
         const val BACK_DELAY: Long = 2000
         const val CHECK_DURATION: Long = 6
+        const val CHECK_INTERVAL: Long = 4200
         const val REMOTE_CONFIG = "remote_config"
         const val AD_INITIAL_DELAY: Long = 44
         const val AD_PERIOD: Long = 256
@@ -131,10 +132,10 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         )
 
         val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        firebaseRemoteConfig.setConfigSettings(
+        firebaseRemoteConfig.setConfigSettingsAsync(
             FirebaseRemoteConfigSettings
                 .Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .setMinimumFetchIntervalInSeconds(CHECK_INTERVAL)
                 .build()
         )
 
@@ -147,7 +148,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                 TimeUnit.HOURS.toSeconds(CHECK_DURATION)
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                firebaseRemoteConfig.activateFetched()
+                firebaseRemoteConfig.activate()
 
                 val remoteConfigStr =
                     if (TextUtils.isEmpty(firebaseRemoteConfig.getString(REMOTE_CONFIG))) {
