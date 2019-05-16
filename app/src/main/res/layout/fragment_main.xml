@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/eTxtSearch"
             style="@style/BaseEditTextTheme"
             android:layout_width="@dimen/zero"
@@ -28,7 +28,8 @@
             android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/searchPreviousButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="Autofill" />
 
         <View
             android:id="@+id/searchPreviousButton"
