@@ -128,7 +128,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(1, getString(R.string.starts), R.drawable.ic_stars),
+                    ActionItem(1, getString(R.string.stars), R.drawable.ic_stars),
                     ActionItem(2, getString(R.string.repositories), R.drawable.ic_repository),
                     ActionItem(3, getString(R.string.gists), R.drawable.ic_gist),
                     ActionItem(4, getString(R.string.notifications), R.drawable.ic_notifications),
