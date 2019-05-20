@@ -41,12 +41,20 @@ import mustafaozhan.github.com.androcat.extensions.showKeyboard
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONObject
+import java.io.IOException
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
 @Suppress("TooManyFunctions", "MagicNumber")
-class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
+class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener, Callback {
 
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
@@ -334,12 +342,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         if (!isAnimating) {
             loadingView(true)
         }
-        if (url.contains(webView?.context?.getString(R.string.url_session).toString())) {
-            webView?.runScript(JsScrip.GET_USERNAME) { str ->
-                if (str != "null")
-                    viewModel.updateUser(str.remove("\""), true)
+        when {
+            url.contains(webView?.context?.getString(R.string.url_session).toString()) -> {
+                webView?.runScript(JsScrip.GET_USERNAME) { str ->
+                    viewModel.updateUser(str.remove("\""), true, token = null)
+                }
+                logoutCount = 0
             }
-            logoutCount = 0
+
+            url.contains("?code=") -> handleAccessToken(url)
         }
     }
 
@@ -354,8 +365,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     url.contains(getString(R.string.str_organization)) or
                     url.contains(getString(R.string.str_google_play)) or
                     !url.contains(getString(R.string.str_github)) or
-                    (url == getString(R.string.url_github)) -> {
-
+                    (url == getString(R.string.url_github))
+                -> {
                     settings?.textZoom = TEXT_SIZE_SMALL
                 }
                 url.contains(context.getString(R.string.url_blank)) -> {
@@ -429,5 +440,50 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     private fun loadUrlWithAnimation(urlToLoad: String?) = urlToLoad?.let { url ->
         loadingView(true)
         webView?.loadUrl(url)
+    }
+
+    private fun handleAccessToken(url: String) {
+        webView?.context?.apply {
+
+            val tokenCode = url.substring(url.lastIndexOf("?code=") + 1)
+                .split("=".toRegex())
+                .dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+
+            val cleanToken = tokenCode[1]
+                .split("&".toRegex())
+                .dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+
+            val code = cleanToken[0]
+
+            val urlOauth = HttpUrl.parse(getString(R.string.url_github_access_token))
+                ?.newBuilder()
+                ?.addQueryParameter("client_id", getString(R.string.client_id))
+                ?.addQueryParameter("client_secret", getString(R.string.client_secret))
+                ?.addQueryParameter("code", code)
+                ?.build()
+                .toString()
+
+            val request = Request.Builder()
+                .header("Accept", "application/json")
+                .url(urlOauth)
+                .build()
+
+            OkHttpClient().newCall(request).enqueue(this@MainFragment)
+        }
+    }
+
+    override fun onFailure(call: Call, e: IOException) {
+        // todo message on failed
+    }
+
+    override fun onResponse(call: Call, response: Response) {
+        if (response.isSuccessful) {
+            val jSonData = response.body()!!.string()
+            val jsonObject = JSONObject(jSonData)
+            val authToken = jsonObject.getString("access_token")
+            viewModel.updateUser(token = authToken)
+        }
     }
 }
