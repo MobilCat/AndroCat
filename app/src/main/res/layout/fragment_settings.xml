@@ -23,7 +23,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtUsernameInput"
@@ -33,13 +33,13 @@
             android:padding="@dimen/four"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtUsername"/>
+            app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="@dimen/four"/>
+            android:padding="@dimen/four" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,21 +64,60 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
                 android:id="@+id/inversionSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="@integer/one"/>
+                android:layout_weight="@integer/one" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="@dimen/four"/>
+            android:padding="@dimen/four" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/eight"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/layoutInversion">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/one"
+                android:padding="@dimen/four"
+                android:text="@string/notifications"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/notificationSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="@integer/one" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one"
+            android:background="@color/blue_gray_50"
+            android:padding="@dimen/four" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/eight"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/layoutInversion">
+        app:layout_constraintTop_toBottomOf="@+id/layoutNotification">
 
         <TextView
             android:layout_width="match_parent"
@@ -97,13 +136,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="@dimen/four"/>
+            android:padding="@dimen/four" />
     </LinearLayout>
 
     <LinearLayout
@@ -122,13 +161,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="@dimen/four"/>
+            android:padding="@dimen/four" />
     </LinearLayout>
 
     <LinearLayout
@@ -147,13 +186,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="@dimen/four"/>
+            android:padding="@dimen/four" />
     </LinearLayout>
 
     <LinearLayout
@@ -172,13 +211,13 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/one"
             android:background="@color/blue_gray_50"
-            android:padding="@dimen/four"/>
+            android:padding="@dimen/four" />
     </LinearLayout>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -191,5 +230,5 @@
         ads:adUnitId="@string/banner_ad_id"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"/>
+        ads:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

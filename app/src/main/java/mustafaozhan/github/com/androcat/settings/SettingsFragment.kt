@@ -14,10 +14,12 @@ import kotlinx.android.synthetic.main.fragment_settings.adView
 import kotlinx.android.synthetic.main.fragment_settings.inversionSwitch
 import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
 import kotlinx.android.synthetic.main.fragment_settings.layoutInversion
+import kotlinx.android.synthetic.main.fragment_settings.layoutNotification
 import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
 import kotlinx.android.synthetic.main.fragment_settings.layoutReportIssue
 import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
 import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
+import kotlinx.android.synthetic.main.fragment_settings.notificationSwitch
 import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
@@ -50,6 +52,14 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layoutInversion.setOnClickListener {
             inversionSwitch.isChecked = !inversionSwitch.isChecked
         }
+        notificationSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                showNotificationDialog()
+            }
+        }
+        layoutNotification.setOnClickListener {
+            notificationSwitch.isChecked = !notificationSwitch.isChecked
+        }
         layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat)))
@@ -74,6 +84,30 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             clearBackStack()
             replaceFragment(MainFragment.newInstance(getString(R.string.url_report_issue)), false)
         }
+    }
+
+    private fun showNotificationDialog() {
+        val animals = arrayOf("one", "two", "three", "four", "five")
+        val checkedItems = booleanArrayOf(true, false, false, true, false)
+
+        AlertDialog.Builder(context)
+            .setTitle("Choose Item")
+            .setMultiChoiceItems(animals, checkedItems) { dialog, which, isChecked ->
+                if (which == -1) {
+                    notificationSwitch.isChecked = !notificationSwitch.isChecked
+                }
+            }
+            .setPositiveButton("OK") { dialog, which ->
+                if (which == -1) {
+                    notificationSwitch.isChecked = !notificationSwitch.isChecked
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                notificationSwitch.isChecked = !notificationSwitch.isChecked
+            }
+            .setCancelable(false)
+            .create()
+            .show()
     }
 
     private fun init() {
