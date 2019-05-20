@@ -25,6 +25,7 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.loadAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
+import mustafaozhan.github.com.androcat.tools.Notification
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -87,25 +88,21 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun showNotificationDialog() {
-        val animals = arrayOf("one", "two", "three", "four", "five")
-        val checkedItems = booleanArrayOf(true, false, false, true, false)
+        val items = Notification.values().map { it.toString().toLowerCase().capitalize() }.toTypedArray()
+        val checkedItems = items.map { false }.toBooleanArray()
 
         AlertDialog.Builder(context)
-            .setTitle("Choose Item")
-            .setMultiChoiceItems(animals, checkedItems) { dialog, which, isChecked ->
+            .setTitle("Choose Notifications")
+            .setIcon(R.drawable.ic_notifications)
+            .setMultiChoiceItems(
+                items,
+                checkedItems
+            ) { dialog, which, isChecked ->
                 if (which == -1) {
                     notificationSwitch.isChecked = !notificationSwitch.isChecked
                 }
             }
-            .setPositiveButton("OK") { dialog, which ->
-                if (which == -1) {
-                    notificationSwitch.isChecked = !notificationSwitch.isChecked
-                }
-            }
-            .setNegativeButton("Cancel") { dialog, which ->
-                notificationSwitch.isChecked = !notificationSwitch.isChecked
-            }
-            .setCancelable(false)
+            .setOnDismissListener { }
             .create()
             .show()
     }
