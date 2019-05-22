@@ -88,7 +88,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun showNotificationDialog() {
-        val items = Notification.values().map { it.toString().toLowerCase().capitalize() }.toTypedArray()
+        val items = Notification.values().map { it.value }.toTypedArray()
         val checkedItems = items.map { false }.toBooleanArray()
 
         AlertDialog.Builder(context)
