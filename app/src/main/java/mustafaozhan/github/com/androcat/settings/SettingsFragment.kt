@@ -115,35 +115,34 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun showUsernameDialog() {
-        val alertDialog = AlertDialog.Builder(context)
-        val editText = EditText(context)
-        editText.inputType = InputType.TYPE_CLASS_TEXT
-        alertDialog.setTitle(getString(R.string.username))
-
-        alertDialog.setView(editText)
-        editText.setTextColor(Color.WHITE)
-        editText.setText(viewModel.getUserName())
-        editText.setSelection(editText.text.length)
-        alertDialog.setPositiveButton("SAVE") { _, _ ->
-            viewModel.updateUserName(editText.text.toString())
-            txtUsernameInput?.text = editText.text.toString()
+        val editText = EditText(context).apply {
+            setTextColor(Color.WHITE)
+            setText(viewModel.getUserName())
+            setSelection(this.text.length)
+            inputType = InputType.TYPE_CLASS_TEXT
         }
 
-        alertDialog.setNegativeButton("CANCEL") { _, _ ->
-            // what ever you want to do with No option.
-        }
-
-        alertDialog.show()
+        AlertDialog
+            .Builder(context)
+            .setTitle(getString(R.string.username))
+            .setView(editText)
+            .setPositiveButton("SAVE") { _, _ ->
+                viewModel.updateUserName(editText.text.toString())
+                txtUsernameInput?.text = editText.text.toString()
+            }
+            .setNegativeButton("CANCEL") { _, _ -> }
+            .show()
     }
 
     private fun sendFeedBack() {
         try {
-            val email = Intent(Intent.ACTION_SEND)
-            email.type = "text/email"
-            email.putExtra(Intent.EXTRA_EMAIL, arrayOf("mr.mustafa.ozhan@gmail.com"))
-            email.putExtra(Intent.EXTRA_SUBJECT, "Feedback for AndroCat")
-            email.putExtra(Intent.EXTRA_TEXT, "Dear Developer," + "")
-            startActivity(Intent.createChooser(email, "Send Feedback:"))
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/email"
+                putExtra(Intent.EXTRA_EMAIL, arrayOf("mr.mustafa.ozhan@gmail.com"))
+                putExtra(Intent.EXTRA_SUBJECT, "Feedback for AndroCat")
+                putExtra(Intent.EXTRA_TEXT, "Dear Developer," + "")
+                startActivity(Intent.createChooser(this, "Send Feedback:"))
+            }
         } catch (activityNotFoundException: ActivityNotFoundException) {
             Crashlytics.logException(activityNotFoundException)
             snacky("You do not have any mail application.")
