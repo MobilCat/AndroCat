@@ -243,13 +243,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         inflateMenu(R.menu.bnvm_dash)
         labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         enableAnimation(false)
-        setTextSize(10.0f)
+        setTextSize(9.0f)
         setIconsMarginTop(12)
         setIconSize(30.0F, 30.0F)
-        getBottomNavigationItemView(2).background = null
-        getBottomNavigationItemView(1).background = null
-        getBottomNavigationItemView(3).background = null
         getBottomNavigationItemView(2).isClickable = false
+
+        for (i in 0..itemCount) {
+            getLargeLabelAt(i)?.setPadding(0, 0, 0, 0)
+            getBottomNavigationItemView(i)?.background = null
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
