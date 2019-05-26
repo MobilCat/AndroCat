@@ -355,6 +355,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     url.contains(getString(R.string.url_trending)) or
                     url.contains(getString(R.string.str_organization)) or
                     url.contains(getString(R.string.str_google_play)) or
+                    url.contains(getString(R.string.str_new)) or
                     !url.contains(getString(R.string.str_github)) or
                     (url == getString(R.string.url_github)) -> {
 
