@@ -21,8 +21,8 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
     fun loadSettings() = generalSharedPreferences.loadSettings()
 
-    fun updateSettings(isInvert: Boolean? = null, isFirstTime: Boolean? = null) =
-        generalSharedPreferences.updateSettings(isInvert = isInvert, isFirstTime = isFirstTime)
+    fun updateSettings(darkMode: Boolean? = null, isFirstTime: Boolean? = null) =
+        generalSharedPreferences.updateSettings(darkMode = darkMode, isFirstTime = isFirstTime)
 
     fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
 }

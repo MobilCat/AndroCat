@@ -109,7 +109,7 @@
             app:fl_strokeWidth="@dimen/four" />
 
         <com.github.jorgecastillo.FillableLoader
-            android:id="@+id/fillableLoaderInverted"
+            android:id="@+id/fillableLoaderDarkMode"
             android:layout_width="@dimen/fillable_loader_width"
             android:layout_height="@dimen/fillable_loader_height"
             app:fl_clippingTransform="waves"

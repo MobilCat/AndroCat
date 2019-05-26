@@ -17,7 +17,7 @@
     <string name="user">User</string>
     <string name="stars">Stars</string>
     <string name="show_profile">Show Profile</string>
-    <string name="invert">Invert</string>
+    <string name="dark_mode">Dark Mode</string>
     <string name="log_in">Log in</string>
     <string name="log_out">Log out</string>
     <string name="settings">Settings</string>
@@ -35,7 +35,6 @@
     <string name="enter">Enter</string>
     <string name="cancel">@android:string/cancel</string>
     <string name="update">Update</string>
-    <string name="color_inversion">Color Inversion</string>
     <string name="report_issue">Report Issue</string>
     <string name="find_in_page">Find in page</string>
 

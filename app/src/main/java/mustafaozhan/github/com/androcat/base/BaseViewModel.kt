@@ -24,6 +24,6 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun getSettings() = dataManager.loadSettings()
 
-    protected fun updateSettings(isInvert: Boolean? = null, isFirstTime: Boolean? = null) =
-        dataManager.updateSettings(isInvert, isFirstTime)
+    protected fun updateSettings(darkMode: Boolean? = null, isFirstTime: Boolean? = null) =
+        dataManager.updateSettings(darkMode, isFirstTime)
 }
