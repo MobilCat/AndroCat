@@ -67,6 +67,7 @@
     <string name="str_stargazers">stargazers</string>
     <string name="str_google_play">https://play.google.com</string>
     <string name="str_organization">https://github.com/org</string>
+    <string name="str_new">new</string>
 
     <!--Network-->
     <string name="network_error_connection">Problem with the Internet connection.</string>
