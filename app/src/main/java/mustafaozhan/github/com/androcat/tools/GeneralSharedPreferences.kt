@@ -32,9 +32,9 @@ constructor() : BaseSharedPreferences() {
         setStringEntry(USER, Gson().toJson(user))
     }
 
-    fun updateSettings(isInvert: Boolean? = null, isFirstTime: Boolean? = null) {
+    fun updateSettings(darkMode: Boolean? = null, isFirstTime: Boolean? = null) {
         val settings = loadSettings()
-        isInvert?.let { settings.isInvert = it }
+        darkMode?.let { settings.darkMode = it }
         isFirstTime?.let { settings.isFirstTime = it }
         setStringEntry(SETTINGS, Gson().toJson(settings))
     }
@@ -50,5 +50,5 @@ constructor() : BaseSharedPreferences() {
 
     fun loadSettings() =
         Gson().fromJson(getStringEntry(SETTINGS), Settings::class.java)
-            ?: Settings(isInvert = false, isFirstTime = true)
+            ?: Settings(darkMode = false, isFirstTime = true)
 }

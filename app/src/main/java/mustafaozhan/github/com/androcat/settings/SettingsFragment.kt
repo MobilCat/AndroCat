@@ -11,9 +11,9 @@ import android.view.View
 import android.widget.EditText
 import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_settings.adView
-import kotlinx.android.synthetic.main.fragment_settings.inversionSwitch
+import kotlinx.android.synthetic.main.fragment_settings.darkModeSwitch
+import kotlinx.android.synthetic.main.fragment_settings.layoutDarkMode
 import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
-import kotlinx.android.synthetic.main.fragment_settings.layoutInversion
 import kotlinx.android.synthetic.main.fragment_settings.layoutNotification
 import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
 import kotlinx.android.synthetic.main.fragment_settings.layoutReportIssue
@@ -47,11 +47,11 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun setListeners() {
-        inversionSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.updateSetting(isInvert = isChecked)
+        darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateSetting(darkMode = isChecked)
         }
-        layoutInversion.setOnClickListener {
-            inversionSwitch.isChecked = !inversionSwitch.isChecked
+        layoutDarkMode.setOnClickListener {
+            darkModeSwitch.isChecked = !darkModeSwitch.isChecked
         }
         notificationSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -109,8 +109,8 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
     private fun init() {
         txtUsernameInput?.text = viewModel.getUserName()
-        viewModel.loadSettings().isInvert?.let {
-            inversionSwitch.isChecked = it
+        viewModel.loadSettings().darkMode?.let {
+            darkModeSwitch.isChecked = it
         }
     }
 

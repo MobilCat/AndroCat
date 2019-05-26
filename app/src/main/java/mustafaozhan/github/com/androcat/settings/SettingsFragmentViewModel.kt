@@ -19,6 +19,6 @@ class SettingsFragmentViewModel : BaseViewModel() {
 
     fun loadSettings() = getSettings()
 
-    fun updateSetting(isInvert: Boolean? = null, isFirstTime: Boolean? = null) =
-        updateSettings(isInvert, isFirstTime)
+    fun updateSetting(darkMode: Boolean? = null, isFirstTime: Boolean? = null) =
+        updateSettings(darkMode, isFirstTime)
 }

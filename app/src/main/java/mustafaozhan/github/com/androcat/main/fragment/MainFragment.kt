@@ -19,7 +19,7 @@ import im.delight.android.webview.AdvancedWebView
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_main.eTxtSearch
 import kotlinx.android.synthetic.main.fragment_main.fillableLoader
-import kotlinx.android.synthetic.main.fragment_main.fillableLoaderInverted
+import kotlinx.android.synthetic.main.fragment_main.fillableLoaderDarkMode
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
@@ -98,7 +98,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     private fun init() {
         fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
-        fillableLoaderInverted.setSvgPath(getString(R.string.androcat_svg_path))
+        fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
         eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
 
         baseUrl = if (viewModel.isLoggedIn() == true) {
@@ -107,7 +107,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             getString(R.string.url_login)
         }
 
-        viewModel.loadSettings().isInvert?.let { invert(it) }
+        viewModel.loadSettings().darkMode?.let { darkMode(it) }
 
         loadUrlWithAnimation(baseUrl)
 
@@ -124,7 +124,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     ActionItem(4, getString(R.string.trends), R.drawable.ic_trends),
                     ActionItem(5, getString(R.string.new_gist), R.drawable.ic_gist),
                     ActionItem(6, getString(R.string.new_repository), R.drawable.ic_repository),
-                    ActionItem(7, getString(R.string.invert), R.drawable.ic_invert),
+                    ActionItem(7, getString(R.string.dark_mode), R.drawable.ic_dark_mode),
                     ActionItem(8, getString(R.string.forward), R.drawable.ic_forward),
                     ActionItem(9, getString(R.string.back), R.drawable.ic_back)
                 )
@@ -228,7 +228,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 4 -> loadUrlWithAnimation(getString(R.string.url_trending))
                 5 -> loadUrlWithAnimation(getString(R.string.url_gist))
                 6 -> loadUrlWithAnimation(getString(R.string.url_new))
-                7 -> viewModel.loadSettings().isInvert?.let { invert(!it, true) }
+                7 -> viewModel.loadSettings().darkMode?.let { darkMode(!it, true) }
                 8 -> webView?.goForward()
                 9 -> webView?.goBack()
                 else -> loadUrlWithAnimation(getString(R.string.url_github))
@@ -236,14 +236,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    private fun invert(invert: Boolean, changeSettings: Boolean = false) {
-        setInversion(invert)
-        webView?.runScript(JsScrip.getInversion(invert))
-        if (!invert)
+    private fun darkMode(darkMode: Boolean, changeSettings: Boolean = false) {
+        setDarkMode(darkMode)
+        webView?.runScript(JsScrip.getDarkMode(darkMode))
+        if (!darkMode)
             webView?.reload()
 
         if (changeSettings) {
-            viewModel.updateSetting(isInvert = invert)
+            viewModel.updateSetting(darkMode = darkMode)
         }
     }
 
@@ -399,8 +399,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     logoutCount = 0
                 }
             }
-            viewModel.loadSettings().isInvert?.let {
-                runScript(JsScrip.getInversion(it)) {
+            viewModel.loadSettings().darkMode?.let {
+                runScript(JsScrip.getDarkMode(it)) {
                     loadingView(false)
                 }
             }
@@ -413,24 +413,24 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             fillableLoaderLayout?.setVisibleWithAnimation(true)
             loader?.visibility = View.VISIBLE
             fillableLoader?.start()
-            fillableLoaderInverted?.start()
+            fillableLoaderDarkMode?.start()
         } else {
             fillableLoaderLayout?.setVisibleWithAnimation(false)
             fillableLoader?.visibility = View.GONE
-            fillableLoaderInverted?.visibility = View.GONE
+            fillableLoaderDarkMode?.visibility = View.GONE
             fillableLoader?.reset()
-            fillableLoaderInverted?.reset()
+            fillableLoaderDarkMode?.reset()
             isAnimating = false
         }
 
-    private fun setInversion(inversion: Boolean) = context?.let { ctx ->
-        loader = if (inversion) {
+    private fun setDarkMode(darkMode: Boolean) = context?.let { ctx ->
+        loader = if (darkMode) {
             fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorPrimaryDark))
             fillableLoader?.visibility = View.GONE
-            fillableLoaderInverted
+            fillableLoaderDarkMode
         } else {
             fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.white))
-            fillableLoaderInverted?.visibility = View.GONE
+            fillableLoaderDarkMode?.visibility = View.GONE
             fillableLoader
         }
     }

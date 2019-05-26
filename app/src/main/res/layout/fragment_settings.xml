@@ -53,7 +53,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutInversion"
+            android:id="@+id/layoutDarkMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
@@ -70,14 +70,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="@integer/one"
                     android:padding="@dimen/four"
-                    android:text="@string/color_inversion"
+                    android:text="@string/dark_mode"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Switch
-                    android:id="@+id/inversionSwitch"
+                    android:id="@+id/darkModeSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/layoutInversion">
+            app:layout_constraintTop_toBottomOf="@id/layoutDarkMode">
 
             <LinearLayout
                 android:layout_width="match_parent"

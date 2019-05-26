@@ -1,15 +1,15 @@
 package mustafaozhan.github.com.androcat.tools
 
 enum class JsScrip(val value: String) {
-    GET_NORMAL_COLORS("getNormalColors.js"),
-    GET_INVERTED_COLORS("getInvertedColors.js"),
+    NORMAL_MODE("normalMode.js"),
+    DARK_MODE("darkMode.js"),
     GET_USERNAME("getUsername.js");
 
     companion object {
-        fun getInversion(inversion: Boolean) =
-            if (inversion)
-                GET_INVERTED_COLORS
+        fun getDarkMode(darkMode: Boolean) =
+            if (darkMode)
+                DARK_MODE
             else
-                GET_NORMAL_COLORS
+                NORMAL_MODE
     }
 }
