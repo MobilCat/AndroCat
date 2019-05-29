@@ -25,4 +25,13 @@ class SettingsFragmentViewModel : BaseViewModel() {
         isFirstTime: Boolean? = null,
         notificationList: ArrayList<Pair<Notification, Boolean>>? = null
     ) = updateSettings(darkMode, isFirstTime, notificationList)
+
+    fun getNotificationSwitch(): Boolean {
+        var state = false
+        loadSettings().notificationList?.forEach {
+            state = state or it.second
+        }
+
+        return state
+    }
 }

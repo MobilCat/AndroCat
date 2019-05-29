@@ -23,6 +23,8 @@ import kotlinx.android.synthetic.main.fragment_settings.notificationSwitch
 import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
+import mustafaozhan.github.com.androcat.extensions.getFirstList
+import mustafaozhan.github.com.androcat.extensions.getSecondList
 import mustafaozhan.github.com.androcat.extensions.loadAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 import mustafaozhan.github.com.androcat.tools.Notification
@@ -82,14 +84,10 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun showNotificationDialog() {
-        val items = ArrayList<String>()
-        val checkedItems = ArrayList<Boolean>()
+        val notificationList = viewModel.loadSettings().notificationList
+        val items = notificationList.getFirstList()
+        val checkedItems = notificationList.getSecondList()
 
-        viewModel.loadSettings().notificationList?.forEach {
-            items.add(it.first.value)
-            checkedItems.add(it.second)
-        }
-        
         AlertDialog.Builder(context)
             .setTitle("Choose Notifications")
             .setIcon(R.drawable.ic_notifications)
@@ -109,28 +107,21 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                     }
                 }
                 viewModel.updateSetting(notificationList = notificationList)
-                var state = false
-                checkedItems.forEach {
-                    state = state or it
-                }
-                notificationSwitch.isChecked = state
+
+                notificationSwitch.isChecked = viewModel.getNotificationSwitch()
             }
             .create()
             .show()
     }
 
     private fun init() {
+        notificationSwitch.isChecked = viewModel.getNotificationSwitch()
+
         txtUsernameInput?.text = viewModel.getUserName()
 
         viewModel.loadSettings().darkMode?.let {
             darkModeSwitch.isChecked = it
         }
-
-        var state = false
-        viewModel.loadSettings().notificationList?.forEach {
-            state = state or it.second
-        }
-        notificationSwitch.isChecked = state
     }
 
     private fun showUsernameDialog() {
