@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import mustafaozhan.github.com.androcat.application.Application
 import mustafaozhan.github.com.androcat.dagger.component.ViewModelComponent
 import mustafaozhan.github.com.androcat.tools.DataManager
+import mustafaozhan.github.com.androcat.tools.Notification
 import javax.inject.Inject
 
 /**
@@ -24,6 +25,9 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun getSettings() = dataManager.loadSettings()
 
-    protected fun updateSettings(darkMode: Boolean? = null, isFirstTime: Boolean? = null) =
-        dataManager.updateSettings(darkMode, isFirstTime)
+    protected fun updateSettings(
+        darkMode: Boolean? = null,
+        isFirstTime: Boolean? = null,
+        notificationList: ArrayList<Pair<Notification, Boolean>>? = null
+    ) = dataManager.updateSettings(darkMode, isFirstTime, notificationList)
 }
