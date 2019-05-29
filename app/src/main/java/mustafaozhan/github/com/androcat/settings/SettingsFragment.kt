@@ -53,14 +53,8 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layoutDarkMode.setOnClickListener {
             darkModeSwitch.isChecked = !darkModeSwitch.isChecked
         }
-        notificationSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                showNotificationDialog()
-            }
-        }
-        layoutNotification.setOnClickListener {
-            notificationSwitch.isChecked = !notificationSwitch.isChecked
-        }
+        notificationSwitch.setOnClickListener { showNotificationDialog() }
+        layoutNotification.setOnClickListener { showNotificationDialog() }
         layoutUsername.setOnClickListener { showUsernameDialog() }
         layoutSupport.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat)))
@@ -88,30 +82,55 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun showNotificationDialog() {
-        val items = Notification.values().map { it.value }.toTypedArray()
-        val checkedItems = items.map { false }.toBooleanArray()
+        val items = ArrayList<String>()
+        val checkedItems = ArrayList<Boolean>()
 
+        viewModel.loadSettings().notificationList?.forEach {
+            items.add(it.first.value)
+            checkedItems.add(it.second)
+        }
+        
         AlertDialog.Builder(context)
             .setTitle("Choose Notifications")
             .setIcon(R.drawable.ic_notifications)
             .setMultiChoiceItems(
-                items,
-                checkedItems
+                items.toTypedArray(),
+                checkedItems.toBooleanArray()
             ) { dialog, which, isChecked ->
-                if (which == -1) {
-                    notificationSwitch.isChecked = !notificationSwitch.isChecked
+                if (which != -1) {
+                    checkedItems[which] = isChecked
                 }
             }
-            .setOnDismissListener { }
+            .setOnDismissListener {
+                val notificationList = ArrayList<Pair<Notification, Boolean>>()
+                for (i in 0 until Notification.values().size) {
+                    Notification.fromString(items[i])?.let {
+                        notificationList.add(Pair(it, checkedItems[i]))
+                    }
+                }
+                viewModel.updateSetting(notificationList = notificationList)
+                var state = false
+                checkedItems.forEach {
+                    state = state or it
+                }
+                notificationSwitch.isChecked = state
+            }
             .create()
             .show()
     }
 
     private fun init() {
         txtUsernameInput?.text = viewModel.getUserName()
+
         viewModel.loadSettings().darkMode?.let {
             darkModeSwitch.isChecked = it
         }
+
+        var state = false
+        viewModel.loadSettings().notificationList?.forEach {
+            state = state or it.second
+        }
+        notificationSwitch.isChecked = state
     }
 
     private fun showUsernameDialog() {
