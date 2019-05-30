@@ -3,7 +3,7 @@ package mustafaozhan.github.com.androcat.extensions
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import mustafaozhan.github.com.androcat.tools.Notification
+import mustafaozhan.github.com.androcat.notifications.Notification
 
 fun String.remove(str: String) = replace(str, "")
 
@@ -25,4 +25,12 @@ fun ArrayList<Pair<Notification, Boolean>>?.getSecondList(): ArrayList<Boolean> 
         items.add(it.second)
     }
     return items
+}
+
+fun ArrayList<Pair<Notification, Boolean>>?.isAnyNotificationEnabled(): Boolean {
+    var state = false
+    this?.forEach {
+        state = state || it.second
+    }
+    return state
 }

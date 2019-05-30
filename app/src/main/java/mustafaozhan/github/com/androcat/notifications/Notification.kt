@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.androcat.tools
+package mustafaozhan.github.com.androcat.notifications
 
 enum class Notification(val value: String) {
     NOTIFICATIONS("Notification"),

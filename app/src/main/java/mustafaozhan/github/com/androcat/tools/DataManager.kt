@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.tools
 
 import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
+import mustafaozhan.github.com.androcat.notifications.Notification
 import javax.inject.Inject
 import javax.inject.Singleton
 

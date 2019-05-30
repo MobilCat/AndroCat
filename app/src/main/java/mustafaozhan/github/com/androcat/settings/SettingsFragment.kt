@@ -27,7 +27,8 @@ import mustafaozhan.github.com.androcat.extensions.getFirstList
 import mustafaozhan.github.com.androcat.extensions.getSecondList
 import mustafaozhan.github.com.androcat.extensions.loadAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
-import mustafaozhan.github.com.androcat.tools.Notification
+import mustafaozhan.github.com.androcat.notifications.Notification
+
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -94,19 +95,19 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             .setMultiChoiceItems(
                 items.toTypedArray(),
                 checkedItems.toBooleanArray()
-            ) { dialog, which, isChecked ->
+            ) { _, which, isChecked ->
                 if (which != -1) {
                     checkedItems[which] = isChecked
                 }
             }
             .setOnDismissListener {
-                val notificationList = ArrayList<Pair<Notification, Boolean>>()
+                val newNotificationList = ArrayList<Pair<Notification, Boolean>>()
                 for (i in 0 until Notification.values().size) {
                     Notification.fromString(items[i])?.let {
-                        notificationList.add(Pair(it, checkedItems[i]))
+                        newNotificationList.add(Pair(it, checkedItems[i]))
                     }
                 }
-                viewModel.updateSetting(notificationList = notificationList)
+                viewModel.updateSetting(notificationList = newNotificationList)
 
                 notificationSwitch.isChecked = viewModel.getNotificationSwitch()
             }

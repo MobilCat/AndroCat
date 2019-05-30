@@ -1,7 +1,7 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
 import mustafaozhan.github.com.androcat.base.BaseViewModel
-import mustafaozhan.github.com.androcat.tools.Notification
+import mustafaozhan.github.com.androcat.notifications.Notification
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.

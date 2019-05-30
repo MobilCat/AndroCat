@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import mustafaozhan.github.com.androcat.base.BaseSharedPreferences
 import mustafaozhan.github.com.androcat.model.Settings
 import mustafaozhan.github.com.androcat.model.User
+import mustafaozhan.github.com.androcat.notifications.Notification
 import javax.inject.Inject
 import javax.inject.Singleton
 

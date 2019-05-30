@@ -1,7 +1,8 @@
 package mustafaozhan.github.com.androcat.settings
 
 import mustafaozhan.github.com.androcat.base.BaseViewModel
-import mustafaozhan.github.com.androcat.tools.Notification
+import mustafaozhan.github.com.androcat.extensions.isAnyNotificationEnabled
+import mustafaozhan.github.com.androcat.notifications.Notification
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -26,12 +27,6 @@ class SettingsFragmentViewModel : BaseViewModel() {
         notificationList: ArrayList<Pair<Notification, Boolean>>? = null
     ) = updateSettings(darkMode, isFirstTime, notificationList)
 
-    fun getNotificationSwitch(): Boolean {
-        var state = false
-        loadSettings().notificationList?.forEach {
-            state = state or it.second
-        }
-
-        return state
-    }
+    fun getNotificationSwitch() =
+        loadSettings().notificationList.isAnyNotificationEnabled()
 }

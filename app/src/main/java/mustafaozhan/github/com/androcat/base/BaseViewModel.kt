@@ -3,8 +3,8 @@ package mustafaozhan.github.com.androcat.base
 import androidx.lifecycle.ViewModel
 import mustafaozhan.github.com.androcat.application.Application
 import mustafaozhan.github.com.androcat.dagger.component.ViewModelComponent
+import mustafaozhan.github.com.androcat.notifications.Notification
 import mustafaozhan.github.com.androcat.tools.DataManager
-import mustafaozhan.github.com.androcat.tools.Notification
 import javax.inject.Inject
 
 /**
