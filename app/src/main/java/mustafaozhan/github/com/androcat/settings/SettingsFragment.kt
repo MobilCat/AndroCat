@@ -28,6 +28,7 @@ import mustafaozhan.github.com.androcat.extensions.getSecondList
 import mustafaozhan.github.com.androcat.extensions.loadAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 import mustafaozhan.github.com.androcat.notifications.Notification
+import mustafaozhan.github.com.androcat.notifications.NotificationReceiver
 
 
 /**
@@ -110,6 +111,14 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                 viewModel.updateSetting(notificationList = newNotificationList)
 
                 notificationSwitch.isChecked = viewModel.getNotificationSwitch()
+
+                context?.let {
+                    if (viewModel.getNotificationSwitch()) {
+                        NotificationReceiver().setNotifications(it)
+                    } else {
+                        NotificationReceiver().cancelNotifications(it)
+                    }
+                }
             }
             .create()
             .show()
