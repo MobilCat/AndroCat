@@ -3,7 +3,10 @@ package mustafaozhan.github.com.androcat.dagger.component
 import dagger.Subcomponent
 import mustafaozhan.github.com.androcat.annontation.PerBroadcastReceiver
 import mustafaozhan.github.com.androcat.dagger.module.BroadcastReceiverModule
+import mustafaozhan.github.com.androcat.notifications.NotificationReceiver
 
 @PerBroadcastReceiver
 @Subcomponent(modules = [(BroadcastReceiverModule::class)])
-interface BroadcastReceiverComponent
+interface BroadcastReceiverComponent {
+    fun inject(notificationReceiver: NotificationReceiver)
+}

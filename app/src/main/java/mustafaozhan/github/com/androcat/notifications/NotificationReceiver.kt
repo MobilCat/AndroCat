@@ -8,10 +8,13 @@ import android.util.Log
 import mustafaozhan.github.com.androcat.base.BaseBroadcastReceiver
 
 class NotificationReceiver : BaseBroadcastReceiver() {
-
     companion object {
         private const val NOTIFICATION_REQUEST_CODE = 1
         private const val NOTIFICATION_INTERVAL: Long = 2000
+    }
+
+    override fun inject() {
+        broadcastReceiverComponent.inject(this)
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {

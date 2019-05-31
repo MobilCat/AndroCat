@@ -12,7 +12,9 @@ import javax.inject.Inject
  */
 abstract class BaseViewModel : ViewModel() {
 
-    protected val viewModelComponent: ViewModelComponent by lazy { Application.instance.component.viewModelComponent() }
+    protected val viewModelComponent: ViewModelComponent by lazy {
+        Application.instance.component.viewModelComponent()
+    }
 
     @Inject
     lateinit var dataManager: DataManager
