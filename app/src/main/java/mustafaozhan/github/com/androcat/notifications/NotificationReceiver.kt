@@ -2,18 +2,20 @@ package mustafaozhan.github.com.androcat.notifications
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import mustafaozhan.github.com.androcat.base.BaseBroadcastReceiver
 
-class NotificationReceiver : BroadcastReceiver() {
+class NotificationReceiver : BaseBroadcastReceiver() {
+
     companion object {
         private const val NOTIFICATION_REQUEST_CODE = 1
         private const val NOTIFICATION_INTERVAL: Long = 2000
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        super.onReceive(context, intent)
         Log.d("Broadcast Receiver", "Receiver Running")
     }
 
