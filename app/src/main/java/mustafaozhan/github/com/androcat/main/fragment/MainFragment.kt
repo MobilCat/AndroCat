@@ -371,6 +371,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     (url == getString(R.string.url_github))
                 -> {
                     settings?.textZoom = TEXT_SIZE_SMALL
+                    logoutCount = 0
                 }
                 url.contains(context.getString(R.string.url_blank)) -> {
                     logoutCount = 0
@@ -394,7 +395,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 }
                 url.contains(getString(R.string.str_stargazers)) -> {
                     settings?.textZoom = TEXT_SIZE_MEDIUM
+                    logoutCount = 0
                 }
+                url.contains(viewModel.getUsername().toString()) -> {
+                    settings?.textZoom = TEXT_SIZE_SMALL
+                    logoutCount = 0
+                }
+
                 else -> {
                     settings?.textZoom = TEXT_SIZE_LARGE
                     logoutCount = 0
