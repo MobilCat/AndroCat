@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.tools
 
 import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
+import mustafaozhan.github.com.androcat.notifications.Notification
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,8 +22,14 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
     fun loadSettings() = generalSharedPreferences.loadSettings()
 
-    fun updateSettings(darkMode: Boolean? = null, isFirstTime: Boolean? = null) =
-        generalSharedPreferences.updateSettings(darkMode = darkMode, isFirstTime = isFirstTime)
+    fun updateSettings(
+        darkMode: Boolean? = null,
+        isFirstTime: Boolean? = null,
+        notificationList: ArrayList<Pair<Notification, Boolean>>? = null
+    ) = generalSharedPreferences.updateSettings(
+        darkMode = darkMode,
+        isFirstTime = isFirstTime,
+        notificationList = notificationList)
 
     fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
 }
