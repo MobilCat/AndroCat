@@ -99,7 +99,6 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         }
 
         alertDialog.setNegativeButton("CANCEL") { _, _ ->
-            // what ever you want to do with No option.
         }
 
         alertDialog.show()
