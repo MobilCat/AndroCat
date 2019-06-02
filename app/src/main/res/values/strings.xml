@@ -65,6 +65,7 @@
 
     <!--STR-->
     <string name="str_github">github</string>
+    <string name="str_gist">gist</string>
     <string name="str_stargazers">stargazers</string>
     <string name="str_google_play">https://play.google.com</string>
     <string name="str_organization">https://github.com/org</string>
