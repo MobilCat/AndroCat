@@ -356,7 +356,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod", "LongMethod")
     override fun onPageFinished(url: String) {
         webView?.apply {
             when {
@@ -398,10 +398,17 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     logoutCount = 0
                 }
                 url.contains(viewModel.getUsername().toString()) -> {
-                    settings?.textZoom = TEXT_SIZE_SMALL
+                    settings?.textZoom = if (url.contains(getString(R.string.str_gist))) {
+                        TEXT_SIZE_LARGE
+                    } else {
+                        TEXT_SIZE_SMALL
+                    }
                     logoutCount = 0
                 }
-
+                url.contains(getString(R.string.str_gist)) -> {
+                    settings?.textZoom = TEXT_SIZE_LARGE
+                    logoutCount = 0
+                }
                 else -> {
                     settings?.textZoom = TEXT_SIZE_LARGE
                     logoutCount = 0
