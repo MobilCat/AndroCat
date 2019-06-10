@@ -97,23 +97,15 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             .doOnNext { count ->
                 if (mInterstitialAd.isLoaded && adVisibility) {
                     if (isInitial) {
-                        showAd()
+                        mInterstitialAd.show()
                         isInitial = false
                     } else if (count > 0) {
-                        showAd()
+                        mInterstitialAd.show()
                     }
                 }
                 prepareAd()
             }
             .subscribe()
-    }
-
-    private fun showAd() = viewModel.loadSettings().isFirstTime?.let {
-        if (it) {
-            viewModel.updateSetting(isFirstTime = false)
-        } else {
-            mInterstitialAd.show()
-        }
     }
 
     private fun prepareAd() {

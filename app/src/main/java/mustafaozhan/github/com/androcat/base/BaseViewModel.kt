@@ -29,7 +29,6 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun updateSettings(
         darkMode: Boolean? = null,
-        isFirstTime: Boolean? = null,
         notificationList: ArrayList<Pair<Notification, Boolean>>? = null
-    ) = dataManager.updateSettings(darkMode, isFirstTime, notificationList)
+    ) = dataManager.updateSettings(darkMode, notificationList)
 }

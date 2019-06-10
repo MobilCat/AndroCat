@@ -35,12 +35,10 @@ constructor() : BaseSharedPreferences() {
 
     fun updateSettings(
         darkMode: Boolean? = null,
-        isFirstTime: Boolean? = null,
         notificationList: ArrayList<Pair<Notification, Boolean>>? = null
     ) {
         val settings = loadSettings()
         darkMode?.let { settings.darkMode = it }
-        isFirstTime?.let { settings.isFirstTime = it }
         notificationList?.let { settings.notificationList = it }
         setStringEntry(SETTINGS, Gson().toJson(settings))
     }
@@ -61,6 +59,6 @@ constructor() : BaseSharedPreferences() {
                 Notification.values().forEach {
                     notificationList.add(Pair(it, false))
                 }
-                Settings(darkMode = false, isFirstTime = true, notificationList = notificationList)
+                Settings(darkMode = false, notificationList = notificationList)
             }
 }
