@@ -25,15 +25,15 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Dagger
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
     implementation "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
 
     // Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     // Fabric
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.0@aar') {
@@ -57,7 +57,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Ad
-    implementation 'com.google.firebase:firebase-ads:17.2.0'
+    implementation 'com.google.firebase:firebase-ads:17.2.1'
 
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
@@ -68,9 +68,6 @@ dependencies {
 
     // Quick Action
     implementation 'com.github.mustafaozhan:quickaction:3.0.2'
-
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.6.1'
 
     // Bottom Navigation
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
