@@ -102,8 +102,9 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                     } else if (count > 0) {
                         mInterstitialAd.show()
                     }
+                } else {
+                    prepareAd()
                 }
-                prepareAd()
             }
             .subscribe()
     }
