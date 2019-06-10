@@ -19,7 +19,7 @@
         <activity
             android:name="mustafaozhan.github.com.androcat.splash.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Fullscreen.SplashTheme">
+            android:theme="@style/AppTheme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
