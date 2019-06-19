@@ -284,7 +284,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     override fun onResume() {
         super.onResume()
         webView?.onResume()
-        webView?.reload()
         if (MainActivity.uri != null) {
             loadUrlWithAnimation(MainActivity.uri)
             MainActivity.uri = null
