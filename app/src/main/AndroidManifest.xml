@@ -51,8 +51,6 @@
 
         </activity>
 
-        <receiver android:name=".notifications.NotificationReceiver" />
-
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

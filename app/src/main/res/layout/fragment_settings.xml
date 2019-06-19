@@ -92,51 +92,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/layoutDarkMode">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="@integer/one"
-                    android:padding="@dimen/four"
-                    android:text="@string/notifications"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Switch
-                    android:id="@+id/notificationSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="@integer/one" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/one"
-                android:background="@color/blue_gray_50"
-                android:padding="@dimen/four" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/layoutSupport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/layoutNotification">
+            app:layout_constraintTop_toBottomOf="@+id/layoutDarkMode">
 
             <TextView
                 android:layout_width="match_parent"
