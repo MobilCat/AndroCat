@@ -41,7 +41,7 @@ dependencies {
     }
 
     // Anko
-    implementation 'org.jetbrains.anko:anko-commons:0.10.5'
+    implementation 'org.jetbrains.anko:anko-commons:0.10.8'
 
     // Retrofit
     implementation "com.google.code.gson:gson:${gsonVersion}"
@@ -57,11 +57,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Ad
-    implementation 'com.google.firebase:firebase-ads:17.2.1'
+    implementation 'com.google.firebase:firebase-ads:18.0.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-config:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-config:18.0.0'
 
     // Advanced WebView
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
