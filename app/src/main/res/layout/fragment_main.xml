@@ -9,7 +9,7 @@
         android:id="@+id/searchLayout"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
