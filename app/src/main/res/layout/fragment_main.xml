@@ -137,13 +137,14 @@
         android:id="@+id/newsFeedFab"
         android:layout_width="@dimen/fab_width_height"
         android:layout_height="@dimen/fab_width_height"
-        android:layout_marginBottom="@dimen/thirty_six"
         android:src="@drawable/ic_androcat_dash"
         app:backgroundTint="@color/colorPrimary"
         app:fabCustomSize="@dimen/fab_width_height"
-        app:layout_constraintBottom_toBottomOf="@+id/mBottomNavigationView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/mBottomNavigationView"
         app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.955"
         app:maxImageSize="@dimen/forty_eight" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

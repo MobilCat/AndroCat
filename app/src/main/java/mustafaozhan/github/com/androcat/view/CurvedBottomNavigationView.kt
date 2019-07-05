@@ -9,13 +9,10 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import mustafaozhan.github.com.androcat.R
+import mustafaozhan.github.com.androcat.main.activity.MainActivity
 
 @Suppress("MagicNumber")
 class CurvedBottomNavigationView : BottomNavigationViewEx {
-
-    companion object {
-        const val CURVE_CIRCLE_RADIUS = 88
-    }
 
     private var mPath = Path()
     private var mPaint = Paint()
@@ -52,30 +49,36 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        mFirstCurveStartPoint.set(width / 2 - CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS / 8, 0)
+        val width = getWidth(context)
+        val height = getHeight(context)
+        val radius = width / 12
+        val transparentNavigationCurve = 8
+        val backgroundNavigationCurve = 16
 
-        mFirstCurveEndPoint.set(width / 2, CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 8)
+        mFirstCurveStartPoint.set(width / 2 - radius * 2 - radius / transparentNavigationCurve, 0)
+
+        mFirstCurveEndPoint.set(width / 2, radius + radius / transparentNavigationCurve)
 
         mSecondCurveStartPoint = mFirstCurveEndPoint
-        mSecondCurveEndPoint.set(width / 2 + CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS / 8, 0)
+        mSecondCurveEndPoint.set(width / 2 + radius * 2 + radius / transparentNavigationCurve, 0)
 
         mFirstCurveControlPoint1.set(
-            mFirstCurveStartPoint.x + CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 32,
+            mFirstCurveStartPoint.x + radius + radius / backgroundNavigationCurve,
             mFirstCurveStartPoint.y
         )
 
         mFirstCurveControlPoint2.set(
-            mFirstCurveEndPoint.x - CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS,
+            mFirstCurveEndPoint.x - radius * 2 + radius,
             mFirstCurveEndPoint.y
         )
 
         mSecondCurveControlPoint1.set(
-            mSecondCurveStartPoint.x + CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS,
+            mSecondCurveStartPoint.x + radius * 2 - radius,
             mSecondCurveStartPoint.y
         )
 
         mSecondCurveControlPoint2.set(
-            mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 32),
+            mSecondCurveEndPoint.x - (radius + radius / backgroundNavigationCurve),
             mSecondCurveEndPoint.y
         )
 
@@ -115,5 +118,19 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawPath(mPath, mPaint)
+    }
+
+    private fun getWidth(context: Context): Int {
+        val display = (context as MainActivity).windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        return size.x
+    }
+
+    private fun getHeight(context: Context): Int {
+        val display = (context as MainActivity).windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        return size.y
     }
 }
