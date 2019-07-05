@@ -3,24 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/navigation_find"
+        android:id="@+id/nv_explorer"
         android:icon="@drawable/ic_explore"
         android:title="@string/explorer" />
     <item
-        android:id="@+id/navigation_pull_request"
-        android:icon="@drawable/ic_pull_request"
-        android:title="@string/pull_requests" />
+        android:id="@+id/nv_navigation"
+        android:icon="@drawable/ic_navigation"
+        android:title="@string/navigation" />
     <item
-        android:id="@+id/navigation_feed"
+        android:id="@+id/nv_feeds"
         tools:ignore="MenuTitle" />
 
     <item
-        android:id="@+id/navigation_Issues"
-        android:icon="@drawable/ic_issue"
-        android:title="@string/issues" />
+        android:id="@+id/nv_productivity"
+        android:icon="@drawable/ic_productivity"
+        android:title="@string/productivity" />
 
     <item
-        android:id="@+id/navigation_user"
+        android:id="@+id/nv_profile"
         android:icon="@drawable/ic_user"
         android:title="@string/user" />
 </menu>

@@ -66,8 +66,11 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplorer: QuickAction
+    private lateinit var quickActionNavigation: QuickAction
+    private lateinit var quickActionProductivity: QuickAction
+    private lateinit var quickActionProfile: QuickAction
+
     private lateinit var baseUrl: String
 
     private var logoutCount = 0
@@ -88,6 +91,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
+    @Suppress("LongMethod")
     private fun init() {
         fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
         fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
@@ -110,15 +114,34 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(1, getString(R.string.search), R.drawable.ic_search),
-                    ActionItem(2, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
-                    ActionItem(3, getString(R.string.market_place), R.drawable.ic_market_place),
-                    ActionItem(4, getString(R.string.trends), R.drawable.ic_trends),
+                    ActionItem(3, getString(R.string.search), R.drawable.ic_search),
+                    ActionItem(2, getString(R.string.market_place), R.drawable.ic_market_place),
+                    ActionItem(1, getString(R.string.trends), R.drawable.ic_trends)
+                )
+            }
+            quickActionNavigation = QuickAction(ctx, QuickAction.VERTICAL)
+            quickActionNavigation.apply {
+                setColorRes(R.color.colorPrimary)
+                setTextColorRes(R.color.white)
+                setEnabledDivider(false)
+                addActionItem(
+                    ActionItem(4, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
+                    ActionItem(3, getString(R.string.dark_mode), R.drawable.ic_dark_mode),
+                    ActionItem(2, getString(R.string.forward), R.drawable.ic_forward),
+                    ActionItem(1, getString(R.string.back), R.drawable.ic_back)
+                )
+            }
+            quickActionProductivity = QuickAction(ctx, QuickAction.VERTICAL)
+            quickActionProductivity.apply {
+                setColorRes(R.color.colorPrimary)
+                setTextColorRes(R.color.white)
+                setEnabledDivider(false)
+                addActionItem(
                     ActionItem(5, getString(R.string.new_gist), R.drawable.ic_gist),
-                    ActionItem(6, getString(R.string.new_repository), R.drawable.ic_repository),
-                    ActionItem(7, getString(R.string.dark_mode), R.drawable.ic_dark_mode),
-                    ActionItem(8, getString(R.string.forward), R.drawable.ic_forward),
-                    ActionItem(9, getString(R.string.back), R.drawable.ic_back)
+                    ActionItem(4, getString(R.string.new_repository), R.drawable.ic_repository),
+                    ActionItem(3, getString(R.string.projects), R.drawable.ic_projects),
+                    ActionItem(2, getString(R.string.pull_requests), R.drawable.ic_pull_request),
+                    ActionItem(1, getString(R.string.issues), R.drawable.ic_issue)
                 )
             }
 
@@ -128,15 +151,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(1, getString(R.string.stars), R.drawable.ic_stars),
-                    ActionItem(2, getString(R.string.repositories), R.drawable.ic_repository),
-                    ActionItem(3, getString(R.string.gists), R.drawable.ic_gist),
-                    ActionItem(4, getString(R.string.notifications), R.drawable.ic_notifications),
-                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
-                    ActionItem(6, getString(R.string.user_settings), R.drawable.ic_user_settings),
+                    ActionItem(9, getString(R.string.app_settings), R.drawable.ic_settings),
+                    ActionItem(8, getString(R.string.user_settings), R.drawable.ic_user_settings),
                     ActionItem(7, getString(R.string.log_out), R.drawable.ic_logout),
-                    ActionItem(8, getString(R.string.log_in), R.drawable.ic_login),
-                    ActionItem(9, getString(R.string.profile), R.drawable.ic_user)
+                    ActionItem(6, getString(R.string.log_in), R.drawable.ic_login),
+                    ActionItem(5, getString(R.string.gists), R.drawable.ic_gist),
+                    ActionItem(4, getString(R.string.notifications), R.drawable.ic_notifications),
+                    ActionItem(3, getString(R.string.repositories), R.drawable.ic_repository),
+                    ActionItem(2, getString(R.string.stars), R.drawable.ic_stars),
+                    ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
                 )
             }
         }
@@ -161,10 +184,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
         mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
-                R.id.navigation_find -> quickActionExplorer.show(mBottomNavigationView.getIconAt(0))
-                R.id.navigation_pull_request -> loadUrlWithAnimation(getString(R.string.url_pulls))
-                R.id.navigation_Issues -> loadUrlWithAnimation(getString(R.string.url_issues))
+                R.id.nv_explorer -> quickActionExplorer.show(mBottomNavigationView.getIconAt(0))
+                R.id.nv_navigation -> quickActionNavigation.show(mBottomNavigationView.getIconAt(1))
+                R.id.nv_productivity -> quickActionProductivity.show(mBottomNavigationView.getIconAt(3))
+                R.id.nv_profile -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
             }
             true
         }
@@ -192,37 +215,52 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
+        quickActionExplorer.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> loadUrlWithAnimation(getString(R.string.url_trending))
+                2 -> loadUrlWithAnimation(getString(R.string.url_market_place))
+                3 -> loadUrlWithAnimation(getString(R.string.url_search))
+                else -> loadUrlWithAnimation(getString(R.string.url_github))
+            }
+        }
+        quickActionNavigation.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> webView?.goBack()
+                2 -> webView?.goForward()
+                3 -> viewModel.loadSettings().darkMode?.let { darkMode(!it, true) }
+                4 -> {
+                    searchLayout.setVisibleWithAnimation(true)
+                    eTxtSearch.showKeyboard()
+                }
+                else -> loadUrlWithAnimation(getString(R.string.url_github))
+            }
+        }
+        quickActionProductivity.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> loadUrlWithAnimation(getString(R.string.url_issues))
+                2 -> loadUrlWithAnimation(getString(R.string.url_pulls))
+                3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=projects")
+                4 -> loadUrlWithAnimation(getString(R.string.url_new))
+                5 -> loadUrlWithAnimation(getString(R.string.url_gist))
+                else -> loadUrlWithAnimation(getString(R.string.url_github))
+            }
+        }
         quickActionProfile.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
-                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
-                3 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
+                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
+                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
+                3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
+
                 4 -> loadUrlWithAnimation(getString(R.string.url_notifications))
-                5 -> replaceFragment(SettingsFragment.newInstance(), true)
-                6 -> loadUrlWithAnimation(getString(R.string.url_settings))
+
+                5 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
+                6 -> loadUrlWithAnimation(getString(R.string.url_login))
                 7 -> {
                     loadUrlWithAnimation(getString(R.string.url_logout))
                     baseUrl = getString(R.string.url_login)
                 }
-                8 -> loadUrlWithAnimation(getString(R.string.url_login))
-                9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
-                else -> loadUrlWithAnimation(getString(R.string.url_github))
-            }
-        }
-        quickActionExplorer.setOnActionItemClickListener { item ->
-            when (item.actionId) {
-                1 -> loadUrlWithAnimation(getString(R.string.url_search))
-                2 -> {
-                    searchLayout.setVisibleWithAnimation(true)
-                    eTxtSearch.showKeyboard()
-                }
-                3 -> loadUrlWithAnimation(getString(R.string.url_market_place))
-                4 -> loadUrlWithAnimation(getString(R.string.url_trending))
-                5 -> loadUrlWithAnimation(getString(R.string.url_gist))
-                6 -> loadUrlWithAnimation(getString(R.string.url_new))
-                7 -> viewModel.loadSettings().darkMode?.let { darkMode(!it, true) }
-                8 -> webView?.goForward()
-                9 -> webView?.goBack()
+                8 -> loadUrlWithAnimation(getString(R.string.url_settings))
+                9 -> replaceFragment(SettingsFragment.newInstance(), true)
                 else -> loadUrlWithAnimation(getString(R.string.url_github))
             }
         }
@@ -243,7 +281,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         inflateMenu(R.menu.bnvm_dash)
         labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         enableAnimation(false)
-        setTextSize(9.0f)
+        setTextSize(10.0f)
         setIconsMarginTop(12)
         setIconSize(30.0F, 30.0F)
         getBottomNavigationItemView(2).isClickable = false
@@ -382,7 +420,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     }
                     logoutCount = 0
                 }
-                url.contains(getString(R.string.str_stargazers)) -> {
+                url.contains(getString(R.string.str_stargazers)) or
+                    url.contains(getString(R.string.url_new)) -> {
                     settings?.textZoom = TEXT_SIZE_MEDIUM
                     logoutCount = 0
                 }
@@ -394,12 +433,18 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     }
                     logoutCount = 0
                 }
-                url.contains(getString(R.string.str_gist)) -> {
+                url.contains(getString(R.string.str_gist)) or
+                    url.contains(getString(R.string.url_issues)) or
+                    url.contains(getString(R.string.url_pulls)) -> {
                     settings?.textZoom = TEXT_SIZE_LARGE
                     logoutCount = 0
                 }
                 else -> {
-                    settings?.textZoom = TEXT_SIZE_LARGE
+                    if (url.contains(getString(R.string.url_github))) {
+                        settings?.textZoom = TEXT_SIZE_SMALL
+                    } else {
+                        settings?.textZoom = TEXT_SIZE_LARGE
+                    }
                     logoutCount = 0
                 }
             }

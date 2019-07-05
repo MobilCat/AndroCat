@@ -37,6 +37,9 @@
     <string name="update">Update</string>
     <string name="report_issue">Report Issue</string>
     <string name="find_in_page">Find in page</string>
+    <string name="navigation">Navigation</string>
+    <string name="productivity">Productivity</string>
+    <string name="projects">Projects</string>
 
     <!--URL-->
     <string name="url_blank">about:blank</string>
