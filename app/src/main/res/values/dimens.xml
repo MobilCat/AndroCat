@@ -8,10 +8,8 @@
     <dimen name="forty_eight">48dp</dimen>
 
     <!--Fillable Loader-->
-    <dimen name="fillable_loader_width">200dp</dimen>
-    <dimen name="fillable_loader_height">285dp</dimen>
+    <dimen name="fillable_loader_width">100dp</dimen>
+    <dimen name="fillable_loader_height">144dp</dimen>
     <dimen name="fillable_loader_duration">500</dimen>
-
-    <!--Float Action Button-->
     <dimen name="fab_width_height">64dp</dimen>
 </resources>
