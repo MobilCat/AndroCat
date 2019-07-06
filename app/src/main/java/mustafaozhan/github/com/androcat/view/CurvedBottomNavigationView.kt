@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.view
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
@@ -10,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
+import org.jetbrains.anko.configuration
 
 @Suppress("MagicNumber")
 class CurvedBottomNavigationView : BottomNavigationViewEx {
@@ -49,9 +51,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        val width = getWidth(context)
-        val height = getHeight(context)
-        val radius = width / 12
+        val radius = getNavigatingViewWidth(context) / 12
         val transparentNavigationCurve = 8
         val backgroundNavigationCurve = 16
 
@@ -109,8 +109,8 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
             )
 
             lineTo(width.toFloat(), 0f)
-            lineTo(width.toFloat(), height.toFloat())
-            lineTo(0f, height.toFloat())
+            lineTo(width.toFloat(), h.toFloat())
+            lineTo(0f, h.toFloat())
             close()
         }
     }
@@ -120,17 +120,14 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
         canvas.drawPath(mPath, mPaint)
     }
 
-    private fun getWidth(context: Context): Int {
+    private fun getNavigatingViewWidth(context: Context): Int {
         val display = (context as MainActivity).windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
-        return size.x
-    }
-
-    private fun getHeight(context: Context): Int {
-        val display = (context as MainActivity).windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        return size.y
+        return when (context.configuration.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> size.y
+            Configuration.ORIENTATION_PORTRAIT -> size.x
+            else -> size.x
+        }
     }
 }

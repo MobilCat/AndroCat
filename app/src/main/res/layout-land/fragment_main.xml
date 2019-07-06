@@ -1,0 +1,151 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <EditText
+            android:id="@+id/eTxtSearch"
+            style="@style/BaseEditTextTheme"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/eight"
+            android:layout_marginEnd="@dimen/eight"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@+id/searchPreviousButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="Autofill" />
+
+        <View
+            android:id="@+id/searchPreviousButton"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginEnd="@dimen/eight"
+            android:background="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/searchNextButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/searchNextButton"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginEnd="@dimen/eight"
+            android:background="@drawable/ic_forward"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/searchDismissButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/searchDismissButton"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero"
+            android:layout_marginEnd="@dimen/eight"
+            android:background="@drawable/ic_dismiss"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/mSwipeRefreshLayout"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchLayout">
+
+        <im.delight.android.webview.AdvancedWebView
+            android:id="@+id/webView"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/zero" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/fillableLoaderLayout"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.github.jorgecastillo.FillableLoader
+            android:id="@+id/fillableLoader"
+            android:layout_width="@dimen/fillable_loader_width"
+            android:layout_height="@dimen/fillable_loader_height"
+            app:fl_clippingTransform="waves"
+            app:fl_fillColor="@color/colorPrimaryDark"
+            app:fl_fillDuration="@integer/fillable_loader_duration"
+            app:fl_fillPercentage="@integer/fillable_loader_percentage"
+            app:fl_originalHeight="@integer/fillable_loader_height"
+            app:fl_originalWidth="@integer/fillable_loader_width"
+            app:fl_strokeColor="@color/colorPrimaryDark"
+            app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
+            app:fl_strokeWidth="@dimen/one" />
+
+        <com.github.jorgecastillo.FillableLoader
+            android:id="@+id/fillableLoaderDarkMode"
+            android:layout_width="@dimen/fillable_loader_width"
+            android:layout_height="@dimen/fillable_loader_height"
+            app:fl_clippingTransform="waves"
+            app:fl_fillColor="@color/white"
+            app:fl_fillDuration="@integer/fillable_loader_duration"
+            app:fl_fillPercentage="@integer/fillable_loader_percentage"
+            app:fl_originalHeight="@integer/fillable_loader_height"
+            app:fl_originalWidth="@integer/fillable_loader_width"
+            app:fl_strokeColor="@color/white"
+            app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
+            app:fl_strokeWidth="@dimen/one" />
+    </RelativeLayout>
+
+    <mustafaozhan.github.com.androcat.view.CurvedBottomNavigationView
+        android:id="@+id/mBottomNavigationView"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/newsFeedFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_androcat_dash"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabCustomSize="@dimen/fab_width_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/mBottomNavigationView"
+        app:layout_constraintStart_toStartOf="@+id/mBottomNavigationView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9"
+        app:maxImageSize="@dimen/forty_eight" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

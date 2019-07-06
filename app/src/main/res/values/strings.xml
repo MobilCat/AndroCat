@@ -6,11 +6,11 @@
     <string name="missUsername">Please Enter Your GitHub Username</string>
     <string name="news_feed">News Feed</string>
     <string name="search">Search</string>
+    <string name="search_in_github">Search in GitHub</string>
     <string name="pull_requests">Pull Requests</string>
     <string name="profile">Profile</string>
     <string name="issues">Issues</string>
-    <string name="explorer">Explorer</string>
-    <string name="market_place">Market Place</string>
+    <string name="explore">Explore</string>
     <string name="back">Back</string>
     <string name="forward">Forward</string>
     <string name="find">Find</string>
@@ -37,7 +37,7 @@
     <string name="update">Update</string>
     <string name="report_issue">Report Issue</string>
     <string name="find_in_page">Find in page</string>
-    <string name="navigation">Navigation</string>
+    <string name="navigation">Navigate</string>
     <string name="productivity">Productivity</string>
     <string name="projects">Projects</string>
 
@@ -46,7 +46,6 @@
     <string name="url_login">https://github.com/login</string>
     <string name="url_logout">https://github.com/logout</string>
     <string name="url_search">https://github.com/search</string>
-    <string name="url_market_place">https://github.com/marketplace</string>
     <string name="url_trending">https://github.com/trending</string>
     <string name="url_github">https://github.com/</string>
     <string name="url_pulls">https://github.com/pulls</string>

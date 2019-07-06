@@ -5,10 +5,10 @@
     <item
         android:id="@+id/nv_explorer"
         android:icon="@drawable/ic_explore"
-        android:title="@string/explorer" />
+        android:title="@string/explore" />
     <item
         android:id="@+id/nv_navigation"
-        android:icon="@drawable/ic_navigation"
+        android:icon="@drawable/ic_navigate"
         android:title="@string/navigation" />
     <item
         android:id="@+id/nv_feeds"

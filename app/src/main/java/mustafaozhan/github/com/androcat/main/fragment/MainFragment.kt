@@ -47,7 +47,6 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
  */
 @Suppress("TooManyFunctions", "MagicNumber")
 class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
-
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
         const val TEXT_SIZE_SMALL = 100
@@ -66,15 +65,16 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var quickActionExplorer: QuickAction
-    private lateinit var quickActionNavigation: QuickAction
+    private lateinit var quickActionExplore: QuickAction
+    private lateinit var quickActionNavigate: QuickAction
     private lateinit var quickActionProductivity: QuickAction
     private lateinit var quickActionProfile: QuickAction
 
     private lateinit var baseUrl: String
 
-    private var logoutCount = 0
     private var loader: FillableLoader? = null
+
+    private var logoutCount = 0
     private var isAnimating = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,7 +91,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    @Suppress("LongMethod")
+    @Suppress("LongMethod", "ComplexMethod")
     private fun init() {
         fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
         fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
@@ -108,27 +108,30 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         loadUrlWithAnimation(baseUrl)
 
         context?.let { ctx ->
-            quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionExplorer.apply {
+            quickActionExplore = QuickAction(ctx, QuickAction.VERTICAL)
+            quickActionExplore.apply {
                 setColorRes(R.color.colorPrimary)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(3, getString(R.string.search), R.drawable.ic_search),
-                    ActionItem(2, getString(R.string.market_place), R.drawable.ic_market_place),
-                    ActionItem(1, getString(R.string.trends), R.drawable.ic_trends)
-                )
-            }
-            quickActionNavigation = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionNavigation.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(4, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
+                    ActionItem(6, getString(R.string.trends), R.drawable.ic_trends),
+                    ActionItem(4, getString(R.string.search_in_github), R.drawable.ic_search),
+                    ActionItem(5, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
                     ActionItem(3, getString(R.string.dark_mode), R.drawable.ic_dark_mode),
                     ActionItem(2, getString(R.string.forward), R.drawable.ic_forward),
                     ActionItem(1, getString(R.string.back), R.drawable.ic_back)
+                )
+            }
+            quickActionNavigate = QuickAction(ctx, QuickAction.VERTICAL)
+            quickActionNavigate.apply {
+                setColorRes(R.color.colorPrimary)
+                setTextColorRes(R.color.white)
+                setEnabledDivider(false)
+                addActionItem(
+                    ActionItem(4, getString(R.string.gists), R.drawable.ic_gist),
+                    ActionItem(3, getString(R.string.repositories), R.drawable.ic_repository),
+                    ActionItem(2, getString(R.string.stars), R.drawable.ic_stars),
+                    ActionItem(1, getString(R.string.notifications), R.drawable.ic_notifications)
                 )
             }
             quickActionProductivity = QuickAction(ctx, QuickAction.VERTICAL)
@@ -151,14 +154,10 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
                 addActionItem(
-                    ActionItem(9, getString(R.string.app_settings), R.drawable.ic_settings),
-                    ActionItem(8, getString(R.string.user_settings), R.drawable.ic_user_settings),
-                    ActionItem(7, getString(R.string.log_out), R.drawable.ic_logout),
-                    ActionItem(6, getString(R.string.log_in), R.drawable.ic_login),
-                    ActionItem(5, getString(R.string.gists), R.drawable.ic_gist),
-                    ActionItem(4, getString(R.string.notifications), R.drawable.ic_notifications),
-                    ActionItem(3, getString(R.string.repositories), R.drawable.ic_repository),
-                    ActionItem(2, getString(R.string.stars), R.drawable.ic_stars),
+                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
+                    ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
+                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout),
+                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login),
                     ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
                 )
             }
@@ -184,8 +183,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
         mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nv_explorer -> quickActionExplorer.show(mBottomNavigationView.getIconAt(0))
-                R.id.nv_navigation -> quickActionNavigation.show(mBottomNavigationView.getIconAt(1))
+                R.id.nv_explorer -> quickActionExplore.show(mBottomNavigationView.getIconAt(0))
+                R.id.nv_navigation -> quickActionNavigate.show(mBottomNavigationView.getIconAt(1))
                 R.id.nv_productivity -> quickActionProductivity.show(mBottomNavigationView.getIconAt(3))
                 R.id.nv_profile -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
             }
@@ -215,24 +214,25 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
-        quickActionExplorer.setOnActionItemClickListener { item ->
-            when (item.actionId) {
-                1 -> loadUrlWithAnimation(getString(R.string.url_trending))
-                2 -> loadUrlWithAnimation(getString(R.string.url_market_place))
-                3 -> loadUrlWithAnimation(getString(R.string.url_search))
-                else -> loadUrlWithAnimation(getString(R.string.url_github))
-            }
-        }
-        quickActionNavigation.setOnActionItemClickListener { item ->
+        quickActionExplore.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> webView?.goBack()
                 2 -> webView?.goForward()
                 3 -> viewModel.loadSettings().darkMode?.let { darkMode(!it, true) }
-                4 -> {
+                4 -> loadUrlWithAnimation(getString(R.string.url_search))
+                5 -> {
                     searchLayout.setVisibleWithAnimation(true)
                     eTxtSearch.showKeyboard()
                 }
-                else -> loadUrlWithAnimation(getString(R.string.url_github))
+                6 -> loadUrlWithAnimation(getString(R.string.url_trending))
+            }
+        }
+        quickActionNavigate.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> loadUrlWithAnimation(getString(R.string.url_notifications))
+                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
+                3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
+                4 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
             }
         }
         quickActionProductivity.setOnActionItemClickListener { item ->
@@ -248,19 +248,14 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         quickActionProfile.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
-                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
-                3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
 
-                4 -> loadUrlWithAnimation(getString(R.string.url_notifications))
-
-                5 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
-                6 -> loadUrlWithAnimation(getString(R.string.url_login))
-                7 -> {
+                2 -> loadUrlWithAnimation(getString(R.string.url_login))
+                3 -> {
                     loadUrlWithAnimation(getString(R.string.url_logout))
                     baseUrl = getString(R.string.url_login)
                 }
-                8 -> loadUrlWithAnimation(getString(R.string.url_settings))
-                9 -> replaceFragment(SettingsFragment.newInstance(), true)
+                4 -> loadUrlWithAnimation(getString(R.string.url_settings))
+                5 -> replaceFragment(SettingsFragment.newInstance(), true)
                 else -> loadUrlWithAnimation(getString(R.string.url_github))
             }
         }
@@ -389,7 +384,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             when {
                 url.contains(getString(R.string.url_login)) or
                     url.contains(getString(R.string.url_search)) or
-                    url.contains(getString(R.string.url_market_place)) or
                     url.contains(getString(R.string.url_trending)) or
                     url.contains(getString(R.string.str_organization)) or
                     url.contains(getString(R.string.str_google_play)) or
