@@ -2,14 +2,15 @@
 <resources>
     <dimen name="zero">0dp</dimen>
     <dimen name="one">1dp</dimen>
+    <dimen name="two">2dp</dimen>
     <dimen name="four">4dp</dimen>
     <dimen name="eight">8dp</dimen>
     <dimen name="thirty_six">36dp</dimen>
     <dimen name="forty_eight">48dp</dimen>
 
     <!--Fillable Loader-->
-    <dimen name="fillable_loader_width">100dp</dimen>
-    <dimen name="fillable_loader_height">144dp</dimen>
+    <dimen name="fillable_loader_width">150dp</dimen>
+    <dimen name="fillable_loader_height">216dp</dimen>
     <dimen name="fillable_loader_duration">500</dimen>
     <dimen name="fab_width_height">64dp</dimen>
 </resources>

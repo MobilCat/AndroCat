@@ -106,7 +106,7 @@
             app:fl_originalWidth="@integer/fillable_loader_width"
             app:fl_strokeColor="@color/colorPrimaryDark"
             app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
-            app:fl_strokeWidth="@dimen/one" />
+            app:fl_strokeWidth="@dimen/two" />
 
         <com.github.jorgecastillo.FillableLoader
             android:id="@+id/fillableLoaderDarkMode"
@@ -120,7 +120,7 @@
             app:fl_originalWidth="@integer/fillable_loader_width"
             app:fl_strokeColor="@color/white"
             app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
-            app:fl_strokeWidth="@dimen/one" />
+            app:fl_strokeWidth="@dimen/two" />
     </RelativeLayout>
 
     <mustafaozhan.github.com.androcat.view.CurvedBottomNavigationView
