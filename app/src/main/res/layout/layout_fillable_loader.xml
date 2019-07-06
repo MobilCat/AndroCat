@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fillableLoaderLayout"
+    android:layout_width="@dimen/zero"
+    android:layout_height="@dimen/zero"
+    android:background="@color/white"
+    android:gravity="center"
+    android:visibility="gone"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <com.github.jorgecastillo.FillableLoader
+        android:id="@+id/fillableLoader"
+        android:layout_width="@dimen/fillable_loader_width"
+        android:layout_height="@dimen/fillable_loader_height"
+        app:fl_clippingTransform="waves"
+        app:fl_fillColor="@color/colorPrimaryDark"
+        app:fl_fillDuration="@integer/fillable_loader_duration"
+        app:fl_fillPercentage="@integer/fillable_loader_percentage"
+        app:fl_originalHeight="@integer/fillable_loader_height"
+        app:fl_originalWidth="@integer/fillable_loader_width"
+        app:fl_strokeColor="@color/colorPrimaryDark"
+        app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
+        app:fl_strokeWidth="@dimen/two" />
+
+    <com.github.jorgecastillo.FillableLoader
+        android:id="@+id/fillableLoaderDarkMode"
+        android:layout_width="@dimen/fillable_loader_width"
+        android:layout_height="@dimen/fillable_loader_height"
+        app:fl_clippingTransform="waves"
+        app:fl_fillColor="@color/white"
+        app:fl_fillDuration="@integer/fillable_loader_duration"
+        app:fl_fillPercentage="@integer/fillable_loader_percentage"
+        app:fl_originalHeight="@integer/fillable_loader_height"
+        app:fl_originalWidth="@integer/fillable_loader_width"
+        app:fl_strokeColor="@color/white"
+        app:fl_strokeDrawingDuration="@integer/fillable_loader_duration"
+        app:fl_strokeWidth="@dimen/two" />
+</RelativeLayout>

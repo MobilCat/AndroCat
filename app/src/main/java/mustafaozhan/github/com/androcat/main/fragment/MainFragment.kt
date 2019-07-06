@@ -17,18 +17,18 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
 import io.reactivex.rxkotlin.addTo
-import kotlinx.android.synthetic.main.fragment_main.eTxtSearch
-import kotlinx.android.synthetic.main.fragment_main.fillableLoader
-import kotlinx.android.synthetic.main.fragment_main.fillableLoaderDarkMode
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_main.newsFeedFab
-import kotlinx.android.synthetic.main.fragment_main.searchDismissButton
-import kotlinx.android.synthetic.main.fragment_main.searchLayout
-import kotlinx.android.synthetic.main.fragment_main.searchNextButton
-import kotlinx.android.synthetic.main.fragment_main.searchPreviousButton
 import kotlinx.android.synthetic.main.fragment_main.webView
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoader
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoaderDarkMode
+import kotlinx.android.synthetic.main.layout_find_in_page.eTxtSearch
+import kotlinx.android.synthetic.main.layout_find_in_page.searchDismissButton
+import kotlinx.android.synthetic.main.layout_find_in_page.searchLayout
+import kotlinx.android.synthetic.main.layout_find_in_page.searchNextButton
+import kotlinx.android.synthetic.main.layout_find_in_page.searchPreviousButton
 import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
@@ -199,11 +199,11 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
         searchNextButton.setOnClickListener {
             webView?.findNext(true)
-            searchNextButton.hideKeyboard()
+            it.hideKeyboard()
         }
         searchPreviousButton.setOnClickListener {
             webView?.findNext(false)
-            searchPreviousButton.hideKeyboard()
+            it.hideKeyboard()
         }
         searchDismissButton.setOnClickListener {
             eTxtSearch.setText("")

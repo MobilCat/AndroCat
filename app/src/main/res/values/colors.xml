@@ -5,5 +5,7 @@
     <color name="colorAccent">#0097A7</color>
     <color name="white">#ffffff</color>
     <color name="blue_gray_50">#ECEFF1</color>
+    <color name="background_github_normal">#F6F8FA</color>
+    <color name="background_github_dark">#202020</color>
     <color name="transparent">#00000000</color>
 </resources>
