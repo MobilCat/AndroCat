@@ -96,6 +96,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
         fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
         eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+        newsFeedFab.bringToFront()
 
         baseUrl = if (viewModel.isLoggedIn() == true) {
             getString(R.string.url_github)

@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import mustafaozhan.github.com.androcat.R
-import mustafaozhan.github.com.androcat.main.activity.MainActivity
 
 @Suppress("MagicNumber")
 class CurvedBottomNavigationView : BottomNavigationViewEx {
@@ -49,7 +48,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        val radius = getRatio(context).toInt()
+        val radius = (context.resources.displayMetrics.density * 32).toInt()
         val transparentNavigationCurve = 8
         val backgroundNavigationCurve = 16
 
@@ -116,17 +115,5 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawPath(mPath, mPaint)
-    }
-
-    private fun getRatio(context: Context): Double {
-        val display = (context as MainActivity).windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        val ratio = if (size.x > size.y) {
-            size.x.toDouble() / size.y
-        } else {
-            size.y.toDouble() / size.x
-        }
-        return ratio * 56
     }
 }
