@@ -6,6 +6,7 @@
 
     <include
         android:id="@+id/layout_find_in_page"
+        android:visibility="gone"
         layout="@layout/layout_find_in_page" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

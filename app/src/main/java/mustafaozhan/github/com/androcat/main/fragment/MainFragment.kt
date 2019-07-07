@@ -18,6 +18,7 @@ import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
+import kotlinx.android.synthetic.main.fragment_main.layout_find_in_page
 import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_main.newsFeedFab
@@ -26,7 +27,6 @@ import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoader
 import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoaderDarkMode
 import kotlinx.android.synthetic.main.layout_find_in_page.eTxtSearch
 import kotlinx.android.synthetic.main.layout_find_in_page.searchDismissButton
-import kotlinx.android.synthetic.main.layout_find_in_page.searchLayout
 import kotlinx.android.synthetic.main.layout_find_in_page.searchNextButton
 import kotlinx.android.synthetic.main.layout_find_in_page.searchPreviousButton
 import me.piruin.quickaction.ActionItem
@@ -207,8 +207,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
         searchDismissButton.setOnClickListener {
             eTxtSearch.setText("")
-            searchLayout.setVisibleWithAnimation(false)
-            searchLayout.hideKeyboard()
+            layout_find_in_page.setVisibleWithAnimation(false)
+            layout_find_in_page.hideKeyboard()
         }
     }
 
@@ -221,7 +221,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 3 -> viewModel.loadSettings().darkMode?.let { darkMode(!it, true) }
                 4 -> loadUrlWithAnimation(getString(R.string.url_search))
                 5 -> {
-                    searchLayout.setVisibleWithAnimation(true)
+                    layout_find_in_page.setVisibleWithAnimation(true)
                     eTxtSearch.showKeyboard()
                 }
                 6 -> loadUrlWithAnimation(getString(R.string.url_trending))
