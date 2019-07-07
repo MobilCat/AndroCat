@@ -1,7 +1,6 @@
 package mustafaozhan.github.com.androcat.view
 
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
@@ -11,7 +10,6 @@ import androidx.core.content.ContextCompat
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
-import org.jetbrains.anko.configuration
 
 @Suppress("MagicNumber")
 class CurvedBottomNavigationView : BottomNavigationViewEx {
@@ -51,7 +49,7 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
-        val radius = getNavigatingViewWidth(context) / 12
+        val radius = getRatio(context).toInt()
         val transparentNavigationCurve = 8
         val backgroundNavigationCurve = 16
 
@@ -120,14 +118,15 @@ class CurvedBottomNavigationView : BottomNavigationViewEx {
         canvas.drawPath(mPath, mPaint)
     }
 
-    private fun getNavigatingViewWidth(context: Context): Int {
+    private fun getRatio(context: Context): Double {
         val display = (context as MainActivity).windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
-        return when (context.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> size.y
-            Configuration.ORIENTATION_PORTRAIT -> size.x
-            else -> size.x
+        val ratio = if (size.x > size.y) {
+            size.x.toDouble() / size.y
+        } else {
+            size.y.toDouble() / size.x
         }
+        return ratio * 56
     }
 }
