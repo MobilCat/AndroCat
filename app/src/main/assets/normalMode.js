@@ -5,17 +5,7 @@ javascript: (
 
         var issuesNavBarName = 'reponav-wrapper reponav-small d-lg-none';
         var gitHubNavBarName = 'position-relative js-header-wrapper ';
-
-        if (document.getElementsByClassName(gitHubNavBarName)[0] != null) {
-            document.getElementsByClassName(gitHubNavBarName)[0]
-                .style
-                .display = 'none';
-        }
-        if (document.getElementsByClassName(issuesNavBarName)[0] != null) {
-            document.getElementsByClassName(issuesNavBarName)[0]
-                .style
-                .display = 'none';
-        }
+		var projectButton = 'd-flex d-sm-none position-fixed bottom-0 width-full border-top bg-white p-3 box-shadow-large js-project-small-footer';
 
         head = document.getElementsByTagName('head')[0];
         body = document.getElementsByTagName('body')[0];
@@ -28,8 +18,26 @@ javascript: (
             style.appendChild(document.createTextNode(css));
         }
 
+        if (document.getElementsByClassName(gitHubNavBarName)[0] != null) {
+            document.getElementsByClassName(gitHubNavBarName)[0]
+                    .style
+                    .display = 'none';
+        }
+        if (document.getElementsByClassName(issuesNavBarName)[0] != null) {
+            document.getElementsByClassName(issuesNavBarName)[0]
+                    .style
+                    .display = 'none';
+        }
+        if (document.getElementsByClassName(projectButton)[0] != null) {
+            document.getElementsByClassName(projectButton)[0]
+                    .style
+                    .marginBottom = '55px';
+            document.body.style.marginBottom='150px'
+        } else {
+            document.body.style.marginBottom='55px'
+        }
+
         head.appendChild(style);
         body.appendChild(style);
 
-        document.body.style.marginBottom='55px'
     })()
