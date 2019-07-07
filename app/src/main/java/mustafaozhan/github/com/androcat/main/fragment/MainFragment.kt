@@ -229,7 +229,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
         quickActionNavigate.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadUrlWithAnimation(getString(R.string.url_notifications))
+                1 -> loadIfUserNameSet(getString(R.string.url_notifications))
                 2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
                 3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
                 4 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
@@ -237,26 +237,23 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
         quickActionProductivity.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadUrlWithAnimation(getString(R.string.url_issues))
-                2 -> loadUrlWithAnimation(getString(R.string.url_pulls))
+                1 -> loadIfUserNameSet(getString(R.string.url_issues))
+                2 -> loadIfUserNameSet(getString(R.string.url_pulls))
                 3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=projects")
-                4 -> loadUrlWithAnimation(getString(R.string.url_new))
-                5 -> loadUrlWithAnimation(getString(R.string.url_gist))
-                else -> loadUrlWithAnimation(getString(R.string.url_github))
+                4 -> loadIfUserNameSet(getString(R.string.url_new))
+                5 -> loadIfUserNameSet(getString(R.string.url_gist))
             }
         }
         quickActionProfile.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
-
                 2 -> loadUrlWithAnimation(getString(R.string.url_login))
                 3 -> {
                     loadUrlWithAnimation(getString(R.string.url_logout))
                     baseUrl = getString(R.string.url_login)
                 }
-                4 -> loadUrlWithAnimation(getString(R.string.url_settings))
+                4 -> loadIfUserNameSet(getString(R.string.url_settings))
                 5 -> replaceFragment(SettingsFragment.newInstance(), true)
-                else -> loadUrlWithAnimation(getString(R.string.url_github))
             }
         }
     }
@@ -304,8 +301,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private fun loadIfUserNameSet(url: String) =
-        viewModel.getUsername()?.let { username ->
-            if (username.isEmpty()) {
+        viewModel.getUsername().let { username ->
+            if (username.isNullOrEmpty()) {
                 snacky(getString(R.string.missUsername), getString(R.string.enter)) {
                     replaceFragment(SettingsFragment.newInstance(), true)
                 }
