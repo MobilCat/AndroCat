@@ -379,6 +379,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     override fun onPageFinished(url: String) {
         webView?.apply {
             when {
+                url.contains(getString(R.string.str_gist)) or
+                    url.contains(getString(R.string.url_issues)) or
+                    url.contains(getString(R.string.url_pulls)) or
+                    url.contains(getString(R.string.url_notifications)) or
+                    url.contains(getString(R.string.url_new)) or
+                    url.contains(getString(R.string.url_settings)) -> {
+                    settings?.textZoom = TEXT_SIZE_LARGE
+                    logoutCount = 0
+                }
                 url.contains(getString(R.string.url_login)) or
                     url.contains(getString(R.string.url_search)) or
                     url.contains(getString(R.string.url_trending)) or
@@ -411,15 +420,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     }
                     logoutCount = 0
                 }
-                url.contains(getString(R.string.str_stargazers)) or
-                    url.contains(getString(R.string.url_new)) -> {
+                url.contains(getString(R.string.str_stargazers)) -> {
                     settings?.textZoom = TEXT_SIZE_MEDIUM
-                    logoutCount = 0
-                }
-                url.contains(getString(R.string.str_gist)) or
-                    url.contains(getString(R.string.url_issues)) or
-                    url.contains(getString(R.string.url_pulls)) -> {
-                    settings?.textZoom = TEXT_SIZE_LARGE
                     logoutCount = 0
                 }
                 url.contains(viewModel.getUsername().toString()) -> {
