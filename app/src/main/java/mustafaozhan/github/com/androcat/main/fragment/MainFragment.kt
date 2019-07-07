@@ -419,18 +419,18 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     settings?.textZoom = TEXT_SIZE_MEDIUM
                     logoutCount = 0
                 }
+                url.contains(getString(R.string.str_gist)) or
+                    url.contains(getString(R.string.url_issues)) or
+                    url.contains(getString(R.string.url_pulls)) -> {
+                    settings?.textZoom = TEXT_SIZE_LARGE
+                    logoutCount = 0
+                }
                 url.contains(viewModel.getUsername().toString()) -> {
                     settings?.textZoom = if (url.contains(getString(R.string.str_gist))) {
                         TEXT_SIZE_LARGE
                     } else {
                         TEXT_SIZE_SMALL
                     }
-                    logoutCount = 0
-                }
-                url.contains(getString(R.string.str_gist)) or
-                    url.contains(getString(R.string.url_issues)) or
-                    url.contains(getString(R.string.url_pulls)) -> {
-                    settings?.textZoom = TEXT_SIZE_LARGE
                     logoutCount = 0
                 }
                 else -> {
