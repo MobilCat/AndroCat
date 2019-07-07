@@ -37,8 +37,8 @@
     <string name="update">Update</string>
     <string name="report_issue">Report Issue</string>
     <string name="find_in_page">Find in page</string>
-    <string name="navigation">Navigate</string>
-    <string name="productivity">Productivity</string>
+    <string name="stacks">Stacks</string>
+    <string name="production">Production</string>
     <string name="projects">Projects</string>
 
     <!--URL-->

@@ -66,8 +66,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     private lateinit var quickActionExplore: QuickAction
-    private lateinit var quickActionNavigate: QuickAction
-    private lateinit var quickActionProductivity: QuickAction
+    private lateinit var quickActionStack: QuickAction
+    private lateinit var quickActionProduction: QuickAction
     private lateinit var quickActionProfile: QuickAction
 
     private lateinit var baseUrl: String
@@ -122,8 +122,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     ActionItem(1, getString(R.string.back), R.drawable.ic_back)
                 )
             }
-            quickActionNavigate = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionNavigate.apply {
+            quickActionStack = QuickAction(ctx, QuickAction.VERTICAL)
+            quickActionStack.apply {
                 setColorRes(R.color.colorPrimary)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
@@ -134,8 +134,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     ActionItem(1, getString(R.string.notifications), R.drawable.ic_notifications)
                 )
             }
-            quickActionProductivity = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionProductivity.apply {
+            quickActionProduction = QuickAction(ctx, QuickAction.VERTICAL)
+            quickActionProduction.apply {
                 setColorRes(R.color.colorPrimary)
                 setTextColorRes(R.color.white)
                 setEnabledDivider(false)
@@ -184,8 +184,8 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nv_explorer -> quickActionExplore.show(mBottomNavigationView.getIconAt(0))
-                R.id.nv_navigation -> quickActionNavigate.show(mBottomNavigationView.getIconAt(1))
-                R.id.nv_productivity -> quickActionProductivity.show(mBottomNavigationView.getIconAt(3))
+                R.id.nv_stacks -> quickActionStack.show(mBottomNavigationView.getIconAt(1))
+                R.id.nv_production -> quickActionProduction.show(mBottomNavigationView.getIconAt(3))
                 R.id.nv_profile -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
             }
             true
@@ -227,7 +227,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 6 -> loadUrlWithAnimation(getString(R.string.url_trending))
             }
         }
-        quickActionNavigate.setOnActionItemClickListener { item ->
+        quickActionStack.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadIfUserNameSet(getString(R.string.url_notifications))
                 2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
@@ -235,7 +235,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 4 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
             }
         }
-        quickActionProductivity.setOnActionItemClickListener { item ->
+        quickActionProduction.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> loadIfUserNameSet(getString(R.string.url_issues))
                 2 -> loadIfUserNameSet(getString(R.string.url_pulls))
