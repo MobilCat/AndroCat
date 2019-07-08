@@ -16,7 +16,7 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
 /**
  * Created by Mustafa Ozhan on 1/30/18 at 12:42 AM on Arch Linux wit Love <3.
  */
-fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
+fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String?) -> Unit = {}) =
     try {
         evaluateJavascript(
             context

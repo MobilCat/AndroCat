@@ -7,9 +7,10 @@ enum class JsScrip(val value: String) {
 
     companion object {
         fun getDarkMode(darkMode: Boolean) =
-            if (darkMode)
+            if (darkMode) {
                 DARK_MODE
-            else
+            } else {
                 NORMAL_MODE
+            }
     }
 }
