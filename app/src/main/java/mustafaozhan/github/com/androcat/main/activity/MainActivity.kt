@@ -67,10 +67,12 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
                 webView.goBack()
                 true
-            } else
+            } else {
                 super.onKeyUp(keyCode, event)
-        } else
+            }
+        } else {
             super.onKeyUp(keyCode, event)
+        }
     }
 
     override fun onBackPressed() {
@@ -105,6 +107,8 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                 } else {
                     prepareAd()
                 }
+            }.doOnError {
+                Crashlytics.logException(it)
             }
             .subscribe()
     }
@@ -135,10 +139,11 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         firebaseRemoteConfig.setDefaults(defaultMap)
 
         firebaseRemoteConfig.fetch(
-            if (BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG) {
                 0
-            else
+            } else {
                 TimeUnit.HOURS.toSeconds(CHECK_DURATION)
+            }
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 firebaseRemoteConfig.activate()
@@ -184,8 +189,9 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         super.onResume()
         ad()
         val data = this.intent.data
-        if (data != null && data.isHierarchical)
+        if (data != null && data.isHierarchical) {
             uri = this.intent.dataString
+        }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
