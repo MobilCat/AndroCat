@@ -368,8 +368,12 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     logoutCount = 0
                     loginCount++
                     if (loginCount == 3) {
-                        viewModel.updateUser(userName, true)
+                        authentication(true)
                     }
+                }
+                context.getString(R.string.url_logout) -> {
+                    loginCount = 0
+                    logoutCount++
                 }
                 else -> {
                     logoutCount = 0
@@ -378,6 +382,18 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
             }
         }
     }
+
+    private fun authentication(isLogin: Boolean) =
+        if (isLogin) {
+            viewModel.updateUser(userName, isLogin)
+        } else {
+            context?.getString(R.string.url_login)?.let {
+                baseUrl = it
+                loadUrlWithAnimation(it)
+            }
+            loadUrlWithAnimation(context?.getString(R.string.url_login))
+            viewModel.updateUser("", false)
+        }
 
     @Suppress("ComplexMethod", "LongMethod")
     override fun onPageFinished(url: String) {
@@ -411,15 +427,13 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     logoutCount = 0
                     loginCount = 0
                 }
-                url.contains(context.getString(R.string.url_logout)) -> {
-                    if (logoutCount == 2) {
-                        baseUrl = context.getString(R.string.url_login)
-                        loadUrlWithAnimation(context.getString(R.string.url_login))
-                        viewModel.updateUser(null, false)
-                    }
+                url == context.getString(R.string.url_logout) -> {
                     settings?.textZoom = TEXT_SIZE_SMALL
                     logoutCount++
                     loginCount = 0
+                    if (logoutCount == 4) {
+                        authentication(false)
+                    }
                 }
                 url.contains(context.getString(R.string.url_session)) -> {
                     webView?.runScript(JsScrip.GET_USERNAME) {
