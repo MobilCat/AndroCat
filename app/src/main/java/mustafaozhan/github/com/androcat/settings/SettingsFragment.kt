@@ -77,12 +77,8 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun init() {
-        viewModel.getUserName()?.let { username ->
-            txtUsernameInput?.text = if (username.isEmpty() || username == "" || username == "null") {
-                getString(R.string.missUsername)
-            } else {
-                username
-            }
+        viewModel.getUserName()?.let {
+            txtUsernameInput?.text = it
         } ?: run { txtUsernameInput?.text = getString(R.string.missUsername) }
 
         viewModel.loadSettings().darkMode?.let {

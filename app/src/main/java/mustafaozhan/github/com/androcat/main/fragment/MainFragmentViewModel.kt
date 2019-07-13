@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
 import mustafaozhan.github.com.androcat.base.BaseViewModel
+import mustafaozhan.github.com.androcat.extensions.isValidUsername
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -11,7 +12,14 @@ class MainFragmentViewModel : BaseViewModel() {
         viewModelComponent.inject(this)
     }
 
-    fun getUsername() = dataManager.loadUser().username
+    fun getUserName(): String? {
+        val username = dataManager.loadUser().username
+        return if (username.isValidUsername()) {
+            username
+        } else {
+            null
+        }
+    }
 
     fun isLoggedIn() = dataManager.loadUser().isLoggedIn
 
