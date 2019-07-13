@@ -113,8 +113,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
         loadUrlWithAnimation(baseUrl)
 
-        setProfileActions(false)
-
         context?.let { ctx ->
             quickActionExplore = QuickAction(ctx, QuickAction.VERTICAL)
             quickActionExplore.apply {
@@ -376,39 +374,29 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     @Suppress("ComplexMethod")
     private fun setProfileActions(isLogin: Boolean) = context?.let {
-        quickActionProfile = QuickAction(it, QuickAction.VERTICAL)
-        if (isLogin) {
-            quickActionProfile.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
-                    ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
-                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout),
-                    ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
-                )
-            }
-        } else {
-            quickActionProfile.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
-                    ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
-                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login),
-                    ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
-                )
-            }
-        }
-        quickActionProfile.setOnActionItemClickListener { item ->
-            when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
-                2 -> loadUrlWithAnimation(getString(R.string.url_login))
-                3 -> loadIfUserNameSet(getString(R.string.url_logout))
-                4 -> loadIfUserNameSet(getString(R.string.url_settings))
-                5 -> replaceFragment(SettingsFragment.newInstance(), true)
+        quickActionProfile = QuickAction(it, QuickAction.VERTICAL).apply {
+            setColorRes(R.color.colorPrimary)
+            setTextColorRes(R.color.white)
+            setEnabledDivider(false)
+            addActionItem(
+                ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
+                ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
+                if (isLogin) {
+                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout)
+                } else {
+                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login)
+                },
+                ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
+            )
+
+            setOnActionItemClickListener { item ->
+                when (item.actionId) {
+                    1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
+                    2 -> loadUrlWithAnimation(getString(R.string.url_login))
+                    3 -> loadIfUserNameSet(getString(R.string.url_logout))
+                    4 -> loadIfUserNameSet(getString(R.string.url_settings))
+                    5 -> replaceFragment(SettingsFragment.newInstance(), true)
+                }
             }
         }
     }
