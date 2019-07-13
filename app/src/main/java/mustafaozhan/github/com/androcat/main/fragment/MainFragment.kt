@@ -102,14 +102,18 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         newsFeedFab.bringToFront()
 
         baseUrl = if (viewModel.isLoggedIn() == true) {
+            setProfileActions(true)
             getString(R.string.url_github)
         } else {
+            setProfileActions(false)
             getString(R.string.url_login)
         }
 
         viewModel.loadSettings().darkMode?.let { darkMode(it) }
 
         loadUrlWithAnimation(baseUrl)
+
+        setProfileActions(false)
 
         context?.let { ctx ->
             quickActionExplore = QuickAction(ctx, QuickAction.VERTICAL)
@@ -149,20 +153,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     ActionItem(3, getString(R.string.projects), R.drawable.ic_projects),
                     ActionItem(2, getString(R.string.pull_requests), R.drawable.ic_pull_request),
                     ActionItem(1, getString(R.string.issues), R.drawable.ic_issue)
-                )
-            }
-
-            quickActionProfile = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionProfile.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
-                    ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
-                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout),
-                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login),
-                    ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
                 )
             }
         }
@@ -380,7 +370,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    private fun authentication(isLogin: Boolean) =
+    private fun authentication(isLogin: Boolean) {
         if (isLogin) {
             viewModel.updateUser(userName, isLogin)
         } else {
@@ -388,9 +378,39 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 baseUrl = it
                 loadUrlWithAnimation(it)
             }
-            loadUrlWithAnimation(context?.getString(R.string.url_login))
             viewModel.updateUser("", false)
         }
+        setProfileActions(isLogin)
+    }
+
+    private fun setProfileActions(isLogin: Boolean) = context?.let {
+        quickActionProfile = QuickAction(it, QuickAction.VERTICAL)
+        if (isLogin) {
+            quickActionProfile.apply {
+                setColorRes(R.color.colorPrimary)
+                setTextColorRes(R.color.white)
+                setEnabledDivider(false)
+                addActionItem(
+                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
+                    ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
+                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout),
+                    ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
+                )
+            }
+        } else {
+            quickActionProfile.apply {
+                setColorRes(R.color.colorPrimary)
+                setTextColorRes(R.color.white)
+                setEnabledDivider(false)
+                addActionItem(
+                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
+                    ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
+                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login),
+                    ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
+                )
+            }
+        }
+    }
 
     @Suppress("ComplexMethod", "LongMethod")
     override fun onPageFinished(url: String) {
