@@ -230,15 +230,6 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 5 -> loadIfUserNameSet(getString(R.string.url_gist))
             }
         }
-        quickActionProfile.setOnActionItemClickListener { item ->
-            when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
-                2 -> loadUrlWithAnimation(getString(R.string.url_login))
-                3 -> loadIfUserNameSet(getString(R.string.url_logout))
-                4 -> loadIfUserNameSet(getString(R.string.url_settings))
-                5 -> replaceFragment(SettingsFragment.newInstance(), true)
-            }
-        }
     }
 
     private fun setDash() = mBottomNavigationView.apply {
@@ -383,6 +374,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         setProfileActions(isLogin)
     }
 
+    @Suppress("ComplexMethod")
     private fun setProfileActions(isLogin: Boolean) = context?.let {
         quickActionProfile = QuickAction(it, QuickAction.VERTICAL)
         if (isLogin) {
@@ -408,6 +400,15 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                     ActionItem(2, getString(R.string.log_in), R.drawable.ic_login),
                     ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
                 )
+            }
+        }
+        quickActionProfile.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
+                2 -> loadUrlWithAnimation(getString(R.string.url_login))
+                3 -> loadIfUserNameSet(getString(R.string.url_logout))
+                4 -> loadIfUserNameSet(getString(R.string.url_settings))
+                5 -> replaceFragment(SettingsFragment.newInstance(), true)
             }
         }
     }
