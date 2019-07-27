@@ -148,14 +148,11 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             if (task.isSuccessful) {
                 firebaseRemoteConfig.activate()
 
-                val remoteConfigStr =
-                    if (TextUtils.isEmpty(firebaseRemoteConfig.getString(REMOTE_CONFIG))) {
-                        defaultMap[REMOTE_CONFIG] as String
-                    } else {
-                        firebaseRemoteConfig.getString(REMOTE_CONFIG)
-                    }
-
-                showUpdateDialog(remoteConfigStr)
+                if (TextUtils.isEmpty(firebaseRemoteConfig.getString(REMOTE_CONFIG))) {
+                    defaultMap[REMOTE_CONFIG] as? String
+                } else {
+                    firebaseRemoteConfig.getString(REMOTE_CONFIG)
+                }?.let { showUpdateDialog(it) }
             }
         }
     }

@@ -54,8 +54,8 @@ fun View.setVisibleWithAnimation(isVisible: Boolean) {
 @Suppress("TooGenericExceptionCaught")
 fun View.hideKeyboard(): Boolean {
     try {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        return inputMethodManager?.hideSoftInputFromWindow(windowToken, 0) ?: false
     } catch (exception: RuntimeException) {
         Crashlytics.logException(exception)
         Crashlytics.log(
@@ -68,7 +68,7 @@ fun View.hideKeyboard(): Boolean {
 }
 
 fun View.showKeyboard() {
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
     this.requestFocus()
-    imm.showSoftInput(this, 0)
+    imm?.showSoftInput(this, 0)
 }
