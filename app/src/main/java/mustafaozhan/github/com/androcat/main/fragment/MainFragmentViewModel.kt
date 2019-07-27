@@ -1,5 +1,6 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
+import io.reactivex.subjects.PublishSubject
 import mustafaozhan.github.com.androcat.base.BaseViewModel
 import mustafaozhan.github.com.androcat.extensions.isValidUsername
 
@@ -11,6 +12,8 @@ class MainFragmentViewModel : BaseViewModel() {
     override fun inject() {
         viewModelComponent.inject(this)
     }
+
+    var loginSubject: PublishSubject<Boolean> = PublishSubject.create()
 
     fun getUserName(): String? {
         val username = dataManager.loadUser().username
@@ -31,4 +34,6 @@ class MainFragmentViewModel : BaseViewModel() {
     fun updateSetting(
         darkMode: Boolean? = null
     ) = updateSettings(darkMode)
+
+    fun authentication(isLoggedIn: Boolean) = loginSubject.onNext(isLoggedIn)
 }

@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.crashlytics.android.Crashlytics
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.rxkotlin.addTo
@@ -28,6 +29,7 @@ import mustafaozhan.github.com.androcat.extensions.hideKeyboard
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.extensions.showKeyboard
+import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
 
 /**
@@ -35,6 +37,7 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
  */
 @Suppress("MagicNumber")
 class MainFragment : BaseMainFragment() {
+
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
         var TAG: String = MainFragment::class.java.simpleName
@@ -50,6 +53,7 @@ class MainFragment : BaseMainFragment() {
         fun newInstance() = MainFragment()
     }
 
+    private lateinit var quickActionProfile: QuickAction
     private lateinit var quickActionExplore: QuickAction
     private lateinit var quickActionStack: QuickAction
     private lateinit var quickActionProduction: QuickAction
@@ -57,6 +61,7 @@ class MainFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        initActions()
         setDash()
         initWebView()
         setListeners()
@@ -66,6 +71,23 @@ class MainFragment : BaseMainFragment() {
             loadUrlWithAnimation(url)
             arguments?.clear()
         }
+
+        viewModel
+            .loginSubject
+            .subscribe({ isLoggedIn ->
+                if (isLoggedIn) {
+                    viewModel.updateUser(userName, isLoggedIn)
+                } else {
+                    context?.getString(R.string.url_login)?.let {
+                        baseUrl = it
+                        loadUrlWithAnimation(it)
+                    }
+                    viewModel.updateUser("", false)
+                }
+                setProfileActions(isLoggedIn)
+            }, { error ->
+                Crashlytics.logException(error)
+            }).addTo(compositeDisposable)
     }
 
     @Suppress("LongMethod", "ComplexMethod")
@@ -86,7 +108,9 @@ class MainFragment : BaseMainFragment() {
         viewModel.loadSettings().darkMode?.let { darkMode(it) }
 
         loadUrlWithAnimation(baseUrl)
+    }
 
+    private fun initActions() {
         context?.let { ctx ->
             quickActionExplore = QuickAction(ctx, QuickAction.VERTICAL)
             quickActionExplore.apply {
@@ -258,4 +282,35 @@ class MainFragment : BaseMainFragment() {
         }
     }
 
+    @Suppress("ComplexMethod")
+    private fun setProfileActions(isLogin: Boolean) = context?.let {
+        quickActionProfile = QuickAction(it, QuickAction.VERTICAL).apply {
+            setColorRes(R.color.colorPrimary)
+            setTextColorRes(R.color.white)
+            setEnabledDivider(false)
+            addActionItem(
+                ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
+                ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
+                if (isLogin) {
+                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout)
+                } else {
+                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login)
+                },
+                ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
+            )
+
+            setOnActionItemClickListener { item ->
+                when (item.actionId) {
+                    1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
+                    2 -> loadUrlWithAnimation(getString(R.string.url_login))
+                    3 -> {
+                        logoutCount = 0
+                        loadUrlWithAnimation(getString(R.string.url_logout))
+                    }
+                    4 -> loadIfUserNameSet(getString(R.string.url_settings))
+                    5 -> replaceFragment(SettingsFragment.newInstance(), true)
+                }
+            }
+        }
+    }
 }

@@ -13,8 +13,6 @@ import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
 import kotlinx.android.synthetic.main.fragment_main.webView
 import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoader
 import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoaderDarkMode
-import me.piruin.quickaction.ActionItem
-import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.isValidUsername
@@ -34,13 +32,13 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
         const val TEXT_SIZE_LARGE = 150
     }
 
-    protected lateinit var quickActionProfile: QuickAction
-    private var logoutCount = 0
-    private var loginCount = 0
-    private var userName = ""
     private var isAnimating = false
+    private var loginCount = 0
+
     protected lateinit var baseUrl: String
 
+    protected var logoutCount = 0
+    protected var userName = ""
     protected var loader: FillableLoader? = null
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
@@ -60,7 +58,7 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
                     logoutCount = 0
                     loginCount++
                     if (loginCount == 3) {
-                        authentication(true)
+                        viewModel.authentication(true)
                     }
                 }
                 context.getString(R.string.url_logout) -> {
@@ -112,7 +110,7 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
                     logoutCount++
                     loginCount = 0
                     if (logoutCount == 4) {
-                        authentication(false)
+                        viewModel.authentication(false)
                     }
                 }
                 url.contains(context.getString(R.string.url_session)) -> {
@@ -206,19 +204,6 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
         loadUrlWithAnimation(webView?.context?.getString(R.string.url_blank))
     }
 
-    private fun authentication(isLogin: Boolean) {
-        if (isLogin) {
-            viewModel.updateUser(userName, isLogin)
-        } else {
-            context?.getString(R.string.url_login)?.let {
-                baseUrl = it
-                loadUrlWithAnimation(it)
-            }
-            viewModel.updateUser("", false)
-        }
-        setProfileActions(isLogin)
-    }
-
     protected fun loadIfUserNameSet(url: String) =
         viewModel.getUserName().let { username ->
             if (username.isValidUsername()) {
@@ -240,38 +225,6 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
                 }
             }
         }
-
-    @Suppress("ComplexMethod")
-    protected fun setProfileActions(isLogin: Boolean) = context?.let {
-        quickActionProfile = QuickAction(it, QuickAction.VERTICAL).apply {
-            setColorRes(R.color.colorPrimary)
-            setTextColorRes(R.color.white)
-            setEnabledDivider(false)
-            addActionItem(
-                ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
-                ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
-                if (isLogin) {
-                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout)
-                } else {
-                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login)
-                },
-                ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
-            )
-
-            setOnActionItemClickListener { item ->
-                when (item.actionId) {
-                    1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
-                    2 -> loadUrlWithAnimation(getString(R.string.url_login))
-                    3 -> {
-                        logoutCount = 0
-                        loadIfUserNameSet(getString(R.string.url_logout))
-                    }
-                    4 -> loadIfUserNameSet(getString(R.string.url_settings))
-                    5 -> replaceFragment(SettingsFragment.newInstance(), true)
-                }
-            }
-        }
-    }
 
     private fun loadingView(show: Boolean) =
         if (show and !isAnimating) {
