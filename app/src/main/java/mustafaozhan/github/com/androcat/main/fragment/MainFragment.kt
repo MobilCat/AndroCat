@@ -301,7 +301,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
 
     private fun darkMode(darkMode: Boolean, changeSettings: Boolean = false) {
         setDarkMode(darkMode)
-        webView?.runScript(JsScrip.getDarkMode(darkMode))
+        webView?.runScript(JsScrip.getTheme(darkMode))
         if (!darkMode) {
             webView?.reload()
         }
@@ -477,7 +477,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
                 }
             }
             viewModel.loadSettings().darkMode?.let {
-                runScript(JsScrip.getDarkMode(it)) {
+                runScript(JsScrip.getTheme(it)) {
                     loadingView(false)
                 }
             }

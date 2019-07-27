@@ -6,11 +6,7 @@ enum class JsScrip(val value: String) {
     GET_USERNAME("getUsername.js");
 
     companion object {
-        fun getDarkMode(darkMode: Boolean) =
-            if (darkMode) {
-                DARK_MODE
-            } else {
-                NORMAL_MODE
-            }
+        fun getTheme(darkMode: Boolean) =
+            if (darkMode) DARK_MODE else NORMAL_MODE
     }
 }
