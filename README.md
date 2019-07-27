@@ -14,7 +14,7 @@
 <img src="https://i.postimg.cc/rqqLRVCj/7.png?dl=1" width="420px"/> <img src="https://i.postimg.cc/RMZGT58c/8.png?dl=1" width="420px"/>
 
 ## Dependencies
-```
+```gradle
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
