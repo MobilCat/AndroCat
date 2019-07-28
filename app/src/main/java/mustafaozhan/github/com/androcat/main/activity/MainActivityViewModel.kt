@@ -9,10 +9,4 @@ class MainActivityViewModel : BaseViewModel() {
     override fun inject() {
         viewModelComponent.inject(this)
     }
-
-    fun loadSettings() = getSettings()
-
-    fun updateSetting(
-        darkMode: Boolean? = null
-    ) = updateSettings(darkMode)
 }

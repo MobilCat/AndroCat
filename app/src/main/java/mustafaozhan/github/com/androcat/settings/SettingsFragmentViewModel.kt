@@ -24,10 +24,4 @@ class SettingsFragmentViewModel : BaseViewModel() {
             null
         }
     }
-
-    fun loadSettings() = getSettings()
-
-    fun updateSetting(
-        darkMode: Boolean? = null
-    ) = updateSettings(darkMode)
 }

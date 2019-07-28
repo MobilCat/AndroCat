@@ -19,14 +19,16 @@ abstract class BaseViewModel : ViewModel() {
     lateinit var dataManager: DataManager
 
     init {
+        @Suppress("LeakingThis")
         inject()
     }
 
     protected abstract fun inject()
 
-    protected fun getSettings() = dataManager.loadSettings()
+    open fun getSettings() = dataManager.loadSettings()
 
-    protected fun updateSettings(
-        darkMode: Boolean? = null
-    ) = dataManager.updateSettings(darkMode)
+    open fun updateSettings(
+        darkMode: Boolean? = null,
+        sliderShown: Boolean? = null
+    ) = dataManager.updateSettings(darkMode, sliderShown)
 }

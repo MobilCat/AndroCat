@@ -45,7 +45,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
     private fun setListeners() {
         darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.updateSetting(darkMode = isChecked)
+            viewModel.updateSettings(darkMode = isChecked)
         }
         layoutDarkMode.setOnClickListener {
             darkModeSwitch.isChecked = !darkModeSwitch.isChecked
@@ -81,7 +81,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             txtUsernameInput?.text = it
         } ?: run { txtUsernameInput?.text = getString(R.string.missUsername) }
 
-        viewModel.loadSettings().darkMode?.let {
+        viewModel.getSettings().darkMode?.let {
             darkModeSwitch.isChecked = it
         }
     }

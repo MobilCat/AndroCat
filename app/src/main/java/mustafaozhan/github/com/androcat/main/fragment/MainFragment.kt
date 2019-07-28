@@ -105,7 +105,7 @@ class MainFragment : BaseMainFragment() {
             baseUrl = getString(R.string.url_login)
         }
 
-        viewModel.loadSettings().darkMode?.let { darkMode(it) }
+        viewModel.getSettings().darkMode?.let { darkMode(it) }
 
         loadUrlWithAnimation(baseUrl)
     }
@@ -172,7 +172,7 @@ class MainFragment : BaseMainFragment() {
             when (item.actionId) {
                 1 -> webView?.goBack()
                 2 -> webView?.goForward()
-                3 -> viewModel.loadSettings().darkMode?.let { darkMode(!it, true) }
+                3 -> viewModel.getSettings().darkMode?.let { darkMode(!it, true) }
                 4 -> loadUrlWithAnimation(getString(R.string.url_search))
                 5 -> {
                     layout_find_in_page.setVisibleWithAnimation(true)
@@ -243,7 +243,7 @@ class MainFragment : BaseMainFragment() {
             fillableLoader
         }
         webView?.runScript(JsScrip.getTheme(darkMode))
-        if (changeSettings) viewModel.updateSetting(darkMode = darkMode)
+        if (changeSettings) viewModel.updateSettings(darkMode = darkMode)
     }
 
     override fun loadingView(show: Boolean) {
