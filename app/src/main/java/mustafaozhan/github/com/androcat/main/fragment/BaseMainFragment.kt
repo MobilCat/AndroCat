@@ -4,27 +4,22 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Log
-import android.view.View
 import com.crashlytics.android.Crashlytics
 import com.github.jorgecastillo.FillableLoader
 import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
-import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
 import kotlinx.android.synthetic.main.fragment_main.webView
-import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoader
-import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoaderDarkMode
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.isValidUsername
 import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
-import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
 
 @Suppress("TooManyFunctions", "MagicNumber")
-open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
+abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
         const val TEXT_SIZE_SMALL = 100
@@ -32,7 +27,7 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
         const val TEXT_SIZE_LARGE = 150
     }
 
-    private var isAnimating = false
+    protected var isAnimating = false
     private var loginCount = 0
 
     protected lateinit var baseUrl: String
@@ -226,22 +221,6 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
             }
         }
 
-    private fun loadingView(show: Boolean) =
-        if (show and !isAnimating) {
-            isAnimating = true
-            fillableLoaderLayout?.setVisibleWithAnimation(true)
-            loader?.visibility = View.VISIBLE
-            fillableLoader?.start()
-            fillableLoaderDarkMode?.start()
-        } else {
-            fillableLoaderLayout?.setVisibleWithAnimation(false)
-            fillableLoader?.visibility = View.GONE
-            fillableLoaderDarkMode?.visibility = View.GONE
-            fillableLoader?.reset()
-            fillableLoaderDarkMode?.reset()
-            isAnimating = false
-        }
-
     protected fun loadUrlWithAnimation(urlToLoad: String?) = urlToLoad?.let { url ->
         loadingView(true)
         webView?.loadUrl(url)
@@ -249,5 +228,7 @@ open class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Advance
 
     override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
 
-    override fun getLayoutResId(): Int = R.layout.fragment_main
+    abstract override fun getLayoutResId(): Int
+
+    protected abstract fun loadingView(show: Boolean)
 }

@@ -26,6 +26,9 @@ import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.hideKeyboard
+import mustafaozhan.github.com.androcat.extensions.initExplorer
+import mustafaozhan.github.com.androcat.extensions.initProduction
+import mustafaozhan.github.com.androcat.extensions.initStack
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.extensions.showKeyboard
@@ -35,7 +38,7 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
-@Suppress("MagicNumber")
+@Suppress("MagicNumber", "TooManyFunctions")
 class MainFragment : BaseMainFragment() {
 
     companion object {
@@ -60,8 +63,8 @@ class MainFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         init()
-        initActions()
         setDash()
         initWebView()
         setListeners()
@@ -92,6 +95,11 @@ class MainFragment : BaseMainFragment() {
 
     @Suppress("LongMethod", "ComplexMethod")
     private fun init() {
+        context?.apply {
+            quickActionExplore = initExplorer()
+            quickActionStack = initStack()
+            quickActionProduction = initProduction()
+        }
         fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
         fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
         eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
@@ -108,50 +116,6 @@ class MainFragment : BaseMainFragment() {
         viewModel.loadSettings().darkMode?.let { darkMode(it) }
 
         loadUrlWithAnimation(baseUrl)
-    }
-
-    private fun initActions() {
-        context?.let { ctx ->
-            quickActionExplore = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionExplore.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(6, getString(R.string.trends), R.drawable.ic_trends),
-                    ActionItem(4, getString(R.string.search_in_github), R.drawable.ic_search),
-                    ActionItem(5, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
-                    ActionItem(3, getString(R.string.dark_mode), R.drawable.ic_dark_mode),
-                    ActionItem(2, getString(R.string.forward), R.drawable.ic_forward),
-                    ActionItem(1, getString(R.string.back), R.drawable.ic_back)
-                )
-            }
-            quickActionStack = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionStack.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(4, getString(R.string.gists), R.drawable.ic_gist),
-                    ActionItem(3, getString(R.string.repositories), R.drawable.ic_repository),
-                    ActionItem(2, getString(R.string.stars), R.drawable.ic_stars),
-                    ActionItem(1, getString(R.string.notifications), R.drawable.ic_notifications)
-                )
-            }
-            quickActionProduction = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionProduction.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(5, getString(R.string.new_gist), R.drawable.ic_gist),
-                    ActionItem(4, getString(R.string.new_repository), R.drawable.ic_repository),
-                    ActionItem(3, getString(R.string.projects), R.drawable.ic_projects),
-                    ActionItem(2, getString(R.string.pull_requests), R.drawable.ic_pull_request),
-                    ActionItem(1, getString(R.string.issues), R.drawable.ic_issue)
-                )
-            }
-        }
     }
 
     private fun setListeners() {
@@ -313,4 +277,23 @@ class MainFragment : BaseMainFragment() {
             }
         }
     }
+
+    override fun loadingView(show: Boolean) {
+        if (show and !isAnimating) {
+            isAnimating = true
+            fillableLoaderLayout?.setVisibleWithAnimation(true)
+            loader?.visibility = View.VISIBLE
+            fillableLoader?.start()
+            fillableLoaderDarkMode?.start()
+        } else {
+            fillableLoaderLayout?.setVisibleWithAnimation(false)
+            fillableLoader?.visibility = View.GONE
+            fillableLoaderDarkMode?.visibility = View.GONE
+            fillableLoader?.reset()
+            fillableLoaderDarkMode?.reset()
+            isAnimating = false
+        }
+    }
+
+    override fun getLayoutResId(): Int = R.layout.fragment_main
 }

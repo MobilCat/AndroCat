@@ -10,6 +10,8 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import im.delight.android.webview.AdvancedWebView
+import me.piruin.quickaction.ActionItem
+import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.tools.JsScrip
 
@@ -72,3 +74,48 @@ fun View.showKeyboard() {
     this.requestFocus()
     imm?.showSoftInput(this, 0)
 }
+
+@Suppress("MagicNumber")
+fun Context.initExplorer() =
+    QuickAction(this, QuickAction.VERTICAL).apply {
+        setColorRes(R.color.colorPrimary)
+        setTextColorRes(R.color.white)
+        setEnabledDivider(false)
+        addActionItem(
+            ActionItem(6, getString(R.string.trends), R.drawable.ic_trends),
+            ActionItem(4, getString(R.string.search_in_github), R.drawable.ic_search),
+            ActionItem(5, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
+            ActionItem(3, getString(R.string.dark_mode), R.drawable.ic_dark_mode),
+            ActionItem(2, getString(R.string.forward), R.drawable.ic_forward),
+            ActionItem(1, getString(R.string.back), R.drawable.ic_back)
+        )
+    }
+
+@Suppress("MagicNumber")
+fun Context.initStack() =
+    QuickAction(this, QuickAction.VERTICAL).apply {
+        setColorRes(R.color.colorPrimary)
+        setTextColorRes(R.color.white)
+        setEnabledDivider(false)
+        addActionItem(
+            ActionItem(4, getString(R.string.gists), R.drawable.ic_gist),
+            ActionItem(3, getString(R.string.repositories), R.drawable.ic_repository),
+            ActionItem(2, getString(R.string.stars), R.drawable.ic_stars),
+            ActionItem(1, getString(R.string.notifications), R.drawable.ic_notifications)
+        )
+    }
+
+@Suppress("MagicNumber")
+fun Context.initProduction() =
+    QuickAction(this, QuickAction.VERTICAL).apply {
+        setColorRes(R.color.colorPrimary)
+        setTextColorRes(R.color.white)
+        setEnabledDivider(false)
+        addActionItem(
+            ActionItem(5, getString(R.string.new_gist), R.drawable.ic_gist),
+            ActionItem(4, getString(R.string.new_repository), R.drawable.ic_repository),
+            ActionItem(3, getString(R.string.projects), R.drawable.ic_projects),
+            ActionItem(2, getString(R.string.pull_requests), R.drawable.ic_pull_request),
+            ActionItem(1, getString(R.string.issues), R.drawable.ic_issue)
+        )
+    }
