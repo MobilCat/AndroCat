@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -137,3 +138,7 @@ fun Context.initProfileActions(isLogin: Boolean) =
             ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
         )
     }
+
+fun View.setBGColor(context: Context, color: Int) {
+    setBackgroundColor(ContextCompat.getColor(context, color))
+}

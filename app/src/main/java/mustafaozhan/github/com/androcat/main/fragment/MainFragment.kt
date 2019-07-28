@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -31,6 +29,7 @@ import mustafaozhan.github.com.androcat.extensions.initProductionActions
 import mustafaozhan.github.com.androcat.extensions.initProfileActions
 import mustafaozhan.github.com.androcat.extensions.initStackActions
 import mustafaozhan.github.com.androcat.extensions.runScript
+import mustafaozhan.github.com.androcat.extensions.setBGColor
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.extensions.showKeyboard
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
@@ -41,17 +40,13 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
  */
 @Suppress("MagicNumber", "TooManyFunctions")
 class MainFragment : BaseMainFragment() {
-
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
         var TAG: String = MainFragment::class.java.simpleName
-
-        fun newInstance(url: String): MainFragment {
-            val args = Bundle()
-            args.putString(ARGS_OPEN_URL, url)
-            val fragment = MainFragment()
-            fragment.arguments = args
-            return fragment
+        fun newInstance(url: String) = MainFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARGS_OPEN_URL, url)
+            }
         }
 
         fun newInstance() = MainFragment()
@@ -64,20 +59,17 @@ class MainFragment : BaseMainFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        arguments?.apply {
+            getString(ARGS_OPEN_URL)?.let { loadUrlWithAnimation(it) }
+            clear()
+        }
         init()
         setDash()
         initWebView()
         setListeners()
         setActionListeners()
 
-        arguments?.apply {
-            getString(ARGS_OPEN_URL)?.let { loadUrlWithAnimation(it) }
-            clear()
-        }
-
-        viewModel
-            .loginSubject
+        viewModel.loginSubject
             .subscribe({ isLoggedIn ->
                 if (isLoggedIn) {
                     viewModel.updateUser(userName, isLoggedIn)
@@ -89,14 +81,8 @@ class MainFragment : BaseMainFragment() {
                     viewModel.updateUser("", false)
                 }
                 quickActionProfile = setProfileActions(isLoggedIn)
-            }, { error ->
-                Crashlytics.logException(error)
-                Crashlytics.log(
-                    Log.ERROR,
-                    "View.hideKeyboard()",
-                    "exception:$error"
-                )
-            }).addTo(compositeDisposable)
+            }, { Crashlytics.logException(it) }
+            ).addTo(compositeDisposable)
     }
 
     private fun init() {
@@ -131,7 +117,7 @@ class MainFragment : BaseMainFragment() {
                     1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
                     2 -> loadUrlWithAnimation(getString(R.string.url_login))
                     3 -> {
-                        logoutCount = 0
+                        updateVariables(logout = false)
                         loadUrlWithAnimation(getString(R.string.url_logout))
                     }
                     4 -> loadIfUserNameSet(getString(R.string.url_settings))
@@ -160,8 +146,7 @@ class MainFragment : BaseMainFragment() {
             true
         }
 
-        eTxtSearch
-            .textChanges()
+        eTxtSearch.textChanges()
             .subscribe { txt ->
                 webView?.findAllAsync(txt.toString())
             }.addTo(compositeDisposable)
@@ -247,26 +232,18 @@ class MainFragment : BaseMainFragment() {
     }
 
     private fun darkMode(darkMode: Boolean, changeSettings: Boolean = false) {
-        setDarkMode(darkMode)
-        webView?.runScript(JsScrip.getTheme(darkMode))
-        if (!darkMode) {
-            webView?.reload()
-        }
-        if (changeSettings) {
-            viewModel.updateSetting(darkMode = darkMode)
-        }
-    }
-
-    private fun setDarkMode(darkMode: Boolean) = context?.let { ctx ->
         loader = if (darkMode) {
-            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorPrimaryDark))
+            context?.let { fillableLoaderLayout?.setBGColor(it, R.color.colorPrimaryDark) }
             fillableLoader?.visibility = View.GONE
             fillableLoaderDarkMode
         } else {
-            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.white))
+            context?.let { fillableLoaderLayout?.setBGColor(it, R.color.white) }
             fillableLoaderDarkMode?.visibility = View.GONE
+            webView?.reload()
             fillableLoader
         }
+        webView?.runScript(JsScrip.getTheme(darkMode))
+        if (changeSettings) viewModel.updateSetting(darkMode = darkMode)
     }
 
     override fun loadingView(show: Boolean) {

@@ -17,129 +17,85 @@ import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
+import mustafaozhan.github.com.androcat.tools.TextSize
 
-@Suppress("TooManyFunctions", "MagicNumber")
+@Suppress("TooManyFunctions")
 abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
-        const val TEXT_SIZE_SMALL = 100
-        const val TEXT_SIZE_MEDIUM = 124
-        const val TEXT_SIZE_LARGE = 150
+        const val LOGIN_COUNTER_LIMIT = 3
+        const val LOGOUT_COUNTER_LIMIT = 4
     }
 
     private var loginCount = 0
-    protected var isAnimating = false
+    private var logoutCount = 0
     protected lateinit var baseUrl: String
-    protected var logoutCount = 0
+    protected var isAnimating = false
     protected var userName = ""
     protected var loader: FillableLoader? = null
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
-        webView?.apply {
-            if (!isAnimating) {
-                loadingView(true)
+        if (!isAnimating) loadingView(true)
+
+        when (url) {
+            context?.getString(R.string.url_session) -> {
+                webView?.runScript(JsScrip.GET_USERNAME) {
+                    userName = it?.remove("\"").toString()
+                }
+                updateVariables(login = true, logout = false)
             }
-            when (url) {
-                context?.getString(R.string.url_session).toString() -> {
-                    runScript(JsScrip.GET_USERNAME) {
-                        userName = it?.remove("\"").toString()
-                    }
-                    logoutCount = 0
-                    loginCount++
-                }
-                context?.getString(R.string.url_github).toString() -> {
-                    logoutCount = 0
-                    loginCount++
-                    if (loginCount == 3) {
-                        viewModel.authentication(true)
-                    }
-                }
-                context.getString(R.string.url_logout) -> {
-                    loginCount = 0
-                    logoutCount++
-                }
-                else -> {
-                    logoutCount = 0
-                    loginCount = 0
-                }
-            }
+            context?.getString(R.string.url_github) -> updateVariables(login = true, logout = false)
+            context?.getString(R.string.url_logout) -> updateVariables(login = false, logout = true)
+            else -> updateVariables(login = false, logout = false)
         }
     }
 
-    @Suppress("ComplexMethod", "LongMethod")
+    @Suppress("ComplexMethod")
     override fun onPageFinished(url: String) {
-        webView?.apply {
-            when {
-                url.contains(getString(R.string.str_gist)) or
-                    url.contains(getString(R.string.url_issues)) or
-                    url.contains(getString(R.string.url_pulls)) or
-                    url.contains(getString(R.string.url_notifications)) or
-                    url.contains(getString(R.string.url_new)) or
-                    url.contains(getString(R.string.url_settings)) -> {
-                    settings?.textZoom = TEXT_SIZE_LARGE
-                    logoutCount = 0
-                    loginCount = 0
+        when {
+            url.contains(getString(R.string.str_gist)) or
+                url.contains(getString(R.string.url_issues)) or
+                url.contains(getString(R.string.url_pulls)) or
+                url.contains(getString(R.string.url_notifications)) or
+                url.contains(getString(R.string.url_new)) or
+                url.contains(getString(R.string.url_settings)) ->
+                updateVariables(login = false, logout = false, textSize = TextSize.LARGE)
+            url.contains(getString(R.string.url_login)) or
+                url.contains(getString(R.string.url_search)) or
+                url.contains(getString(R.string.url_trending)) or
+                url.contains(getString(R.string.str_organization)) or
+                url.contains(getString(R.string.str_google_play)) or
+                url.contains(getString(R.string.str_new)) or
+                !url.contains(getString(R.string.str_github)) or
+                (url == getString(R.string.url_github)) ->
+                updateVariables(login = false, logout = false, textSize = TextSize.SMALL)
+            url.contains(context?.getString(R.string.url_blank).toString()) ->
+                updateVariables(login = false, logout = false)
+            url == context?.getString(R.string.url_logout) ->
+                updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
+            url.contains(context?.getString(R.string.url_session).toString()) -> {
+                webView?.runScript(JsScrip.GET_USERNAME) {
+                    userName = it?.remove("\"").toString()
                 }
-                url.contains(getString(R.string.url_login)) or
-                    url.contains(getString(R.string.url_search)) or
-                    url.contains(getString(R.string.url_trending)) or
-                    url.contains(getString(R.string.str_organization)) or
-                    url.contains(getString(R.string.str_google_play)) or
-                    url.contains(getString(R.string.str_new)) or
-                    !url.contains(getString(R.string.str_github)) or
-                    (url == getString(R.string.url_github)) -> {
-                    settings?.textZoom = TEXT_SIZE_SMALL
-                    logoutCount = 0
-                    loginCount = 0
-                }
-                url.contains(context.getString(R.string.url_blank)) -> {
-                    logoutCount = 0
-                    loginCount = 0
-                }
-                url == context.getString(R.string.url_logout) -> {
-                    settings?.textZoom = TEXT_SIZE_SMALL
-                    logoutCount++
-                    loginCount = 0
-                    if (logoutCount == 4) {
-                        viewModel.authentication(false)
-                    }
-                }
-                url.contains(context.getString(R.string.url_session)) -> {
-                    webView?.runScript(JsScrip.GET_USERNAME) {
-                        userName = it?.remove("\"").toString()
-                    }
-                    settings?.textZoom = TEXT_SIZE_SMALL
-                    logoutCount = 0
-                    loginCount++
-                }
-                url.contains(getString(R.string.str_stargazers)) -> {
-                    settings?.textZoom = TEXT_SIZE_MEDIUM
-                    logoutCount = 0
-                    loginCount = 0
-                }
-                url.contains(viewModel.getUserName().toString()) -> {
-                    settings?.textZoom = if (url.contains(getString(R.string.str_gist))) {
-                        TEXT_SIZE_LARGE
-                    } else {
-                        TEXT_SIZE_SMALL
-                    }
-                    logoutCount = 0
-                    loginCount = 0
-                }
-                else -> {
-                    settings?.textZoom = if (url.contains(getString(R.string.url_github))) {
-                        TEXT_SIZE_SMALL
-                    } else {
-                        TEXT_SIZE_LARGE
-                    }
-                    logoutCount = 0
-                    loginCount = 0
-                }
+                updateVariables(login = true, logout = false, textSize = TextSize.SMALL)
             }
-            viewModel.loadSettings().darkMode?.let {
-                runScript(JsScrip.getTheme(it)) {
-                    loadingView(false)
-                }
+            url.contains(getString(R.string.str_stargazers)) ->
+                updateVariables(login = false, logout = false, textSize = TextSize.MEDIUM)
+            url.contains(viewModel.getUserName().toString()) -> updateVariables(
+                login = false,
+                logout = false,
+                textSize = if (url.contains(getString(R.string.str_gist))) TextSize.LARGE else TextSize.SMALL
+            )
+            else -> updateVariables(
+                login = false,
+                logout = false,
+                textSize = if (url.contains(getString(R.string.url_github))) TextSize.SMALL else TextSize.LARGE
+            )
+        }
+
+        viewModel.loadSettings().darkMode?.let {
+            webView?.runScript(JsScrip.getTheme(it)) {
+                loadingView(false)
             }
         }
     }
@@ -220,6 +176,21 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     protected fun loadUrlWithAnimation(urlToLoad: String?) = urlToLoad?.let { url ->
         loadingView(true)
         webView?.loadUrl(url)
+    }
+
+    @Suppress("ComplexMethod")
+    protected fun updateVariables(
+        login: Boolean? = null,
+        logout: Boolean? = null,
+        textSize: TextSize? = null
+    ) {
+        login?.let { if (it) loginCount++ else loginCount = 0 }
+        logout?.let { if (it) logoutCount++ else logoutCount = 0 }
+        textSize?.let { webView?.settings?.textZoom = it.value }
+        when {
+            loginCount == LOGIN_COUNTER_LIMIT -> viewModel.authentication(true)
+            logoutCount == LOGOUT_COUNTER_LIMIT -> viewModel.authentication(false)
+        }
     }
 
     override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
