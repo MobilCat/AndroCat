@@ -33,10 +33,12 @@ constructor() : BaseSharedPreferences() {
     }
 
     fun updateSettings(
-        darkMode: Boolean? = null
+        darkMode: Boolean? = null,
+        sliderShown: Boolean? = null
     ) {
         val settings = loadSettings()
         darkMode?.let { settings.darkMode = it }
+        sliderShown?.let { settings.sliderShown = it }
         setStringEntry(SETTINGS, Gson().toJson(settings))
     }
 
@@ -52,6 +54,6 @@ constructor() : BaseSharedPreferences() {
     fun loadSettings() =
         Gson().fromJson(getStringEntry(SETTINGS), Settings::class.java)
             ?: run {
-                Settings(darkMode = false)
+                Settings(darkMode = false, sliderShown = false)
             }
 }

@@ -50,6 +50,10 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".slider.SliderActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
