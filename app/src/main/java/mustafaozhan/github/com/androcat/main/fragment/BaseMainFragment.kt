@@ -27,11 +27,9 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         const val TEXT_SIZE_LARGE = 150
     }
 
-    protected var isAnimating = false
     private var loginCount = 0
-
+    protected var isAnimating = false
     protected lateinit var baseUrl: String
-
     protected var logoutCount = 0
     protected var userName = ""
     protected var loader: FillableLoader? = null
@@ -77,8 +75,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                     url.contains(getString(R.string.url_pulls)) or
                     url.contains(getString(R.string.url_notifications)) or
                     url.contains(getString(R.string.url_new)) or
-                    url.contains(getString(R.string.url_settings))
-                -> {
+                    url.contains(getString(R.string.url_settings)) -> {
                     settings?.textZoom = TEXT_SIZE_LARGE
                     logoutCount = 0
                     loginCount = 0
@@ -90,8 +87,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                     url.contains(getString(R.string.str_google_play)) or
                     url.contains(getString(R.string.str_new)) or
                     !url.contains(getString(R.string.str_github)) or
-                    (url == getString(R.string.url_github))
-                -> {
+                    (url == getString(R.string.url_github)) -> {
                     settings?.textZoom = TEXT_SIZE_SMALL
                     logoutCount = 0
                     loginCount = 0
@@ -131,10 +127,10 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                     loginCount = 0
                 }
                 else -> {
-                    if (url.contains(getString(R.string.url_github))) {
-                        settings?.textZoom = TEXT_SIZE_SMALL
+                    settings?.textZoom = if (url.contains(getString(R.string.url_github))) {
+                        TEXT_SIZE_SMALL
                     } else {
-                        settings?.textZoom = TEXT_SIZE_LARGE
+                        TEXT_SIZE_LARGE
                     }
                     logoutCount = 0
                     loginCount = 0

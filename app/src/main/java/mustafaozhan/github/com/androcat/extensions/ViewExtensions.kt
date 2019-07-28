@@ -76,7 +76,7 @@ fun View.showKeyboard() {
 }
 
 @Suppress("MagicNumber")
-fun Context.initExplorer() =
+fun Context.initExplorerActions() =
     QuickAction(this, QuickAction.VERTICAL).apply {
         setColorRes(R.color.colorPrimary)
         setTextColorRes(R.color.white)
@@ -92,7 +92,7 @@ fun Context.initExplorer() =
     }
 
 @Suppress("MagicNumber")
-fun Context.initStack() =
+fun Context.initStackActions() =
     QuickAction(this, QuickAction.VERTICAL).apply {
         setColorRes(R.color.colorPrimary)
         setTextColorRes(R.color.white)
@@ -106,7 +106,7 @@ fun Context.initStack() =
     }
 
 @Suppress("MagicNumber")
-fun Context.initProduction() =
+fun Context.initProductionActions() =
     QuickAction(this, QuickAction.VERTICAL).apply {
         setColorRes(R.color.colorPrimary)
         setTextColorRes(R.color.white)
@@ -117,5 +117,23 @@ fun Context.initProduction() =
             ActionItem(3, getString(R.string.projects), R.drawable.ic_projects),
             ActionItem(2, getString(R.string.pull_requests), R.drawable.ic_pull_request),
             ActionItem(1, getString(R.string.issues), R.drawable.ic_issue)
+        )
+    }
+
+@Suppress("MagicNumber")
+fun Context.initProfileActions(isLogin: Boolean) =
+    QuickAction(this, QuickAction.VERTICAL).apply {
+        setColorRes(R.color.colorPrimary)
+        setTextColorRes(R.color.white)
+        setEnabledDivider(false)
+        addActionItem(
+            ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
+            ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
+            if (isLogin) {
+                ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout)
+            } else {
+                ActionItem(2, getString(R.string.log_in), R.drawable.ic_login)
+            },
+            ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
         )
     }

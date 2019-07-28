@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
@@ -22,13 +23,13 @@ import kotlinx.android.synthetic.main.layout_find_in_page.eTxtSearch
 import kotlinx.android.synthetic.main.layout_find_in_page.searchDismissButton
 import kotlinx.android.synthetic.main.layout_find_in_page.searchNextButton
 import kotlinx.android.synthetic.main.layout_find_in_page.searchPreviousButton
-import me.piruin.quickaction.ActionItem
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.hideKeyboard
-import mustafaozhan.github.com.androcat.extensions.initExplorer
-import mustafaozhan.github.com.androcat.extensions.initProduction
-import mustafaozhan.github.com.androcat.extensions.initStack
+import mustafaozhan.github.com.androcat.extensions.initExplorerActions
+import mustafaozhan.github.com.androcat.extensions.initProductionActions
+import mustafaozhan.github.com.androcat.extensions.initProfileActions
+import mustafaozhan.github.com.androcat.extensions.initStackActions
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.extensions.showKeyboard
@@ -56,7 +57,7 @@ class MainFragment : BaseMainFragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var quickActionProfile: QuickAction
+    private var quickActionProfile: QuickAction? = null
     private lateinit var quickActionExplore: QuickAction
     private lateinit var quickActionStack: QuickAction
     private lateinit var quickActionProduction: QuickAction
@@ -70,9 +71,9 @@ class MainFragment : BaseMainFragment() {
         setListeners()
         setActionListeners()
 
-        arguments?.getString(ARGS_OPEN_URL)?.let { url ->
-            loadUrlWithAnimation(url)
-            arguments?.clear()
+        arguments?.apply {
+            getString(ARGS_OPEN_URL)?.let { loadUrlWithAnimation(it) }
+            clear()
         }
 
         viewModel
@@ -87,35 +88,57 @@ class MainFragment : BaseMainFragment() {
                     }
                     viewModel.updateUser("", false)
                 }
-                setProfileActions(isLoggedIn)
+                quickActionProfile = setProfileActions(isLoggedIn)
             }, { error ->
                 Crashlytics.logException(error)
+                Crashlytics.log(
+                    Log.ERROR,
+                    "View.hideKeyboard()",
+                    "exception:$error"
+                )
             }).addTo(compositeDisposable)
     }
 
-    @Suppress("LongMethod", "ComplexMethod")
     private fun init() {
         context?.apply {
-            quickActionExplore = initExplorer()
-            quickActionStack = initStack()
-            quickActionProduction = initProduction()
+            quickActionExplore = initExplorerActions()
+            quickActionStack = initStackActions()
+            quickActionProduction = initProductionActions()
         }
+
         fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
         fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
         eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
         newsFeedFab.bringToFront()
 
-        baseUrl = if (viewModel.isLoggedIn() == true) {
-            setProfileActions(true)
-            getString(R.string.url_github)
+        if (viewModel.isLoggedIn() == true) {
+            quickActionProfile = setProfileActions(true)
+            baseUrl = getString(R.string.url_github)
         } else {
-            setProfileActions(false)
-            getString(R.string.url_login)
+            quickActionProfile = setProfileActions(false)
+            baseUrl = getString(R.string.url_login)
         }
 
         viewModel.loadSettings().darkMode?.let { darkMode(it) }
 
         loadUrlWithAnimation(baseUrl)
+    }
+
+    private fun setProfileActions(isLoggedIn: Boolean): QuickAction? {
+        return context?.initProfileActions(isLoggedIn)?.apply {
+            setOnActionItemClickListener { item ->
+                when (item.actionId) {
+                    1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
+                    2 -> loadUrlWithAnimation(getString(R.string.url_login))
+                    3 -> {
+                        logoutCount = 0
+                        loadUrlWithAnimation(getString(R.string.url_logout))
+                    }
+                    4 -> loadIfUserNameSet(getString(R.string.url_settings))
+                    5 -> replaceFragment(SettingsFragment.newInstance(), true)
+                }
+            }
+        }
     }
 
     private fun setListeners() {
@@ -132,7 +155,7 @@ class MainFragment : BaseMainFragment() {
                 R.id.nv_explorer -> quickActionExplore.show(mBottomNavigationView.getIconAt(0))
                 R.id.nv_stacks -> quickActionStack.show(mBottomNavigationView.getIconAt(1))
                 R.id.nv_production -> quickActionProduction.show(mBottomNavigationView.getIconAt(3))
-                R.id.nv_profile -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
+                R.id.nv_profile -> quickActionProfile?.show(mBottomNavigationView.getIconAt(4))
             }
             true
         }
@@ -243,38 +266,6 @@ class MainFragment : BaseMainFragment() {
             fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.white))
             fillableLoaderDarkMode?.visibility = View.GONE
             fillableLoader
-        }
-    }
-
-    @Suppress("ComplexMethod")
-    private fun setProfileActions(isLogin: Boolean) = context?.let {
-        quickActionProfile = QuickAction(it, QuickAction.VERTICAL).apply {
-            setColorRes(R.color.colorPrimary)
-            setTextColorRes(R.color.white)
-            setEnabledDivider(false)
-            addActionItem(
-                ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
-                ActionItem(4, getString(R.string.user_settings), R.drawable.ic_user_settings),
-                if (isLogin) {
-                    ActionItem(3, getString(R.string.log_out), R.drawable.ic_logout)
-                } else {
-                    ActionItem(2, getString(R.string.log_in), R.drawable.ic_login)
-                },
-                ActionItem(1, getString(R.string.profile), R.drawable.ic_user)
-            )
-
-            setOnActionItemClickListener { item ->
-                when (item.actionId) {
-                    1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
-                    2 -> loadUrlWithAnimation(getString(R.string.url_login))
-                    3 -> {
-                        logoutCount = 0
-                        loadUrlWithAnimation(getString(R.string.url_logout))
-                    }
-                    4 -> loadIfUserNameSet(getString(R.string.url_settings))
-                    5 -> replaceFragment(SettingsFragment.newInstance(), true)
-                }
-            }
         }
     }
 
