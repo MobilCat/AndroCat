@@ -78,7 +78,7 @@ class MainFragment : BaseMainFragment() {
                         baseUrl = it
                         loadUrlWithAnimation(it)
                     }
-                    viewModel.updateUser("", false)
+                    viewModel.updateUser("", isLoggedIn)
                 }
                 quickActionProfile = setProfileActions(isLoggedIn)
             }, { Crashlytics.logException(it) }

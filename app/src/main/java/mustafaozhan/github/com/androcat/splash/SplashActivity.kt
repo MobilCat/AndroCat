@@ -21,7 +21,6 @@ class SplashActivity : BaseMvvmActivity<SplashActivityViewModel>() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         } else {
-            viewModel.updateSettings(sliderShown = true)
             startActivity(Intent(this, SliderActivity::class.java))
             finish()
         }
