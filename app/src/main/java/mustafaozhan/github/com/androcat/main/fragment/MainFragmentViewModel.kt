@@ -29,11 +29,5 @@ class MainFragmentViewModel : BaseViewModel() {
     fun updateUser(username: String? = null, isLoggedIn: Boolean? = null, token: String? = null) =
         dataManager.updateUser(username, isLoggedIn, token)
 
-    fun loadSettings() = getSettings()
-
-    fun updateSetting(
-        darkMode: Boolean? = null
-    ) = updateSettings(darkMode)
-
     fun authentication(isLoggedIn: Boolean) = loginSubject.onNext(isLoggedIn)
 }

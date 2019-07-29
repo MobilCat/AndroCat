@@ -93,7 +93,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
             )
         }
 
-        viewModel.loadSettings().darkMode?.let {
+        viewModel.getSettings().darkMode?.let {
             webView?.runScript(JsScrip.getTheme(it)) {
                 loadingView(false)
             }

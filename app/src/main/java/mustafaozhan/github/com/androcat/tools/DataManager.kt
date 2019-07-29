@@ -22,9 +22,12 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
     fun loadSettings() = generalSharedPreferences.loadSettings()
 
     fun updateSettings(
-        darkMode: Boolean? = null
+        darkMode: Boolean? = null,
+        sliderShown: Boolean? = null
     ) = generalSharedPreferences.updateSettings(
-        darkMode = darkMode)
+        darkMode = darkMode,
+        sliderShown = sliderShown
+    )
 
     fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
 }

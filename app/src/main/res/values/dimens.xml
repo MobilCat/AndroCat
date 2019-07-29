@@ -6,9 +6,14 @@
     <dimen name="four">4dp</dimen>
     <dimen name="eight">8dp</dimen>
     <dimen name="thirty_six">36dp</dimen>
+    <dimen name="seventy_two">72dp</dimen>
 
+    <dimen name="thirty_six_sp">36sp</dimen>
     <!--Fillable Loader-->
     <dimen name="fillable_loader_width">150dp</dimen>
     <dimen name="fillable_loader_height">216dp</dimen>
     <dimen name="fillable_loader_duration">500</dimen>
+
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
 </resources>
