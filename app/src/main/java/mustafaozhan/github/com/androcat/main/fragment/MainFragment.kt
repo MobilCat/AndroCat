@@ -78,7 +78,7 @@ class MainFragment : BaseMainFragment() {
                         baseUrl = it
                         loadUrlWithAnimation(it)
                     }
-                    viewModel.updateUser("", false)
+                    viewModel.updateUser("", isLoggedIn)
                 }
                 quickActionProfile = setProfileActions(isLoggedIn)
             }, { Crashlytics.logException(it) }
@@ -87,13 +87,15 @@ class MainFragment : BaseMainFragment() {
 
     private fun init() {
         context?.apply {
+            getString(R.string.androcat_svg_path).let { path ->
+                fillableLoader.setSvgPath(path)
+                fillableLoaderDarkMode.setSvgPath(path)
+            }
             quickActionExplore = initExplorerActions()
             quickActionStack = initStackActions()
             quickActionProduction = initProductionActions()
         }
 
-        fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
-        fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
         eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
         newsFeedFab.bringToFront()
 
