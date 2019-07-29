@@ -21,7 +21,7 @@ import mustafaozhan.github.com.androcat.slider.adapter.ViewPagerAdapter
 class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
 
     companion object {
-        const val SLIDE_SIZE = 4
+        const val SLIDE_SIZE = 2
         const val TEXT_SIZE = 36f
     }
 
@@ -66,7 +66,7 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
                 // move to next screen
                 view_pager.currentItem = current
             } else {
-                launchHomeScreen()
+                launchMainActivity()
             }
         }
     }
@@ -96,7 +96,8 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
         return view_pager.currentItem + i
     }
 
-    private fun launchHomeScreen() {
+    private fun launchMainActivity() {
+        viewModel.updateSettings(sliderShown = true)
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

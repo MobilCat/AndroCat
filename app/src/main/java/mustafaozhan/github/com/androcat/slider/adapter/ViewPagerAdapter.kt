@@ -10,10 +10,9 @@ import mustafaozhan.github.com.androcat.R
 class ViewPagerAdapter(var context: Context) : PagerAdapter() {
 
     private var layouts = intArrayOf(
-        R.layout.slide_1,
-        R.layout.slide_2,
-        R.layout.slide_3,
-        R.layout.slide_4
+        R.layout.slide_intro,
+        R.layout.slide_dark_mode
+//        R.layout.slide_features
     )
 
     override fun instantiateItem(container: ViewGroup, position: Int): View {

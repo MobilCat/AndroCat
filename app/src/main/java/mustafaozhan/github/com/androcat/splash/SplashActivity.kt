@@ -11,18 +11,19 @@ import mustafaozhan.github.com.androcat.slider.SliderActivity
  */
 class SplashActivity : BaseMvvmActivity<SplashActivityViewModel>() {
     override fun getViewModelClass(): Class<SplashActivityViewModel> = SplashActivityViewModel::class.java
-
     override fun getLayoutResId(): Int? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (viewModel.getSettings().sliderShown == true) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        } else {
-            startActivity(Intent(this, SliderActivity::class.java))
-            finish()
-        }
+        startActivity(
+            Intent(
+                this,
+                if (viewModel.getSettings().sliderShown == true) {
+                    MainActivity::class.java
+                } else {
+                    SliderActivity::class.java
+                }
+            )
+        )
+        finish()
     }
 }

@@ -87,15 +87,15 @@
     <!--SVG String-->
     <string name="androcat_svg_path">M48.950 41.000 C 42.065 55.078,40.104 83.280,43.734 116.000 C 46.943 144.919,46.659 146.585,35.839 162.226 C 25.141 177.691,8.000 219.951,8.000 230.861 C 8.000 234.974,45.933 236.000,198.000 236.000 L 388.000 236.000 388.000 226.503 C 388.000 213.317,377.785 185.692,364.938 164.131 C 354.648 146.862,354.198 143.887,355.474 101.589 C 357.849 22.882,325.058 8.107,270.291 63.207 L 255.587 78.000 199.668 77.690 L 143.750 77.379 128.875 62.930 C 100.642 35.505,57.435 23.650,48.950 41.000 M134.000 172.000 C 134.000 178.246,131.416 182.388,126.988 183.241 C 119.070 184.766,113.921 175.188,117.560 165.704 C 121.375 155.763,134.000 160.597,134.000 172.000 M286.000 172.000 C 286.000 183.403,273.375 188.237,269.560 178.296 C 265.921 168.812,271.070 159.234,278.988 160.759 C 283.416 161.612,286.000 165.754,286.000 172.000 M8.000 264.428 C 8.000 294.014,52.310 344.431,93.815 362.071 L 119.429 372.958 104.063 392.397 C 84.434 417.230,74.620 446.684,74.274 481.807 L 74.000 509.613 90.000 518.741 C 110.544 530.461,115.325 530.297,120.111 517.709 C 125.525 503.468,136.889 506.672,142.518 524.026 C 146.479 536.239,149.136 538.314,164.081 540.865 C 187.308 544.830,188.000 543.882,188.000 508.091 C 188.000 473.342,190.180 464.000,198.287 464.000 C 207.827 464.000,212.000 478.603,212.000 511.982 L 212.000 544.490 231.000 541.735 C 254.291 538.359,256.000 537.426,256.000 528.091 C 256.000 507.229,273.654 499.261,278.357 518.000 C 281.420 530.203,284.605 530.357,307.250 519.395 L 325.027 510.789 322.998 474.395 C 320.760 434.226,310.364 408.119,287.155 384.380 C 280.498 377.571,277.257 372.000,279.954 372.000 C 306.547 372.000,361.835 327.803,378.008 293.616 C 395.426 256.798,412.570 260.000,198.000 260.000 C 61.753 260.000,8.000 261.253,8.000 264.428</string>
 
-
     <string name="next">NEXT</string>
     <string name="got_it">GOT IT</string>
 
-    <string name="slide_1_title">AndroCat</string>
-    <string name="slide_1_desc">We provide a traditional GitHub user interface like how you used to do!</string>
-    <string name="slide_2_title">Dark Mode!</string>
-    <string name="slide_2_desc">We have Dark mode option to user Interface \n To activate it please go to: \n Explore > Dark mode or User > App Settings > Dark Mode</string>
-    <string name="slide_3_title">Title</string>
-    <string name="slide_3_desc">The body that contains some text!</string>
+    <string name="slide_intro_title">AndroCat</string>
+    <string name="slide_intro_text_1">A traditional GitHub user interface, like how you are used to ! \n \n</string>
+    <string name="slide_intro_text_2">Mobile friendly pages \n \nDesktop pages have bigger text \n \nFaster load time</string>
+    <string name="slide_dark_mode_title">Dark Mode !</string>
+    <string name="slide_dark_mode_text">To activate it please go to: Explore > Dark mode</string>
+    <string name="slide_features_title">Upcoming Features !</string>
+    <string name="slide_features_text">*Notification support thought GitHub API</string>
 
 </resources>

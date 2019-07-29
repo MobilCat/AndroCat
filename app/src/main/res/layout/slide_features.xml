@@ -10,13 +10,13 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_androcat_dash"
+        android:src="@drawable/ic_under_progress"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/slide_3_title"
+        android:text="@string/slide_features_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@android:color/white" />
 
@@ -26,7 +26,7 @@
         android:layout_marginTop="20dp"
         android:paddingLeft="@dimen/thirty_six"
         android:paddingRight="@dimen/thirty_six"
-        android:text="@string/slide_3_desc"
+        android:text="@string/slide_features_text"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/white" />
