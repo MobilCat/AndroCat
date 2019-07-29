@@ -20,7 +20,7 @@ class ViewPagerAdapter(var context: Context) : PagerAdapter() {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
         val view = layoutInflater?.inflate(layouts[position], container, false)
         container.addView(view)
-        return view!!
+        return view ?: View(context)
     }
 
     override fun getCount(): Int {

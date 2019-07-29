@@ -6,6 +6,7 @@
     <dimen name="four">4dp</dimen>
     <dimen name="eight">8dp</dimen>
     <dimen name="thirty_six">36dp</dimen>
+    <dimen name="seventy_two">72dp</dimen>
 
     <!--Fillable Loader-->
     <dimen name="fillable_loader_width">150dp</dimen>
