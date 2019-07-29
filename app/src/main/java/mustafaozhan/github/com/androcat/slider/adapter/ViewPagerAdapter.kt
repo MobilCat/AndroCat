@@ -17,10 +17,10 @@ class ViewPagerAdapter(var context: Context) : PagerAdapter() {
     )
 
     override fun instantiateItem(container: ViewGroup, position: Int): View {
-        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = layoutInflater.inflate(layouts[position], container, false)
+        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
+        val view = layoutInflater?.inflate(layouts[position], container, false)
         container.addView(view)
-        return view
+        return view!!
     }
 
     override fun getCount(): Int {

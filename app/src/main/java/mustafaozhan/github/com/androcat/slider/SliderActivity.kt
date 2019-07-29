@@ -35,7 +35,10 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
 
         addBottomDots(0)
         changeStatusBarColor()
+        setListeners()
+    }
 
+    private fun setListeners() {
         view_pager?.apply {
             adapter = ViewPagerAdapter(applicationContext)
             addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -50,8 +53,8 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
                     }
                 }
 
-                override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {}
-                override fun onPageScrollStateChanged(arg0: Int) {}
+                override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) = Unit
+                override fun onPageScrollStateChanged(arg0: Int) = Unit
             })
         }
 
