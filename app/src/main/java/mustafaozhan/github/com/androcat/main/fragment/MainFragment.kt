@@ -87,10 +87,6 @@ class MainFragment : BaseMainFragment() {
 
     private fun init() {
         context?.apply {
-            getString(R.string.androcat_svg_path).let { path ->
-                fillableLoader.setSvgPath(path)
-                fillableLoaderDarkMode.setSvgPath(path)
-            }
             quickActionExplore = initExplorerActions()
             quickActionStack = initStackActions()
             quickActionProduction = initProductionActions()

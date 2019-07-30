@@ -3,12 +3,16 @@ package mustafaozhan.github.com.androcat.main.fragment
 import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.crashlytics.android.Crashlytics
 import com.github.jorgecastillo.FillableLoader
 import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.fragment_main.webView
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoader
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoaderDarkMode
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.isValidUsername
@@ -33,6 +37,14 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     protected var isAnimating = false
     protected var userName = ""
     protected var loader: FillableLoader? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        context?.getString(R.string.androcat_svg_path)?.let { path ->
+            fillableLoader.setSvgPath(path)
+            fillableLoaderDarkMode.setSvgPath(path)
+        }
+    }
 
     override fun onPageStarted(url: String, favicon: Bitmap?) {
         if (!isAnimating) loadingView(true)
