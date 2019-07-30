@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.view.KeyEvent
-import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -107,9 +106,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                 } else {
                     prepareAd()
                 }
-            }.doOnError {
-                Crashlytics.logException(it)
-            }
+            }.doOnError(::logException)
             .subscribe()
     }
 
@@ -166,7 +163,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                 }
             }
         } catch (e: JsonSyntaxException) {
-            Crashlytics.logException(e)
+            logException(e)
         }
     }
 

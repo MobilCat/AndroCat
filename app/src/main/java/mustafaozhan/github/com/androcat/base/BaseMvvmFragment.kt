@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.base
 
 import androidx.lifecycle.ViewModelProviders
+import com.crashlytics.android.Crashlytics
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -20,4 +21,6 @@ abstract class BaseMvvmFragment<VM : BaseViewModel> : BaseFragment() {
         super.onDestroy()
         compositeDisposable.clear()
     }
+
+    protected fun logException(t: Throwable) = Crashlytics.logException(t)
 }

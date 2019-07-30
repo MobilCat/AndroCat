@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
-import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_settings.ad_view
 import kotlinx.android.synthetic.main.fragment_settings.layout_dark_mode
 import kotlinx.android.synthetic.main.fragment_settings.layout_feedback
@@ -116,7 +115,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                 startActivity(Intent.createChooser(this, "Send Feedback:"))
             }
         } catch (activityNotFoundException: ActivityNotFoundException) {
-            Crashlytics.logException(activityNotFoundException)
+            logException(activityNotFoundException)
             snacky("You do not have any mail application.")
         }
     }

@@ -4,9 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import com.crashlytics.android.Crashlytics
 import com.github.jorgecastillo.FillableLoader
 import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
@@ -145,12 +143,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                 snacky("Download unsuccessful, download manager has been disabled on device")
             }
         } catch (e: Exception) {
-            Crashlytics.logException(e)
-            Crashlytics.log(
-                Log.ERROR,
-                "Download Unseccessful",
-                e.message
-            )
+            logException(e)
         }
     }
 

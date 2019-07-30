@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.rxkotlin.addTo
@@ -69,23 +68,20 @@ class MainFragment : BaseMainFragment() {
         setListeners()
         setActionListeners()
 
-        viewModel.loginSubject
-            .subscribe({ isLoggedIn ->
-                context?.apply {
-                    if (isLoggedIn) {
-                        viewModel.updateUser(userName, isLoggedIn)
-                        baseUrl = getString(R.string.url_github)
-                    } else {
-                        getString(R.string.url_login).let {
-                            baseUrl = it
-                            loadUrlWithAnimation(it)
-                        }
-                        viewModel.updateUser("", isLoggedIn)
-                    }
-                }
-                quickActionProfile = setProfileActions(isLoggedIn)
-            }, { Crashlytics.logException(it) }
-            ).addTo(compositeDisposable)
+        viewModel
+            .loginSubject
+            .subscribe(::handleLoginAction, ::logException)
+            .addTo(compositeDisposable)
+    }
+
+    private fun handleLoginAction(isLoggedIn: Boolean) {
+        if (isLoggedIn) {
+            viewModel.updateUser(userName, isLoggedIn)
+        } else {
+            loadUrlWithAnimation(getString(R.string.url_login))
+            viewModel.updateUser("", isLoggedIn)
+        }
+        quickActionProfile = setProfileActions(isLoggedIn)
     }
 
     private fun init() {
@@ -98,13 +94,7 @@ class MainFragment : BaseMainFragment() {
         et_search.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
         fab_news_feed.bringToFront()
 
-        if (viewModel.isLoggedIn() == true) {
-            quickActionProfile = setProfileActions(true)
-            baseUrl = getString(R.string.url_github)
-        } else {
-            quickActionProfile = setProfileActions(false)
-            baseUrl = getString(R.string.url_login)
-        }
+        quickActionProfile = setProfileActions(viewModel.isLoggedIn() == true)
 
         viewModel.getSettings().darkMode?.let { darkMode(it) }
 
@@ -112,6 +102,7 @@ class MainFragment : BaseMainFragment() {
     }
 
     private fun setProfileActions(isLoggedIn: Boolean): QuickAction? {
+        baseUrl = getString(if (isLoggedIn) R.string.url_github else R.string.url_login)
         return context?.initProfileActions(isLoggedIn)?.apply {
             setOnActionItemClickListener { item ->
                 when (item.actionId) {
