@@ -63,48 +63,50 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
     @Suppress("ComplexMethod")
     override fun onPageFinished(url: String) {
-        when {
-            url == context?.getString(R.string.url_logout) ->
-                updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
-            url.contains(context?.getString(R.string.url_session).toString()) or
-                url.contains(getString(R.string.url_login)) -> {
-                webView?.runScript(JsScrip.GET_USERNAME) {
-                    userName = it?.remove("\"").toString()
+        webView?.apply {
+            when {
+                url == getString(R.string.url_logout) ->
+                    updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
+                url.contains(getString(R.string.url_session)) or
+                    url.contains(getString(R.string.url_login)) -> {
+                    runScript(JsScrip.GET_USERNAME) {
+                        userName = it?.remove("\"").toString()
+                    }
+                    updateVariables(login = true, logout = false, textSize = TextSize.SMALL)
                 }
-                updateVariables(login = true, logout = false, textSize = TextSize.SMALL)
+                url.contains(getString(R.string.str_gist)) or
+                    url.contains(getString(R.string.url_issues)) or
+                    url.contains(getString(R.string.url_pulls)) or
+                    url.contains(getString(R.string.url_notifications)) or
+                    url.contains(getString(R.string.url_new)) or
+                    url.contains(getString(R.string.url_settings)) ->
+                    updateVariables(login = false, logout = false, textSize = TextSize.LARGE)
+                url.contains(getString(R.string.url_search)) or
+                    url.contains(getString(R.string.url_trending)) or
+                    url.contains(getString(R.string.str_organization)) or
+                    url.contains(getString(R.string.str_google_play)) or
+                    url.contains(getString(R.string.str_new)) or
+                    !url.contains(getString(R.string.str_github)) or
+                    (url == getString(R.string.url_github)) ->
+                    updateVariables(login = false, logout = false, textSize = TextSize.SMALL)
+                url.contains(getString(R.string.url_blank)) ->
+                    updateVariables(login = false, logout = false)
+                url.contains(getString(R.string.str_stargazers)) ->
+                    updateVariables(login = false, logout = false, textSize = TextSize.MEDIUM)
+                url.contains(viewModel.getUserName().toString()) -> updateVariables(
+                    login = false,
+                    logout = false,
+                    textSize = if (url.contains(getString(R.string.str_gist))) TextSize.LARGE else TextSize.SMALL
+                )
+                else -> updateVariables(
+                    textSize = if (url.contains(getString(R.string.url_github))) TextSize.SMALL else TextSize.LARGE
+                )
             }
-            url.contains(getString(R.string.str_gist)) or
-                url.contains(getString(R.string.url_issues)) or
-                url.contains(getString(R.string.url_pulls)) or
-                url.contains(getString(R.string.url_notifications)) or
-                url.contains(getString(R.string.url_new)) or
-                url.contains(getString(R.string.url_settings)) ->
-                updateVariables(login = false, logout = false, textSize = TextSize.LARGE)
-            url.contains(getString(R.string.url_search)) or
-                url.contains(getString(R.string.url_trending)) or
-                url.contains(getString(R.string.str_organization)) or
-                url.contains(getString(R.string.str_google_play)) or
-                url.contains(getString(R.string.str_new)) or
-                !url.contains(getString(R.string.str_github)) or
-                (url == getString(R.string.url_github)) ->
-                updateVariables(login = false, logout = false, textSize = TextSize.SMALL)
-            url.contains(context?.getString(R.string.url_blank).toString()) ->
-                updateVariables(login = false, logout = false)
-            url.contains(getString(R.string.str_stargazers)) ->
-                updateVariables(login = false, logout = false, textSize = TextSize.MEDIUM)
-            url.contains(viewModel.getUserName().toString()) -> updateVariables(
-                login = false,
-                logout = false,
-                textSize = if (url.contains(getString(R.string.str_gist))) TextSize.LARGE else TextSize.SMALL
-            )
-            else -> updateVariables(
-                textSize = if (url.contains(getString(R.string.url_github))) TextSize.SMALL else TextSize.LARGE
-            )
-        }
 
-        viewModel.getSettings().darkMode?.let {
-            webView?.runScript(JsScrip.getTheme(it)) {
-                loadingView(false)
+            viewModel.getSettings().darkMode?.let {
+                runScript(JsScrip.getTheme(it)) {
+                    loadingView(false)
+                }
             }
         }
     }
