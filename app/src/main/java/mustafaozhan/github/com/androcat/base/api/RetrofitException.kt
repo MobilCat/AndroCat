@@ -10,25 +10,23 @@ import java.io.IOException
  */
 class RetrofitException(
     message: String?,
-    val url: String?,
+    url: String?,
     private val response: Response<*>?,
-    val kind: Kind, exception: Throwable?,
-    private val retrofit: Retrofit?) : RuntimeException(message, exception
-) {
+    kind: Kind,
+    exception: Throwable?,
+    private val retrofit: Retrofit?
+) : RuntimeException(message, exception) {
     companion object {
-
         fun httpError(url: String, response: Response<*>, retrofit: Retrofit): RetrofitException {
             val message = response.code().toString() + " " + response.message()
             return RetrofitException(message, url, response, Kind.HTTP, null, retrofit)
         }
 
-        fun networkError(exception: IOException): RetrofitException {
-            return RetrofitException(exception.message, null, null, Kind.NETWORK, exception, null)
-        }
+        fun networkError(exception: IOException) =
+            RetrofitException(exception.message, null, null, Kind.NETWORK, exception, null)
 
-        fun unexpectedError(exception: Throwable): RetrofitException {
-            return RetrofitException(exception.message, null, null, Kind.UNEXPECTED, exception, null)
-        }
+        fun unexpectedError(exception: Throwable) =
+            RetrofitException(exception.message, null, null, Kind.UNEXPECTED, exception, null)
     }
 
     /**

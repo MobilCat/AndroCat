@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fillableLoaderLayout"
+    android:id="@+id/layout_fillable_loader"
     android:layout_width="@dimen/zero"
     android:layout_height="@dimen/zero"
     android:background="@color/white"
@@ -12,7 +12,7 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <com.github.jorgecastillo.FillableLoader
-        android:id="@+id/fillableLoader"
+        android:id="@+id/fillable_loader"
         android:layout_width="@dimen/fillable_loader_width"
         android:layout_height="@dimen/fillable_loader_height"
         app:fl_clippingTransform="waves"
@@ -26,7 +26,7 @@
         app:fl_strokeWidth="@dimen/two" />
 
     <com.github.jorgecastillo.FillableLoader
-        android:id="@+id/fillableLoaderDarkMode"
+        android:id="@+id/fillable_loader_dark"
         android:layout_width="@dimen/fillable_loader_width"
         android:layout_height="@dimen/fillable_loader_height"
         app:fl_clippingTransform="waves"

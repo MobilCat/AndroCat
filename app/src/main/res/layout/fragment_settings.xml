@@ -6,17 +6,17 @@
     android:background="@color/colorPrimary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutOptions"
+        android:id="@+id/layout_options"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
         android:padding="@dimen/eight"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintBottom_toTopOf="@+id/ad_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/layoutUsername"
+            android:id="@+id/layout_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/txtUsername"
+                android:id="@+id/tv_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/four"
@@ -36,14 +36,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtUsernameInput"
+                android:id="@+id/tv_username_output"
                 style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/four"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_username" />
 
             <View
                 android:layout_width="match_parent"
@@ -53,12 +53,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutDarkMode"
+            android:id="@+id/layout_dark_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/layoutUsername">
+            app:layout_constraintTop_toBottomOf="@id/layout_username">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Switch
-                    android:id="@+id/darkModeSwitch"
+                    android:id="@+id/switch_dark_mode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -92,12 +92,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutSupport"
+            android:id="@+id/layout_support"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/layoutDarkMode">
+            app:layout_constraintTop_toBottomOf="@+id/layout_dark_mode">
 
             <TextView
                 android:layout_width="match_parent"
@@ -117,12 +117,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutFeedback"
+            android:id="@+id/layout_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/layoutSupport">
+            app:layout_constraintTop_toBottomOf="@+id/layout_support">
 
             <TextView
                 android:layout_width="match_parent"
@@ -142,12 +142,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutOnGitHub"
+            android:id="@+id/layout_on_github"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/layoutFeedback">
+            app:layout_constraintTop_toBottomOf="@+id/layout_feedback">
 
             <TextView
                 android:layout_width="match_parent"
@@ -167,12 +167,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutReportIssue"
+            android:id="@+id/layout_report_issue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/eight"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/layoutOnGitHub">
+            app:layout_constraintTop_toBottomOf="@+id/layout_on_github">
 
             <TextView
                 android:layout_width="match_parent"
@@ -193,7 +193,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
+        android:id="@+id/ad_view"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

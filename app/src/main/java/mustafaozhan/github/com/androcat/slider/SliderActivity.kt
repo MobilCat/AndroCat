@@ -11,8 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_slider.btn_next
-import kotlinx.android.synthetic.main.activity_slider.layoutDots
-import kotlinx.android.synthetic.main.activity_slider.progressBar
+import kotlinx.android.synthetic.main.activity_slider.layout_dots
+import kotlinx.android.synthetic.main.activity_slider.progress_bar
 import kotlinx.android.synthetic.main.activity_slider.view_pager
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmActivity
@@ -73,7 +73,7 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
     }
 
     private fun addBottomDots(currentPage: Int) {
-        layoutDots.removeAllViews()
+        layout_dots.removeAllViews()
         val dots = arrayListOf<TextView>().apply {
             repeat(SLIDE_SIZE) {
                 add(TextView(applicationContext))
@@ -85,7 +85,7 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
             dots[i].text = HtmlCompat.fromHtml("&#8226;", HtmlCompat.FROM_HTML_MODE_LEGACY)
             dots[i].textSize = TEXT_SIZE
             dots[i].setTextColor(ContextCompat.getColor(applicationContext, R.color.colorPrimaryDark))
-            layoutDots.addView(dots[i])
+            layout_dots.addView(dots[i])
         }
 
         if (dots.size > 0) {
@@ -98,7 +98,7 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
     }
 
     private fun launchMainActivity() {
-        progressBar.visibility = View.VISIBLE
+        progress_bar.visibility = View.VISIBLE
         viewModel.updateSettings(sliderShown = true)
         startActivity(Intent(this, MainActivity::class.java))
         finish()

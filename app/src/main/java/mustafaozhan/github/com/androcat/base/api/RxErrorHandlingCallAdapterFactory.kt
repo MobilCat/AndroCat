@@ -31,23 +31,23 @@ class RxErrorHandlingCallAdapterFactory : CallAdapter.Factory {
     }
 
     override fun get(returnType: Type, annotations: Array<Annotation>, retrofit: Retrofit): CallAdapter<*, *> {
-        val wrapped = original.get(returnType, annotations, retrofit) as CallAdapter<out Any, *>
+        val wrapped = original.get(returnType, annotations, retrofit) as? CallAdapter<out Any, *>
         return RxCallAdapterWrapper(retrofit, wrapped)
     }
 
     private class RxCallAdapterWrapper<R>(
         private val retrofit: Retrofit,
-        private val wrapped: CallAdapter<R, *>
+        private val wrapped: CallAdapter<R, *>?
     ) : CallAdapter<R, Observable<R>> {
 
-        override fun responseType(): Type {
-            return wrapped.responseType()
+        override fun responseType(): Type? {
+            return wrapped?.responseType()
         }
 
         @SuppressLint("CheckResult")
         @Suppress("UNCHECKED_CAST")
         override fun adapt(call: Call<R>): Observable<R>? {
-            val adapted = (wrapped.adapt(call) as? Observable<R>)
+            val adapted = (wrapped?.adapt(call) as? Observable<R>)
             adapted?.onErrorResumeNext { throwable: Throwable ->
                 Observable.error(asRetrofitException(throwable))
             }
@@ -55,16 +55,14 @@ class RxErrorHandlingCallAdapterFactory : CallAdapter.Factory {
             return adapted
         }
 
-        private fun asRetrofitException(throwable: Throwable): RetrofitException {
-            // We had non-200 http error
-            if (throwable is HttpException) {
-                val response = throwable.response()
-                return RetrofitException.httpError(response.raw().request().url().toString(), response, retrofit)
-            }
-            // A network error happened
-            return if (throwable is IOException) {
-                RetrofitException.networkError(throwable)
-            } else RetrofitException.unexpectedError(throwable)
+        private fun asRetrofitException(throwable: Throwable) = when (throwable) {
+            is HttpException -> RetrofitException.httpError(
+                throwable.response().raw().request().url().toString(),
+                throwable.response(),
+                retrofit
+            )
+            is IOException -> RetrofitException.networkError(throwable)
+            else -> RetrofitException.unexpectedError(throwable)
         }
     }
 }

@@ -11,7 +11,7 @@
     tools:visibility="visible">
 
     <EditText
-        android:id="@+id/eTxtSearch"
+        android:id="@+id/et_search"
         style="@style/BaseEditTextTheme"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"
@@ -20,35 +20,35 @@
         android:hint="@string/search"
         android:inputType="text"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/searchPreviousButton"
+        app:layout_constraintEnd_toStartOf="@+id/view_search_previous"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="Autofill" />
 
     <View
-        android:id="@+id/searchPreviousButton"
+        android:id="@+id/view_search_previous"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
         android:layout_marginEnd="@dimen/eight"
         android:background="@drawable/ic_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@+id/searchNextButton"
+        app:layout_constraintEnd_toStartOf="@+id/view_search_next"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/searchNextButton"
+        android:id="@+id/view_search_next"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
         android:layout_marginEnd="@dimen/eight"
         android:background="@drawable/ic_forward"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@+id/searchDismissButton"
+        app:layout_constraintEnd_toStartOf="@+id/view_dismiss"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/searchDismissButton"
+        android:id="@+id/view_dismiss"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
         android:layout_marginEnd="@dimen/eight"

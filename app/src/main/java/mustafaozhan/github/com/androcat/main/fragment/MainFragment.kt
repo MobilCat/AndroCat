@@ -9,18 +9,18 @@ import com.crashlytics.android.Crashlytics
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.rxkotlin.addTo
-import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
+import kotlinx.android.synthetic.main.fragment_main.bottom_navigation_view
+import kotlinx.android.synthetic.main.fragment_main.fab_news_feed
+import kotlinx.android.synthetic.main.fragment_main.layout_fillable_loader
 import kotlinx.android.synthetic.main.fragment_main.layout_find_in_page
-import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
-import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
-import kotlinx.android.synthetic.main.fragment_main.newsFeedFab
-import kotlinx.android.synthetic.main.fragment_main.webView
-import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoader
-import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoaderDarkMode
-import kotlinx.android.synthetic.main.layout_find_in_page.eTxtSearch
-import kotlinx.android.synthetic.main.layout_find_in_page.searchDismissButton
-import kotlinx.android.synthetic.main.layout_find_in_page.searchNextButton
-import kotlinx.android.synthetic.main.layout_find_in_page.searchPreviousButton
+import kotlinx.android.synthetic.main.fragment_main.layout_swipe_refresh
+import kotlinx.android.synthetic.main.fragment_main.web_view
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader_dark
+import kotlinx.android.synthetic.main.layout_find_in_page.et_search
+import kotlinx.android.synthetic.main.layout_find_in_page.view_dismiss
+import kotlinx.android.synthetic.main.layout_find_in_page.view_search_next
+import kotlinx.android.synthetic.main.layout_find_in_page.view_search_previous
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.hideKeyboard
@@ -71,14 +71,17 @@ class MainFragment : BaseMainFragment() {
 
         viewModel.loginSubject
             .subscribe({ isLoggedIn ->
-                if (isLoggedIn) {
-                    viewModel.updateUser(userName, isLoggedIn)
-                } else {
-                    context?.getString(R.string.url_login)?.let {
-                        baseUrl = it
-                        loadUrlWithAnimation(it)
+                context?.apply {
+                    if (isLoggedIn) {
+                        viewModel.updateUser(userName, isLoggedIn)
+                        baseUrl = getString(R.string.url_github)
+                    } else {
+                        getString(R.string.url_login).let {
+                            baseUrl = it
+                            loadUrlWithAnimation(it)
+                        }
+                        viewModel.updateUser("", isLoggedIn)
                     }
-                    viewModel.updateUser("", isLoggedIn)
                 }
                 quickActionProfile = setProfileActions(isLoggedIn)
             }, { Crashlytics.logException(it) }
@@ -92,8 +95,8 @@ class MainFragment : BaseMainFragment() {
             quickActionProduction = initProductionActions()
         }
 
-        eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
-        newsFeedFab.bringToFront()
+        et_search.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+        fab_news_feed.bringToFront()
 
         if (viewModel.isLoggedIn() == true) {
             quickActionProfile = setProfileActions(true)
@@ -123,39 +126,39 @@ class MainFragment : BaseMainFragment() {
     }
 
     private fun setListeners() {
-        newsFeedFab.setOnClickListener { loadUrlWithAnimation(baseUrl) }
-        webView?.setListener(getBaseActivity(), this)
+        fab_news_feed.setOnClickListener { loadUrlWithAnimation(baseUrl) }
+        web_view?.setListener(getBaseActivity(), this)
 
-        mSwipeRefreshLayout.setOnRefreshListener {
-            loadUrlWithAnimation(webView?.url)
-            mSwipeRefreshLayout.isRefreshing = false
+        layout_swipe_refresh.setOnRefreshListener {
+            loadUrlWithAnimation(web_view?.url)
+            layout_swipe_refresh.isRefreshing = false
         }
 
-        mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottom_navigation_view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nv_explorer -> quickActionExplore.show(mBottomNavigationView.getIconAt(0))
-                R.id.nv_stacks -> quickActionStack.show(mBottomNavigationView.getIconAt(1))
-                R.id.nv_production -> quickActionProduction.show(mBottomNavigationView.getIconAt(3))
-                R.id.nv_profile -> quickActionProfile?.show(mBottomNavigationView.getIconAt(4))
+                R.id.nv_explorer -> quickActionExplore.show(bottom_navigation_view.getIconAt(0))
+                R.id.nv_stacks -> quickActionStack.show(bottom_navigation_view.getIconAt(1))
+                R.id.nv_production -> quickActionProduction.show(bottom_navigation_view.getIconAt(3))
+                R.id.nv_profile -> quickActionProfile?.show(bottom_navigation_view.getIconAt(4))
             }
             true
         }
 
-        eTxtSearch.textChanges()
+        et_search.textChanges()
             .subscribe { txt ->
-                webView?.findAllAsync(txt.toString())
+                web_view?.findAllAsync(txt.toString())
             }.addTo(compositeDisposable)
 
-        searchNextButton.setOnClickListener {
-            webView?.findNext(true)
+        view_search_next.setOnClickListener {
+            web_view?.findNext(true)
             it.hideKeyboard()
         }
-        searchPreviousButton.setOnClickListener {
-            webView?.findNext(false)
+        view_search_previous.setOnClickListener {
+            web_view?.findNext(false)
             it.hideKeyboard()
         }
-        searchDismissButton.setOnClickListener {
-            eTxtSearch.setText("")
+        view_dismiss.setOnClickListener {
+            et_search.setText("")
             layout_find_in_page.setVisibleWithAnimation(false)
             layout_find_in_page.hideKeyboard()
         }
@@ -165,13 +168,13 @@ class MainFragment : BaseMainFragment() {
     private fun setActionListeners() {
         quickActionExplore.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> webView?.goBack()
-                2 -> webView?.goForward()
+                1 -> web_view?.goBack()
+                2 -> web_view?.goForward()
                 3 -> viewModel.getSettings().darkMode?.let { darkMode(!it, true) }
                 4 -> loadUrlWithAnimation(getString(R.string.url_search))
                 5 -> {
                     layout_find_in_page.setVisibleWithAnimation(true)
-                    eTxtSearch.showKeyboard()
+                    et_search.showKeyboard()
                 }
                 6 -> loadUrlWithAnimation(getString(R.string.url_trending))
             }
@@ -195,7 +198,7 @@ class MainFragment : BaseMainFragment() {
         }
     }
 
-    private fun setDash() = mBottomNavigationView.apply {
+    private fun setDash() = bottom_navigation_view.apply {
         inflateMenu(R.menu.bnvm_dash)
         labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         enableAnimation(false)
@@ -211,7 +214,7 @@ class MainFragment : BaseMainFragment() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun initWebView() = webView?.apply {
+    private fun initWebView() = web_view?.apply {
         setBackgroundColor(Color.parseColor("#FFFFFF"))
         settings.apply {
             setDesktopMode(true)
@@ -228,32 +231,32 @@ class MainFragment : BaseMainFragment() {
 
     private fun darkMode(darkMode: Boolean, changeSettings: Boolean = false) {
         loader = if (darkMode) {
-            context?.let { fillableLoaderLayout?.setBGColor(it, R.color.colorPrimaryDark) }
-            fillableLoader?.visibility = View.GONE
-            fillableLoaderDarkMode
+            context?.let { layout_fillable_loader?.setBGColor(it, R.color.colorPrimaryDark) }
+            fillable_loader?.visibility = View.GONE
+            fillable_loader_dark
         } else {
-            context?.let { fillableLoaderLayout?.setBGColor(it, R.color.white) }
-            fillableLoaderDarkMode?.visibility = View.GONE
-            webView?.reload()
-            fillableLoader
+            context?.let { layout_fillable_loader?.setBGColor(it, R.color.white) }
+            fillable_loader_dark?.visibility = View.GONE
+            web_view?.reload()
+            fillable_loader
         }
-        webView?.runScript(JsScrip.getTheme(darkMode))
+        web_view?.runScript(JsScrip.getTheme(darkMode))
         if (changeSettings) viewModel.updateSettings(darkMode = darkMode)
     }
 
     override fun loadingView(show: Boolean) {
         if (show and !isAnimating) {
             isAnimating = true
-            fillableLoaderLayout?.setVisibleWithAnimation(true)
+            layout_fillable_loader?.setVisibleWithAnimation(true)
             loader?.visibility = View.VISIBLE
-            fillableLoader?.start()
-            fillableLoaderDarkMode?.start()
+            fillable_loader?.start()
+            fillable_loader_dark?.start()
         } else {
-            fillableLoaderLayout?.setVisibleWithAnimation(false)
-            fillableLoader?.visibility = View.GONE
-            fillableLoaderDarkMode?.visibility = View.GONE
-            fillableLoader?.reset()
-            fillableLoaderDarkMode?.reset()
+            layout_fillable_loader?.setVisibleWithAnimation(false)
+            fillable_loader?.visibility = View.GONE
+            fillable_loader_dark?.visibility = View.GONE
+            fillable_loader?.reset()
+            fillable_loader_dark?.reset()
             isAnimating = false
         }
     }

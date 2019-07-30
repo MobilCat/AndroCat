@@ -10,9 +10,9 @@ import com.crashlytics.android.Crashlytics
 import com.github.jorgecastillo.FillableLoader
 import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
-import kotlinx.android.synthetic.main.fragment_main.webView
-import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoader
-import kotlinx.android.synthetic.main.layout_fillable_loader.fillableLoaderDarkMode
+import kotlinx.android.synthetic.main.fragment_main.web_view
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader_dark
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.isValidUsername
@@ -40,8 +40,8 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         context?.getString(R.string.androcat_svg_path)?.let { path ->
-            fillableLoader.setSvgPath(path)
-            fillableLoaderDarkMode.setSvgPath(path)
+            fillable_loader.setSvgPath(path)
+            fillable_loader_dark.setSvgPath(path)
         }
     }
 
@@ -50,7 +50,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
         when (url) {
             context?.getString(R.string.url_session) -> {
-                webView?.runScript(JsScrip.GET_USERNAME) {
+                web_view?.runScript(JsScrip.GET_USERNAME) {
                     userName = it?.remove("\"").toString()
                 }
                 updateVariables(login = true, logout = false)
@@ -63,7 +63,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
     @Suppress("ComplexMethod")
     override fun onPageFinished(url: String) {
-        webView?.apply {
+        web_view?.apply {
             when {
                 url == getString(R.string.url_logout) ->
                     updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
@@ -113,7 +113,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
     override fun onResume() {
         super.onResume()
-        webView?.onResume()
+        web_view?.onResume()
         if (MainActivity.uri != null) {
             loadUrlWithAnimation(MainActivity.uri)
             MainActivity.uri = null
@@ -122,12 +122,12 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
     override fun onDestroy() {
         super.onDestroy()
-        webView?.onPause()
+        web_view?.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
-        webView?.onActivityResult(requestCode, resultCode, intent)
+        web_view?.onActivityResult(requestCode, resultCode, intent)
     }
 
     @Suppress("TooGenericExceptionCaught")
@@ -159,7 +159,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     }
 
     override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-        loadUrlWithAnimation(webView?.context?.getString(R.string.url_blank))
+        loadUrlWithAnimation(web_view?.context?.getString(R.string.url_blank))
     }
 
     protected fun loadIfUserNameSet(url: String) =
@@ -186,7 +186,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
     protected fun loadUrlWithAnimation(urlToLoad: String?) = urlToLoad?.let { url ->
         loadingView(true)
-        webView?.loadUrl(url)
+        web_view?.loadUrl(url)
     }
 
     @Suppress("ComplexMethod")
@@ -197,7 +197,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     ) {
         login?.let { if (it) loginCount++ else loginCount = 0 }
         logout?.let { if (it) logoutCount++ else logoutCount = 0 }
-        textSize?.let { webView?.settings?.textZoom = it.value }
+        textSize?.let { web_view?.settings?.textZoom = it.value }
         when {
             loginCount == AUTHENTICATION_COUNTER -> viewModel.authentication(true)
             logoutCount == AUTHENTICATION_COUNTER -> viewModel.authentication(false)

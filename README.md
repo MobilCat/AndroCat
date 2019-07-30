@@ -1,11 +1,10 @@
 <p align="center">AndroCat is a GitHub client for Android phones like how you used to</p>
 <p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="300px"></a></p>
+<p align="center"><a href="https://www.codacy.com/app/mr.mustafa.ozhan/AndroCat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mustafaozhan/AndroCat&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/da90986c7dc94f26b57a33dbf5b3e83b"/></a><a href="https://codebeat.co/projects/github-com-mustafaozhan-androcat-master"><img alt="codebeat badge" src="https://codebeat.co/badges/529dc1ee-5f0a-4ee6-9aa1-aa306a46163b" /></a><img src="https://img.shields.io/github/last-commit/mustafaozhan/androcat.svg"><img src="https://img.shields.io/github/issues/mustafaozhan/androcat.svg"><img src="https://img.shields.io/github/issues-closed/mustafaozhan/androcat.svg"><img src="https://img.shields.io/github/license/mustafaozhan/androcat.svg"></p>
 <p align="center"><a href='https://ko-fi.com/B0B2TZMH' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
 <p align="center">Important! The old version has been removed from the Google Play Store. Download the updated AndroCat from the store icon above to get the lastest updates.</p>
 
 ## Screenshots
-
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9d1a9f2296d543de941250c5596c3bdf)](https://app.codacy.com/app/mr.mustafa.ozhan/AndroCat?utm_source=github.com&utm_medium=referral&utm_content=mustafaozhan/AndroCat&utm_campaign=Badge_Grade_Dashboard)
 
 <img src="https://i.postimg.cc/WsScMB5v/1.png?dl=1" width="420px"/> <img src="https://i.postimg.cc/Vmq8NrM5/2.png?dl=1" width="420px"/>
 

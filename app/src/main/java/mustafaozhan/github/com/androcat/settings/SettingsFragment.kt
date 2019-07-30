@@ -10,15 +10,15 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import com.crashlytics.android.Crashlytics
-import kotlinx.android.synthetic.main.fragment_settings.adView
-import kotlinx.android.synthetic.main.fragment_settings.darkModeSwitch
-import kotlinx.android.synthetic.main.fragment_settings.layoutDarkMode
-import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
-import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
-import kotlinx.android.synthetic.main.fragment_settings.layoutReportIssue
-import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
-import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
-import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
+import kotlinx.android.synthetic.main.fragment_settings.ad_view
+import kotlinx.android.synthetic.main.fragment_settings.layout_dark_mode
+import kotlinx.android.synthetic.main.fragment_settings.layout_feedback
+import kotlinx.android.synthetic.main.fragment_settings.layout_on_github
+import kotlinx.android.synthetic.main.fragment_settings.layout_report_issue
+import kotlinx.android.synthetic.main.fragment_settings.layout_support
+import kotlinx.android.synthetic.main.fragment_settings.layout_username
+import kotlinx.android.synthetic.main.fragment_settings.switch_dark_mode
+import kotlinx.android.synthetic.main.fragment_settings.tv_username_output
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.loadAd
@@ -44,14 +44,14 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun setListeners() {
-        darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+        switch_dark_mode.setOnCheckedChangeListener { _, isChecked ->
             viewModel.updateSettings(darkMode = isChecked)
         }
-        layoutDarkMode.setOnClickListener {
-            darkModeSwitch.isChecked = !darkModeSwitch.isChecked
+        layout_dark_mode.setOnClickListener {
+            switch_dark_mode.isChecked = !switch_dark_mode.isChecked
         }
-        layoutUsername.setOnClickListener { showUsernameDialog() }
-        layoutSupport.setOnClickListener {
+        layout_username.setOnClickListener { showUsernameDialog() }
+        layout_support.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat)))
             getBaseActivity()?.packageManager?.let { packageManager ->
                 intent.resolveActivity(packageManager)?.let {
@@ -65,12 +65,12 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                 }
             }
         }
-        layoutFeedback.setOnClickListener { sendFeedBack() }
-        layoutOnGitHub.setOnClickListener {
+        layout_feedback.setOnClickListener { sendFeedBack() }
+        layout_on_github.setOnClickListener {
             clearBackStack()
             replaceFragment(MainFragment.newInstance(getString(R.string.url_project_repository)), false)
         }
-        layoutReportIssue.setOnClickListener {
+        layout_report_issue.setOnClickListener {
             clearBackStack()
             replaceFragment(MainFragment.newInstance(getString(R.string.url_report_issue)), false)
         }
@@ -78,11 +78,11 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
     private fun init() {
         viewModel.getUserName()?.let {
-            txtUsernameInput?.text = it
-        } ?: run { txtUsernameInput?.text = getString(R.string.missUsername) }
+            tv_username_output?.text = it
+        } ?: run { tv_username_output?.text = getString(R.string.missUsername) }
 
         viewModel.getSettings().darkMode?.let {
-            darkModeSwitch.isChecked = it
+            switch_dark_mode.isChecked = it
         }
     }
 
@@ -100,7 +100,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             .setView(editText)
             .setPositiveButton("SAVE") { _, _ ->
                 viewModel.updateUserName(editText.text.toString())
-                txtUsernameInput?.text = editText.text.toString()
+                tv_username_output?.text = editText.text.toString()
             }
             .setNegativeButton("CANCEL") { _, _ -> }
             .show()
@@ -122,7 +122,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     override fun onResume() {
-        adView.loadAd(R.string.banner_ad_id)
+        ad_view.loadAd(R.string.banner_ad_id)
         super.onResume()
     }
 }

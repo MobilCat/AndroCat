@@ -16,7 +16,7 @@ import com.google.gson.JsonSyntaxException
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_main.webView
+import kotlinx.android.synthetic.main.fragment_main.web_view
 import mustafaozhan.github.com.androcat.BuildConfig
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseFragment
@@ -64,8 +64,8 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         val f = supportFragmentManager.findFragmentById(containerId)
 
         return if (f is MainFragment) {
-            if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-                webView.goBack()
+            if (keyCode == KeyEvent.KEYCODE_BACK && web_view.canGoBack()) {
+                web_view.goBack()
                 true
             } else {
                 super.onKeyUp(keyCode, event)
@@ -128,33 +128,27 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             getString(R.string.url_androcat)
         )
 
-        val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-        firebaseRemoteConfig.setConfigSettingsAsync(
-            FirebaseRemoteConfigSettings
-                .Builder()
-                .setMinimumFetchIntervalInSeconds(CHECK_INTERVAL)
-                .build()
-        )
-
-        firebaseRemoteConfig.setDefaults(defaultMap)
-
-        firebaseRemoteConfig.fetch(
-            if (BuildConfig.DEBUG) {
-                0
-            } else {
-                TimeUnit.HOURS.toSeconds(CHECK_DURATION)
+        FirebaseRemoteConfig
+            .getInstance().apply {
+                setConfigSettingsAsync(
+                    FirebaseRemoteConfigSettings
+                        .Builder()
+                        .setMinimumFetchIntervalInSeconds(CHECK_INTERVAL)
+                        .build()
+                )
+                setDefaults(defaultMap)
+                fetch(if (BuildConfig.DEBUG) 0 else TimeUnit.HOURS.toSeconds(CHECK_DURATION))
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            activate()
+                            if (TextUtils.isEmpty(getString(REMOTE_CONFIG))) {
+                                defaultMap[REMOTE_CONFIG] as? String
+                            } else {
+                                getString(REMOTE_CONFIG)
+                            }?.let { showUpdateDialog(it) }
+                        }
+                    }
             }
-        ).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                firebaseRemoteConfig.activate()
-
-                if (TextUtils.isEmpty(firebaseRemoteConfig.getString(REMOTE_CONFIG))) {
-                    defaultMap[REMOTE_CONFIG] as? String
-                } else {
-                    firebaseRemoteConfig.getString(REMOTE_CONFIG)
-                }?.let { showUpdateDialog(it) }
-            }
-        }
     }
 
     private fun showUpdateDialog(remoteConfigStr: String) {
