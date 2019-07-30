@@ -27,8 +27,7 @@ import mustafaozhan.github.com.androcat.tools.TextSize
 abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
-        const val LOGIN_COUNTER_LIMIT = 3
-        const val LOGOUT_COUNTER_LIMIT = 4
+        const val AUTHENTICATION_COUNTER = 3
     }
 
     private var loginCount = 0
@@ -99,8 +98,6 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                 textSize = if (url.contains(getString(R.string.str_gist))) TextSize.LARGE else TextSize.SMALL
             )
             else -> updateVariables(
-                login = false,
-                logout = false,
                 textSize = if (url.contains(getString(R.string.url_github))) TextSize.SMALL else TextSize.LARGE
             )
         }
@@ -200,8 +197,8 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         logout?.let { if (it) logoutCount++ else logoutCount = 0 }
         textSize?.let { webView?.settings?.textZoom = it.value }
         when {
-            loginCount == LOGIN_COUNTER_LIMIT -> viewModel.authentication(true)
-            logoutCount == LOGOUT_COUNTER_LIMIT -> viewModel.authentication(false)
+            loginCount == AUTHENTICATION_COUNTER -> viewModel.authentication(true)
+            logoutCount == AUTHENTICATION_COUNTER -> viewModel.authentication(false)
         }
     }
 

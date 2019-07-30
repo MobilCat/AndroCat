@@ -114,10 +114,7 @@ class MainFragment : BaseMainFragment() {
                 when (item.actionId) {
                     1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
                     2 -> loadUrlWithAnimation(getString(R.string.url_login))
-                    3 -> {
-                        updateVariables(logout = false)
-                        loadUrlWithAnimation(getString(R.string.url_logout))
-                    }
+                    3 -> loadUrlWithAnimation(getString(R.string.url_logout))
                     4 -> loadIfUserNameSet(getString(R.string.url_settings))
                     5 -> replaceFragment(SettingsFragment.newInstance(), true)
                 }

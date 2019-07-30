@@ -19,6 +19,14 @@
         android:gravity="center"
         android:orientation="horizontal" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layoutDots"
+        android:layout_marginBottom="@dimen/dots_margin_bottom"
+        android:visibility="gone" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

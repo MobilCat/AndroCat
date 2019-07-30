@@ -12,6 +12,7 @@ import androidx.core.text.HtmlCompat
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.activity_slider.btn_next
 import kotlinx.android.synthetic.main.activity_slider.layoutDots
+import kotlinx.android.synthetic.main.activity_slider.progressBar
 import kotlinx.android.synthetic.main.activity_slider.view_pager
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmActivity
@@ -97,6 +98,7 @@ class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
     }
 
     private fun launchMainActivity() {
+        progressBar.visibility = View.VISIBLE
         viewModel.updateSettings(sliderShown = true)
         startActivity(Intent(this, MainActivity::class.java))
         finish()
