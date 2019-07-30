@@ -21,7 +21,7 @@ import mustafaozhan.github.com.androcat.slider.adapter.ViewPagerAdapter
 class SliderActivity : BaseMvvmActivity<SliderActivityViewModel>() {
 
     companion object {
-        const val SLIDE_SIZE = 2
+        const val SLIDE_SIZE = 3
         const val TEXT_SIZE = 36f
     }
 

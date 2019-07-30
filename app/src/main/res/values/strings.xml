@@ -95,7 +95,8 @@
     <string name="slide_intro_text_2">Mobile friendly pages \n \nDesktop pages have bigger text \n \nFaster load time</string>
     <string name="slide_dark_mode_title">Dark Mode !</string>
     <string name="slide_dark_mode_text">To activate it please go to: Explore > Dark mode</string>
-    <string name="slide_features_title">Upcoming Features !</string>
-    <string name="slide_features_text">*Notification support thought GitHub API</string>
+    <string name="slide_bug_report_title">Bugs &amp; Issues</string>
+    <string name="slide_bug_report_text_1">If you experienced any Bug or Issue</string>
+    <string name="slide_bug_report_text_2"> Please navigate\n\nUser > App Settings > Report Issue\n\n Than create a GitHub Issue to AndroCat Project</string>
 
 </resources>

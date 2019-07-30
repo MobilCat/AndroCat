@@ -55,7 +55,8 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         when {
             url == context?.getString(R.string.url_logout) ->
                 updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
-            url.contains(context?.getString(R.string.url_session).toString()) -> {
+            url.contains(context?.getString(R.string.url_session).toString()) or
+                url.contains(getString(R.string.url_login)) -> {
                 webView?.runScript(JsScrip.GET_USERNAME) {
                     userName = it?.remove("\"").toString()
                 }
@@ -68,8 +69,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                 url.contains(getString(R.string.url_new)) or
                 url.contains(getString(R.string.url_settings)) ->
                 updateVariables(login = false, logout = false, textSize = TextSize.LARGE)
-            url.contains(getString(R.string.url_login)) or
-                url.contains(getString(R.string.url_search)) or
+            url.contains(getString(R.string.url_search)) or
                 url.contains(getString(R.string.url_trending)) or
                 url.contains(getString(R.string.str_organization)) or
                 url.contains(getString(R.string.str_google_play)) or
@@ -143,7 +143,9 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         }
     }
 
-    override fun onExternalPageRequest(url: String?) {}
+    override fun onExternalPageRequest(url: String?) {
+        // Nothing Implemented yet
+    }
 
     override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
         loadUrlWithAnimation(webView?.context?.getString(R.string.url_blank))
