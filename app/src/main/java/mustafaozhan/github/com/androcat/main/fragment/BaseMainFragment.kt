@@ -53,6 +53,14 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     @Suppress("ComplexMethod")
     override fun onPageFinished(url: String) {
         when {
+            url == context?.getString(R.string.url_logout) ->
+                updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
+            url.contains(context?.getString(R.string.url_session).toString()) -> {
+                webView?.runScript(JsScrip.GET_USERNAME) {
+                    userName = it?.remove("\"").toString()
+                }
+                updateVariables(login = true, logout = false, textSize = TextSize.SMALL)
+            }
             url.contains(getString(R.string.str_gist)) or
                 url.contains(getString(R.string.url_issues)) or
                 url.contains(getString(R.string.url_pulls)) or
@@ -71,14 +79,6 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                 updateVariables(login = false, logout = false, textSize = TextSize.SMALL)
             url.contains(context?.getString(R.string.url_blank).toString()) ->
                 updateVariables(login = false, logout = false)
-            url == context?.getString(R.string.url_logout) ->
-                updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
-            url.contains(context?.getString(R.string.url_session).toString()) -> {
-                webView?.runScript(JsScrip.GET_USERNAME) {
-                    userName = it?.remove("\"").toString()
-                }
-                updateVariables(login = true, logout = false, textSize = TextSize.SMALL)
-            }
             url.contains(getString(R.string.str_stargazers)) ->
                 updateVariables(login = false, logout = false, textSize = TextSize.MEDIUM)
             url.contains(viewModel.getUserName().toString()) -> updateVariables(
@@ -143,9 +143,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         }
     }
 
-    override fun onExternalPageRequest(url: String?) {
-        // todo not implemented yet
-    }
+    override fun onExternalPageRequest(url: String?) {}
 
     override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
         loadUrlWithAnimation(webView?.context?.getString(R.string.url_blank))
