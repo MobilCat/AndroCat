@@ -113,7 +113,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         super.onResume()
         web_view?.onResume()
         if (MainActivity.uri != null) {
-            loadUrlWithAnimation(MainActivity.uri)
+            loadUrl(urlStr = MainActivity.uri)
             MainActivity.uri = null
         }
     }
@@ -152,34 +152,30 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     }
 
     override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-        loadUrlWithAnimation(web_view?.context?.getString(R.string.url_blank))
+        loadUrl(R.string.url_blank)
     }
 
-    protected fun loadIfUserNameSet(url: String) =
-        viewModel.getUserName().let { username ->
-            if (username.isValidUsername()) {
-                if (viewModel.isLoggedIn() == false) {
-                    baseUrl = getString(R.string.url_login)
-                    loadUrlWithAnimation(baseUrl)
-                } else {
-                    // if user name valid load url anyway
-                    loadUrlWithAnimation(url)
-                }
-            } else {
-                if (viewModel.isLoggedIn() == false) {
-                    baseUrl = getString(R.string.url_login)
-                    loadUrlWithAnimation(baseUrl)
-                } else {
-                    snacky(getString(R.string.missUsername), getString(R.string.enter)) {
-                        replaceFragment(SettingsFragment.newInstance(), true)
-                    }
-                }
+    protected fun loadIfUserNameSet(urlId: Int, addUserName: Boolean = false) = viewModel.apply {
+        when {
+            isLoggedIn() == false -> loadUrl(R.string.url_login, true)
+            getUserName().isValidUsername() ->
+                loadUrl(urlStr = if (addUserName) getString(urlId, getUserName()) else getString(urlId))
+            else -> snacky(getString(R.string.missUsername), getString(R.string.enter)) {
+                replaceFragment(SettingsFragment.newInstance(), true)
             }
         }
+    }
 
-    protected fun loadUrlWithAnimation(urlToLoad: String?) = urlToLoad?.let { url ->
+    protected fun loadUrl(urlId: Int? = null, updateBaseUrl: Boolean = false, urlStr: String? = null) {
         loadingView(true)
-        web_view?.loadUrl(url)
+        urlStr?.let {
+            web_view?.loadUrl(it)
+        } ?: run {
+            urlId?.let { id ->
+                if (updateBaseUrl) baseUrl = getString(id)
+                web_view?.loadUrl(getString(id))
+            }
+        }
     }
 
     @Suppress("ComplexMethod")

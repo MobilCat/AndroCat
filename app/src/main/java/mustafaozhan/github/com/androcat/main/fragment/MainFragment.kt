@@ -59,7 +59,7 @@ class MainFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.apply {
-            getString(ARGS_OPEN_URL)?.let { loadUrlWithAnimation(it) }
+            loadUrl(urlStr = getString(ARGS_OPEN_URL))
             clear()
         }
         init()
@@ -78,7 +78,7 @@ class MainFragment : BaseMainFragment() {
         if (isLoggedIn) {
             viewModel.updateUser(userName, isLoggedIn)
         } else {
-            loadUrlWithAnimation(getString(R.string.url_login))
+            loadUrl(R.string.url_login)
             viewModel.updateUser("", isLoggedIn)
         }
         quickActionProfile = setProfileActions(isLoggedIn)
@@ -98,7 +98,7 @@ class MainFragment : BaseMainFragment() {
 
         viewModel.getSettings().darkMode?.let { darkMode(it) }
 
-        loadUrlWithAnimation(baseUrl)
+        loadUrl(urlStr = baseUrl)
     }
 
     private fun setProfileActions(isLoggedIn: Boolean): QuickAction? {
@@ -106,10 +106,10 @@ class MainFragment : BaseMainFragment() {
         return context?.initProfileActions(isLoggedIn)?.apply {
             setOnActionItemClickListener { item ->
                 when (item.actionId) {
-                    1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName())
-                    2 -> loadUrlWithAnimation(getString(R.string.url_login))
-                    3 -> loadUrlWithAnimation(getString(R.string.url_logout))
-                    4 -> loadIfUserNameSet(getString(R.string.url_settings))
+                    1 -> loadIfUserNameSet(R.string.url_user_profile, true)
+                    2 -> loadUrl(R.string.url_login)
+                    3 -> loadUrl(R.string.url_logout)
+                    4 -> loadIfUserNameSet(R.string.url_settings)
                     5 -> replaceFragment(SettingsFragment.newInstance(), true)
                 }
             }
@@ -117,11 +117,11 @@ class MainFragment : BaseMainFragment() {
     }
 
     private fun setListeners() {
-        fab_news_feed.setOnClickListener { loadUrlWithAnimation(baseUrl) }
+        fab_news_feed.setOnClickListener { loadUrl(urlStr = baseUrl) }
         web_view?.setListener(getBaseActivity(), this)
 
         layout_swipe_refresh.setOnRefreshListener {
-            loadUrlWithAnimation(web_view?.url)
+            loadUrl(urlStr = web_view?.url)
             layout_swipe_refresh.isRefreshing = false
         }
 
@@ -162,29 +162,29 @@ class MainFragment : BaseMainFragment() {
                 1 -> web_view?.goBack()
                 2 -> web_view?.goForward()
                 3 -> viewModel.getSettings().darkMode?.let { darkMode(!it, true) }
-                4 -> loadUrlWithAnimation(getString(R.string.url_search))
+                4 -> loadUrl(R.string.url_search)
                 5 -> {
                     layout_find_in_page.setVisibleWithAnimation(true)
                     et_search.showKeyboard()
                 }
-                6 -> loadUrlWithAnimation(getString(R.string.url_trending))
+                6 -> loadUrl(R.string.url_trending)
             }
         }
         quickActionStack.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_notifications))
-                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName() + "?tab=stars")
-                3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName() + "?tab=repositories")
-                4 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUserName())
+                1 -> loadIfUserNameSet(R.string.url_notifications)
+                2 -> loadIfUserNameSet(R.string.url_user_stars, true)
+                3 -> loadIfUserNameSet(R.string.url_user_repositories, true)
+                4 -> loadIfUserNameSet(R.string.url_user_gists, true)
             }
         }
         quickActionProduction.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_issues))
-                2 -> loadIfUserNameSet(getString(R.string.url_pulls))
-                3 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUserName() + "?tab=projects")
-                4 -> loadIfUserNameSet(getString(R.string.url_new))
-                5 -> loadIfUserNameSet(getString(R.string.url_gist))
+                1 -> loadIfUserNameSet(R.string.url_issues)
+                2 -> loadIfUserNameSet(R.string.url_pulls)
+                3 -> loadIfUserNameSet(R.string.url_user_projects, true)
+                4 -> loadIfUserNameSet(R.string.url_new)
+                5 -> loadIfUserNameSet(R.string.url_gist)
             }
         }
     }

@@ -56,6 +56,13 @@
     <string name="url_notifications">https://github.com/notifications</string>
     <string name="url_session">https://github.com/session</string>
 
+    <string name="url_user_profile">https://github.com/%s</string>
+    <string name="url_user_stars">https://github.com/%s?tab=stars</string>
+    <string name="url_user_repositories">https://github.com/%s?tab=repositories</string>
+    <string name="url_user_projects">https://github.com/%s?tab=projects</string>
+    <string name="url_user_gists">https://gist.github.com/%s</string>
+
+
     <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
     <string name="url_report_issue">https://github.com/mustafaozhan/AndroCat/issues</string>
