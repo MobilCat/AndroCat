@@ -6,6 +6,8 @@ javascript: (
         var issuesNavBarName = "reponav-wrapper reponav-small d-lg-none";
         var gitHubNavBarName = "position-relative js-header-wrapper ";
 		var projectButton = "d-flex d-sm-none position-fixed bottom-0 width-full border-top bg-white p-3 box-shadow-large js-project-small-footer";
+		var issuesTitleBarName = "gh-header js-details-container Details js-socket-channel js-updatable-content issue";
+		var pullRequestTitleBarName = "gh-header js-details-container Details js-socket-channel js-updatable-content pull request"
 
         var head = document.getElementsByTagName("head")[0];
         var body = document.getElementsByTagName("body")[0];
@@ -17,7 +19,16 @@ javascript: (
         } else {
             style.appendChild(document.createTextNode(css));
         }
-
+        if (document.getElementsByClassName(issuesTitleBarName)[0]) {
+            document.getElementsByClassName(issuesTitleBarName)[0]
+                     .style
+                     .backgroundColor = "transparent";
+        }
+        if (document.getElementsByClassName(pullRequestTitleBarName)[0]) {
+            document.getElementsByClassName(pullRequestTitleBarName)[0]
+                    .style
+                    .backgroundColor = "transparent";
+        }
         if (document.getElementsByClassName(gitHubNavBarName)[0]) {
             document.getElementsByClassName(gitHubNavBarName)[0]
                     .style
