@@ -1,9 +1,15 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
 import com.github.jorgecastillo.FillableLoader
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.fragment_main.web_view
@@ -18,6 +24,7 @@ import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
 import mustafaozhan.github.com.androcat.tools.TextSize
+
 
 @Suppress("TooManyFunctions")
 abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
@@ -136,12 +143,30 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         userAgent: String?
     ) {
         try {
-            if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
-                snacky("Download unsuccessful, download manager has been disabled on device")
+            if (!hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Permission ask
+                ActivityCompat.requestPermissions(getBaseActivity() as Activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
+            } else {
+                if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
+                    snacky("Download unsuccessful, download manager has been disabled on device")
+                }
+                loadUrl()
             }
+
         } catch (e: Exception) {
             logException(e)
         }
+    }
+
+    fun hasPermissions(context: Context?, vararg permissions: String): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     override fun onExternalPageRequest(url: String?) {
