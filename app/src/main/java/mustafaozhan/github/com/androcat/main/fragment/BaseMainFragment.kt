@@ -1,12 +1,10 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
-import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import com.github.jorgecastillo.FillableLoader
-import com.livinglifetechway.quickpermissions.annotations.WithPermissions
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.fragment_main.web_view
 import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader
@@ -129,7 +127,6 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     }
 
     @Suppress("TooGenericExceptionCaught")
-    @WithPermissions([Manifest.permission.WRITE_EXTERNAL_STORAGE])
     override fun onDownloadRequested(
         url: String?,
         suggestedFilename: String?,

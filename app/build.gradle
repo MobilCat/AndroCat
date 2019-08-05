@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.livinglifetechway.quickpermissions_plugin'
 
 def getGitVersionCode = { ->
     try {
