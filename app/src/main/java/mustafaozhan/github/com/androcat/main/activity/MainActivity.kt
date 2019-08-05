@@ -36,8 +36,8 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         const val CHECK_DURATION: Long = 6
         const val CHECK_INTERVAL: Long = 4200
         const val REMOTE_CONFIG = "remote_config"
-        const val AD_INITIAL_DELAY: Long = 44
-        const val AD_PERIOD: Long = 256
+        const val AD_INITIAL_DELAY: Long = 50
+        const val AD_PERIOD: Long = 250
     }
 
     private lateinit var adObservableInterval: Disposable
