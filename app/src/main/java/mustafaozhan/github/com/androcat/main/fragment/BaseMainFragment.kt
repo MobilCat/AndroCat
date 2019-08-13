@@ -2,11 +2,8 @@ package mustafaozhan.github.com.androcat.main.fragment
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -25,17 +22,17 @@ import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
 import mustafaozhan.github.com.androcat.tools.TextSize
 
-
 @Suppress("TooManyFunctions")
 abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener {
 
     companion object {
         const val AUTHENTICATION_COUNTER = 3
+        const val EXTERNAL_STORAGE_PERMISSION_CODE = 111
     }
 
+    protected lateinit var baseUrl: String
     private var loginCount = 0
     private var logoutCount = 0
-    protected lateinit var baseUrl: String
     protected var isAnimating = false
     protected var userName = ""
     protected var loader: FillableLoader? = null
@@ -144,38 +141,26 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     ) {
         try {
             if (!hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                // Permission ask
-                ActivityCompat.requestPermissions(getBaseActivity() as Activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
+                ActivityCompat.requestPermissions(
+                    getBaseActivity() as Activity,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    EXTERNAL_STORAGE_PERMISSION_CODE
+                )
             } else {
                 if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
                     snacky("Download unsuccessful, download manager has been disabled on device")
                 }
                 loadUrl()
             }
-
         } catch (e: Exception) {
             logException(e)
         }
     }
 
-    fun hasPermissions(context: Context?, vararg permissions: String): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
-            for (permission in permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
+    override fun onExternalPageRequest(url: String?) = Unit
 
-    override fun onExternalPageRequest(url: String?) {
-        // Nothing Implemented yet
-    }
-
-    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-        loadUrl(R.string.url_blank)
-    }
+    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) = loadUrl(R.string.url_blank)
 
     protected fun loadIfUserNameSet(urlId: Int, addUserName: Boolean = false) = viewModel.apply {
         when {

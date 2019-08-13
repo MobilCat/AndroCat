@@ -72,6 +72,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    // Http client
+    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+
     // Rx
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:${rootProject.ext.rxBindingVersion}"
@@ -100,9 +103,6 @@ dependencies {
 
     // Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
-
-    // Http client
-    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
 
     // Android Fillable Loader
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
