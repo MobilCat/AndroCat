@@ -51,7 +51,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     private var doubleBackToExitPressedOnce = false
     private var adVisibility = false
-    private var isInitial = true
+    private var firstShow = true
 
     override fun getDefaultFragment(): BaseFragment = MainFragment.newInstance()
 
@@ -105,7 +105,38 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         })
     }
 
-    internal fun showRewardedAd() {
+    private fun ad() {
+        adVisibility = true
+        adObservableInterval = Observable.interval(AD_INITIAL_DELAY, AD_PERIOD, TimeUnit.SECONDS)
+            .debounce(0, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext { count ->
+                if (mInterstitialAd.isLoaded && adVisibility && viewModel.isRewardExpired()) {
+                    if (firstShow) {
+                        mInterstitialAd.show()
+                        firstShow = false
+                    } else if (count > 0) {
+                        mInterstitialAd.show()
+                        showRewardedAdDialog()
+                    }
+                } else {
+                    prepareAd()
+                }
+            }.doOnError(::logException)
+            .subscribe()
+    }
+
+    internal fun showRewardedAdDialog() {
+        showDialog(
+            getString(R.string.remove_ads),
+            getString(R.string.remove_ads_text),
+            getString(R.string.watch)
+        ) {
+            showRewardedAd()
+        }
+    }
+
+    private fun showRewardedAd() {
         if (rewardedAd.isLoaded) {
             rewardedAd.show(this, object : RewardedAdCallback() {
                 override fun onRewardedAdOpened() = Unit
@@ -119,26 +150,6 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                 }
             })
         }
-    }
-
-    private fun ad() {
-        adVisibility = true
-        adObservableInterval = Observable.interval(AD_INITIAL_DELAY, AD_PERIOD, TimeUnit.SECONDS)
-            .debounce(0, TimeUnit.SECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { count ->
-                if (mInterstitialAd.isLoaded && adVisibility && viewModel.isRewardExpired()) {
-                    if (isInitial) {
-                        mInterstitialAd.show()
-                        isInitial = false
-                    } else if (count > 0) {
-                        mInterstitialAd.show()
-                    }
-                } else {
-                    prepareAd()
-                }
-            }.doOnError(::logException)
-            .subscribe()
     }
 
     private fun prepareAd() {

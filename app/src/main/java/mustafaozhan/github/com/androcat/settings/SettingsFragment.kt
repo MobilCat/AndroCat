@@ -51,15 +51,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layout_dark_mode.setOnClickListener {
             switch_dark_mode.isChecked = !switch_dark_mode.isChecked
         }
-        layout_remove_ads.setOnClickListener {
-            showDialog(
-                getString(R.string.remove_ads),
-                getString(R.string.remove_ads_text),
-                getString(R.string.watch)
-            ) {
-                (getBaseActivity() as? MainActivity)?.showRewardedAd()
-            }
-        }
+        layout_remove_ads.setOnClickListener { (getBaseActivity() as? MainActivity)?.showRewardedAdDialog() }
         layout_username.setOnClickListener { showUsernameDialog() }
         layout_support.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat)))
