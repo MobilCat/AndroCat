@@ -6,8 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.view.KeyEvent
+import androidx.annotation.NonNull
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
@@ -40,6 +45,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         const val AD_PERIOD: Long = 250
     }
 
+    private lateinit var rewardedAd: RewardedAd
     private lateinit var adObservableInterval: Disposable
     private lateinit var mInterstitialAd: InterstitialAd
 
@@ -55,6 +61,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadRewardedAd()
         checkAppUpdate()
         prepareAd()
     }
@@ -87,6 +94,30 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             Handler().postDelayed({ doubleBackToExitPressedOnce = false }, BACK_DELAY)
         } else {
             super.onBackPressed()
+        }
+    }
+
+    private fun loadRewardedAd() {
+        rewardedAd = RewardedAd(this, getString(R.string.rewarded_ad_unit_id))
+        rewardedAd.loadAd(AdRequest.Builder().build(), object : RewardedAdLoadCallback() {
+            override fun onRewardedAdLoaded() = Unit
+            override fun onRewardedAdFailedToLoad(errorCode: Int) = Unit
+        })
+    }
+
+    private fun showRewardedAd() {
+        if (rewardedAd.isLoaded) {
+            rewardedAd.show(this, object : RewardedAdCallback() {
+                override fun onRewardedAdOpened() = Unit
+                override fun onRewardedAdClosed() = loadRewardedAd()
+                override fun onRewardedAdFailedToShow(errorCode: Int) = loadRewardedAd()
+                override fun onUserEarnedReward(@NonNull reward: RewardItem) {
+                    viewModel.updateAdFreeActivation()
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
+                }
+            })
         }
     }
 

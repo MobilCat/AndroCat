@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import mustafaozhan.github.com.androcat.base.BaseSharedPreferences
 import mustafaozhan.github.com.androcat.model.Settings
 import mustafaozhan.github.com.androcat.model.User
+import org.joda.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,11 +35,13 @@ constructor() : BaseSharedPreferences() {
 
     fun updateSettings(
         darkMode: Boolean? = null,
-        sliderShown: Boolean? = null
+        sliderShown: Boolean? = null,
+        adFreeActivatedDate: Instant? = null
     ) {
         val settings = loadSettings()
         darkMode?.let { settings.darkMode = it }
         sliderShown?.let { settings.sliderShown = it }
+        adFreeActivatedDate?.let { settings.adFreeActivatedDate = it }
         setStringEntry(SETTINGS, Gson().toJson(settings))
     }
 
@@ -54,6 +57,6 @@ constructor() : BaseSharedPreferences() {
     fun loadSettings() =
         Gson().fromJson(getStringEntry(SETTINGS), Settings::class.java)
             ?: run {
-                Settings(darkMode = false, sliderShown = false)
+                Settings(darkMode = false, sliderShown = false, adFreeActivatedDate = null)
             }
 }

@@ -104,6 +104,9 @@ dependencies {
     // Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    // Joda Time
+    implementation 'net.danlew:android.joda:2.10.1.2'
+
     // Android Fillable Loader
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
 }

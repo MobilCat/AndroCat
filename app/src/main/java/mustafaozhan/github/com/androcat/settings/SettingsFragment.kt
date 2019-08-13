@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_settings.switch_dark_mode
 import kotlinx.android.synthetic.main.fragment_settings.tv_username_output
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
-import mustafaozhan.github.com.androcat.extensions.loadAd
+import mustafaozhan.github.com.androcat.extensions.checkAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 
 /**
@@ -121,7 +121,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     override fun onResume() {
-        ad_view.loadAd(R.string.banner_ad_id)
+        ad_view.checkAd(R.string.banner_ad_id, viewModel.isRewardExpired())
         super.onResume()
     }
 }

@@ -106,4 +106,9 @@
     <string name="slide_bug_report_text_1">If you experienced any Bug or Issue</string>
     <string name="slide_bug_report_text_2"> Please navigate\n\nUser > App Settings > Report Issue\n\n Than create a GitHub Issue to AndroCat Project</string>
 
+    <!--Rewarded Ads-->
+    <string name="remove_ads">Remove Ads</string>
+    <string name="remove_ads_text">Would you like to watch a video to stop ads for 48 hours ?</string>
+    <string name="watch">Watch</string>
+
 </resources>
