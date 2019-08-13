@@ -130,7 +130,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         web_view?.onActivityResult(requestCode, resultCode, intent)
     }
 
-    @Suppress("TooGenericExceptionCaught")
+    @Suppress("TooGenericExceptionCaught", "NestedBlockDepth")
     override fun onDownloadRequested(
         url: String?,
         suggestedFilename: String?,
@@ -140,18 +140,19 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
         userAgent: String?
     ) {
         try {
-            if (!hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(
-                    getBaseActivity() as Activity,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ),
-                    EXTERNAL_STORAGE_PERMISSION_CODE
-                )
-            } else {
-                if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
-                    snacky("Download unsuccessful, download manager has been disabled on device")
+            (getBaseActivity() as? Activity)?.let {
+                if (!hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    ActivityCompat.requestPermissions(
+                        it,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        EXTERNAL_STORAGE_PERMISSION_CODE
+                    )
+                } else {
+                    if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
+                        snacky("Download unsuccessful, download manager has been disabled on device")
+                    }
+                    loadUrl()
                 }
-                loadUrl()
             }
         } catch (e: Exception) {
             logException(e)
