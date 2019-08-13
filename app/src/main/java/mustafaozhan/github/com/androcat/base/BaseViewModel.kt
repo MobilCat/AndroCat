@@ -39,6 +39,6 @@ abstract class BaseViewModel : ViewModel() {
     ) = dataManager.updateSettings(darkMode, sliderShown)
 
     open fun isRewardExpired() = dataManager.loadSettings().adFreeActivatedDate?.let {
-        Duration(it, Instant.now()).standardSeconds > NUMBER_OF_HOURS
+        Duration(it, Instant.now()).standardHours > NUMBER_OF_HOURS
     } ?: true
 }

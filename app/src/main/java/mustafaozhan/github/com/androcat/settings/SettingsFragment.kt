@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_settings.ad_view
 import kotlinx.android.synthetic.main.fragment_settings.layout_dark_mode
 import kotlinx.android.synthetic.main.fragment_settings.layout_feedback
 import kotlinx.android.synthetic.main.fragment_settings.layout_on_github
+import kotlinx.android.synthetic.main.fragment_settings.layout_remove_ads
 import kotlinx.android.synthetic.main.fragment_settings.layout_report_issue
 import kotlinx.android.synthetic.main.fragment_settings.layout_support
 import kotlinx.android.synthetic.main.fragment_settings.layout_username
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_settings.tv_username_output
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.checkAd
+import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 
 /**
@@ -48,6 +50,15 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         }
         layout_dark_mode.setOnClickListener {
             switch_dark_mode.isChecked = !switch_dark_mode.isChecked
+        }
+        layout_remove_ads.setOnClickListener {
+            showDialog(
+                getString(R.string.remove_ads),
+                getString(R.string.remove_ads_text),
+                getString(R.string.watch)
+            ) {
+                (getBaseActivity() as? MainActivity)?.showRewardedAd()
+            }
         }
         layout_username.setOnClickListener { showUsernameDialog() }
         layout_support.setOnClickListener {

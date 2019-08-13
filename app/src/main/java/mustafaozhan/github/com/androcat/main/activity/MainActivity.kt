@@ -105,7 +105,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         })
     }
 
-    private fun showRewardedAd() {
+    internal fun showRewardedAd() {
         if (rewardedAd.isLoaded) {
             rewardedAd.show(this, object : RewardedAdCallback() {
                 override fun onRewardedAdOpened() = Unit
@@ -127,7 +127,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
             .debounce(0, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { count ->
-                if (mInterstitialAd.isLoaded && adVisibility) {
+                if (mInterstitialAd.isLoaded && adVisibility && viewModel.isRewardExpired()) {
                     if (isInitial) {
                         mInterstitialAd.show()
                         isInitial = false
