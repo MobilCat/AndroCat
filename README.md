@@ -1,8 +1,8 @@
 <p align="center">AndroCat is a GitHub client for Android phones like how you used to</p>
 <p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="300px"></a></p>
-<p align="center"><a href="https://www.codacy.com/app/mr.mustafa.ozhan/AndroCat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mustafaozhan/AndroCat&amp;utm_campaign=Badge_Grade"> <img src="https://api.codacy.com/project/badge/Grade/da90986c7dc94f26b57a33dbf5b3e83b"/></a>   <a href="https://codebeat.co/projects/github-com-mustafaozhan-androcat-master"> <img alt="codebeat badge" src="https://codebeat.co/badges/529dc1ee-5f0a-4ee6-9aa1-aa306a46163b" /></a>   <img src="https://img.shields.io/github/last-commit/mustafaozhan/androcat.svg">  <img src="https://img.shields.io/github/issues/mustafaozhan/androcat.svg">   <img src="https://img.shields.io/github/issues-closed/mustafaozhan/androcat.svg">  <img src="https://img.shields.io/github/license/mustafaozhan/androcat.svg"></p>
+<p align="center"><a href="https://www.codacy.com/app/mr.mustafa.ozhan/AndroCat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MobilCat/AndroCat&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/e0cf92fe59fa4b188ad1ed9dcabc5525"/></a>   <a href="https://codebeat.co/projects/github-com-mobilcat-androcat-master"><img alt="codebeat badge" src="https://codebeat.co/badges/f906b401-fac9-41f4-b4d3-8ae6884370df" /></a>   <img src="https://img.shields.io/github/last-commit/MobilCat/AndroCat.svg">  <img src="https://img.shields.io/github/issues/MobilCat/AndroCat.svg">   <img src="https://img.shields.io/github/issues-closed/MobilCat/AndroCat.svg">  <img src="https://img.shields.io/github/license/MobilCat/AndroCat.svg"></p>
 <p align="center"><a href='https://ko-fi.com/B0B2TZMH' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
-<p align="center">Important! The old version has been removed from the Google Play Store. Download the updated AndroCat from the store icon above to get the lastest updates.</p>
+<p align="center">Important! The old version has been removed from the Google Play Store. Download the updated AndroCat from the store icon above to get the latest updates.</p>
 
 ## Screenshots
 
@@ -47,6 +47,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    // Http client
+    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+
     // Rx
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:${rootProject.ext.rxBindingVersion}"
@@ -55,10 +58,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Ad
-    implementation 'com.google.firebase:firebase-ads:18.0.0'
+    implementation 'com.google.firebase:firebase-ads:18.1.1'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.google.firebase:firebase-config:18.0.0'
 
     // Advanced WebView
@@ -76,8 +79,8 @@ dependencies {
     // Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    // Http client
-    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+    // Joda Time
+    implementation 'net.danlew:android.joda:2.10.1.2'
 
     // Android Fillable Loader
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'

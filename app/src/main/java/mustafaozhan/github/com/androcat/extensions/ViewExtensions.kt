@@ -38,10 +38,15 @@ fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String?) -> Unit = {}) 
         )
     }
 
-fun AdView.loadAd(adId: Int) {
-    MobileAds.initialize(context, resources.getString(adId))
-    val adRequest = AdRequest.Builder().build()
-    loadAd(adRequest)
+fun AdView.checkAd(id: Int, isExpired: Boolean) {
+    if (isExpired) {
+        MobileAds.initialize(context, resources.getString(id))
+        val adRequest = AdRequest.Builder().build()
+        loadAd(adRequest)
+    } else {
+        isEnabled = false
+        visibility = View.GONE
+    }
 }
 
 fun View.setVisibleWithAnimation(isVisible: Boolean) {

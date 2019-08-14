@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.tools
 
 import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
+import org.joda.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,10 +24,12 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
     fun updateSettings(
         darkMode: Boolean? = null,
-        sliderShown: Boolean? = null
+        sliderShown: Boolean? = null,
+        adFreeActivatedDate: Instant? = null
     ) = generalSharedPreferences.updateSettings(
         darkMode = darkMode,
-        sliderShown = sliderShown
+        sliderShown = sliderShown,
+        adFreeActivatedDate = adFreeActivatedDate
     )
 
     fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
