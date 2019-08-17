@@ -5,7 +5,9 @@
     <dimen name="two">2dp</dimen>
     <dimen name="four">4dp</dimen>
     <dimen name="eight">8dp</dimen>
+    <dimen name="ten">10dp</dimen>
     <dimen name="thirty_six">36dp</dimen>
+    <dimen name="forty_eight">48dp</dimen>
     <dimen name="seventy_two">72dp</dimen>
 
     <dimen name="thirty_six_sp">36sp</dimen>
