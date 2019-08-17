@@ -63,9 +63,9 @@
     <string name="url_user_gists">https://gist.github.com/%s</string>
 
 
-    <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
+    <string name="url_project_repository">https://github.com/MobilCat/AndroCat</string>
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
-    <string name="url_report_issue">https://github.com/mustafaozhan/AndroCat/issues</string>
+    <string name="url_report_issue">https://github.com/MobilCat/AndroCat/issues</string>
 
     <string name="url_github_code">https://github.com/mustafaozhan/AndroCat?code=</string>
     <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
@@ -103,12 +103,12 @@
     <string name="slide_bug_report_text_1">If you experienced any Bug or Issue</string>
     <string name="slide_bug_report_text_2"> Please navigate\n\nUser > App Settings > Report Issue\n\n Than create a GitHub Issue to AndroCat Project\n\n Or\n\nUser > App Settings > Feedback\n\n Than send a email to us </string>
     <string name="slide_disable_ads_title">Disable Ads</string>
-    <string name="slide_disable_ads_text_1">If you want to disable Ads for 48 hours</string>
-    <string name="slide_disable_ads_text_2"> Please navigate\n\nUser > App Settings > Disable Ads\n\n After you watch a video app will be ad free for 48 hours!</string>
+    <string name="slide_disable_ads_text_1">If you want to disable Ads for 36 hours</string>
+    <string name="slide_disable_ads_text_2"> Please navigate\n\nUser > App Settings > Disable Ads\n\n After you watch a video app will be ad free for 36 hours!</string>
 
     <!--Rewarded Ads-->
     <string name="remove_ads">Remove Ads</string>
-    <string name="remove_ads_text">Would you like to watch a video to stop ads for 48 hours ?</string>
+    <string name="remove_ads_text">Would you like to watch a video to stop ads for 36 hours ?</string>
     <string name="watch">Watch</string>
 
     <!--SVG String-->
