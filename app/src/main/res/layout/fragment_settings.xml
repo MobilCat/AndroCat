@@ -31,6 +31,7 @@
                 android:layout_height="@dimen/forty_eight"
                 android:padding="@dimen/eight"
                 android:src="@drawable/ic_user"
+                android:layout_marginBottom="@dimen/four"
                 tools:ignore="ContentDescription" />
 
             <LinearLayout
@@ -62,6 +63,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/eight"
                     android:background="@color/colorPrimary"
                     android:padding="@dimen/four" />
             </LinearLayout>
@@ -77,6 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/layout_username">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
                 android:padding="@dimen/eight"
@@ -115,6 +118,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/eight"
                     android:background="@color/colorPrimary"
                     android:padding="@dimen/four" />
             </LinearLayout>
@@ -130,6 +134,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_dark_mode">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
                 android:padding="@dimen/eight"
@@ -154,6 +159,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/eight"
                     android:background="@color/colorPrimary"
                     android:padding="@dimen/four" />
             </LinearLayout>
@@ -169,6 +175,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_remove_ads">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
                 android:padding="@dimen/ten"
@@ -193,6 +200,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/eight"
                     android:background="@color/colorPrimary"
                     android:padding="@dimen/four" />
             </LinearLayout>
@@ -208,6 +216,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_support">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
                 android:padding="@dimen/eight"
@@ -232,6 +241,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/eight"
                     android:background="@color/colorPrimary"
                     android:padding="@dimen/four" />
             </LinearLayout>
@@ -247,6 +257,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_feedback">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
                 android:padding="@dimen/eight"
@@ -271,6 +282,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/eight"
                     android:background="@color/colorPrimary"
                     android:padding="@dimen/four" />
             </LinearLayout>
@@ -286,6 +298,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_on_github">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
                 android:padding="@dimen/eight"
@@ -310,6 +323,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/one"
+                    android:layout_marginTop="@dimen/eight"
                     android:background="@color/colorPrimary"
                     android:padding="@dimen/four" />
             </LinearLayout>

@@ -51,6 +51,7 @@ class MainFragment : BaseMainFragment() {
         fun newInstance() = MainFragment()
     }
 
+    private var fromSetting = false
     private var quickActionProfile: QuickAction? = null
     private lateinit var quickActionExplore: QuickAction
     private lateinit var quickActionStack: QuickAction
@@ -59,8 +60,12 @@ class MainFragment : BaseMainFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.apply {
-            loadUrl(urlStr = getString(ARGS_OPEN_URL))
-            clear()
+            getString(ARGS_OPEN_URL)?.let {
+                loadUrl(urlStr = it)
+                fromSetting = true
+                baseUrl = it
+                clear()
+            }
         }
         init()
         setDash()
@@ -101,8 +106,11 @@ class MainFragment : BaseMainFragment() {
         loadUrl(urlStr = baseUrl)
     }
 
+    @Suppress("ComplexMethod")
     private fun setProfileActions(isLoggedIn: Boolean): QuickAction? {
-        baseUrl = getString(if (isLoggedIn) R.string.url_github else R.string.url_login)
+        if (!fromSetting) {
+            baseUrl = getString(if (isLoggedIn) R.string.url_github else R.string.url_login)
+        }
         return context?.initProfileActions(isLoggedIn)?.apply {
             setOnActionItemClickListener { item ->
                 when (item.actionId) {
