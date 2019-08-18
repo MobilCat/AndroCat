@@ -175,7 +175,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
                         .setMinimumFetchIntervalInSeconds(CHECK_INTERVAL)
                         .build()
                 )
-                setDefaults(defaultMap)
+                setDefaultsAsync(defaultMap)
                 fetch(if (BuildConfig.DEBUG) 0 else TimeUnit.HOURS.toSeconds(CHECK_DURATION))
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
