@@ -24,6 +24,7 @@ import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.extensions.hideKeyboard
 import mustafaozhan.github.com.androcat.extensions.initExplorerActions
+import mustafaozhan.github.com.androcat.extensions.initFeedActions
 import mustafaozhan.github.com.androcat.extensions.initProductionActions
 import mustafaozhan.github.com.androcat.extensions.initProfileActions
 import mustafaozhan.github.com.androcat.extensions.initStackActions
@@ -31,6 +32,7 @@ import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setBGColor
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.extensions.showKeyboard
+import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
 
@@ -53,6 +55,7 @@ class MainFragment : BaseMainFragment() {
 
     private var fromSetting = false
     private var quickActionProfile: QuickAction? = null
+    private lateinit var quickActionFeed: QuickAction
     private lateinit var quickActionExplore: QuickAction
     private lateinit var quickActionStack: QuickAction
     private lateinit var quickActionProduction: QuickAction
@@ -91,6 +94,7 @@ class MainFragment : BaseMainFragment() {
 
     private fun init() {
         context?.apply {
+            quickActionFeed = initFeedActions()
             quickActionExplore = initExplorerActions()
             quickActionStack = initStackActions()
             quickActionProduction = initProductionActions()
@@ -126,6 +130,10 @@ class MainFragment : BaseMainFragment() {
 
     private fun setListeners() {
         fab_news_feed.setOnClickListener { loadUrl(urlStr = baseUrl) }
+        fab_news_feed.setOnLongClickListener {
+            quickActionFeed.show(it)
+            true
+        }
         web_view?.setListener(getBaseActivity(), this)
 
         layout_swipe_refresh.setOnRefreshListener {
@@ -165,17 +173,22 @@ class MainFragment : BaseMainFragment() {
 
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
-        quickActionExplore.setOnActionItemClickListener { item ->
+        quickActionFeed.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> web_view?.goBack()
                 2 -> web_view?.goForward()
-                3 -> viewModel.getSettings().darkMode?.let { darkMode(!it, true) }
-                4 -> loadUrl(R.string.url_search)
-                5 -> {
+                3 -> {
                     layout_find_in_page.setVisibleWithAnimation(true)
                     et_search.showKeyboard()
                 }
-                6 -> loadUrl(R.string.url_trending)
+            }
+        }
+        quickActionExplore.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> viewModel.getSettings().darkMode?.let { darkMode(!it, true) }
+                2 -> (getBaseActivity() as? MainActivity)?.showRewardedAdDialog()
+                3 -> loadUrl(R.string.url_search)
+                4 -> loadUrl(R.string.url_trending)
             }
         }
         quickActionStack.setOnActionItemClickListener { item ->
