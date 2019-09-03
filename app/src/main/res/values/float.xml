@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="fab_vertical_bias" format="float" type="dimen">0.945</item>
+    <item name="loader_vertical_bias" format="float" type="dimen">0.5</item>
 </resources>
