@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="@+id/bottom_navigation_view"
         app:layout_constraintStart_toStartOf="@+id/bottom_navigation_view"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.945"
+        app:layout_constraintVertical_bias="@dimen/fab_vertical_bias"
         app:maxImageSize="@dimen/thirty_six" />
 
     <mustafaozhan.github.com.androcat.view.CurvedBottomNavigationView
