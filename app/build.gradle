@@ -83,10 +83,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Ad
-    implementation 'com.google.firebase:firebase-ads:18.1.1'
+    implementation 'com.google.firebase:firebase-ads:18.2.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:17.1.0'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-config:19.0.0'
 
     // Advanced WebView
