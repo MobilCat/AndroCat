@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.33" />
+        app:layout_constraintVertical_bias="@dimen/loader_vertical_bias" />
 
     <com.github.jorgecastillo.FillableLoader
         android:id="@+id/fillable_loader_dark"
@@ -47,5 +47,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.33" />
+        app:layout_constraintVertical_bias="@dimen/loader_vertical_bias" />
 </androidx.constraintlayout.widget.ConstraintLayout>
