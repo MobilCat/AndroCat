@@ -3,7 +3,7 @@
     <integer name="one">1</integer>
     <!--Fillable Loader-->
     <integer name="fillable_loader_duration">500</integer>
-    <integer name="fillable_loader_percentage">72</integer>
-    <integer name="fillable_loader_height">575</integer>
+    <integer name="fillable_loader_percentage">66</integer>
+    <integer name="fillable_loader_height">576</integer>
     <integer name="fillable_loader_width">400</integer>
 </resources>

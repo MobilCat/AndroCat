@@ -1,257 +1,220 @@
 package mustafaozhan.github.com.androcat.main.fragment
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat
-import com.crashlytics.android.Crashlytics
-import com.github.jorgecastillo.FillableLoader
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.jakewharton.rxbinding2.widget.textChanges
-import com.livinglifetechway.quickpermissions.annotations.WithPermissions
-import im.delight.android.webview.AdvancedWebView
 import io.reactivex.rxkotlin.addTo
-import kotlinx.android.synthetic.main.fragment_main.eTxtSearch
-import kotlinx.android.synthetic.main.fragment_main.fillableLoader
-import kotlinx.android.synthetic.main.fragment_main.fillableLoaderDarkMode
-import kotlinx.android.synthetic.main.fragment_main.fillableLoaderLayout
-import kotlinx.android.synthetic.main.fragment_main.mBottomNavigationView
-import kotlinx.android.synthetic.main.fragment_main.mSwipeRefreshLayout
-import kotlinx.android.synthetic.main.fragment_main.newsFeedFab
-import kotlinx.android.synthetic.main.fragment_main.searchDismissButton
-import kotlinx.android.synthetic.main.fragment_main.searchLayout
-import kotlinx.android.synthetic.main.fragment_main.searchNextButton
-import kotlinx.android.synthetic.main.fragment_main.searchPreviousButton
-import kotlinx.android.synthetic.main.fragment_main.webView
-import me.piruin.quickaction.ActionItem
+import kotlinx.android.synthetic.main.fragment_main.bottom_navigation_view
+import kotlinx.android.synthetic.main.fragment_main.fab_news_feed
+import kotlinx.android.synthetic.main.fragment_main.layout_fillable_loader
+import kotlinx.android.synthetic.main.fragment_main.layout_find_in_page
+import kotlinx.android.synthetic.main.fragment_main.layout_swipe_refresh
+import kotlinx.android.synthetic.main.fragment_main.web_view
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader
+import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader_dark
+import kotlinx.android.synthetic.main.layout_find_in_page.et_search
+import kotlinx.android.synthetic.main.layout_find_in_page.view_dismiss
+import kotlinx.android.synthetic.main.layout_find_in_page.view_search_next
+import kotlinx.android.synthetic.main.layout_find_in_page.view_search_previous
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
-import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.hideKeyboard
-import mustafaozhan.github.com.androcat.extensions.remove
+import mustafaozhan.github.com.androcat.extensions.initExplorerActions
+import mustafaozhan.github.com.androcat.extensions.initFeedActions
+import mustafaozhan.github.com.androcat.extensions.initProductionActions
+import mustafaozhan.github.com.androcat.extensions.initProfileActions
+import mustafaozhan.github.com.androcat.extensions.initStackActions
 import mustafaozhan.github.com.androcat.extensions.runScript
+import mustafaozhan.github.com.androcat.extensions.setBGColor
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.extensions.showKeyboard
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.HttpUrl
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
-import org.json.JSONObject
-import java.io.IOException
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
  */
-@Suppress("TooManyFunctions", "MagicNumber")
-class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.Listener, Callback {
-
+@Suppress("MagicNumber", "TooManyFunctions")
+class MainFragment : BaseMainFragment() {
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
-        const val TEXT_SIZE_SMALL = 100
-        const val TEXT_SIZE_MEDIUM = 124
-        const val TEXT_SIZE_LARGE = 150
         var TAG: String = MainFragment::class.java.simpleName
-
-        fun newInstance(url: String): MainFragment {
-            val args = Bundle()
-            args.putString(ARGS_OPEN_URL, url)
-            val fragment = MainFragment()
-            fragment.arguments = args
-            return fragment
+        fun newInstance(url: String) = MainFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARGS_OPEN_URL, url)
+            }
         }
 
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var quickActionProfile: QuickAction
-    private lateinit var quickActionExplorer: QuickAction
-    private lateinit var baseUrl: String
-
-    private var logoutCount = 0
-    private var loader: FillableLoader? = null
-    private var isAnimating = false
+    private var fromSetting = false
+    private var quickActionProfile: QuickAction? = null
+    private lateinit var quickActionFeed: QuickAction
+    private lateinit var quickActionExplore: QuickAction
+    private lateinit var quickActionStack: QuickAction
+    private lateinit var quickActionProduction: QuickAction
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.apply {
+            getString(ARGS_OPEN_URL)?.let {
+                loadUrl(urlStr = it)
+                fromSetting = true
+                baseUrl = it
+                clear()
+            }
+        }
         init()
         setDash()
         initWebView()
         setListeners()
         setActionListeners()
 
-        arguments?.getString(ARGS_OPEN_URL)?.let { url ->
-            loadUrlWithAnimation(url)
-            arguments?.clear()
+        viewModel
+            .loginSubject
+            .subscribe(::handleLoginAction, ::logException)
+            .addTo(compositeDisposable)
+    }
+
+    private fun handleLoginAction(isLoggedIn: Boolean) {
+        if (isLoggedIn) {
+            viewModel.updateUser(userName, isLoggedIn)
+        } else {
+            loadUrl(R.string.url_login)
+            viewModel.updateUser("", isLoggedIn)
         }
+        quickActionProfile = setProfileActions(isLoggedIn)
     }
 
     private fun init() {
-        fillableLoader.setSvgPath(getString(R.string.androcat_svg_path))
-        fillableLoaderDarkMode.setSvgPath(getString(R.string.androcat_svg_path))
-        eTxtSearch.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
-
-        baseUrl = if (viewModel.isLoggedIn() == true) {
-            getString(R.string.url_github)
-        } else {
-            getString(R.string.url_login)
+        context?.apply {
+            quickActionFeed = initFeedActions()
+            quickActionExplore = initExplorerActions()
+            quickActionStack = initStackActions()
+            quickActionProduction = initProductionActions()
         }
 
-        viewModel.loadSettings().darkMode?.let { darkMode(it) }
+        et_search.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+        fab_news_feed.bringToFront()
 
-        loadUrlWithAnimation(baseUrl)
+        quickActionProfile = setProfileActions(viewModel.isLoggedIn() == true)
 
-        context?.let { ctx ->
-            quickActionExplorer = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionExplorer.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(1, getString(R.string.search), R.drawable.ic_search),
-                    ActionItem(2, getString(R.string.find_in_page), R.drawable.ic_find_in_page),
-                    ActionItem(3, getString(R.string.market_place), R.drawable.ic_market_place),
-                    ActionItem(4, getString(R.string.trends), R.drawable.ic_trends),
-                    ActionItem(5, getString(R.string.new_gist), R.drawable.ic_gist),
-                    ActionItem(6, getString(R.string.new_repository), R.drawable.ic_repository),
-                    ActionItem(7, getString(R.string.dark_mode), R.drawable.ic_dark_mode),
-                    ActionItem(8, getString(R.string.forward), R.drawable.ic_forward),
-                    ActionItem(9, getString(R.string.back), R.drawable.ic_back)
-                )
-            }
+        viewModel.getSettings().darkMode?.let { darkMode(it) }
 
-            quickActionProfile = QuickAction(ctx, QuickAction.VERTICAL)
-            quickActionProfile.apply {
-                setColorRes(R.color.colorPrimary)
-                setTextColorRes(R.color.white)
-                setEnabledDivider(false)
-                addActionItem(
-                    ActionItem(1, getString(R.string.stars), R.drawable.ic_stars),
-                    ActionItem(2, getString(R.string.repositories), R.drawable.ic_repository),
-                    ActionItem(3, getString(R.string.gists), R.drawable.ic_gist),
-                    ActionItem(4, getString(R.string.notifications), R.drawable.ic_notifications),
-                    ActionItem(5, getString(R.string.app_settings), R.drawable.ic_settings),
-                    ActionItem(6, getString(R.string.user_settings), R.drawable.ic_user_settings),
-                    ActionItem(7, getString(R.string.log_out), R.drawable.ic_logout),
-                    ActionItem(8, getString(R.string.log_in), R.drawable.ic_login),
-                    ActionItem(9, getString(R.string.profile), R.drawable.ic_user)
-                )
+        loadUrl(urlStr = baseUrl)
+    }
+
+    @Suppress("ComplexMethod")
+    private fun setProfileActions(isLoggedIn: Boolean): QuickAction? {
+        if (!fromSetting) {
+            baseUrl = getString(if (isLoggedIn) R.string.url_github else R.string.url_login)
+        }
+        return context?.initProfileActions(isLoggedIn)?.apply {
+            setOnActionItemClickListener { item ->
+                when (item.actionId) {
+                    1 -> loadIfUserNameSet(R.string.url_user_profile, true)
+                    2 -> loadUrl(R.string.url_login)
+                    3 -> loadUrl(R.string.url_logout)
+                    4 -> loadIfUserNameSet(R.string.url_settings)
+                    5 -> replaceFragment(SettingsFragment.newInstance(), true)
+                }
             }
         }
     }
 
     private fun setListeners() {
-        newsFeedFab.setOnClickListener {
-            loadUrlWithAnimation(
-                if (viewModel.isLoggedIn() == false) {
-                    getString(R.string.url_login)
-                } else {
-                    getString(R.string.url_github)
-                }
-            )
+        fab_news_feed.setOnClickListener { loadUrl(urlStr = baseUrl) }
+        fab_news_feed.setOnLongClickListener {
+            quickActionFeed.show(it)
+            true
         }
-        webView?.setListener(getBaseActivity(), this)
+        web_view?.setListener(getBaseActivity(), this)
 
-        mSwipeRefreshLayout.setOnRefreshListener {
-            loadUrlWithAnimation(webView?.url)
-            mSwipeRefreshLayout.isRefreshing = false
+        layout_swipe_refresh.setOnRefreshListener {
+            loadUrl(urlStr = web_view?.url)
+            layout_swipe_refresh.isRefreshing = false
         }
 
-        mBottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottom_navigation_view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_user -> quickActionProfile.show(mBottomNavigationView.getIconAt(4))
-                R.id.navigation_find -> quickActionExplorer.show(mBottomNavigationView.getIconAt(0))
-                R.id.navigation_pull_request -> loadUrlWithAnimation(getString(R.string.url_pulls))
-                R.id.navigation_Issues -> loadUrlWithAnimation(getString(R.string.url_issues))
+                R.id.nv_explorer -> quickActionExplore.show(bottom_navigation_view.getIconAt(0))
+                R.id.nv_stacks -> quickActionStack.show(bottom_navigation_view.getIconAt(1))
+                R.id.nv_production -> quickActionProduction.show(bottom_navigation_view.getIconAt(3))
+                R.id.nv_profile -> quickActionProfile?.show(bottom_navigation_view.getIconAt(4))
             }
             true
         }
 
-        eTxtSearch
-            .textChanges()
+        et_search.textChanges()
             .subscribe { txt ->
-                webView?.findAllAsync(txt.toString())
+                web_view?.findAllAsync(txt.toString())
             }.addTo(compositeDisposable)
 
-        searchNextButton.setOnClickListener {
-            webView?.findNext(true)
-            searchNextButton.hideKeyboard()
+        view_search_next.setOnClickListener {
+            web_view?.findNext(true)
+            it.hideKeyboard()
         }
-        searchPreviousButton.setOnClickListener {
-            webView?.findNext(false)
-            searchPreviousButton.hideKeyboard()
+        view_search_previous.setOnClickListener {
+            web_view?.findNext(false)
+            it.hideKeyboard()
         }
-        searchDismissButton.setOnClickListener {
-            eTxtSearch.setText("")
-            searchLayout.setVisibleWithAnimation(false)
-            searchLayout.hideKeyboard()
+        view_dismiss.setOnClickListener {
+            et_search.setText("")
+            layout_find_in_page.setVisibleWithAnimation(false)
+            layout_find_in_page.hideKeyboard()
         }
     }
 
     @Suppress("ComplexMethod")
     private fun setActionListeners() {
-        quickActionProfile.setOnActionItemClickListener { item ->
+        quickActionFeed.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=stars")
-                2 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername() + "?tab=repositories")
-                3 -> loadIfUserNameSet(getString(R.string.url_gist) + viewModel.getUsername())
-                4 -> loadUrlWithAnimation(getString(R.string.url_notifications))
-                5 -> replaceFragment(SettingsFragment.newInstance(), true)
-                6 -> loadUrlWithAnimation(getString(R.string.url_settings))
-                7 -> {
-                    loadUrlWithAnimation(getString(R.string.url_logout))
-                    baseUrl = getString(R.string.url_login)
+                1 -> web_view?.goBack()
+                2 -> web_view?.goForward()
+                3 -> {
+                    layout_find_in_page.setVisibleWithAnimation(true)
+                    et_search.showKeyboard()
                 }
-                8 -> loadUrlWithAnimation(getString(R.string.url_login))
-                9 -> loadIfUserNameSet(getString(R.string.url_github) + viewModel.getUsername())
-                else -> loadUrlWithAnimation(getString(R.string.url_github))
             }
         }
-        quickActionExplorer.setOnActionItemClickListener { item ->
+        quickActionExplore.setOnActionItemClickListener { item ->
             when (item.actionId) {
-                1 -> loadUrlWithAnimation(getString(R.string.url_search))
-                2 -> {
-                    searchLayout.setVisibleWithAnimation(true)
-                    eTxtSearch.showKeyboard()
-                }
-                3 -> loadUrlWithAnimation(getString(R.string.url_market_place))
-                4 -> loadUrlWithAnimation(getString(R.string.url_trending))
-                5 -> loadUrlWithAnimation(getString(R.string.url_gist))
-                6 -> loadUrlWithAnimation(getString(R.string.url_new))
-                7 -> viewModel.loadSettings().darkMode?.let { darkMode(!it, true) }
-                8 -> webView?.goForward()
-                9 -> webView?.goBack()
-                else -> loadUrlWithAnimation(getString(R.string.url_github))
+                1 -> viewModel.getSettings().darkMode?.let { darkMode(!it, true) }
+                2 -> (getBaseActivity() as? MainActivity)?.showRewardedAdDialog()
+                3 -> loadUrl(R.string.url_search)
+                4 -> loadUrl(R.string.url_trending)
+            }
+        }
+        quickActionStack.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> loadIfUserNameSet(R.string.url_notifications)
+                2 -> loadIfUserNameSet(R.string.url_user_stars, true)
+                3 -> loadIfUserNameSet(R.string.url_user_repositories, true)
+                4 -> loadIfUserNameSet(R.string.url_user_gists, true)
+            }
+        }
+        quickActionProduction.setOnActionItemClickListener { item ->
+            when (item.actionId) {
+                1 -> loadIfUserNameSet(R.string.url_issues)
+                2 -> loadIfUserNameSet(R.string.url_pulls)
+                3 -> loadIfUserNameSet(R.string.url_user_projects, true)
+                4 -> loadIfUserNameSet(R.string.url_new)
+                5 -> loadIfUserNameSet(R.string.url_gist)
             }
         }
     }
 
-    private fun darkMode(darkMode: Boolean, changeSettings: Boolean = false) {
-        setDarkMode(darkMode)
-        webView?.runScript(JsScrip.getDarkMode(darkMode))
-        if (!darkMode)
-            webView?.reload()
-
-        if (changeSettings) {
-            viewModel.updateSetting(darkMode = darkMode)
-        }
-    }
-
-    private fun setDash() = mBottomNavigationView.apply {
+    private fun setDash() = bottom_navigation_view.apply {
         inflateMenu(R.menu.bnvm_dash)
         labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         enableAnimation(false)
-        setTextSize(9.0f)
+        setTextSize(10.0f)
         setIconsMarginTop(12)
         setIconSize(30.0F, 30.0F)
         getBottomNavigationItemView(2).isClickable = false
@@ -263,7 +226,7 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun initWebView() = webView?.apply {
+    private fun initWebView() = web_view?.apply {
         setBackgroundColor(Color.parseColor("#FFFFFF"))
         settings.apply {
             setDesktopMode(true)
@@ -278,229 +241,37 @@ class MainFragment : BaseMvvmFragment<MainFragmentViewModel>(), AdvancedWebView.
         }
     }
 
-    private fun loadIfUserNameSet(url: String) =
-        viewModel.getUsername()?.let { username ->
-            if (username.isEmpty()) {
-                snacky(getString(R.string.missUsername), getString(R.string.enter)) {
-                    replaceFragment(SettingsFragment.newInstance(), true)
-                }
-            } else {
-                loadUrlWithAnimation(url)
-            }
+    private fun darkMode(darkMode: Boolean, changeSettings: Boolean = false) {
+        loader = if (darkMode) {
+            context?.let { layout_fillable_loader?.setBGColor(it, R.color.colorPrimaryDark) }
+            fillable_loader?.visibility = View.GONE
+            fillable_loader_dark
+        } else {
+            context?.let { layout_fillable_loader?.setBGColor(it, R.color.white) }
+            fillable_loader_dark?.visibility = View.GONE
+            web_view?.reload()
+            fillable_loader
         }
-
-    override fun onResume() {
-        super.onResume()
-        webView?.onResume()
-        webView?.reload()
-        if (MainActivity.uri != null) {
-            loadUrlWithAnimation(MainActivity.uri)
-            MainActivity.uri = null
-        }
+        web_view?.runScript(JsScrip.getTheme(darkMode))
+        if (changeSettings) viewModel.updateSettings(darkMode = darkMode)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        webView?.onPause()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
-        webView?.onActivityResult(requestCode, resultCode, intent)
-    }
-
-    @Suppress("TooGenericExceptionCaught")
-    @WithPermissions([Manifest.permission.WRITE_EXTERNAL_STORAGE])
-    override fun onDownloadRequested(
-        url: String?,
-        suggestedFilename: String?,
-        mimeType: String?,
-        contentLength: Long,
-        contentDisposition: String?,
-        userAgent: String?
-    ) {
-        try {
-            if (!AdvancedWebView.handleDownload(context, url, suggestedFilename)) {
-                snacky("Download unsuccessful, download manager has been disabled on device")
-            }
-        } catch (e: Exception) {
-            Crashlytics.logException(e)
-            Crashlytics.log(
-                Log.ERROR,
-                "Download Unseccessful",
-                e.message
-            )
-        }
-    }
-
-    override fun onExternalPageRequest(url: String?) {
-    }
-
-    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
-        loadUrlWithAnimation(webView?.context?.getString(R.string.url_blank))
-    }
-
-    override fun onPageStarted(url: String, favicon: Bitmap?) {
-        if (!isAnimating) {
-            loadingView(true)
-        }
-        when {
-            url.contains(webView?.context?.getString(R.string.url_session).toString()) -> {
-                webView?.runScript(JsScrip.GET_USERNAME) { str ->
-                    viewModel.updateUser(str.remove("\""), true, token = null)
-                }
-                logoutCount = 0
-            }
-
-            url.contains("?code=") -> handleAccessToken(url)
-        }
-    }
-
-    @Suppress("ComplexMethod", "LongMethod")
-    override fun onPageFinished(url: String) {
-        webView?.apply {
-            when {
-                url.contains(getString(R.string.url_login)) or
-                    url.contains(getString(R.string.url_search)) or
-                    url.contains(getString(R.string.url_market_place)) or
-                    url.contains(getString(R.string.url_trending)) or
-                    url.contains(getString(R.string.str_organization)) or
-                    url.contains(getString(R.string.str_google_play)) or
-                    url.contains(getString(R.string.str_new)) or
-                    !url.contains(getString(R.string.str_github)) or
-                    (url == getString(R.string.url_github))
-                -> {
-                    settings?.textZoom = TEXT_SIZE_SMALL
-                    logoutCount = 0
-                }
-                url.contains(context.getString(R.string.url_blank)) -> {
-                    logoutCount = 0
-                }
-                url.contains(context.getString(R.string.url_logout)) -> {
-                    settings?.textZoom = TEXT_SIZE_SMALL
-                    logoutCount++
-                    if (logoutCount == 2) {
-                        baseUrl = context.getString(R.string.url_login)
-                        loadUrl(context.getString(R.string.url_login))
-                        viewModel.updateUser(isLoggedIn = false)
-                    }
-                }
-                url.contains(context.getString(R.string.url_session)) -> {
-                    settings?.textZoom = TEXT_SIZE_SMALL
-                    webView?.runScript(JsScrip.GET_USERNAME) { str ->
-                        if (str != "null")
-                            viewModel.updateUser(str.remove("\""), true)
-                    }
-                    logoutCount = 0
-                }
-                url.contains(getString(R.string.str_stargazers)) -> {
-                    settings?.textZoom = TEXT_SIZE_MEDIUM
-                    logoutCount = 0
-                }
-                url.contains(viewModel.getUsername().toString()) -> {
-                    settings?.textZoom = if (url.contains(getString(R.string.str_gist))) {
-                        TEXT_SIZE_LARGE
-                    } else {
-                        TEXT_SIZE_SMALL
-                    }
-                    logoutCount = 0
-                }
-                url.contains(getString(R.string.str_gist)) -> {
-                    settings?.textZoom = TEXT_SIZE_LARGE
-                    logoutCount = 0
-                }
-                else -> {
-                    settings?.textZoom = TEXT_SIZE_LARGE
-                    logoutCount = 0
-                }
-            }
-            viewModel.loadSettings().darkMode?.let {
-                runScript(JsScrip.getDarkMode(it)) {
-                    loadingView(false)
-                }
-            }
-        }
-    }
-
-    private fun loadingView(show: Boolean) =
+    override fun loadingView(show: Boolean) {
         if (show and !isAnimating) {
             isAnimating = true
-            fillableLoaderLayout?.setVisibleWithAnimation(true)
+            layout_fillable_loader?.setVisibleWithAnimation(true)
             loader?.visibility = View.VISIBLE
-            fillableLoader?.start()
-            fillableLoaderDarkMode?.start()
+            fillable_loader?.start()
+            fillable_loader_dark?.start()
         } else {
-            fillableLoaderLayout?.setVisibleWithAnimation(false)
-            fillableLoader?.visibility = View.GONE
-            fillableLoaderDarkMode?.visibility = View.GONE
-            fillableLoader?.reset()
-            fillableLoaderDarkMode?.reset()
+            layout_fillable_loader?.setVisibleWithAnimation(false)
+            fillable_loader?.visibility = View.GONE
+            fillable_loader_dark?.visibility = View.GONE
+            fillable_loader?.reset()
+            fillable_loader_dark?.reset()
             isAnimating = false
         }
-
-    private fun setDarkMode(darkMode: Boolean) = context?.let { ctx ->
-        loader = if (darkMode) {
-            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.colorPrimaryDark))
-            fillableLoader?.visibility = View.GONE
-            fillableLoaderDarkMode
-        } else {
-            fillableLoaderLayout?.setBackgroundColor(ContextCompat.getColor(ctx, R.color.white))
-            fillableLoaderDarkMode?.visibility = View.GONE
-            fillableLoader
-        }
     }
-
-    override fun getViewModelClass(): Class<MainFragmentViewModel> = MainFragmentViewModel::class.java
 
     override fun getLayoutResId(): Int = R.layout.fragment_main
-
-    private fun loadUrlWithAnimation(urlToLoad: String?) = urlToLoad?.let { url ->
-        loadingView(true)
-        webView?.loadUrl(url)
-    }
-
-    private fun handleAccessToken(url: String) {
-        webView?.context?.apply {
-
-            val tokenCode = url.substring(url.lastIndexOf("?code=") + 1)
-                .split("=".toRegex())
-                .dropLastWhile { it.isEmpty() }
-                .toTypedArray()
-
-            val cleanToken = tokenCode[1]
-                .split("&".toRegex())
-                .dropLastWhile { it.isEmpty() }
-                .toTypedArray()
-
-            val code = cleanToken[0]
-
-            val urlOauth = HttpUrl.parse(getString(R.string.url_github_access_token))
-                ?.newBuilder()
-                ?.addQueryParameter("client_id", getString(R.string.client_id))
-                ?.addQueryParameter("client_secret", getString(R.string.client_secret))
-                ?.addQueryParameter("code", code)
-                ?.build()
-                .toString()
-
-            val request = Request.Builder()
-                .header("Accept", "application/json")
-                .url(urlOauth)
-                .build()
-
-            OkHttpClient().newCall(request).enqueue(this@MainFragment)
-        }
-    }
-
-    override fun onFailure(call: Call, e: IOException) {
-        // todo message on failed
-    }
-
-    override fun onResponse(call: Call, response: Response) {
-        if (response.isSuccessful) {
-            val jSonData = response.body()!!.string()
-            val jsonObject = JSONObject(jSonData)
-            val authToken = jsonObject.getString("access_token")
-            viewModel.updateUser(token = authToken)
-        }
-    }
 }

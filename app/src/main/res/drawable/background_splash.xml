@@ -4,6 +4,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/androcat_splash" />
+            android:src="@drawable/ic_androcat" />
     </item>
 </layer-list>

@@ -1,7 +1,7 @@
 package mustafaozhan.github.com.androcat.tools
 
 import mustafaozhan.github.com.androcat.base.api.github.GitHubApiHelper
-import mustafaozhan.github.com.androcat.notifications.Notification
+import org.joda.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,10 +24,13 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
 
     fun updateSettings(
         darkMode: Boolean? = null,
-        notificationList: ArrayList<Pair<Notification, Boolean>>? = null
+        sliderShown: Boolean? = null,
+        adFreeActivatedDate: Instant? = null
     ) = generalSharedPreferences.updateSettings(
         darkMode = darkMode,
-        notificationList = notificationList)
+        sliderShown = sliderShown,
+        adFreeActivatedDate = adFreeActivatedDate
+    )
 
     fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
 }

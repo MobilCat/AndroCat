@@ -6,11 +6,11 @@
     <string name="missUsername">Please Enter Your GitHub Username</string>
     <string name="news_feed">News Feed</string>
     <string name="search">Search</string>
+    <string name="search_in_github">Search in GitHub</string>
     <string name="pull_requests">Pull Requests</string>
     <string name="profile">Profile</string>
     <string name="issues">Issues</string>
-    <string name="explorer">Explorer</string>
-    <string name="market_place">Market Place</string>
+    <string name="explore">Explore</string>
     <string name="back">Back</string>
     <string name="forward">Forward</string>
     <string name="find">Find</string>
@@ -37,13 +37,15 @@
     <string name="update">Update</string>
     <string name="report_issue">Report Issue</string>
     <string name="find_in_page">Find in page</string>
+    <string name="stacks">Stacks</string>
+    <string name="production">Production</string>
+    <string name="projects">Projects</string>
 
     <!--URL-->
     <string name="url_blank">about:blank</string>
     <string name="url_login">https://github.com/login</string>
     <string name="url_logout">https://github.com/logout</string>
     <string name="url_search">https://github.com/search</string>
-    <string name="url_market_place">https://github.com/marketplace</string>
     <string name="url_trending">https://github.com/trending</string>
     <string name="url_github">https://github.com/</string>
     <string name="url_pulls">https://github.com/pulls</string>
@@ -54,9 +56,16 @@
     <string name="url_notifications">https://github.com/notifications</string>
     <string name="url_session">https://github.com/session</string>
 
-    <string name="url_project_repository">https://github.com/mustafaozhan/AndroCat</string>
+    <string name="url_user_profile">https://github.com/%s</string>
+    <string name="url_user_stars">https://github.com/%s?tab=stars</string>
+    <string name="url_user_repositories">https://github.com/%s?tab=repositories</string>
+    <string name="url_user_projects">https://github.com/%s?tab=projects</string>
+    <string name="url_user_gists">https://gist.github.com/%s</string>
+
+
+    <string name="url_project_repository">https://github.com/MobilCat/AndroCat</string>
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
-    <string name="url_report_issue">https://github.com/mustafaozhan/AndroCat/issues</string>
+    <string name="url_report_issue">https://github.com/MobilCat/AndroCat/issues</string>
 
     <string name="url_github_code">https://github.com/mustafaozhan/AndroCat?code=</string>
     <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
@@ -82,6 +91,26 @@
     <string name="remote_config_title">App Update</string>
     <string name="remote_config_description">Looks like you have an older\nversion of the app.\nPlease update to get latest\nfeatures and best experience.</string>
 
+    <!--Intro Sliders-->
+    <string name="next">NEXT</string>
+    <string name="got_it">GOT IT</string>
+    <string name="slide_intro_title">AndroCat</string>
+    <string name="slide_intro_text_1">A traditional GitHub user interface, like how you are used to ! \n \n</string>
+    <string name="slide_intro_text_2">Mobile friendly pages \n \nDesktop pages have bigger text \n \nFaster load time</string>
+    <string name="slide_dark_mode_title">Dark Mode !</string>
+    <string name="slide_dark_mode_text">To activate it please go to: Explore > Dark mode</string>
+    <string name="slide_bug_report_title">Bugs &amp; Issues</string>
+    <string name="slide_bug_report_text_1">If you experienced any Bug or Issue</string>
+    <string name="slide_bug_report_text_2"> Please navigate\n\nUser > App Settings > Report Issue\n\n Than create a GitHub Issue to AndroCat Project\n\n Or\n\nUser > App Settings > Feedback\n\n Than send a email to us </string>
+    <string name="slide_disable_ads_title">Disable Ads</string>
+    <string name="slide_disable_ads_text_1">If you want to disable Ads for 24 hours</string>
+    <string name="slide_disable_ads_text_2"> Please navigate\n\nUser > App Settings > Disable Ads\n\n After you watch a video app will be ad free for 24 hours!</string>
+
+    <!--Rewarded Ads-->
+    <string name="remove_ads">Remove Ads</string>
+    <string name="remove_ads_text">Would you like to watch a video to stop ads for 24 hours ?</string>
+    <string name="watch">Watch</string>
+
     <!--SVG String-->
-    <string name="androcat_svg_path">M44.718 11.388 C 34.581 32.426,33.266 71.915,41.299 114.095 L 43.865 127.565 37.155 137.845 C 27.103 153.247,21.679 162.543,18.728 169.427 C 17.268 172.833,15.266 177.321,14.280 179.400 C 10.698 186.947,4.915 209.604,4.157 219.063 L 3.379 228.750 200.000 228.750 L 396.621 228.750 395.850 219.063 C 394.379 200.565,385.548 172.645,375.787 155.625 C 370.266 145.999,362.273 133.487,359.283 129.791 L 356.586 126.458 358.918 114.166 C 367.011 71.503,364.928 27.476,353.966 9.514 L 351.000 4.654 338.313 5.304 C 311.119 6.697,284.621 22.745,264.986 49.712 C 260.506 55.865,257.726 58.621,256.373 58.249 C 223.062 49.100,169.704 49.009,145.389 58.060 C 144.572 58.364,139.888 53.844,134.980 48.016 C 110.880 19.397,89.406 7.201,59.920 5.386 L 47.964 4.651 44.718 11.388 M126.959 142.500 C 134.586 142.500,137.877 162.905,131.373 169.868 C 121.299 180.653,106.911 168.612,111.134 152.930 C 112.965 146.131,119.218 140.609,123.540 141.974 C 124.455 142.263,125.994 142.500,126.959 142.500 M285.682 142.500 C 291.810 142.500,296.010 159.505,291.862 167.525 C 286.824 177.267,273.601 175.286,269.957 164.244 C 266.560 153.950,274.547 139.528,282.290 141.974 C 283.205 142.263,284.732 142.500,285.682 142.500 M4.084 264.063 C 9.011 311.359,52.552 358.373,108.900 377.241 L 123.426 382.104 117.867 386.990 C 95.465 406.679,76.325 444.723,71.829 478.504 C 69.420 496.598,69.374 532.300,71.755 535.700 C 74.160 539.133,104.123 553.972,109.100 554.195 C 113.078 554.373,113.120 554.314,112.737 549.146 C 111.785 536.292,124.813 526.745,134.576 533.142 C 139.534 536.390,142.441 544.307,142.473 554.644 C 142.496 562.324,142.866 563.858,144.965 564.981 C 148.193 566.709,170.064 569.983,178.438 569.993 L 185.000 570.000 185.027 534.688 C 185.061 492.109,187.518 483.750,200.000 483.750 C 212.450 483.750,215.000 492.423,215.000 534.770 L 215.000 570.000 221.563 569.993 C 229.936 569.983,251.807 566.709,255.035 564.981 C 257.152 563.848,257.500 562.339,257.500 554.291 C 257.500 526.480,284.309 521.511,287.484 548.733 C 288.372 556.354,290.815 556.072,310.844 546.042 C 330.971 535.962,330.000 537.641,330.000 512.911 C 330.000 459.979,315.310 420.017,284.881 390.169 L 276.638 382.083 291.131 377.230 C 333.281 363.117,364.376 337.424,383.087 301.250 C 387.436 292.843,396.250 265.923,396.250 261.049 L 396.250 257.500 199.825 257.500 L 3.400 257.500 4.084 264.063</string>
+    <string name="androcat_svg_path">M48.950 41.000 C 42.065 55.078,40.104 83.280,43.734 116.000 C 46.943 144.919,46.659 146.585,35.839 162.226 C 25.141 177.691,8.000 219.951,8.000 230.861 C 8.000 234.974,45.933 236.000,198.000 236.000 L 388.000 236.000 388.000 226.503 C 388.000 213.317,377.785 185.692,364.938 164.131 C 354.648 146.862,354.198 143.887,355.474 101.589 C 357.849 22.882,325.058 8.107,270.291 63.207 L 255.587 78.000 199.668 77.690 L 143.750 77.379 128.875 62.930 C 100.642 35.505,57.435 23.650,48.950 41.000 M134.000 172.000 C 134.000 178.246,131.416 182.388,126.988 183.241 C 119.070 184.766,113.921 175.188,117.560 165.704 C 121.375 155.763,134.000 160.597,134.000 172.000 M286.000 172.000 C 286.000 183.403,273.375 188.237,269.560 178.296 C 265.921 168.812,271.070 159.234,278.988 160.759 C 283.416 161.612,286.000 165.754,286.000 172.000 M8.000 264.428 C 8.000 294.014,52.310 344.431,93.815 362.071 L 119.429 372.958 104.063 392.397 C 84.434 417.230,74.620 446.684,74.274 481.807 L 74.000 509.613 90.000 518.741 C 110.544 530.461,115.325 530.297,120.111 517.709 C 125.525 503.468,136.889 506.672,142.518 524.026 C 146.479 536.239,149.136 538.314,164.081 540.865 C 187.308 544.830,188.000 543.882,188.000 508.091 C 188.000 473.342,190.180 464.000,198.287 464.000 C 207.827 464.000,212.000 478.603,212.000 511.982 L 212.000 544.490 231.000 541.735 C 254.291 538.359,256.000 537.426,256.000 528.091 C 256.000 507.229,273.654 499.261,278.357 518.000 C 281.420 530.203,284.605 530.357,307.250 519.395 L 325.027 510.789 322.998 474.395 C 320.760 434.226,310.364 408.119,287.155 384.380 C 280.498 377.571,277.257 372.000,279.954 372.000 C 306.547 372.000,361.835 327.803,378.008 293.616 C 395.426 256.798,412.570 260.000,198.000 260.000 C 61.753 260.000,8.000 261.253,8.000 264.428</string>
 </resources>

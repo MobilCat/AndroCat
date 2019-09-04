@@ -9,27 +9,21 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
-import com.crashlytics.android.Crashlytics
-import kotlinx.android.synthetic.main.fragment_settings.adView
-import kotlinx.android.synthetic.main.fragment_settings.darkModeSwitch
-import kotlinx.android.synthetic.main.fragment_settings.layoutDarkMode
-import kotlinx.android.synthetic.main.fragment_settings.layoutFeedback
-import kotlinx.android.synthetic.main.fragment_settings.layoutNotification
-import kotlinx.android.synthetic.main.fragment_settings.layoutOnGitHub
-import kotlinx.android.synthetic.main.fragment_settings.layoutReportIssue
-import kotlinx.android.synthetic.main.fragment_settings.layoutSupport
-import kotlinx.android.synthetic.main.fragment_settings.layoutUsername
-import kotlinx.android.synthetic.main.fragment_settings.notificationSwitch
-import kotlinx.android.synthetic.main.fragment_settings.txtUsernameInput
+import kotlinx.android.synthetic.main.fragment_settings.ad_view
+import kotlinx.android.synthetic.main.fragment_settings.layout_dark_mode
+import kotlinx.android.synthetic.main.fragment_settings.layout_feedback
+import kotlinx.android.synthetic.main.fragment_settings.layout_on_github
+import kotlinx.android.synthetic.main.fragment_settings.layout_remove_ads
+import kotlinx.android.synthetic.main.fragment_settings.layout_report_issue
+import kotlinx.android.synthetic.main.fragment_settings.layout_support
+import kotlinx.android.synthetic.main.fragment_settings.layout_username
+import kotlinx.android.synthetic.main.fragment_settings.switch_dark_mode
+import kotlinx.android.synthetic.main.fragment_settings.tv_username_output
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
-import mustafaozhan.github.com.androcat.extensions.getFirstList
-import mustafaozhan.github.com.androcat.extensions.getSecondList
-import mustafaozhan.github.com.androcat.extensions.loadAd
+import mustafaozhan.github.com.androcat.extensions.checkAd
+import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
-import mustafaozhan.github.com.androcat.notifications.Notification
-import mustafaozhan.github.com.androcat.notifications.NotificationReceiver
-
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -51,16 +45,15 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
     }
 
     private fun setListeners() {
-        darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.updateSetting(darkMode = isChecked)
+        switch_dark_mode.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateSettings(darkMode = isChecked)
         }
-        layoutDarkMode.setOnClickListener {
-            darkModeSwitch.isChecked = !darkModeSwitch.isChecked
+        layout_dark_mode.setOnClickListener {
+            switch_dark_mode.isChecked = !switch_dark_mode.isChecked
         }
-        notificationSwitch.setOnClickListener { showNotificationDialog() }
-        layoutNotification.setOnClickListener { showNotificationDialog() }
-        layoutUsername.setOnClickListener { showUsernameDialog() }
-        layoutSupport.setOnClickListener {
+        layout_remove_ads.setOnClickListener { (getBaseActivity() as? MainActivity)?.showRewardedAdDialog() }
+        layout_username.setOnClickListener { showUsernameDialog() }
+        layout_support.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat)))
             getBaseActivity()?.packageManager?.let { packageManager ->
                 intent.resolveActivity(packageManager)?.let {
@@ -74,63 +67,24 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                 }
             }
         }
-        layoutFeedback.setOnClickListener { sendFeedBack() }
-        layoutOnGitHub.setOnClickListener {
+        layout_feedback.setOnClickListener { sendFeedBack() }
+        layout_on_github.setOnClickListener {
             clearBackStack()
             replaceFragment(MainFragment.newInstance(getString(R.string.url_project_repository)), false)
         }
-        layoutReportIssue.setOnClickListener {
+        layout_report_issue.setOnClickListener {
             clearBackStack()
             replaceFragment(MainFragment.newInstance(getString(R.string.url_report_issue)), false)
         }
     }
 
-    private fun showNotificationDialog() {
-        val notificationList = viewModel.loadSettings().notificationList
-        val items = notificationList.getFirstList()
-        val checkedItems = notificationList.getSecondList()
-
-        AlertDialog.Builder(context)
-            .setTitle("Choose Notifications")
-            .setIcon(R.drawable.ic_notifications)
-            .setMultiChoiceItems(
-                items.toTypedArray(),
-                checkedItems.toBooleanArray()
-            ) { _, which, isChecked ->
-                if (which != -1) {
-                    checkedItems[which] = isChecked
-                }
-            }
-            .setOnDismissListener {
-                val newNotificationList = ArrayList<Pair<Notification, Boolean>>()
-                for (i in 0 until Notification.values().size) {
-                    Notification.fromString(items[i])?.let {
-                        newNotificationList.add(Pair(it, checkedItems[i]))
-                    }
-                }
-                viewModel.updateSetting(notificationList = newNotificationList)
-
-                notificationSwitch.isChecked = viewModel.getNotificationSwitch()
-
-                context?.let {
-                    if (viewModel.getNotificationSwitch()) {
-                        NotificationReceiver().setNotifications(it)
-                    } else {
-                        NotificationReceiver().cancelNotifications(it)
-                    }
-                }
-            }
-            .create()
-            .show()
-    }
-
     private fun init() {
-        notificationSwitch.isChecked = viewModel.getNotificationSwitch()
+        viewModel.getUserName()?.let {
+            tv_username_output?.text = it
+        } ?: run { tv_username_output?.text = getString(R.string.missUsername) }
 
-        txtUsernameInput?.text = viewModel.getUserName()
-
-        viewModel.loadSettings().darkMode?.let {
-            darkModeSwitch.isChecked = it
+        viewModel.getSettings().darkMode?.let {
+            switch_dark_mode.isChecked = it
         }
     }
 
@@ -148,7 +102,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             .setView(editText)
             .setPositiveButton("SAVE") { _, _ ->
                 viewModel.updateUserName(editText.text.toString())
-                txtUsernameInput?.text = editText.text.toString()
+                tv_username_output?.text = editText.text.toString()
             }
             .setNegativeButton("CANCEL") { _, _ -> }
             .show()
@@ -164,13 +118,13 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
                 startActivity(Intent.createChooser(this, "Send Feedback:"))
             }
         } catch (activityNotFoundException: ActivityNotFoundException) {
-            Crashlytics.logException(activityNotFoundException)
+            logException(activityNotFoundException)
             snacky("You do not have any mail application.")
         }
     }
 
     override fun onResume() {
-        adView.loadAd(R.string.banner_ad_id)
+        ad_view.checkAd(R.string.banner_ad_id, viewModel.isRewardExpired())
         super.onResume()
     }
 }

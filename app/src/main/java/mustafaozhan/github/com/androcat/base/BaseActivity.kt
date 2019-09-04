@@ -18,7 +18,7 @@ import mustafaozhan.github.com.androcat.R
 abstract class BaseActivity : AppCompatActivity() {
 
     @LayoutRes
-    protected abstract fun getLayoutResId(): Int
+    protected abstract fun getLayoutResId(): Int?
 
     @IdRes
     open var containerId: Int = R.id.content
@@ -26,9 +26,11 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(getLayoutResId())
-        getDefaultFragment()?.let {
-            replaceFragment(it, false)
+        getLayoutResId()?.let {
+            setContentView(it)
+            getDefaultFragment()?.let { defaultFragment ->
+                replaceFragment(defaultFragment, false)
+            }
         }
     }
 
@@ -67,15 +69,17 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun replaceFragment(containerViewId: Int, fragment: BaseFragment) {
         val ft = supportFragmentManager.beginTransaction()
-        if (supportFragmentManager.backStackEntryCount != 0)
+        if (supportFragmentManager.backStackEntryCount != 0) {
             ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right)
+        }
         ft.replace(containerViewId, fragment, fragment.fragmentTag)
         ft.commit()
     }
 
     fun clearBackStack() {
-        if (supportFragmentManager.backStackEntryCount > 0)
+        if (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
     }
 
     fun snacky(text: String, actionText: String = "", action: () -> Unit = {}) {
@@ -113,8 +117,9 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
                 .setCancelable(cancelable)
 
-            if (cancelable)
+            if (cancelable) {
                 builder.setNegativeButton(getString(R.string.cancel), null)
+            }
 
             builder.show()
         }

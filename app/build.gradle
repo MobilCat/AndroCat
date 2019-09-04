@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.livinglifetechway.quickpermissions_plugin'
 
 def getGitVersionCode = { ->
     try {
@@ -21,12 +20,16 @@ def getGitVersionCode = { ->
 }
 
 android {
-    compileSdkVersion 28
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    compileSdkVersion 29
     defaultConfig {
         multiDexEnabled true
         applicationId "mustafaozhan.github.com.androcat"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode getGitVersionCode()
         versionName "1.${getGitVersionCode()}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -69,6 +72,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    // Http client
+    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+
     // Rx
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
     implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:${rootProject.ext.rxBindingVersion}"
@@ -98,8 +104,8 @@ dependencies {
     // Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    // Http client
-    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+    // Joda Time
+    implementation 'net.danlew:android.joda:2.10.1.2'
 
     // Android Fillable Loader
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'

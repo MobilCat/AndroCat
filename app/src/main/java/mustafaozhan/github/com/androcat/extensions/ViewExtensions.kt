@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -16,7 +17,7 @@ import mustafaozhan.github.com.androcat.tools.JsScrip
 /**
  * Created by Mustafa Ozhan on 1/30/18 at 12:42 AM on Arch Linux wit Love <3.
  */
-fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
+fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String?) -> Unit = {}) =
     try {
         evaluateJavascript(
             context
@@ -35,10 +36,15 @@ fun AdvancedWebView.runScript(jsScrip: JsScrip, action: (String) -> Unit = {}) =
         )
     }
 
-fun AdView.loadAd(adId: Int) {
-    MobileAds.initialize(context, resources.getString(adId))
-    val adRequest = AdRequest.Builder().build()
-    loadAd(adRequest)
+fun AdView.checkAd(id: Int, isExpired: Boolean) {
+    if (isExpired) {
+        MobileAds.initialize(context, resources.getString(id))
+        val adRequest = AdRequest.Builder().build()
+        loadAd(adRequest)
+    } else {
+        isEnabled = false
+        visibility = View.GONE
+    }
 }
 
 fun View.setVisibleWithAnimation(isVisible: Boolean) {
@@ -54,8 +60,8 @@ fun View.setVisibleWithAnimation(isVisible: Boolean) {
 @Suppress("TooGenericExceptionCaught")
 fun View.hideKeyboard(): Boolean {
     try {
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        return inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        return inputMethodManager?.hideSoftInputFromWindow(windowToken, 0) ?: false
     } catch (exception: RuntimeException) {
         Crashlytics.logException(exception)
         Crashlytics.log(
@@ -68,7 +74,11 @@ fun View.hideKeyboard(): Boolean {
 }
 
 fun View.showKeyboard() {
-    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
     this.requestFocus()
-    imm.showSoftInput(this, 0)
+    imm?.showSoftInput(this, 0)
+}
+
+fun View.setBGColor(context: Context, color: Int) {
+    setBackgroundColor(ContextCompat.getColor(context, color))
 }

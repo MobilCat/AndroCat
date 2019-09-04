@@ -1,8 +1,9 @@
 package mustafaozhan.github.com.androcat.model
 
-import mustafaozhan.github.com.androcat.notifications.Notification
+import org.joda.time.Instant
 
 data class Settings(
     var darkMode: Boolean? = false,
-    var notificationList: ArrayList<Pair<Notification, Boolean>>? = null
+    var sliderShown: Boolean? = false,
+    var adFreeActivatedDate: Instant?
 )

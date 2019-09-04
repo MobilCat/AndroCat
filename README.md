@@ -1,12 +1,10 @@
 <p align="center">AndroCat is a GitHub client for Android phones like how you used to</p>
 <p align="center"><a href="https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" width="300px"></a></p>
+<p align="center"><a href="https://www.codacy.com/app/mr.mustafa.ozhan/AndroCat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MobilCat/AndroCat&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/e0cf92fe59fa4b188ad1ed9dcabc5525"/></a>   <a href="https://codebeat.co/projects/github-com-mobilcat-androcat-master"><img alt="codebeat badge" src="https://codebeat.co/badges/f906b401-fac9-41f4-b4d3-8ae6884370df" /></a>   <img src="https://img.shields.io/github/last-commit/MobilCat/AndroCat.svg">  <img src="https://img.shields.io/github/issues/MobilCat/AndroCat.svg">   <img src="https://img.shields.io/github/issues-closed/MobilCat/AndroCat.svg">  <img src="https://img.shields.io/github/license/MobilCat/AndroCat.svg"></p>
 <p align="center"><a href='https://ko-fi.com/B0B2TZMH' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi1.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a></p>
-<p align="center">Important! The old version has been removed from the Google Play Store. Download the updated AndroCat from the store icon above to get the lastest updates.</p>
-
-
+<p align="center">Important! The old version has been removed from the Google Play Store. Download the updated AndroCat from the store icon above to get the latest updates.</p>
 
 ## Screenshots
-
 
 <img src="https://i.postimg.cc/WsScMB5v/1.png?dl=1" width="420px"/> <img src="https://i.postimg.cc/Vmq8NrM5/2.png?dl=1" width="420px"/>
 
@@ -17,7 +15,7 @@
 <img src="https://i.postimg.cc/rqqLRVCj/7.png?dl=1" width="420px"/> <img src="https://i.postimg.cc/RMZGT58c/8.png?dl=1" width="420px"/>
 
 ## Dependencies
-```
+```gradle
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -41,13 +39,16 @@ dependencies {
     }
 
     // Anko
-    implementation 'org.jetbrains.anko:anko-commons:0.10.5'
+    implementation 'org.jetbrains.anko:anko-commons:0.10.8'
 
     // Retrofit
     implementation "com.google.code.gson:gson:${gsonVersion}"
     implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
     implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+    // Http client
+    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
 
     // Rx
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
@@ -57,11 +58,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Ad
-    implementation 'com.google.firebase:firebase-ads:17.2.1'
+    implementation 'com.google.firebase:firebase-ads:18.2.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-config:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-config:19.0.0'
 
     // Advanced WebView
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
@@ -78,8 +79,8 @@ dependencies {
     // Multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    // Http client
-    implementation "com.squareup.okhttp3:okhttp:${rootProject.ext.okHttpVersion}"
+    // Joda Time
+    implementation 'net.danlew:android.joda:2.10.1.2'
 
     // Android Fillable Loader
     implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
