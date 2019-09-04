@@ -29,9 +29,9 @@
             <ImageView
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
                 android:padding="@dimen/eight"
                 android:src="@drawable/ic_user"
+                android:layout_marginBottom="@dimen/four"
                 tools:ignore="ContentDescription" />
 
             <LinearLayout
@@ -79,9 +79,9 @@
             app:layout_constraintTop_toBottomOf="@id/layout_username">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
                 android:padding="@dimen/eight"
                 android:src="@drawable/ic_dark_mode"
                 tools:ignore="ContentDescription" />
@@ -96,13 +96,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <Switch
-                        android:id="@+id/switch_dark_mode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="@integer/one" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -113,6 +106,13 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <Switch
+                        android:id="@+id/switch_dark_mode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="@integer/one" />
                 </LinearLayout>
 
                 <View
@@ -134,9 +134,9 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_dark_mode">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
                 android:padding="@dimen/eight"
                 android:src="@drawable/ic_disable_ads"
                 tools:ignore="ContentDescription" />
@@ -175,9 +175,9 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_remove_ads">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
                 android:padding="@dimen/ten"
                 android:src="@drawable/ic_store"
                 tools:ignore="ContentDescription" />
@@ -216,9 +216,9 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_support">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
                 android:padding="@dimen/eight"
                 android:src="@drawable/ic_feedback"
                 tools:ignore="ContentDescription" />
@@ -257,9 +257,9 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_feedback">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
                 android:padding="@dimen/eight"
                 android:src="@drawable/ic_androcat_dash"
                 tools:ignore="ContentDescription" />
@@ -298,9 +298,9 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_on_github">
 
             <ImageView
+                android:layout_marginBottom="@dimen/four"
                 android:layout_width="@dimen/forty_eight"
                 android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
                 android:padding="@dimen/eight"
                 android:src="@drawable/ic_bug_report"
                 tools:ignore="ContentDescription" />

@@ -22,6 +22,5 @@ abstract class BaseBroadcastReceiver : BroadcastReceiver() {
 
     abstract fun inject()
 
-    override fun onReceive(context: Context, intent: Intent) {
-    }
+    override fun onReceive(context: Context, intent: Intent) = Unit
 }
