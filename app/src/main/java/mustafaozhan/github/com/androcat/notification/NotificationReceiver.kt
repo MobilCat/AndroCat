@@ -35,7 +35,7 @@ class NotificationReceiver : BaseBroadcastReceiver() {
     fun setNotifications(context: Context) {
         cancelNotifications(context)
 
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         val intent = Intent(context, NotificationReceiver::class.java)
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -44,7 +44,7 @@ class NotificationReceiver : BaseBroadcastReceiver() {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-        alarmManager.setRepeating(
+        alarmManager?.setRepeating(
             AlarmManager.RTC_WAKEUP,
             System.currentTimeMillis(),
             NOTIFICATION_INTERVAL,
@@ -60,8 +60,8 @@ class NotificationReceiver : BaseBroadcastReceiver() {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(pendingIntent)
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+        alarmManager?.cancel(pendingIntent)
     }
 
     private fun senNotification(name: String, context: Context, requestCode: Int) {

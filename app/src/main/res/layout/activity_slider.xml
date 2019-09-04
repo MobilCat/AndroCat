@@ -5,16 +5,10 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/activity_slider">
 
-    <Button
-        android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@null"
-        android:text="@string/next"
-        android:textColor="@android:color/white"
-        tools:ignore="RelativeOverlap" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/layout_dots"
@@ -40,9 +34,15 @@
         android:alpha=".1"
         android:background="@android:color/white" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@null"
+        android:text="@string/next"
+        android:textColor="@android:color/white"
+        tools:ignore="RelativeOverlap" />
 
 </RelativeLayout>

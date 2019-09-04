@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingTop="@dimen/seventy_two"
+    android:paddingBottom="@dimen/seventy_two"
     android:background="@color/colorPrimary"
     android:gravity="center"
-    android:paddingBottom="@dimen/seventy_two"
-    android:weightSum="2">
+    android:weightSum="2"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="wrap_content"
