@@ -32,7 +32,6 @@ import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.extensions.setBGColor
 import mustafaozhan.github.com.androcat.extensions.setVisibleWithAnimation
 import mustafaozhan.github.com.androcat.extensions.showKeyboard
-import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
 import mustafaozhan.github.com.androcat.tools.JsScrip
 
@@ -186,7 +185,7 @@ class MainFragment : BaseMainFragment() {
         quickActionExplore.setOnActionItemClickListener { item ->
             when (item.actionId) {
                 1 -> viewModel.getSettings().darkMode?.let { darkMode(!it, true) }
-                2 -> (getBaseActivity() as? MainActivity)?.showRewardedAdDialog()
+                2 -> showRewardedAdDialog()
                 3 -> loadUrl(R.string.url_search)
                 4 -> loadUrl(R.string.url_trending)
             }
