@@ -6,384 +6,394 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_options"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layout_scroll"
         android:layout_width="@dimen/zero"
         android:layout_height="@dimen/zero"
-        android:padding="@dimen/eight"
         app:layout_constraintBottom_toTopOf="@+id/ad_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/layout_username"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_options"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:padding="@dimen/eight"
+            app:layout_constraintBottom_toTopOf="@+id/ad_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/eight"
-                android:src="@drawable/ic_user"
-                tools:ignore="ContentDescription" />
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_username"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/four"
-                    android:text="@string/username"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_username_output"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/four"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_username" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_dark_mode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/layout_username">
-
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/eight"
-                android:src="@drawable/ic_dark_mode"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/eight"
+                    android:src="@drawable/ic_user"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_username"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="@integer/one"
                         android:padding="@dimen/four"
-                        android:text="@string/dark_mode"
+                        android:text="@string/username"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <Switch
-                        android:id="@+id/switch_dark_mode"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tv_username_output"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="@integer/one" />
+                        android:padding="@dimen/four"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_notifications"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/layout_dark_mode">
-
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/eight"
-                android:src="@drawable/ic_notifications"
-                tools:ignore="ContentDescription" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_dark_mode"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_username">
+
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/eight"
+                    android:src="@drawable/ic_dark_mode"
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="@integer/one"
+                            android:padding="@dimen/four"
+                            android:text="@string/dark_mode"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Switch
+                            android:id="@+id/switch_dark_mode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="@integer/one" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/layout_dark_mode">
+
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/eight"
+                    android:src="@drawable/ic_notifications"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="@integer/one"
+                            android:padding="@dimen/four"
+                            android:text="@string/notifications"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Switch
+                            android:id="@+id/switch_notifications"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="@integer/one" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_remove_ads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/layout_notifications">
+
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/eight"
+                    android:src="@drawable/ic_disable_ads"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="@integer/one"
                         android:padding="@dimen/four"
-                        android:text="@string/notifications"
+                        android:text="@string/remove_ads"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <Switch
-                        android:id="@+id/switch_notifications"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="@integer/one" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_remove_ads"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/layout_notifications">
-
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/eight"
-                android:src="@drawable/ic_disable_ads"
-                tools:ignore="ContentDescription" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_support"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/layout_remove_ads">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/ten"
+                    android:src="@drawable/ic_store"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/four"
-                    android:text="@string/remove_ads"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/four"
+                        android:text="@string/support"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_support"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/layout_remove_ads">
-
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/ten"
-                android:src="@drawable/ic_store"
-                tools:ignore="ContentDescription" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_feedback"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/layout_support">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/eight"
+                    android:src="@drawable/ic_feedback"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/four"
-                    android:text="@string/support"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/four"
+                        android:text="@string/feedback"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_feedback"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/layout_support">
-
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/eight"
-                android:src="@drawable/ic_feedback"
-                tools:ignore="ContentDescription" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_on_github"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/layout_feedback">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/eight"
+                    android:src="@drawable/ic_androcat_dash"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/four"
-                    android:text="@string/feedback"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/four"
+                        android:text="@string/on_github"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_on_github"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/layout_feedback">
-
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/eight"
-                android:src="@drawable/ic_androcat_dash"
-                tools:ignore="ContentDescription" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/layout_report_issue"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="@dimen/eight"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/layout_on_github">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="@dimen/forty_eight"
+                    android:layout_height="@dimen/forty_eight"
+                    android:layout_marginBottom="@dimen/four"
+                    android:padding="@dimen/eight"
+                    android:src="@drawable/ic_bug_report"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/four"
-                    android:text="@string/on_github"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/four"
+                        android:text="@string/report_issue"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/one"
+                        android:layout_marginTop="@dimen/eight"
+                        android:background="@color/colorPrimary"
+                        android:padding="@dimen/four" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_report_issue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/eight"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/layout_on_github">
-
-            <ImageView
-                android:layout_width="@dimen/forty_eight"
-                android:layout_height="@dimen/forty_eight"
-                android:layout_marginBottom="@dimen/four"
-                android:padding="@dimen/eight"
-                android:src="@drawable/ic_bug_report"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/four"
-                    android:text="@string/report_issue"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/one"
-                    android:layout_marginTop="@dimen/eight"
-                    android:background="@color/colorPrimary"
-                    android:padding="@dimen/four" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ad_view"

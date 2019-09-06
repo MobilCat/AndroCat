@@ -33,7 +33,7 @@
     <string name="app_settings">App Settings</string>
     <string name="user_settings">User Settings</string>
     <string name="enter">Enter</string>
-    <string name="cancel">@android:string/cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="update">Update</string>
     <string name="report_issue">Report Issue</string>
     <string name="find_in_page">Find in page</string>
