@@ -93,8 +93,8 @@ class NotificationReceiver : BaseBroadcastReceiver() {
             description = context.getString(R.string.feedback)
         }
 
-        val notificationManager: NotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        val notificationManager: NotificationManager? =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+        notificationManager?.createNotificationChannel(channel)
     }
 }

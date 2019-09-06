@@ -25,10 +25,12 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
     fun updateSettings(
         darkMode: Boolean? = null,
         sliderShown: Boolean? = null,
+        isNotificationOn: Boolean? = null,
         adFreeActivatedDate: Instant? = null
     ) = generalSharedPreferences.updateSettings(
         darkMode = darkMode,
         sliderShown = sliderShown,
+        isNotificationOn = isNotificationOn,
         adFreeActivatedDate = adFreeActivatedDate
     )
 
