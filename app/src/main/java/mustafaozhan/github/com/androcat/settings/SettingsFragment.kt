@@ -12,12 +12,14 @@ import android.widget.EditText
 import kotlinx.android.synthetic.main.fragment_settings.ad_view
 import kotlinx.android.synthetic.main.fragment_settings.layout_dark_mode
 import kotlinx.android.synthetic.main.fragment_settings.layout_feedback
+import kotlinx.android.synthetic.main.fragment_settings.layout_notifications
 import kotlinx.android.synthetic.main.fragment_settings.layout_on_github
 import kotlinx.android.synthetic.main.fragment_settings.layout_remove_ads
 import kotlinx.android.synthetic.main.fragment_settings.layout_report_issue
 import kotlinx.android.synthetic.main.fragment_settings.layout_support
 import kotlinx.android.synthetic.main.fragment_settings.layout_username
 import kotlinx.android.synthetic.main.fragment_settings.switch_dark_mode
+import kotlinx.android.synthetic.main.fragment_settings.switch_notifications
 import kotlinx.android.synthetic.main.fragment_settings.tv_username_output
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
@@ -50,6 +52,13 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         }
         layout_dark_mode.setOnClickListener {
             switch_dark_mode.isChecked = !switch_dark_mode.isChecked
+        }
+
+        switch_notifications.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.updateSettings(isNotificationOn = isChecked)
+        }
+        layout_notifications.setOnClickListener {
+            switch_notifications.isChecked = !switch_notifications.isChecked
         }
         layout_remove_ads.setOnClickListener { (getBaseActivity() as? MainActivity)?.showRewardedAdDialog() }
         layout_username.setOnClickListener { showUsernameDialog() }
@@ -85,6 +94,9 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
         viewModel.getSettings().darkMode?.let {
             switch_dark_mode.isChecked = it
+        }
+        viewModel.getSettings().isNotificationOn?.let {
+            switch_notifications.isChecked = it
         }
     }
 
