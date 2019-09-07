@@ -11,7 +11,7 @@
     tools:visibility="visible">
 
     <EditText
-        android:id="@+id/et_search"
+        android:id="@+id/edit_text_search"
         style="@style/BaseEditTextTheme"
         android:layout_width="@dimen/zero"
         android:layout_height="wrap_content"

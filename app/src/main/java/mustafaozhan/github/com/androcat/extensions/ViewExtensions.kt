@@ -1,6 +1,11 @@
 package mustafaozhan.github.com.androcat.extensions
 
 import android.content.Context
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -81,4 +86,13 @@ fun View.showKeyboard() {
 
 fun View.setBGColor(context: Context, color: Int) {
     setBackgroundColor(ContextCompat.getColor(context, color))
+}
+
+fun Drawable.applyColorFilter(color: Int) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        colorFilter = BlendModeColorFilter(color, BlendMode.SRC_ATOP)
+    } else {
+        @Suppress("DEPRECATION")
+        setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+    }
 }

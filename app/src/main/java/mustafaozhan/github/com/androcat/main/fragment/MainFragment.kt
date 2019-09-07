@@ -2,7 +2,6 @@ package mustafaozhan.github.com.androcat.main.fragment
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -16,12 +15,13 @@ import kotlinx.android.synthetic.main.fragment_main.layout_swipe_refresh
 import kotlinx.android.synthetic.main.fragment_main.web_view
 import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader
 import kotlinx.android.synthetic.main.layout_fillable_loader.fillable_loader_dark
-import kotlinx.android.synthetic.main.layout_find_in_page.et_search
+import kotlinx.android.synthetic.main.layout_find_in_page.edit_text_search
 import kotlinx.android.synthetic.main.layout_find_in_page.view_dismiss
 import kotlinx.android.synthetic.main.layout_find_in_page.view_search_next
 import kotlinx.android.synthetic.main.layout_find_in_page.view_search_previous
 import me.piruin.quickaction.QuickAction
 import mustafaozhan.github.com.androcat.R
+import mustafaozhan.github.com.androcat.extensions.applyColorFilter
 import mustafaozhan.github.com.androcat.extensions.hideKeyboard
 import mustafaozhan.github.com.androcat.extensions.initExplorerActions
 import mustafaozhan.github.com.androcat.extensions.initFeedActions
@@ -99,7 +99,7 @@ class MainFragment : BaseMainFragment() {
             quickActionProduction = initProductionActions()
         }
 
-        et_search.background.mutate().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
+        edit_text_search.background.mutate().applyColorFilter(Color.WHITE)
         fab_news_feed.bringToFront()
 
         quickActionProfile = setProfileActions(viewModel.isLoggedIn() == true)
@@ -150,7 +150,7 @@ class MainFragment : BaseMainFragment() {
             true
         }
 
-        et_search.textChanges()
+        edit_text_search.textChanges()
             .subscribe { txt ->
                 web_view?.findAllAsync(txt.toString())
             }.addTo(compositeDisposable)
@@ -164,7 +164,7 @@ class MainFragment : BaseMainFragment() {
             it.hideKeyboard()
         }
         view_dismiss.setOnClickListener {
-            et_search.setText("")
+            edit_text_search.setText("")
             layout_find_in_page.setVisibleWithAnimation(false)
             layout_find_in_page.hideKeyboard()
         }
@@ -178,7 +178,7 @@ class MainFragment : BaseMainFragment() {
                 2 -> web_view?.goForward()
                 3 -> {
                     layout_find_in_page.setVisibleWithAnimation(true)
-                    et_search.showKeyboard()
+                    edit_text_search.showKeyboard()
                 }
             }
         }
