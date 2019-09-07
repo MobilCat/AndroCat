@@ -11,6 +11,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.MenuRes
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import mustafaozhan.github.com.androcat.main.activity.MainActivity
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -58,4 +59,6 @@ abstract class BaseFragment : Fragment() {
         cancelable: Boolean = true,
         function: () -> Unit = {}
     ) = getBaseActivity()?.showDialog(title, description, positiveButton, cancelable, function)
+
+    protected fun showRewardedAdDialog() = (getBaseActivity() as? MainActivity)?.showRewardedAdDialog()
 }

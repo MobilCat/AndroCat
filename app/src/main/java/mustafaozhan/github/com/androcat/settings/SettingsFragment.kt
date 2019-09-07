@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.fragment_settings.tv_username_output
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.checkAd
-import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
 
 /**
@@ -60,7 +59,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layout_notifications.setOnClickListener {
             switch_notifications.isChecked = !switch_notifications.isChecked
         }
-        layout_remove_ads.setOnClickListener { (getBaseActivity() as? MainActivity)?.showRewardedAdDialog() }
+        layout_remove_ads.setOnClickListener { showRewardedAdDialog() }
         layout_username.setOnClickListener { showUsernameDialog() }
         layout_support.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_androcat)))

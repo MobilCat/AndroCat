@@ -51,7 +51,6 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     private var doubleBackToExitPressedOnce = false
     private var adVisibility = false
-    private var firstShow = true
 
     override fun getDefaultFragment(): BaseFragment = MainFragment.newInstance()
 
@@ -110,15 +109,9 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
         adObservableInterval = Observable.interval(AD_INITIAL_DELAY, AD_PERIOD, TimeUnit.SECONDS)
             .debounce(0, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { count ->
+            .doOnNext {
                 if (mInterstitialAd.isLoaded && adVisibility && viewModel.isRewardExpired()) {
-                    if (firstShow) {
-                        mInterstitialAd.show()
-                        firstShow = false
-                    } else if (count > 0) {
-                        mInterstitialAd.show()
-                        showRewardedAdDialog()
-                    }
+                    mInterstitialAd.show()
                 } else {
                     prepareAd()
                 }
