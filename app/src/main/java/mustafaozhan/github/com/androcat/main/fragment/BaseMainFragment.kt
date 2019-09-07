@@ -19,6 +19,7 @@ import mustafaozhan.github.com.androcat.extensions.remove
 import mustafaozhan.github.com.androcat.extensions.runScript
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.settings.SettingsFragment
+import mustafaozhan.github.com.androcat.tools.AccessTokenUtil
 import mustafaozhan.github.com.androcat.tools.JsScrip
 import mustafaozhan.github.com.androcat.tools.TextSize
 
@@ -48,16 +49,22 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
     override fun onPageStarted(url: String, favicon: Bitmap?) {
         if (!isAnimating) loadingView(true)
 
-        when (url) {
-            context?.getString(R.string.url_session) -> {
-                web_view?.runScript(JsScrip.GET_USERNAME) {
-                    userName = it?.remove("\"").toString()
+        with(url) {
+            when {
+                equals(context?.getString(R.string.url_session)) -> {
+                    web_view?.runScript(JsScrip.GET_USERNAME) {
+                        userName = it?.remove("\"").toString()
+                    }
+                    updateVariables(login = true, logout = false)
                 }
-                updateVariables(login = true, logout = false)
+                equals(context?.getString(R.string.url_github)) ->
+                    updateVariables(login = true, logout = false)
+                equals(context?.getString(R.string.url_logout)) ->
+                    updateVariables(login = false, logout = true)
+                contains(context?.getString(R.string.url_github_app_code).toString()) ->
+                    context?.let { AccessTokenUtil(it, this) }
+                else -> updateVariables(login = false, logout = false)
             }
-            context?.getString(R.string.url_github) -> updateVariables(login = true, logout = false)
-            context?.getString(R.string.url_logout) -> updateVariables(login = false, logout = true)
-            else -> updateVariables(login = false, logout = false)
         }
     }
 
