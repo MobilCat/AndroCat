@@ -12,6 +12,15 @@ import org.json.JSONObject
 import java.io.IOException
 
 class AccessTokenUtil(private val context: Context, url: String) : Callback {
+    companion object {
+        const val QUERY_CLIENT_ID = "client_id"
+        const val QUERY_CLIENT_SECRET = "client_secret"
+        const val QUERY_CODE = "code"
+        const val ACCESS_TOKEN = "access_token"
+        const val HEADER = "Accept"
+        const val HEADER_JSON = "application/json"
+    }
+
     init {
         handleAccessToken(url)
     }
@@ -19,7 +28,9 @@ class AccessTokenUtil(private val context: Context, url: String) : Callback {
     private fun handleAccessToken(url: String) {
         context.apply {
 
-            val tokenCode = url.substring(url.lastIndexOf("?code=") + 1)
+            val tokenCode = url.substring(
+                url.lastIndexOf(getString(R.string.query_param_code)
+                ) + 1)
                 .split("=".toRegex())
                 .dropLastWhile { it.isEmpty() }
                 .toTypedArray()
@@ -33,14 +44,14 @@ class AccessTokenUtil(private val context: Context, url: String) : Callback {
 
             val urlOauth = HttpUrl.parse(getString(R.string.url_github_access_token))
                 ?.newBuilder()
-                ?.addQueryParameter("client_id", getString(R.string.client_id))
-                ?.addQueryParameter("client_secret", getString(R.string.client_secret))
-                ?.addQueryParameter("code", code)
+                ?.addQueryParameter(QUERY_CLIENT_ID, getString(R.string.client_id))
+                ?.addQueryParameter(QUERY_CLIENT_SECRET, getString(R.string.client_secret))
+                ?.addQueryParameter(QUERY_CODE, code)
                 ?.build()
                 .toString()
 
             val request = Request.Builder()
-                .header("Accept", "application/json")
+                .header(HEADER, HEADER_JSON)
                 .url(urlOauth)
                 .build()
 
@@ -52,10 +63,9 @@ class AccessTokenUtil(private val context: Context, url: String) : Callback {
 
     override fun onResponse(call: Call, response: Response) {
         if (response.isSuccessful) {
-            val jSonData = response.body()!!.string()
-            val jsonObject = JSONObject(jSonData)
-            val authToken = jsonObject.getString("access_token")
-            GeneralSharedPreferences().updateUser(token = authToken)
+            JSONObject(response.body().toString()).getString(ACCESS_TOKEN).let {
+                GeneralSharedPreferences().updateUser(token = it)
+            }
         }
     }
 }

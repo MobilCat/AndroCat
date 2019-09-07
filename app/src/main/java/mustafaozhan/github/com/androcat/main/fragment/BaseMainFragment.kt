@@ -51,17 +51,17 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
         with(url) {
             when {
-                equals(context?.getString(R.string.url_session)) -> {
+                equals(getString(R.string.url_session)) -> {
                     web_view?.runScript(JsScrip.GET_USERNAME) {
                         userName = it?.remove("\"").toString()
                     }
                     updateVariables(login = true, logout = false)
                 }
-                equals(context?.getString(R.string.url_github)) ->
+                equals(getString(R.string.url_github)) ->
                     updateVariables(login = true, logout = false)
-                equals(context?.getString(R.string.url_logout)) ->
+                equals(getString(R.string.url_logout)) ->
                     updateVariables(login = false, logout = true)
-                contains(context?.getString(R.string.url_github_app_code).toString()) ->
+                contains(getString(R.string.url_github_app_code)) ->
                     context?.let { AccessTokenUtil(it, this) }
                 else -> updateVariables(login = false, logout = false)
             }
@@ -70,48 +70,48 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
 
     @Suppress("ComplexMethod")
     override fun onPageFinished(url: String) {
-        web_view?.apply {
+        with(url) {
             when {
-                url == getString(R.string.url_logout) ->
+                equals(getString(R.string.url_logout)) ->
                     updateVariables(login = false, logout = true, textSize = TextSize.SMALL)
-                url.contains(getString(R.string.url_session)) or
-                    url.contains(getString(R.string.url_login)) -> {
-                    runScript(JsScrip.GET_USERNAME) {
+                contains(getString(R.string.url_session)) or
+                    contains(getString(R.string.url_login)) -> {
+                    web_view?.runScript(JsScrip.GET_USERNAME) {
                         userName = it?.remove("\"").toString()
                     }
                     updateVariables(login = true, logout = false, textSize = TextSize.SMALL)
                 }
-                url.contains(getString(R.string.str_gist)) or
-                    url.contains(getString(R.string.url_issues)) or
-                    url.contains(getString(R.string.url_pulls)) or
-                    url.contains(getString(R.string.url_notifications)) or
-                    url.contains(getString(R.string.url_new)) or
-                    url.contains(getString(R.string.url_settings)) ->
+                contains(getString(R.string.str_gist)) or
+                    contains(getString(R.string.url_issues)) or
+                    contains(getString(R.string.url_pulls)) or
+                    contains(getString(R.string.url_notifications)) or
+                    contains(getString(R.string.url_new)) or
+                    contains(getString(R.string.url_settings)) ->
                     updateVariables(login = false, logout = false, textSize = TextSize.LARGE)
-                url.contains(getString(R.string.url_search)) or
-                    url.contains(getString(R.string.url_trending)) or
-                    url.contains(getString(R.string.str_organization)) or
-                    url.contains(getString(R.string.str_google_play)) or
-                    url.contains(getString(R.string.str_new)) or
-                    !url.contains(getString(R.string.str_github)) or
-                    (url == getString(R.string.url_github)) ->
+                contains(getString(R.string.url_search)) or
+                    contains(getString(R.string.url_trending)) or
+                    contains(getString(R.string.str_organization)) or
+                    contains(getString(R.string.str_google_play)) or
+                    contains(getString(R.string.str_new)) or
+                    !contains(getString(R.string.str_github)) or
+                    equals(getString(R.string.url_github)) ->
                     updateVariables(login = false, logout = false, textSize = TextSize.SMALL)
-                url.contains(getString(R.string.url_blank)) ->
+                contains(getString(R.string.url_blank)) ->
                     updateVariables(login = false, logout = false)
-                url.contains(getString(R.string.str_stargazers)) ->
+                contains(getString(R.string.str_stargazers)) ->
                     updateVariables(login = false, logout = false, textSize = TextSize.MEDIUM)
-                url.contains(viewModel.getUserName().toString()) -> updateVariables(
+                contains(viewModel.getUserName().toString()) -> updateVariables(
                     login = false,
                     logout = false,
-                    textSize = if (url.contains(getString(R.string.str_gist))) TextSize.LARGE else TextSize.SMALL
+                    textSize = if (contains(getString(R.string.str_gist))) TextSize.LARGE else TextSize.SMALL
                 )
                 else -> updateVariables(
-                    textSize = if (url.contains(getString(R.string.url_github))) TextSize.SMALL else TextSize.LARGE
+                    textSize = if (contains(getString(R.string.url_github))) TextSize.SMALL else TextSize.LARGE
                 )
             }
 
             viewModel.getSettings().darkMode?.let {
-                runScript(JsScrip.getTheme(it)) {
+                web_view?.runScript(JsScrip.getTheme(it)) {
                     loadingView(false)
                 }
             }

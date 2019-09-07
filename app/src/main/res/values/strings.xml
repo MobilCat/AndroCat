@@ -70,6 +70,7 @@
     <string name="url_github_app_code">https://github.com/MobilCat/AndroCat?code=</string>
     <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
     <string name="url_github_authorize">https://github.com/login/oauth/authorize/</string>
+    <string name="query_param_code">\?code=</string>
 
     <!--STR-->
     <string name="str_github">github</string>
