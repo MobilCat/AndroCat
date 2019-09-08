@@ -1,4 +1,4 @@
-package mustafaozhan.github.com.androcat.model
+package mustafaozhan.github.com.androcat.notification.model
 
 import com.google.gson.annotations.SerializedName
 

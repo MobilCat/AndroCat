@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -13,7 +14,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseBroadcastReceiver
-import mustafaozhan.github.com.androcat.model.Notification
+import mustafaozhan.github.com.androcat.notification.model.Notification
+import mustafaozhan.github.com.androcat.notification.model.NotificationType
 
 class NotificationReceiver : BaseBroadcastReceiver() {
     companion object {
@@ -82,15 +84,22 @@ class NotificationReceiver : BaseBroadcastReceiver() {
 
         with(NotificationManagerCompat.from(context)) {
             notify(
-                1,
+                notification.id?.toInt() ?: -1,
                 NotificationCompat
                     .Builder(context, NotificationCompat.CATEGORY_SOCIAL)
-                    .setSmallIcon(R.drawable.ic_androcat_dash)
-                    .setContentTitle(notification.subject?.title.toString())
-                    .setContentText(notification.repository?.name.toString())
-                    .setContentInfo(notification.subject?.type.toString())
+                    .setSmallIcon(
+                        when (notification.subject?.type.toString()) {
+                            NotificationType.ISSUE.value -> R.drawable.ic_issue
+                            NotificationType.PULL_REQUEST.value -> R.drawable.ic_pull_request
+                            else -> R.drawable.ic_androcat_dash
+                        }
+                    )
+                    .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher_round))
+                    .setContentTitle("[${notification.subject?.type}] ${notification.repository?.fullName}")
+                    .setContentText(notification.subject?.title.toString())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .build())
+                    .build()
+            )
         }
     }
 
