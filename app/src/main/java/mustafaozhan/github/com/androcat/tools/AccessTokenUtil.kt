@@ -63,7 +63,7 @@ class AccessTokenUtil(private val context: Context, url: String) : Callback {
 
     override fun onResponse(call: Call, response: Response) {
         if (response.isSuccessful) {
-            JSONObject(response.body().toString()).getString(ACCESS_TOKEN).let {
+            JSONObject(response.body()?.string().toString()).getString(ACCESS_TOKEN).let {
                 GeneralSharedPreferences().updateUser(token = it)
             }
         }
