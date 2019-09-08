@@ -19,22 +19,23 @@ import mustafaozhan.github.com.androcat.notification.model.NotificationType
 
 object NotificationUtil {
     fun senNotification(notification: Notification, context: Context) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(context)
         }
-
 
         val notificationIntent = Intent(context, MainActivity::class.java)
 
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
 
-        notificationIntent.data = Uri.parse(notification.subject?.url.toString().replace("api.", "").replace("/repos", ""))
-        val intent = PendingIntent.getActivity(context, 0,
-            notificationIntent, 0)
+        notificationIntent.data = Uri.parse(
+            notification.subject?.url.toString()
+                .replace("api.", "")
+                .replace("/repos", "")
+        )
 
-//        notification.setLatestEventInfo(context, title, message, intent)
-//        notification.flags = notification.flags or Notification.FLAG_AUTO_CANCEL
-//        notificationManager.notify(0, notification)
+        val intent = PendingIntent.getActivity(context, notification.id?.toInt() ?: -1,
+            notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         with(NotificationManagerCompat.from(context)) {
             notify(
@@ -52,6 +53,7 @@ object NotificationUtil {
                     .setContentTitle("[${notification.subject?.type}] ${notification.repository?.fullName}")
                     .setContentText(notification.subject?.title.toString())
                     .setContentIntent(intent)
+                    .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .build()
             )

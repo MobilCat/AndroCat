@@ -23,10 +23,12 @@ class NotificationReceiver : BaseBroadcastReceiver() {
         compositeDisposable.add(
             dataManager.getNotifications()
                 .subscribe(
-                    {
-                        it.forEach { notification ->
-                            NotificationUtil.senNotification(notification, context)
-                        }
+                    { notifications ->
+                        notifications
+                            .filter { it.unread == false } // todo make it true after development
+                            .forEach { notification ->
+                                NotificationUtil.senNotification(notification, context)
+                            }
                         compositeDisposable.dispose()
                     }, {
                     Log.d("Test Error", it.toString())
