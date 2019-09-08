@@ -7,11 +7,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseBroadcastReceiver
+import mustafaozhan.github.com.androcat.model.Notification
 
 class NotificationReceiver : BaseBroadcastReceiver() {
     companion object {
@@ -25,15 +27,24 @@ class NotificationReceiver : BaseBroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        senNotification(
-            "Notification",
-            context,
-            NOTIFICATION_REQUEST_CODE
+
+        compositeDisposable.add(
+            dataManager.getNotifications()
+                .subscribe(
+                    {
+                        it.forEach { notification ->
+                            senNotification(notification, context)
+                        }
+                        compositeDisposable.dispose()
+                    }, {
+                    Log.d("Test Error", it.toString())
+                }
+                )
         )
     }
 
-    fun setNotifications(context: Context) {
-        cancelNotifications(context)
+    fun setNotificationReceiver(context: Context) {
+        cancelNotificationReceiver(context)
 
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         val intent = Intent(context, NotificationReceiver::class.java)
@@ -52,7 +63,7 @@ class NotificationReceiver : BaseBroadcastReceiver() {
         )
     }
 
-    fun cancelNotifications(context: Context) {
+    fun cancelNotificationReceiver(context: Context) {
         val intent = Intent(context, NotificationReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -64,7 +75,7 @@ class NotificationReceiver : BaseBroadcastReceiver() {
         alarmManager?.cancel(pendingIntent)
     }
 
-    private fun senNotification(name: String, context: Context, requestCode: Int) {
+    private fun senNotification(notification: Notification, context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(context)
         }
@@ -75,8 +86,9 @@ class NotificationReceiver : BaseBroadcastReceiver() {
                 NotificationCompat
                     .Builder(context, NotificationCompat.CATEGORY_SOCIAL)
                     .setSmallIcon(R.drawable.ic_androcat_dash)
-                    .setContentTitle("Notification Title")
-                    .setContentText("Much longer text that cannot fit one line...")
+                    .setContentTitle(notification.subject?.title.toString())
+                    .setContentText(notification.repository?.name.toString())
+                    .setContentInfo(notification.subject?.type.toString())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .build())
         }
@@ -87,11 +99,9 @@ class NotificationReceiver : BaseBroadcastReceiver() {
 
         val channel = NotificationChannel(
             NotificationCompat.CATEGORY_SOCIAL,
-            context.getString(R.string.dark_mode),
+            context.getString(R.string.app_name),
             NotificationManager.IMPORTANCE_DEFAULT
-        ).apply {
-            description = context.getString(R.string.feedback)
-        }
+        )
 
         val notificationManager: NotificationManager? =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager

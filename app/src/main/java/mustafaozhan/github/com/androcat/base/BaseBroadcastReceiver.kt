@@ -3,6 +3,7 @@ package mustafaozhan.github.com.androcat.base
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import io.reactivex.disposables.CompositeDisposable
 import mustafaozhan.github.com.androcat.application.Application
 import mustafaozhan.github.com.androcat.dagger.component.BroadcastReceiverComponent
 import mustafaozhan.github.com.androcat.tools.DataManager
@@ -12,6 +13,7 @@ abstract class BaseBroadcastReceiver : BroadcastReceiver() {
     protected val broadcastReceiverComponent: BroadcastReceiverComponent by lazy {
         Application.instance.component.broadcastReceiverComponent()
     }
+    protected val compositeDisposable = CompositeDisposable()
 
     @Inject
     lateinit var dataManager: DataManager

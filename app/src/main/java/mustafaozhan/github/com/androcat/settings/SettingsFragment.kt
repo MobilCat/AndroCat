@@ -25,6 +25,7 @@ import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.checkAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
+import mustafaozhan.github.com.androcat.notification.NotificationReceiver
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -53,8 +54,13 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             switch_dark_mode.isChecked = !switch_dark_mode.isChecked
         }
 
-        switch_notifications.setOnCheckedChangeListener { _, isChecked ->
+        switch_notifications.setOnCheckedChangeListener { view, isChecked ->
             viewModel.updateSettings(isNotificationOn = isChecked)
+            if (isChecked) {
+                NotificationReceiver().setNotificationReceiver(view.context)
+            } else {
+                NotificationReceiver().cancelNotificationReceiver(view.context)
+            }
         }
         layout_notifications.setOnClickListener {
             switch_notifications.isChecked = !switch_notifications.isChecked
