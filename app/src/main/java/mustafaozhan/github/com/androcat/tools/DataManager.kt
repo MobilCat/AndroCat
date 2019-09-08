@@ -34,5 +34,5 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
         adFreeActivatedDate = adFreeActivatedDate
     )
 
-    fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
+    fun getNotifications() = gitHubApiHelper.gitHubApiServices.getNotifications(true)
 }
