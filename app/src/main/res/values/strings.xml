@@ -33,7 +33,7 @@
     <string name="app_settings">App Settings</string>
     <string name="user_settings">User Settings</string>
     <string name="enter">Enter</string>
-    <string name="cancel">@android:string/cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="update">Update</string>
     <string name="report_issue">Report Issue</string>
     <string name="find_in_page">Find in page</string>
@@ -67,9 +67,9 @@
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
     <string name="url_report_issue">https://github.com/MobilCat/AndroCat/issues</string>
 
-    <string name="url_github_code">https://github.com/mustafaozhan/AndroCat?code=</string>
     <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
-    <string name="url_github_authorize">https://github.com/login/oauth/authorize/</string>
+    <string name="url_github_authorize">https://github.com/login/oauth/authorize?client_id=e86c71c4a09a596dc857&amp;scope=notifications</string>
+    <string name="query_param_code">/?code=</string>
 
     <!--STR-->
     <string name="str_github">github</string>
@@ -107,9 +107,19 @@
     <string name="slide_disable_ads_text_2"> Please navigate\n\nUser > App Settings > Disable Ads\n\n After you watch a video app will be ad free for 24 hours!</string>
 
     <!--Rewarded Ads-->
-    <string name="remove_ads">Remove Ads</string>
-    <string name="remove_ads_text">Would you like to watch a video to stop ads for 24 hours ?</string>
-    <string name="watch">Watch</string>
+    <string name="dialog_remove_ads_title">Remove Ads</string>
+    <string name="dialog_remove_ads_message">Would you like to watch a video to stop ads for 24 hours ?</string>
+    <string name="dialog_remove_ads_positive_button">Watch</string>
+
+    <!--Notifications-->
+    <string name="dialog_notifications_title">Enable Notifications</string>
+    <string name="dialog_notifications_message">In order to enable notifications you need to authorize AndroCat. Do you want to continue ?</string>
+    <string name="dialog_notifications_positive_button">Yes</string>
+
+    <string name="authorization_successful">Authorization successful</string>
+    <string name="authorization_failed">Authorization failed, try again later</string>
+    <string name="snack_bar_action_try_again">Try again</string>
+
 
     <!--SVG String-->
     <string name="androcat_svg_path">M48.950 41.000 C 42.065 55.078,40.104 83.280,43.734 116.000 C 46.943 144.919,46.659 146.585,35.839 162.226 C 25.141 177.691,8.000 219.951,8.000 230.861 C 8.000 234.974,45.933 236.000,198.000 236.000 L 388.000 236.000 388.000 226.503 C 388.000 213.317,377.785 185.692,364.938 164.131 C 354.648 146.862,354.198 143.887,355.474 101.589 C 357.849 22.882,325.058 8.107,270.291 63.207 L 255.587 78.000 199.668 77.690 L 143.750 77.379 128.875 62.930 C 100.642 35.505,57.435 23.650,48.950 41.000 M134.000 172.000 C 134.000 178.246,131.416 182.388,126.988 183.241 C 119.070 184.766,113.921 175.188,117.560 165.704 C 121.375 155.763,134.000 160.597,134.000 172.000 M286.000 172.000 C 286.000 183.403,273.375 188.237,269.560 178.296 C 265.921 168.812,271.070 159.234,278.988 160.759 C 283.416 161.612,286.000 165.754,286.000 172.000 M8.000 264.428 C 8.000 294.014,52.310 344.431,93.815 362.071 L 119.429 372.958 104.063 392.397 C 84.434 417.230,74.620 446.684,74.274 481.807 L 74.000 509.613 90.000 518.741 C 110.544 530.461,115.325 530.297,120.111 517.709 C 125.525 503.468,136.889 506.672,142.518 524.026 C 146.479 536.239,149.136 538.314,164.081 540.865 C 187.308 544.830,188.000 543.882,188.000 508.091 C 188.000 473.342,190.180 464.000,198.287 464.000 C 207.827 464.000,212.000 478.603,212.000 511.982 L 212.000 544.490 231.000 541.735 C 254.291 538.359,256.000 537.426,256.000 528.091 C 256.000 507.229,273.654 499.261,278.357 518.000 C 281.420 530.203,284.605 530.357,307.250 519.395 L 325.027 510.789 322.998 474.395 C 320.760 434.226,310.364 408.119,287.155 384.380 C 280.498 377.571,277.257 372.000,279.954 372.000 C 306.547 372.000,361.835 327.803,378.008 293.616 C 395.426 256.798,412.570 260.000,198.000 260.000 C 61.753 260.000,8.000 261.253,8.000 264.428</string>

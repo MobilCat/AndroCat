@@ -14,3 +14,7 @@ annotation class ApplicationContext
 @Scope
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class PerViewModel
+
+@Scope
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+annotation class PerBroadcastReceiver

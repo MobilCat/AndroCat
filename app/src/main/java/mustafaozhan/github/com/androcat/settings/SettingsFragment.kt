@@ -12,17 +12,20 @@ import android.widget.EditText
 import kotlinx.android.synthetic.main.fragment_settings.ad_view
 import kotlinx.android.synthetic.main.fragment_settings.layout_dark_mode
 import kotlinx.android.synthetic.main.fragment_settings.layout_feedback
+import kotlinx.android.synthetic.main.fragment_settings.layout_notifications
 import kotlinx.android.synthetic.main.fragment_settings.layout_on_github
 import kotlinx.android.synthetic.main.fragment_settings.layout_remove_ads
 import kotlinx.android.synthetic.main.fragment_settings.layout_report_issue
 import kotlinx.android.synthetic.main.fragment_settings.layout_support
 import kotlinx.android.synthetic.main.fragment_settings.layout_username
 import kotlinx.android.synthetic.main.fragment_settings.switch_dark_mode
+import kotlinx.android.synthetic.main.fragment_settings.switch_notifications
 import kotlinx.android.synthetic.main.fragment_settings.tv_username_output
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.base.BaseMvvmFragment
 import mustafaozhan.github.com.androcat.extensions.checkAd
 import mustafaozhan.github.com.androcat.main.fragment.MainFragment
+import mustafaozhan.github.com.androcat.notification.NotificationReceiver
 
 /**
  * Created by Mustafa Ozhan on 2018-07-22.
@@ -50,6 +53,24 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         layout_dark_mode.setOnClickListener {
             switch_dark_mode.isChecked = !switch_dark_mode.isChecked
         }
+
+        switch_notifications.setOnCheckedChangeListener { view, isChecked ->
+            if (isChecked) {
+                showDialog(
+                    getString(R.string.dialog_notifications_title),
+                    getString(R.string.dialog_notifications_message),
+                    getString(R.string.dialog_notifications_positive_button)
+                ) {
+                    openUrlInMain(R.string.url_github_authorize)
+                }
+            } else {
+                NotificationReceiver().cancelNotificationReceiver(view.context)
+                viewModel.updateSettings(isNotificationOn = isChecked)
+            }
+        }
+        layout_notifications.setOnClickListener {
+            switch_notifications.isChecked = !switch_notifications.isChecked
+        }
         layout_remove_ads.setOnClickListener { showRewardedAdDialog() }
         layout_username.setOnClickListener { showUsernameDialog() }
         layout_support.setOnClickListener {
@@ -67,15 +88,12 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             }
         }
         layout_feedback.setOnClickListener { sendFeedBack() }
-        layout_on_github.setOnClickListener {
-            clearBackStack()
-            replaceFragment(MainFragment.newInstance(getString(R.string.url_project_repository)), false)
-        }
-        layout_report_issue.setOnClickListener {
-            clearBackStack()
-            replaceFragment(MainFragment.newInstance(getString(R.string.url_report_issue)), false)
-        }
+        layout_on_github.setOnClickListener { openUrlInMain(R.string.url_project_repository) }
+        layout_report_issue.setOnClickListener { openUrlInMain(R.string.url_report_issue) }
     }
+
+    private fun openUrlInMain(stringId: Int) =
+        replaceFragment(MainFragment.newInstance(getString(stringId)), false)
 
     private fun init() {
         viewModel.getUserName()?.let {
@@ -84,6 +102,9 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
 
         viewModel.getSettings().darkMode?.let {
             switch_dark_mode.isChecked = it
+        }
+        viewModel.getSettings().isNotificationOn?.let {
+            switch_notifications.isChecked = it
         }
     }
 

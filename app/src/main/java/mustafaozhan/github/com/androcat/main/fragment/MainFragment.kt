@@ -43,7 +43,7 @@ class MainFragment : BaseMainFragment() {
     companion object {
         private const val ARGS_OPEN_URL = "ARGS_OPEN_URL"
         var TAG: String = MainFragment::class.java.simpleName
-        fun newInstance(url: String) = MainFragment().apply {
+        fun newInstance(url: String?) = MainFragment().apply {
             arguments = Bundle().apply {
                 putString(ARGS_OPEN_URL, url)
             }
@@ -86,7 +86,7 @@ class MainFragment : BaseMainFragment() {
             viewModel.updateUser(userName, isLoggedIn)
         } else {
             loadUrl(R.string.url_login)
-            viewModel.updateUser("", isLoggedIn)
+            viewModel.updateUser("", isLoggedIn, null)
         }
         quickActionProfile = setProfileActions(isLoggedIn)
     }

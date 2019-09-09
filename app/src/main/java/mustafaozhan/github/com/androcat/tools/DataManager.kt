@@ -25,12 +25,14 @@ constructor(private val generalSharedPreferences: GeneralSharedPreferences) {
     fun updateSettings(
         darkMode: Boolean? = null,
         sliderShown: Boolean? = null,
+        isNotificationOn: Boolean? = null,
         adFreeActivatedDate: Instant? = null
     ) = generalSharedPreferences.updateSettings(
         darkMode = darkMode,
         sliderShown = sliderShown,
+        isNotificationOn = isNotificationOn,
         adFreeActivatedDate = adFreeActivatedDate
     )
 
-    fun getUser(token: String?) = gitHubApiHelper.gitHubApiServices.getUser(token)
+    fun getNotifications() = gitHubApiHelper.gitHubApiServices.getNotifications(true)
 }
