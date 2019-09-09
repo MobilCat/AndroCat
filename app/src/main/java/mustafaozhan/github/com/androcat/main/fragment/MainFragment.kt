@@ -86,7 +86,7 @@ class MainFragment : BaseMainFragment() {
             viewModel.updateUser(userName, isLoggedIn)
         } else {
             loadUrl(R.string.url_login)
-            viewModel.updateUser("", isLoggedIn)
+            viewModel.updateUser("", isLoggedIn, null)
         }
         quickActionProfile = setProfileActions(isLoggedIn)
     }

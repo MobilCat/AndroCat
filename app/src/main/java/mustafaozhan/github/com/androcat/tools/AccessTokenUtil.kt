@@ -89,7 +89,7 @@ class AccessTokenUtil(
     }
 
     private fun showSnacky(stringId: Int, actionText: String = "") {
-        (context as MainActivity).snacky(
+        (context as? MainActivity)?.snacky(
             context.getString(stringId),
             actionText
         ) {
