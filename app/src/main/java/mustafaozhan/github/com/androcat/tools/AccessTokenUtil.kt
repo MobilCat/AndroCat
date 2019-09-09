@@ -1,6 +1,7 @@
 package mustafaozhan.github.com.androcat.tools
 
 import android.content.Context
+import com.crashlytics.android.Crashlytics
 import mustafaozhan.github.com.androcat.R
 import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.notification.NotificationReceiver
@@ -81,6 +82,7 @@ class AccessTokenUtil(
                 preferences.updateSettings(isNotificationOn = false)
             }
         } catch (e: Exception) {
+            Crashlytics.logException(e)
             showSnacky(R.string.authorization_failed, context.getString(R.string.snack_bar_action_try_again))
             preferences.updateSettings(isNotificationOn = false)
         }
