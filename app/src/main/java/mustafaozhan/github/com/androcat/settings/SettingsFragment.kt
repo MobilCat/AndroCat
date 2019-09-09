@@ -57,7 +57,7 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         switch_notifications.setOnCheckedChangeListener { view, isChecked ->
             viewModel.updateSettings(isNotificationOn = isChecked)
             if (isChecked) {
-                NotificationReceiver().setNotificationReceiver(view.context)
+                replaceFragment(MainFragment.newInstance(getString(R.string.url_github_authorize)), false)
             } else {
                 NotificationReceiver().cancelNotificationReceiver(view.context)
             }

@@ -59,6 +59,11 @@ constructor() : BaseSharedPreferences() {
     fun loadSettings() =
         Gson().fromJson(getStringEntry(SETTINGS), Settings::class.java)
             ?: run {
-                Settings(darkMode = false, sliderShown = false, isNotificationOn = true, adFreeActivatedDate = null)
+                Settings(
+                    darkMode = false,
+                    sliderShown = false,
+                    isNotificationOn = false,
+                    adFreeActivatedDate = null
+                )
             }
 }

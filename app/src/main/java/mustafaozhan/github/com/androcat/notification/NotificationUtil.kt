@@ -16,7 +16,6 @@ import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.notification.model.Notification
 import mustafaozhan.github.com.androcat.notification.model.NotificationType
 
-
 object NotificationUtil {
     fun senNotification(notification: Notification, context: Context) {
 

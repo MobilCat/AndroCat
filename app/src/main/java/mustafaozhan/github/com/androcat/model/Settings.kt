@@ -5,6 +5,6 @@ import org.joda.time.Instant
 data class Settings(
     var darkMode: Boolean? = false,
     var sliderShown: Boolean? = false,
-    var isNotificationOn: Boolean? = true,
+    var isNotificationOn: Boolean? = false,
     var adFreeActivatedDate: Instant?
 )

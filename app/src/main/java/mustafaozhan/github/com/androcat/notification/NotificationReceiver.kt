@@ -25,7 +25,7 @@ class NotificationReceiver : BaseBroadcastReceiver() {
                 .subscribe(
                     { notifications ->
                         notifications
-                            .filter { it.unread == false } // todo make it true after development
+                            .filter { it.unread == true }
                             .forEach { notification ->
                                 NotificationUtil.senNotification(notification, context)
                             }
@@ -68,5 +68,4 @@ class NotificationReceiver : BaseBroadcastReceiver() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         alarmManager?.cancel(pendingIntent)
     }
-
 }
