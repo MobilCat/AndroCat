@@ -55,11 +55,17 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
         }
 
         switch_notifications.setOnCheckedChangeListener { view, isChecked ->
-            viewModel.updateSettings(isNotificationOn = isChecked)
             if (isChecked) {
-                replaceFragment(MainFragment.newInstance(getString(R.string.url_github_authorize)), false)
+                showDialog(
+                    getString(R.string.dialog_notifications_title),
+                    getString(R.string.dialog_notifications_message),
+                    getString(R.string.dialog_notifications_positive_button)
+                ) {
+                    openUrlInMain(R.string.url_github_authorize)
+                }
             } else {
                 NotificationReceiver().cancelNotificationReceiver(view.context)
+                viewModel.updateSettings(isNotificationOn = isChecked)
             }
         }
         layout_notifications.setOnClickListener {
@@ -82,15 +88,12 @@ class SettingsFragment : BaseMvvmFragment<SettingsFragmentViewModel>() {
             }
         }
         layout_feedback.setOnClickListener { sendFeedBack() }
-        layout_on_github.setOnClickListener {
-            clearBackStack()
-            replaceFragment(MainFragment.newInstance(getString(R.string.url_project_repository)), false)
-        }
-        layout_report_issue.setOnClickListener {
-            clearBackStack()
-            replaceFragment(MainFragment.newInstance(getString(R.string.url_report_issue)), false)
-        }
+        layout_on_github.setOnClickListener { openUrlInMain(R.string.url_project_repository) }
+        layout_report_issue.setOnClickListener { openUrlInMain(R.string.url_report_issue) }
     }
+
+    private fun openUrlInMain(stringId: Int) =
+        replaceFragment(MainFragment.newInstance(getString(stringId)), false)
 
     private fun init() {
         viewModel.getUserName()?.let {

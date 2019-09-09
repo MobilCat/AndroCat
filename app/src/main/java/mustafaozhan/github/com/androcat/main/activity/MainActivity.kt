@@ -126,9 +126,9 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     internal fun showRewardedAdDialog() {
         showDialog(
-            getString(R.string.remove_ads),
-            getString(R.string.remove_ads_text),
-            getString(R.string.watch)
+            getString(R.string.dialog_remove_ads_title),
+            getString(R.string.dialog_remove_ads_message),
+            getString(R.string.dialog_remove_ads_positive_button)
         ) {
             showRewardedAd()
         }

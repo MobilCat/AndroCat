@@ -2,6 +2,7 @@ package mustafaozhan.github.com.androcat.tools
 
 import android.content.Context
 import mustafaozhan.github.com.androcat.R
+import mustafaozhan.github.com.androcat.main.activity.MainActivity
 import mustafaozhan.github.com.androcat.notification.NotificationReceiver
 import okhttp3.Call
 import okhttp3.Callback
@@ -12,7 +13,10 @@ import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
 
-class AccessTokenUtil(private val context: Context, url: String) : Callback {
+class AccessTokenUtil(
+    private val context: Context,
+    private val url: String
+) : Callback {
     companion object {
         const val QUERY_CLIENT_ID = "client_id"
         const val QUERY_CLIENT_SECRET = "client_secret"
@@ -64,13 +68,30 @@ class AccessTokenUtil(private val context: Context, url: String) : Callback {
 
     override fun onResponse(call: Call, response: Response) {
         val preferences = GeneralSharedPreferences()
-        if (response.isSuccessful) {
-            JSONObject(response.body()?.string().toString()).getString(ACCESS_TOKEN).let {
-                preferences.updateUser(token = it)
-                NotificationReceiver().setNotificationReceiver(context)
+        try {
+            if (response.isSuccessful) {
+                JSONObject(response.body()?.string().toString()).getString(ACCESS_TOKEN).let {
+                    preferences.updateUser(token = it)
+                    preferences.updateSettings(isNotificationOn = true)
+                    NotificationReceiver().setNotificationReceiver(context)
+                    showSnacky(R.string.authorization_successful)
+                }
+            } else {
+                showSnacky(R.string.authorization_failed, context.getString(R.string.snack_bar_action_try_again))
+                preferences.updateSettings(isNotificationOn = false)
             }
-        } else {
+        } catch (e: Exception) {
+            showSnacky(R.string.authorization_failed, context.getString(R.string.snack_bar_action_try_again))
             preferences.updateSettings(isNotificationOn = false)
+        }
+    }
+
+    private fun showSnacky(stringId: Int, actionText: String = "") {
+        (context as MainActivity).snacky(
+            context.getString(stringId),
+            actionText
+        ) {
+            handleAccessToken(url)
         }
     }
 }

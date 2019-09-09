@@ -14,7 +14,7 @@ fun Context.initExplorerActions() =
         addActionItem(
             ActionItem(4, getString(R.string.trends), R.drawable.ic_trends),
             ActionItem(3, getString(R.string.search_in_github), R.drawable.ic_search),
-            ActionItem(2, getString(R.string.remove_ads), R.drawable.ic_disable_ads),
+            ActionItem(2, getString(R.string.dialog_remove_ads_title), R.drawable.ic_disable_ads),
             ActionItem(1, getString(R.string.dark_mode), R.drawable.ic_dark_mode)
         )
     }
