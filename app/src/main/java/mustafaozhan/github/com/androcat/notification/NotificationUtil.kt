@@ -31,6 +31,7 @@ object NotificationUtil {
             notification.subject?.url.toString()
                 .replace("api.", "")
                 .replace("/repos", "")
+                .replace("pulls", "pull")
         )
 
         val intent = PendingIntent.getActivity(context, notification.id?.toInt() ?: -1,

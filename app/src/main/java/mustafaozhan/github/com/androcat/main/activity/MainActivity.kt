@@ -52,7 +52,7 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
     private var doubleBackToExitPressedOnce = false
     private var adVisibility = false
 
-    override fun getDefaultFragment(): BaseFragment = MainFragment.newInstance()
+    override fun getDefaultFragment(): BaseFragment = MainFragment.newInstance(uri)
 
     override fun getViewModelClass(): Class<MainActivityViewModel> = MainActivityViewModel::class.java
 
@@ -60,6 +60,11 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val data = this.intent.data
+        if (data != null && data.isHierarchical) {
+            uri = this.intent.dataString
+        }
         loadRewardedAd()
         checkAppUpdate()
         prepareAd()
@@ -211,10 +216,6 @@ class MainActivity : BaseMvvmActivity<MainActivityViewModel>() {
     override fun onResume() {
         super.onResume()
         ad()
-        val data = this.intent.data
-        if (data != null && data.isHierarchical) {
-            uri = this.intent.dataString
-        }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
