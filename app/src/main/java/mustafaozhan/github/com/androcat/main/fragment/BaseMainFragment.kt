@@ -61,7 +61,7 @@ abstract class BaseMainFragment : BaseMvvmFragment<MainFragmentViewModel>(), Adv
                     updateVariables(login = true, logout = false)
                 equals(getString(R.string.url_logout)) ->
                     updateVariables(login = false, logout = true)
-                contains(getString(R.string.url_github_app_code)) ->
+                contains(getString(R.string.query_param_code)) ->
                     context?.let { AccessTokenUtil(it, this) }
                 else -> updateVariables(login = false, logout = false)
             }

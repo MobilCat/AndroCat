@@ -2,6 +2,7 @@ package mustafaozhan.github.com.androcat.tools
 
 import android.content.Context
 import mustafaozhan.github.com.androcat.R
+import mustafaozhan.github.com.androcat.notification.NotificationReceiver
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.HttpUrl
@@ -62,10 +63,14 @@ class AccessTokenUtil(private val context: Context, url: String) : Callback {
     override fun onFailure(call: Call, e: IOException) = Unit
 
     override fun onResponse(call: Call, response: Response) {
+        val preferences = GeneralSharedPreferences()
         if (response.isSuccessful) {
             JSONObject(response.body()?.string().toString()).getString(ACCESS_TOKEN).let {
-                GeneralSharedPreferences().updateUser(token = it)
+                preferences.updateUser(token = it)
+                NotificationReceiver().setNotificationReceiver(context)
             }
+        } else {
+            preferences.updateSettings(isNotificationOn = false)
         }
     }
 }

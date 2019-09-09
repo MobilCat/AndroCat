@@ -67,10 +67,9 @@
     <string name="url_androcat">https://play.google.com/store/apps/details?id=mustafaozhan.github.com.androcat</string>
     <string name="url_report_issue">https://github.com/MobilCat/AndroCat/issues</string>
 
-    <string name="url_github_app_code">https://github.com/MobilCat?code=</string>
     <string name="url_github_access_token">https://github.com/login/oauth/access_token</string>
     <string name="url_github_authorize">https://github.com/login/oauth/authorize?client_id=e86c71c4a09a596dc857&amp;scope=notifications</string>
-    <string name="query_param_code">\?code=</string>
+    <string name="query_param_code">/?code=</string>
 
     <!--STR-->
     <string name="str_github">github</string>
